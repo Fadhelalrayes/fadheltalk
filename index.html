@@ -6,322 +6,84 @@
     <title>FadhelTalk - محادثة ذكية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #2d3748;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            color: #2d3748; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-        
         .container {
-            width: 100%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.8s ease-out;
+            width: 100%; max-width: 500px; background: rgba(255, 255, 255, 0.95); border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); overflow: hidden; backdrop-filter: blur(10px); animation: fadeIn 0.8s ease-out;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
         .header {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 25px; text-align: center; position: relative; overflow: hidden;
         }
-        
         .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
-            transform: rotate(30deg);
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%); transform: rotate(30deg);
         }
-        
-        .logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
+        .logo { display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
         .logo-icon {
-            font-size: 32px;
-            background: white;
-            color: #7c3aed;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s infinite;
+            font-size: 32px; background: white; color: #7c3aed; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); animation: pulse 2s infinite;
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            letter-spacing: -0.5px;
-        }
-        
-        .subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-        
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.05);} 100% {transform: scale(1);} }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.5px; }
+        .subtitle { font-size: 14px; opacity: 0.9; font-weight: 400; }
         .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
+            display: inline-flex; align-items: center; gap: 8px; font-size: 13px; margin-top: 15px;
+            background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(5px);
         }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-        }
-        
+        .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
         .chat-container {
-            height: 400px;
-            overflow-y: auto;
-            padding: 25px;
-            background: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            scrollbar-width: thin;
-            scrollbar-color: #cbd5e0 transparent;
+            height: 400px; overflow-y: auto; padding: 25px; background: #f8fafc; display: flex; flex-direction: column; gap: 20px;
+            scrollbar-width: thin; scrollbar-color: #cbd5e0 transparent;
         }
-        
-        .chat-container::-webkit-scrollbar {
-            width: 5px;
-        }
-        
-        .chat-container::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
-            border-radius: 10px;
-        }
-        
+        .chat-container::-webkit-scrollbar { width: 5px; }
+        .chat-container::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
         .message {
-            max-width: 80%;
-            padding: 16px 20px;
-            border-radius: 20px;
-            line-height: 1.5;
-            position: relative;
-            animation: messageAppear 0.3s ease-out;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            max-width: 80%; padding: 16px 20px; border-radius: 20px; line-height: 1.5; position: relative;
+            animation: messageAppear 0.3s ease-out; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        
-        @keyframes messageAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .user-message {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .ai-message {
-            align-self: flex-start;
-            background: white;
-            color: #374151;
-            border-bottom-left-radius: 5px;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .message-content {
-            margin-bottom: 5px;
-            font-size: 15px;
-        }
-        
-        .message-time {
-            font-size: 11px;
-            opacity: 0.7;
-            margin-top: 5px;
-        }
-        
-        .input-container {
-            display: flex;
-            padding: 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e5e7eb;
-            gap: 12px;
-        }
-        
+        @keyframes messageAppear { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        .user-message { align-self: flex-end; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border-bottom-right-radius: 5px; }
+        .ai-message { align-self: flex-start; background: white; color: #374151; border-bottom-left-radius: 5px; border: 1px solid #e5e7eb; }
+        .message-content { margin-bottom: 5px; font-size: 15px; }
+        .message-time { font-size: 11px; opacity: 0.7; margin-top: 5px; }
+        .input-container { display: flex; padding: 20px; background: #f8fafc; border-top: 1px solid #e5e7eb; gap: 12px; }
         input {
-            flex: 1;
-            padding: 16px 20px;
-            border: none;
-            border-radius: 24px;
-            outline: none;
-            font-size: 15px;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
+            flex: 1; padding: 16px 20px; border: none; border-radius: 24px; outline: none; font-size: 15px; background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s;
         }
-        
-        input:focus {
-            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
-        }
-        
-        input::placeholder {
-            color: #9ca3af;
-        }
-        
+        input:focus { box-shadow: 0 2px 12px rgba(59,130,246,0.2); }
+        input::placeholder { color: #9ca3af; }
         button {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            border: none;
-            border-radius: 24px;
-            padding: 16px 24px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; border: none; border-radius: 24px;
+            padding: 16px 24px; cursor: pointer; font-weight: 600; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(139,92,246,0.3);
         }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #f1f5f9;
-            color: #64748b;
-            font-size: 12px;
-            border-top: 1px solid #e2e8f0;
-        }
-        
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(139,92,246,0.4); }
+        button:active { transform: translateY(0); }
+        .footer { text-align: center; padding: 15px; background: #f1f5f9; color: #64748b; font-size: 12px; border-top: 1px solid #e2e8f0; }
         .typing-indicator {
-            display: flex;
-            align-items: center;
-            color: #6b7280;
-            font-style: italic;
-            padding: 12px 18px;
-            background: white;
-            border-radius: 20px;
-            align-self: flex-start;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
-            animation: messageAppear 0.3s ease-out;
+            display: flex; align-items: center; color: #6b7280; font-style: italic; padding: 12px 18px; background: white; border-radius: 20px;
+            align-self: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; animation: messageAppear 0.3s ease-out;
         }
-        
-        .typing-dots {
-            display: flex;
-            margin-left: 10px;
-        }
-        
-        .typing-dots span {
-            width: 6px;
-            height: 6px;
-            background: #9ca3af;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typing 1.4s infinite both;
-        }
-        
-        .typing-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes typing {
-            0% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.5; }
-        }
-        
-        .api-status {
-            padding: 10px 20px;
-            background: #dcfce7;
-            color: #166534;
-            text-align: center;
-            font-size: 14px;
-            border-bottom: 1px solid #bbf7d0;
-        }
-        
+        .typing-dots { display: flex; margin-left: 10px; }
+        .typing-dots span { width: 6px; height: 6px; background: #9ca3af; border-radius: 50%; margin: 0 2px; animation: typing 1.4s infinite both; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0% {transform: scale(1); opacity: .5;} 50% {transform: scale(1.5); opacity: 1;} 100% {transform: scale(1); opacity: .5;} }
+        .api-status { padding: 10px 20px; background: #dcfce7; color: #166534; text-align: center; font-size: 14px; border-bottom: 1px solid #bbf7d0; }
         @media (max-width: 600px) {
-            .container {
-                border-radius: 20px;
-                max-width: 100%;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .chat-container {
-                height: 50vh;
-                padding: 20px;
-            }
-            
-            .message {
-                max-width: 90%;
-            }
-            
-            .input-container {
-                padding: 15px;
-            }
-            
-            input {
-                padding: 14px 16px;
-            }
-            
-            button {
-                padding: 14px 20px;
-            }
+            .container { border-radius: 20px; max-width: 100%; }
+            .header { padding: 20px; }
+            .chat-container { height: 50vh; padding: 20px; }
+            .message { max-width: 90%; }
+            .input-container { padding: 15px; }
+            input { padding: 14px 16px; }
+            button { padding: 14px 20px; }
         }
     </style>
 </head>
@@ -329,30 +91,28 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-comments"></i>
-                </div>
+                <div class="logo-icon"><i class="fas fa-comments"></i></div>
             </div>
             <h1>FadhelTalk</h1>
             <p class="subtitle">تطبيق المحادثة الذكية</p>
             <div class="status">
-                <span>متصل بـ DeepSeek</span>
+                <span id="status-text">متصل بالخدمة</span>
                 <div class="status-dot"></div>
             </div>
         </div>
-        
-        <div class="api-status">
+
+        <div class="api-status" id="api-status">
             <i class="fas fa-check-circle"></i>
-            تم الاتصال بنجاح بـ DeepSeek API
+            تم الاتصال بنجاح
         </div>
-        
+
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk المتصل بـ DeepSeek. كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
-        
+
         <div class="input-container">
             <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
             <button id="send-btn">
@@ -360,10 +120,8 @@
                 <span>إرسال</span>
             </button>
         </div>
-        
-        <div class="footer">
-            برمجة وتطوير: فاضل الريس | جميع الحقوق محفوظة
-        </div>
+
+        <div class="footer">برمجة وتطوير: فاضل الريس | جميع الحقوق محفوظة</div>
     </div>
 
     <script>
@@ -372,148 +130,115 @@
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
         const currentTimeElement = document.getElementById('current-time');
-        
-        // مفتاح API الخاص بـ DeepSeek
-        const API_KEY = "sk-6bf5bce1fa2e45ddb016a9ec42bc51d3";
-        
+        const statusText = document.getElementById('status-text');
+        const apiStatus = document.getElementById('api-status');
+
+        // مفتاح الخدمة (اتركه فارغًا إن كنت لا تريد عرضه للمستخدم)
+        const API_KEY = ""; // ضع مفتاحك هنا إن لزم
+
         // تحديث الوقت الحالي
         function updateCurrentTime() {
             const now = new Date();
             const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-            if (currentTimeElement) {
-                currentTimeElement.textContent = timeString;
-            }
+            if (currentTimeElement) currentTimeElement.textContent = timeString;
             return timeString;
         }
-        
-        // تحديث الوقت عند التحميل
         updateCurrentTime();
-        
-        // دالة لإضافة رسائل جديدة إلى المحادثة
+
+        // إضافة رسالة للمحادثة
         function addMessage(text, isUser) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
-            
+            messageDiv.classList.add('message', isUser ? 'user-message' : 'ai-message');
+
             const messageContent = document.createElement('div');
             messageContent.classList.add('message-content');
             messageContent.textContent = text;
-            
+
             const messageTime = document.createElement('div');
             messageTime.classList.add('message-time');
             messageTime.textContent = updateCurrentTime();
-            
+
             messageDiv.appendChild(messageContent);
             messageDiv.appendChild(messageTime);
-            
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-        
-        // دالة لمحاكاة الكتابة
+
+        // مؤشر الكتابة
         function showTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.classList.add('typing-indicator');
             typingDiv.id = 'typing-indicator';
-            
+
             const dotsDiv = document.createElement('div');
             dotsDiv.classList.add('typing-dots');
-            
-            for (let i = 0; i < 3; i++) {
-                const dot = document.createElement('span');
-                dotsDiv.appendChild(dot);
-            }
-            
-            const text = document.createTextNode('جاري المعالجة...');
-            
+            for (let i = 0; i < 3; i++) dotsDiv.appendChild(document.createElement('span'));
+
             typingDiv.appendChild(dotsDiv);
-            typingDiv.appendChild(text);
+            typingDiv.appendChild(document.createTextNode('جاري المعالجة...'));
             chatContainer.appendChild(typingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
-            
             return typingDiv;
         }
-        
-        // دالة للاتصال بـ DeepSeek API
-        async function getDeepSeekResponse(message) {
+
+        // استدعاء خدمة الذكاء الاصطناعي (الاسم عام ولا يظهر مزود الخدمة)
+        async function getAIResponse(message) {
             try {
-                const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                // مبدئيًا مثال على استدعاء واجهة متوافقة مع Chat Completions
+                const response = await fetch('https://api.deepseek.com/v1/chat/completions', { // يمكنك تغيير الرابط لاحقًا لمزوّد آخر
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
+                        ...(API_KEY ? { 'Authorization': `Bearer ${API_KEY}` } : {})
                     },
                     body: JSON.stringify({
-                        model: 'deepseek-chat',
+                        model: 'deepseek-chat', // يمكنك تغييره لاحقًا، ولن يظهر اسمه للمستخدم
                         messages: [
-                            { 
-                                role: 'system', 
-                                content: 'أنت مساعد مفيد يتحدث العربية. قدم إجابات واضحة ودقيقة.' 
-                            },
+                            { role: 'system', content: 'أنت مساعد مفيد يتحدث العربية. قدم إجابات واضحة ودقيقة.' },
                             { role: 'user', content: message }
                         ],
                         max_tokens: 1000,
                         temperature: 0.7
                     })
                 });
-                
-                if (!response.ok) {
-                    throw new Error(`خطأ في API: ${response.status}`);
-                }
-                
+
+                if (!response.ok) throw new Error(`خطأ في الخدمة: ${response.status}`);
                 const data = await response.json();
-                return data.choices[0].message.content;
+                return data?.choices?.[0]?.message?.content || 'لم يصل رد صالح من الخدمة.';
             } catch (error) {
                 console.error('Error:', error);
-                return `عذرًا، حدث خطأ في الاتصال: ${error.message}. يرجى المحاولة مرة أخرى.`;
+                // تغيير شارة الحالة في الواجهة دون ذكر اسم المزوّد
+                statusText.textContent = 'غير متصل';
+                apiStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> تعذّر الاتصال بالخدمة';
+                apiStatus.style.background = '#fee2e2';
+                apiStatus.style.color = '#991b1b';
+                return `عذرًا، حدث خطأ في الاتصال: ${error.message}. حاول مرة أخرى.`;
             }
         }
-        
+
         // إرسال الرسالة
         async function sendMessage() {
             const message = userInput.value.trim();
-            
-            if (message) {
-                addMessage(message, true);
-                userInput.value = '';
-                
-                // عرض مؤشر الكتابة
-                const typingIndicator = showTypingIndicator();
-                
-                try {
-                    // الحصول على رد من DeepSeek API
-                    const answer = await getDeepSeekResponse(message);
-                    
-                    // إزالة مؤشر الكتابة
-                    typingIndicator.remove();
-                    
-                    // إضافة رد المساعد
-                    addMessage(answer, false);
-                } catch (error) {
-                    // إزالة مؤشر الكتابة
-                    typingIndicator.remove();
-                    
-                    // إضافة رسالة الخطأ
-                    addMessage("عذرًا، حدث خطأ في الاتصال بالخدمة. يرجى المحاولة مرة أخرى لاحقًا.", false);
-                    console.error("Error:", error);
-                }
+            if (!message) return;
+
+            addMessage(message, true);
+            userInput.value = '';
+
+            const typingIndicator = showTypingIndicator();
+            try {
+                const answer = await getAIResponse(message);
+                typingIndicator.remove();
+                addMessage(answer, false);
+            } catch (e) {
+                typingIndicator.remove();
+                addMessage('عذرًا، حدث خطأ غير متوقع.', false);
             }
         }
-        
-        // إضافة event listeners
+
+        // أحداث
         sendBtn.addEventListener('click', sendMessage);
-        
-        // إرسال الرسالة عند الضغط على Enter
-        userInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        // التركيز على حقل الإدخال عند التحميل
-        window.addEventListener('load', function() {
-            userInput.focus();
-        });
+        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        window.addEventListener('load', () => userInput.focus());
     </script>
 </body>
 </html>
