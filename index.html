@@ -3,64 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج الذكاء الاصطناعي المتكامل</title>
+    <title>نموذج الدردشة مع الذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
         
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
         }
         
-        h1 {
-            color: #2563eb;
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
         }
         
         .chat-container {
             height: 400px;
             overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
             background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
         .message {
-            margin-bottom: 10px;
-            padding: 10px 15px;
-            border-radius: 18px;
             max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .user-message {
+            align-self: flex-end;
             background: #2563eb;
             color: white;
-            margin-left: auto;
             border-bottom-right-radius: 4px;
         }
         
         .ai-message {
+            align-self: flex-start;
             background: #e5e7eb;
             color: #333;
-            margin-right: auto;
             border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .message-content {
+            margin-bottom: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7em;
+            opacity: 0.7;
+            text-align: left;
+            margin-top: 5px;
         }
         
         .input-container {
             display: flex;
+            padding: 15px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
             gap: 10px;
         }
         
@@ -71,6 +130,11 @@
             border-radius: 24px;
             outline: none;
             font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #3b82f6;
         }
         
         button {
@@ -81,11 +145,19 @@
             padding: 12px 20px;
             cursor: pointer;
             font-weight: 500;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         button:hover {
             background: #1e40af;
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            transform: scale(0.95);
         }
         
         .typing-indicator {
@@ -94,11 +166,15 @@
             color: #666;
             font-style: italic;
             margin: 10px 0;
+            padding: 10px 15px;
+            background: #e5e7eb;
+            border-radius: 18px;
+            align-self: flex-start;
         }
         
         .typing-dots {
             display: flex;
-            margin-left: 8px;
+            margin-right: 8px;
         }
         
         .typing-dots span {
@@ -110,26 +186,59 @@
             animation: typing 1.4s infinite both;
         }
         
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
         @keyframes typing {
             0% { transform: scale(1); }
             50% { transform: scale(1.5); }
             100% { transform: scale(1); }
         }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+                height: 100vh;
+            }
+            
+            .chat-container {
+                height: calc(100vh - 180px);
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>مساعد الذكاء الاصطناعي</h1>
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> مساعد الذكاء الاصطناعي</h1>
+            <div class="status">
+                <span>نشط</span>
+                <div class="status-dot"></div>
+            </div>
+        </div>
         
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                مرحبًا! أنا مساعدك الافتراضي. كيف يمكنني مساعدتك اليوم؟
+                <div class="message-content">مرحبًا! أنا مساعدك الافتراضي. كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="message-time" id="current-time"></div>
             </div>
         </div>
         
         <div class="input-container">
             <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
-            <button onclick="sendMessage()">إرسال</button>
+            <button id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+                <span>إرسال</span>
+            </button>
         </div>
     </div>
 
@@ -137,24 +246,49 @@
         // عناصر DOM
         const chatContainer = document.getElementById('chat-container');
         const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const currentTimeElement = document.getElementById('current-time');
         
-        // دالة لإضافة رسائل إلى الدردشة
+        // تحديث الوقت الحالي
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+            if (currentTimeElement) {
+                currentTimeElement.textContent = timeString;
+            }
+            return timeString;
+        }
+        
+        // تحديث الوقت عند التحميل
+        updateCurrentTime();
+        
+        // دالة لإضافة رسائل جديدة إلى المحادثة
         function addMessage(text, isUser) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
             messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
-            messageDiv.textContent = text;
+            
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            messageContent.textContent = text;
+            
+            const messageTime = document.createElement('div');
+            messageTime.classList.add('message-time');
+            messageTime.textContent = updateCurrentTime();
+            
+            messageDiv.appendChild(messageContent);
+            messageDiv.appendChild(messageTime);
+            
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
         
-        // دالة لإظهار مؤشر الكتابة
+        // دالة لمحاكاة الكتابة
         function showTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.classList.add('typing-indicator');
             typingDiv.id = 'typing-indicator';
             
-            const text = document.createTextNode('يكتب');
             const dotsDiv = document.createElement('div');
             dotsDiv.classList.add('typing-dots');
             
@@ -163,16 +297,41 @@
                 dotsDiv.appendChild(dot);
             }
             
-            typingDiv.appendChild(text);
+            const text = document.createTextNode('يكتب...');
+            
             typingDiv.appendChild(dotsDiv);
+            typingDiv.appendChild(text);
             chatContainer.appendChild(typingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             
             return typingDiv;
         }
         
-        // دالة لإرسال الرسالة
-        async function sendMessage() {
+        // دالة للحصول على إجابة
+        function getAnswer(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            // قاعدة معرفة بالإجابات
+            const knowledgeBase = {
+                "مرحبا": ["مرحبًا بك! كيف يمكنني مساعدتك اليوم؟", "أهلاً وسهلاً! ما الذي يمكنني فعله لك؟"],
+                "كيف حالك": ["أنا بخير، شكرًا لسؤالك! كيف يمكنني مساعدك؟"],
+                "ما هو اسمك": ["أنا مساعدك الافتراضي، يمكنك تسميتي كما تريد!"],
+                "شكرا": ["على الرحب والسعة! هل هناك شيء آخر يمكنني مساعدتك فيه؟"],
+                "default": ["هذا سؤال مثير للاهتمام! للأسف قدراتي محدودة في هذا النموذج التوضيحي."]
+            };
+            
+            for (const [key, answers] of Object.entries(knowledgeBase)) {
+                if (lowerQuestion.includes(key)) {
+                    const randomIndex = Math.floor(Math.random() * answers.length);
+                    return answers[randomIndex];
+                }
+            }
+            
+            return knowledgeBase["default"][0];
+        }
+        
+        // إرسال الرسالة عند الضغط على الزر
+        function sendMessage() {
             const message = userInput.value.trim();
             
             if (message) {
@@ -182,6 +341,32 @@
                 // عرض مؤشر الكتابة
                 const typingIndicator = showTypingIndicator();
                 
-                try {
-                    // هنا سيتم استدعاء API الذكاء الاصطناعي
-                    // يمكنك استخدام أي من
+                // محاكاة وقت معالجة السؤال
+                setTimeout(() => {
+                    // إزالة مؤشر الكتابة
+                    typingIndicator.remove();
+                    
+                    // إضافة رد المساعد
+                    const answer = getAnswer(message);
+                    addMessage(answer, false);
+                }, 1500);
+            }
+        }
+        
+        // إضافة event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        
+        // إرسال الرسالة عند الضغط على Enter
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // التركيز على حقل الإدخال عند التحميل
+        window.addEventListener('load', function() {
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>
