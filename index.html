@@ -22,7 +22,7 @@
 <body>
   <header>FadhelTalk — مساعدك الذكي (بدون مفتاح)</header>
   <div class="wrap">
-    <div class="hint" id="status">سيتم تنزيل نموذج صغير عند أول استخدام…</div>
+    <div class="hint" id="status">سيتم تنزيل نموذج خفيف عند أول استخدام…</div>
     <div class="chat" id="chat"></div>
     <textarea id="inp" placeholder="اكتب سؤالك هنا... (النموذج خفيف، فالإجابات مختصرة)"></textarea>
     <div class="controls">
@@ -31,96 +31,8 @@
     </div>
   </div>
 
-<!-- نستخدم Module + فحص دعم واضح -->
 <script type="module">
   const chat = document.getElementById('chat');
   const inp  = document.getElementById('inp');
   const sendBtn = document.getElementById('send');
-  const clearBtn = document.getElementById('clear');
-  const statusEl = document.getElementById('status');
-
-  let pipe = null, loading = false;
-
-  function add(role, text){
-    const div = document.createElement('div');
-    div.className = 'row '+role;
-    div.innerHTML = role==='user' ? `<div class="user">${text}</div>` : `<div class="bot">${text}</div>`;
-    chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
-  }
-
-  async function ensureModel(){
-    if (pipe) return pipe;
-    loading = true; sendBtn.disabled = true;
-    statusEl.textContent = 'جاري تحميل النموذج الخفيف…';
-
-    // 1) جرّب استيراد المكتبة بصيغة Module
-    let lib;
-    try {
-      lib = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js');
-    } catch (e) {
-      statusEl.textContent = 'متصفحك لا يدعم الاستيراد كـ Module. افتح الصفحة في Google Chrome حديث أو جرّب تبويب خفي.';
-      throw e;
-    }
-    if (!lib || !lib.pipeline) {
-      statusEl.textContent = 'تعذّر تحميل المكتبة. جرّب تحديث الصفحة أو فتحها في Chrome.';
-      throw new Error('transformers module not loaded');
-    }
-
-    // 2) حمّل نموذج خفيف جدًا (LaMini-T5-61M) يعمل على الجوال
-    try {
-      pipe = await lib.pipeline('text2text-generation', 'Xenova/LaMini-T5-61M', { quantized: true });
-    } catch (e) {
-      statusEl.textContent = 'تعذّر تحميل النموذج (قد يكون الاتصال بطيئًا). أعد المحاولة بعد لحظات.';
-      throw e;
-    }
-
-    statusEl.textContent = 'جاهز';
-    loading = false; sendBtn.disabled = false;
-    return pipe;
-  }
-
-  function buildPrompt(history, user){
-    let p = "أجب بالعربية الفصحى بإيجاز ووضوح.\n";
-    const last = history.slice(-4);
-    for (const m of last){
-      p += (m.role==='user' ? "سؤال: " : "جواب: ") + m.content + "\n";
-    }
-    p += "سؤال: " + user + "\nجواب:";
-    return p;
-  }
-
-  async function send(){
-    const q = (inp.value||'').trim(); if(!q || loading) return;
-    inp.value=''; add('user', q);
-    try{
-      await ensureModel();
-      const nodes = [...chat.querySelectorAll('.user,.bot')];
-      const history = nodes.map(el => ({
-        role: el.classList.contains('user') ? 'user' : 'assistant',
-        content: el.textContent
-      }));
-      statusEl.textContent = 'يولّد الإجابة…';
-      const out = await pipe(buildPrompt(history, q), { max_new_tokens: 96, temperature: 0.6 });
-      const ans = out?.[0]?.generated_text?.trim() || '…';
-      add('bot', ans);
-    }catch(e){
-      add('bot', 'تعذّر التوليد: ' + (e?.message || ''));
-    }finally{
-      statusEl.textContent = 'جاهز';
-    }
-  }
-
-  sendBtn.onclick = send;
-  clearBtn.onclick = ()=>{ chat.innerHTML=''; };
-  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
-
-  add('bot','مرحبًا! هذه نسخة تعمل بدون مفتاح وبدون خادم باستخدام نموذج صغير. اكتب سؤالك ثم اضغط «أرسل».');
-</script>
-
-<!-- في المتصفحات القديمة جدًا (لا تدعم type=module) نعرض رسالة واضحة -->
-<script nomodule>
-  document.getElementById('status').textContent =
-    'متصفحك قديم ولا يدعم ES Modules. افتح الصفحة في Google Chrome حديث.';
-</script>
-</body>
-</html>
+  const clearBtn =
