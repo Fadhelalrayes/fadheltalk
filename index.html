@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FadhelTalk — مساعدك الذكي (بدون مفتاح)</title>
+  <title>FadhelTalk — (بدون مفتاح)</title>
   <style>
     body{margin:0;font-family:system-ui,Segoe UI,Roboto,"Noto Kufi Arabic",sans-serif;background:#f6f9fc;color:#0f172a}
     header{text-align:center;padding:16px;background:#00c4ca;color:#053437;font-weight:800;font-size:22px}
@@ -16,10 +16,8 @@
     .controls{display:flex;gap:8px;margin-top:8px}
     button{background:#00c4ca;border:0;color:#053437;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
     button:disabled{opacity:.6}
-    .hint{font-size:12px;color:#5b6b84;margin-top:6px}
+    .hint{font-size:12px;color:#5b6b84;margin:6px 0}
   </style>
-  <!-- Transformers.js (WASM) — يعمل بدون مفاتيح -->
-  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js"></script>
 </head>
 <body>
   <header>FadhelTalk — مساعدك الذكي (بدون مفتاح)</header>
@@ -33,7 +31,8 @@
     </div>
   </div>
 
-<script>
+<!-- كل الشيفرة داخل Module لتعمل على كل المتصفحات الحديثة -->
+<script type="module">
   const chat = document.getElementById('chat');
   const inp  = document.getElementById('inp');
   const sendBtn = document.getElementById('send');
@@ -53,8 +52,9 @@
     if (pipe) return pipe;
     loading = true; sendBtn.disabled = true;
     statusEl.textContent = 'جاري تحميل النموذج الخفيف…';
-    const { pipeline } = window.transformers;
-    // نموذج أصغر: LaMini-T5-61M (يدعم text2text-generation)
+    // استيراد المكتبة كـ Module (تجنّب window.transformers)
+    const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js');
+    // نموذج صغير جدًا يعمل على الجوال: LaMini-T5-61M (نص-إلى-نص)
     pipe = await pipeline('text2text-generation', 'Xenova/LaMini-T5-61M', { quantized: true });
     statusEl.textContent = 'جاهز';
     loading = false; sendBtn.disabled = false;
@@ -62,9 +62,7 @@
   }
 
   function buildPrompt(history, user){
-    // نوجّه للناتج العربي المختصر
     let p = "أجب بالعربية الفصحى بإيجاز ووضوح.\n";
-    // يمكن تمرير آخر تبادلين فقط للاختصار
     const last = history.slice(-4);
     for (const m of last){
       p += (m.role==='user' ? "سؤال: " : "جواب: ") + m.content + "\n";
@@ -84,9 +82,7 @@
         content: el.textContent
       }));
       statusEl.textContent = 'يولّد الإجابة…';
-      const out = await pipe(buildPrompt(history, q), {
-        max_new_tokens: 96, temperature: 0.6
-      });
+      const out = await pipe(buildPrompt(history, q), { max_new_tokens: 96, temperature: 0.6 });
       const ans = out?.[0]?.generated_text?.trim() || '…';
       add('bot', ans);
     }catch(e){
