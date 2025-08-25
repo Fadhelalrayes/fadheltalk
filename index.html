@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FadhelTalk — مساعدك الذكي</title>
+  <meta name="description" content="FadhelTalk: صفحة دردشة ذكاء اصطناعي أنيقة تعمل مباشرة داخل المتصفح باستخدام WebLLM بدون خادم أو مفاتيح API." />
+  <meta property="og:title" content="FadhelTalk — مساعدك الذكي" />
+  <meta property="og:description" content="دردشة ذكاء اصطناعي أنيقة، خفيفة، وتعمل محليًا داخل المتصفح." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <style>
+    :root{
+      --bg: #070a14;
+      --bg2:#0b1120;
+      --card:#0f172a;
+      --edge:#1e2a46;
+      --ink:#e7eefc;
+      --muted:#a9b4cf;
+      --brand:#87e0ff;
+      --brand2:#9b8cff;
+      --ok:#7cf2b0;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background: radial-gradient(1200px 600px at 80% -10%, #1b2552 0%, transparent 60%), linear-gradient(180deg, var(--bg), var(--bg2));color:var(--ink);font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Kufi Arabic",sans-serif;letter-spacing:.1px}
+    a{color:var(--brand)}
+    .wrap{max-width:1100px;margin:auto;padding:18px}
+    /* ====== HEADER ====== */
+    header{display:flex;gap:14px;align-items:center;justify-content:space-between;margin:6px 0 14px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;box-shadow:0 8px 28px #87e0ff30}
+    .title h1{font-size:clamp(20px,3.2vw,28px);margin:0}
+    .title .sub{font-size:13px;color:var(--muted)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{background:linear-gradient(180deg,#1ea8ff,#1794ff);border:0;color:#061228;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid var(--edge);color:var(--ink)}
+    .btn[disabled]{opacity:.6;cursor:not-allowed}/* ====== HERO ====== */
+.hero{position:relative;overflow:hidden;border-radius:20px;background:linear-gradient(180deg,#0b1534,#0c1738);border:1px solid #1a2750;box-shadow:0 20px 50px #0006;margin-bottom:14px}
+.hero .grad{position:absolute;inset:0;background:radial-gradient(500px 200px at 20% -10%,#7ae1ff22,transparent 60%),radial-gradient(400px 180px at 90% -20%,#a38bff22,transparent 60%)}
+.hero .inner{position:relative;padding:18px}
+.hero .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.card{background:linear-gradient(180deg,#0b1229,#0b142e);border:1px solid var(--edge);border-radius:18px;box-shadow:0 10px 30px #0005}
+
+/* ====== CHAT ====== */
+.chat{height:min(64vh,680px);overflow:auto;padding:12px}
+.row{display:flex;gap:10px;margin:10px 0;align-items:flex-start}
+.avatar{flex:0 0 36px;height:36px;border-radius:50%;background:#1b254a;display:grid;place-items:center;font-weight:700;color:#cfe3ff}
+.msg{padding:12px 14px;border-radius:14px;line-height:1.75;max-width:85%;background:#0b1734;border:1px solid #20305a;white-space:pre-wrap;word-break:break-word}
+.user .msg{background:#15254a}
+.bot .msg{background:#0b1734}
+.time{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* INPUT PANE */
+.pane{padding:12px;display:grid;gap:10px}
+textarea{width:100%;min-height:88px;resize:y;background:#0b1128;color:var(--ink);border:1px solid #20305a;border-radius:14px;padding:12px;line-height:1.85}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select, input[type="range"]{background:#0b1128;color:var(--ink);border:1px solid #20305a;border-radius:12px;padding:10px}
+.range{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+
+/* SIDE CARD */
+.side{padding:14px}
+.kv{display:grid;gap:10px}
+.kv .row2{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.hint{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#0f1a38;border:1px solid #20305a;font-size:12px}
+.ok{color:var(--ok)}
+.spin{display:inline-block;inline-size:1em;block-size:1em;border:.18em solid #69d; border-top-color:transparent;border-radius:50%;animation:sp 1s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(1turn)}}
+
+footer{margin:16px 0;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (max-width: 960px){
+  .hero .grid{grid-template-columns:1fr}
+  .chat{height:60vh}
+}
+
+  </style>
+  <!-- WebLLM: تشغيل نموذج داخل المتصفح -->
+  <script src="https://unpkg.com/@mlc-ai/web-llm@0.2.77/dist/index.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">💬</div>
+        <div class="title">
+          <h1>FadhelTalk — مساعدك الذكي</h1>
+          <div class="sub">واجهة دردشة احترافية تعمل محليًا داخل المتصفح — بدون خادم وبدون مفاتيح API</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-download" title="تحميل المحادثة">تحميل المحادثة</button>
+        <button class="btn ghost" id="btn-reset" title="بدء محادثة جديدة">محادثة جديدة</button>
+      </div>
+    </header><section class="hero">
+  <div class="grad"></div>
+  <div class="inner">
+    <div class="grid">
+      <div class="card">
+        <section class="chat" id="chat"></section>
+        <section class="pane">
+          <textarea id="inp" placeholder="اكتب سؤالك هنا… مثال: اشرح لي باختصار الفرق بين التعلم المُراقَب وغير المُراقَب."></textarea>
+          <div class="controls">
+            <button class="btn" id="send">أرسل</button>
+            <button class="btn ghost" id="clear">مسح</button>
+            <span id="status" class="hint"></span>
+          </div>
+        </section>
+      </div>
+      <aside class="card side">
+        <div class="kv">
+          <div class="row2"><div>نموذج لغوي</div>
+            <select id="model">
+              <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen2.5 0.5B Instruct (خفيف)</option>
+              <option value="Phi-3-mini-4k-instruct-q4f16_1-MLC">Phi-3-mini 4K Instruct</option>
+            </select>
+          </div>
+          <div class="row2">
+            <div>الإبداع</div>
+            <div class="range">
+              <input id="temp" type="range" min="0" max="1" step="0.1" value="0.7" />
+              <span id="tempv">0.7</span>
+            </div>
+          </div>
+          <div class="row2"><div>الحد الأقصى للتوكنات</div>
+            <select id="maxTok">
+              <option>256</option><option selected>384</option><option>512</option><option>768</option>
+            </select>
+          </div>
+          <div class="row2"><div>الحالة</div>
+            <div class="badge" id="badge">غير محمّل</div>
+          </div>
+          <p class="hint">يتم تحميل النموذج مرة واحدة من الـCDN، ثم تعمل الدردشة محليًا داخل المتصفح. لا حاجة لخادم.</p>
+          <p class="hint">نصيحة: احفظ الصفحة باسم <strong>index.html</strong> وارفعها إلى GitHub Pages وستعمل مباشرة.</p>
+          <hr style="border:0;border-top:1px solid var(--edge)">
+          <div class="hint">إجراءات سريعة</div>
+          <div class="actions">
+            <button class="btn ghost" id="btn-copy">نسخ آخر إجابة</button>
+            <button class="btn ghost" id="btn-theme">تبديل المظهر</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© <span id="year"></span> FadhelTalk — واجهة أنيقة بلمسات احترافية</div>
+  <div>صنع بحب باستخدام <a href="https://github.com/mlc-ai/web-llm" rel="noreferrer" target="_blank">WebLLM</a></div>
+</footer>
+
+  </div><script>
+  // ====== عناصر الصفحة ======
+  const elChat   = document.getElementById('chat');
+  const elInp    = document.getElementById('inp');
+  const elSend   = document.getElementById('send');
+  const elClear  = document.getElementById('clear');
+  const elModel  = document.getElementById('model');
+  const elTemp   = document.getElementById('temp');
+  const elTempV  = document.getElementById('tempv');
+  const elMaxTok = document.getElementById('maxTok');
+  const elBadge  = document.getElementById('badge');
+  const elStatus = document.getElementById('status');
+  const elCopy   = document.getElementById('btn-copy');
+  const elTheme  = document.getElementById('btn-theme');
+  const elDL     = document.getElementById('btn-download');
+  const elReset  = document.getElementById('btn-reset');
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ====== حالة التطبيق ======
+  let engine = null;
+  let loading = false;
+  let messages = JSON.parse(localStorage.getItem('ft_messages')||'null') || [
+    { role: 'system', content: 'أنت مساعد مفيد يجيب بالعربية بإيجاز ووضوح. إن طُلِب غير ذلك فالتزم بلغة المستخدم.' }
+  ];
+
+  // ====== أدوات واجهة ======
+  function timeStr(){
+    const d=new Date();
+    return d.toLocaleTimeString('ar', {hour:'2-digit',minute:'2-digit'});
+  }
+  function setBusy(v, text){
+    loading = v; elSend.disabled = v; elModel.disabled = v; elInp.disabled = v;
+    const info = v ? (text || 'يعمل… <span class="spin"></span>') : '';
+    elStatus.innerHTML = info;
+    elBadge.innerHTML = v ? 'نشِط <span class="spin"></span>' : 'جاهز';
+  }
+  function addRow(role, html){
+    const row = document.createElement('div');
+    row.className = 'row ' + (role==='user'?'user':'bot');
+    row.innerHTML = `
+      <div class="avatar">${role==='user'?'👤':'🤖'}</div>
+      <div>
+        <div class="msg">${html}</div>
+        <div class="time">${timeStr()}</div>
+      </div>`;
+    elChat.appendChild(row);
+    elChat.scrollTop = elChat.scrollHeight;
+    return row.querySelector('.msg');
+  }
+  function escapeHtml(s){
+    return s.replace(/[&<>\"]/g, (c)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+  }
+  function save(){ localStorage.setItem('ft_messages', JSON.stringify(messages)); }
+
+  // ====== محرك WebLLM ======
+  async function ensureEngine(){
+    if(engine) return engine;
+    setBusy(true,'جاري تحميل النموذج…');
+    const modelId = elModel.value;
+    try{
+      engine = await webllm.CreateMLCEngine(modelId, {
+        initProgressCallback: (p)=>{
+          const pct = Math.round((p.progress || 0)*100);
+          elBadge.textContent = `تحميل: ${pct}%`;
+          elStatus.textContent = `تحميل النموذج: ${pct}%`;
+        }
+      });
+      elBadge.innerHTML = 'جاهز ✅';
+      elStatus.textContent = 'تم التحميل';
+      return engine;
+    }catch(err){
+      console.error(err);
+      addRow('bot','حدث خطأ أثناء تحميل النموذج. جرب اختيار نموذج آخر أو تحديث الصفحة.');
+      throw err;
+    }finally{ setBusy(false); }
+  }
+
+  async function send(){
+    const q = (elInp.value||'').trim();
+    if(!q || loading) return;
+    const qEsc = escapeHtml(q);
+    addRow('user', qEsc);
+    const replyEl = addRow('bot','');
+    elInp.value='';
+
+    await ensureEngine();
+    setBusy(true);
+    try{
+      const stream = await engine.chat.completions.create({
+        stream: true,
+        messages: [...messages, {role:'user', content:q}],
+        temperature: parseFloat(elTemp.value || '0.7'),
+        max_tokens: parseInt(elMaxTok.value || '384', 10)
+      });
+      let acc = '';
+      for await (const chunk of stream){
+        const delta = chunk?.choices?.[0]?.delta?.content || '';
+        acc += delta; replyEl.textContent = acc; elChat.scrollTop = elChat.scrollHeight;
+      }
+      messages.push({role:'user', content:q});
+      messages.push({role:'assistant', content:replyEl.textContent});
+      save();
+    }catch(err){
+      console.error(err);
+      replyEl.textContent = 'تعذر إكمال الاستجابة. تأكد من اتصال الإنترنت أو جرّب نموذجًا أخف.';
+    }finally{ setBusy(false); }
+  }
+
+  // ====== ميزات إضافية ======
+  elTemp.addEventListener('input', ()=>{ elTempV.textContent = elTemp.value; });
+  elSend.addEventListener('click', send);
+  elInp.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }});
+  elClear.addEventListener('click', ()=>{ elChat.innerHTML=''; addRow('bot','مرحبًا! أنا <strong>FadhelTalk</strong>. اسألني أي شيء ✨'); messages=[messages[0]]; save(); });
+  elModel.addEventListener('change', ()=>{ engine=null; elBadge.textContent='سيُعاد تحميل النموذج'; });
+  elCopy.addEventListener('click', async()=>{
+    const last = [...document.querySelectorAll('.row.bot .msg')].pop();
+    if(!last){ alert('لا توجد إجابة لنسخها بعد.'); return; }
+    await navigator.clipboard.writeText(last.textContent||'');
+    elCopy.textContent='تم النسخ ✓'; setTimeout(()=> elCopy.textContent='نسخ آخر إجابة', 1600);
+  });
+  elDL.addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(messages, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement('a'), {href:url, download:'FadhelTalk_conversation.json'});
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+  elReset.addEventListener('click', ()=>{
+    localStorage.removeItem('ft_messages'); location.reload();
+  });
+
+  // تبديل مظهر بسيط (قلب درجات الألوان)
+  let alt=false; elTheme.addEventListener('click', ()=>{
+    document.documentElement.style.setProperty('--bg', alt?'#070a14':'#05080f');
+    document.documentElement.style.setProperty('--bg2',alt?'#0b1120':'#0a0f1c');
+    document.documentElement.style.setProperty('--card',alt?'#0f172a':'#0e1726');
+    alt=!alt; elTheme.textContent = alt? 'المظهر الافتراضي' : 'تبديل المظهر';
+  });
+
+  // ترحيب أولي + استرجاع محادثة
+  function renderHistory(){
+    elChat.innerHTML='';
+    const pairs = messages.slice(1); // تجاهل system
+    if(pairs.length===0){ addRow('bot','مرحبًا! أنا <strong>FadhelTalk</strong> — مساعدك الذكي. اكتب سؤالك واضغط «أرسل».'); return; }
+    for (const m of pairs){ addRow(m.role==='user'?'user':'bot', escapeHtml(m.content)); }
+  }
+  renderHistory();
+</script></body>
+</html>
