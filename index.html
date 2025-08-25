@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FadhelTalk — (بدون مفتاح)</title>
+  <title>FadhelTalk — بدون مفتاح</title>
   <style>
     body{margin:0;font-family:system-ui,Segoe UI,Roboto,"Noto Kufi Arabic",sans-serif;background:#f6f9fc;color:#0f172a}
     header{text-align:center;padding:16px;background:#00c4ca;color:#053437;font-weight:800;font-size:22px}
@@ -22,7 +22,7 @@
 <body>
   <header>FadhelTalk — مساعدك الذكي (بدون مفتاح)</header>
   <div class="wrap">
-    <div class="hint" id="status">سيتم تنزيل النموذج الخفيف عند أول استخدام…</div>
+    <div class="hint" id="status">سيتم تنزيل نموذج صغير عند أول استخدام…</div>
     <div class="chat" id="chat"></div>
     <textarea id="inp" placeholder="اكتب سؤالك هنا... (النموذج خفيف، فالإجابات مختصرة)"></textarea>
     <div class="controls">
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-<!-- كل الشيفرة داخل Module لتعمل على كل المتصفحات الحديثة -->
+<!-- نستخدم Module + فحص دعم واضح -->
 <script type="module">
   const chat = document.getElementById('chat');
   const inp  = document.getElementById('inp');
@@ -52,10 +52,28 @@
     if (pipe) return pipe;
     loading = true; sendBtn.disabled = true;
     statusEl.textContent = 'جاري تحميل النموذج الخفيف…';
-    // استيراد المكتبة كـ Module (تجنّب window.transformers)
-    const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js');
-    // نموذج صغير جدًا يعمل على الجوال: LaMini-T5-61M (نص-إلى-نص)
-    pipe = await pipeline('text2text-generation', 'Xenova/LaMini-T5-61M', { quantized: true });
+
+    // 1) جرّب استيراد المكتبة بصيغة Module
+    let lib;
+    try {
+      lib = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js');
+    } catch (e) {
+      statusEl.textContent = 'متصفحك لا يدعم الاستيراد كـ Module. افتح الصفحة في Google Chrome حديث أو جرّب تبويب خفي.';
+      throw e;
+    }
+    if (!lib || !lib.pipeline) {
+      statusEl.textContent = 'تعذّر تحميل المكتبة. جرّب تحديث الصفحة أو فتحها في Chrome.';
+      throw new Error('transformers module not loaded');
+    }
+
+    // 2) حمّل نموذج خفيف جدًا (LaMini-T5-61M) يعمل على الجوال
+    try {
+      pipe = await lib.pipeline('text2text-generation', 'Xenova/LaMini-T5-61M', { quantized: true });
+    } catch (e) {
+      statusEl.textContent = 'تعذّر تحميل النموذج (قد يكون الاتصال بطيئًا). أعد المحاولة بعد لحظات.';
+      throw e;
+    }
+
     statusEl.textContent = 'جاهز';
     loading = false; sendBtn.disabled = false;
     return pipe;
@@ -97,6 +115,12 @@
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
 
   add('bot','مرحبًا! هذه نسخة تعمل بدون مفتاح وبدون خادم باستخدام نموذج صغير. اكتب سؤالك ثم اضغط «أرسل».');
+</script>
+
+<!-- في المتصفحات القديمة جدًا (لا تدعم type=module) نعرض رسالة واضحة -->
+<script nomodule>
+  document.getElementById('status').textContent =
+    'متصفحك قديم ولا يدعم ES Modules. افتح الصفحة في Google Chrome حديث.';
 </script>
 </body>
 </html>
