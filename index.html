@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FadhelTalk - متصل بـ DeepSeek</title>
+    <title>FadhelTalk - محادثة ذكية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -118,31 +118,26 @@
             border-radius: 50%;
         }
         
-        .api-key-container {
-            padding: 15px 20px;
-            background: #fef3c7;
+        .api-setup {
+            padding: 20px;
+            background: #fffbeb;
             border-bottom: 1px solid #f59e0b;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            text-align: center;
         }
         
-        .api-key-container input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #f59e0b;
-            border-radius: 20px;
-            font-size: 14px;
+        .api-setup p {
+            margin-bottom: 15px;
+            color: #78350f;
         }
         
-        .api-key-container button {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 14px;
+        .api-setup a {
+            color: #7c3aed;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .api-setup a:hover {
+            text-decoration: underline;
         }
         
         .chat-container {
@@ -310,6 +305,10 @@
             100% { transform: scale(1); opacity: 0.5; }
         }
         
+        .hidden {
+            display: none;
+        }
+        
         @media (max-width: 600px) {
             .container {
                 border-radius: 20px;
@@ -352,21 +351,21 @@
                 </div>
             </div>
             <h1>FadhelTalk</h1>
-            <p class="subtitle">متصل بـ DeepSeek API</p>
+            <p class="subtitle">تطبيق المحادثة الذكية</p>
             <div class="status">
-                <span>متصل الآن</span>
+                <span>جاهز للاستخدام</span>
                 <div class="status-dot"></div>
             </div>
         </div>
         
-        <div class="api-key-container">
-            <input type="password" id="api-key-input" placeholder="أدخل مفتاح DeepSeek API هنا">
-            <button id="save-api-key">حفظ</button>
+        <div class="api-setup" id="api-setup">
+            <p>لجعل التطبيق يعمل، يرجى إضافة مفتاح DeepSeek API في الكود المصدري (السطر 275)</p>
+            <p>يمكنك الحصول على المفتاح من <a href="https://platform.deepseek.com/" target="_blank">منصة DeepSeek</a></p>
         </div>
         
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk المتصل بـ DeepSeek. لأبدأ، يرجى إدخال مفتاح API الخاص بك أعلاه ثم ابدأ المحادثة.</div>
+                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. للتشغيل الكامل، يرجى إعداد مفتاح DeepSeek API في الكود.</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
@@ -389,11 +388,12 @@
         const chatContainer = document.getElementById('chat-container');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
-        const apiKeyInput = document.getElementById('api-key-input');
-        const saveApiKeyBtn = document.getElementById('save-api-key');
         const currentTimeElement = document.getElementById('current-time');
+        const apiSetup = document.getElementById('api-setup');
         
-        let apiKey = '';
+        // 🔑 هنا ضع مفتاح DeepSeek API الخاص بك
+        // احصل على المفتاح من: https://platform.deepseek.com/
+        const API_KEY = "sk-yourapikeyhere"; // استبدل هذا بمفتاحك الفعلي
         
         // تحديث الوقت الحالي
         function updateCurrentTime() {
@@ -408,29 +408,15 @@
         // تحديث الوقت عند التحميل
         updateCurrentTime();
         
-        // حفظ مفتاح API
-        saveApiKeyBtn.addEventListener('click', function() {
-            apiKey = apiKeyInput.value.trim();
-            if (apiKey) {
-                addMessage('تم حفظ مفتاح API بنجاح. يمكنك الآن البدء في المحادثة.', false);
-                apiKeyInput.type = 'password';
-                localStorage.setItem('deepseek_api_key', apiKey);
-            } else {
-                addMessage('يرجى إدخال مفتاح API صحيح.', false);
-            }
-        });
-        
-        // تحميل مفتاح API المحفوظ إن وجد
-        window.addEventListener('load', function() {
-            const savedApiKey = localStorage.getItem('deepseek_api_key');
-            if (savedApiKey) {
-                apiKey = savedApiKey;
-                apiKeyInput.value = savedApiKey;
-                apiKeyInput.type = 'password';
-                addMessage('تم تحميل مفتاح API المحفوظ مسبقًا. يمكنك الآن البدء في المحادثة.', false);
-            }
-            userInput.focus();
-        });
+        // إخفاء لوحة الإعداد إذا كان المفتاح مضبوطًا
+        if (API_KEY && API_KEY !== "sk-yourapikeyhere") {
+            apiSetup.classList.add('hidden');
+            
+            // إضافة رسالة ترحيبية
+            setTimeout(() => {
+                addMessage("مرحبًا! أنا مساعدك في FadhelTalk المتصل بـ DeepSeek. كيف يمكنني مساعدتك اليوم؟", false);
+            }, 1000);
+        }
         
         // دالة لإضافة رسائل جديدة إلى المحادثة
         function addMessage(text, isUser) {
@@ -479,8 +465,8 @@
         
         // دالة للاتصال بـ DeepSeek API
         async function getDeepSeekResponse(message) {
-            if (!apiKey) {
-                return "لم يتم تعيين مفتاح API. يرجى إدخال مفتاح API الخاص بـ DeepSeek أعلاه.";
+            if (!API_KEY || API_KEY === "sk-yourapikeyhere") {
+                return "⚠️ لم يتم إعداد مفتاح DeepSeek API بعد. يرجى إضافة المفتاح في السطر 275 من الكود لجعل التطبيق يعمل بشكل كامل.";
             }
             
             try {
@@ -488,12 +474,15 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
+                        'Authorization': `Bearer ${API_KEY}`
                     },
                     body: JSON.stringify({
                         model: 'deepseek-chat',
                         messages: [
-                            { role: 'system', content: 'You are a helpful assistant.' },
+                            { 
+                                role: 'system', 
+                                content: 'أنت مساعد مفيد يتحدث العربية. قدم إجابات واضحة ودقيقة.' 
+                            },
                             { role: 'user', content: message }
                         ],
                         max_tokens: 1000,
@@ -509,7 +498,7 @@
                 return data.choices[0].message.content;
             } catch (error) {
                 console.error('Error:', error);
-                return `عذرًا، حدث خطأ في الاتصال: ${error.message}. يرجى التحقق من مفتاح API والمحاولة مرة أخرى.`;
+                return `عذرًا، حدث خطأ في الاتصال: ${error.message}. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.`;
             }
         }
         
@@ -552,6 +541,11 @@
             if (e.key === 'Enter') {
                 sendMessage();
             }
+        });
+        
+        // التركيز على حقل الإدخال عند التحميل
+        window.addEventListener('load', function() {
+            userInput.focus();
         });
     </script>
 </body>
