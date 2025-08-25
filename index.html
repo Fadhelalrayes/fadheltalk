@@ -1,35 +1,187 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title> إسأل </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج الذكاء الاصطناعي المتكامل</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: #2563eb;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai-message {
+            background: #e5e7eb;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #1e40af;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-left: 8px;
+        }
+        
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #999;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite both;
+        }
+        
+        @keyframes typing {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
-    <button onclick="getDeepSeekResponse()">إرسال</button>
-    <div id="response"></div>
+    <div class="container">
+        <h1>مساعد الذكاء الاصطناعي</h1>
+        
+        <div class="chat-container" id="chat-container">
+            <div class="message ai-message">
+                مرحبًا! أنا مساعدك الافتراضي. كيف يمكنني مساعدتك اليوم؟
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
+            <button onclick="sendMessage()">إرسال</button>
+        </div>
+    </div>
 
     <script>
-        async function getDeepSeekResponse() {
-            const userInput = document.getElementById('userInput').value;
-            const apiKey = 'YOUR_API_KEY'; // استبدل هذا بمفتاح API الخاص بك
-            const url = 'https://api.deepseek.com/v1/chat/completions';
-
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'deepseek-chat',
-                    messages: [{ role: 'user', content: userInput }]
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById('response').innerText = data.choices[0].message.content;
+        // عناصر DOM
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        
+        // دالة لإضافة رسائل إلى الدردشة
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-    </script>
-</body>
-</html>
+        
+        // دالة لإظهار مؤشر الكتابة
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('typing-indicator');
+            typingDiv.id = 'typing-indicator';
+            
+            const text = document.createTextNode('يكتب');
+            const dotsDiv = document.createElement('div');
+            dotsDiv.classList.add('typing-dots');
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('span');
+                dotsDiv.appendChild(dot);
+            }
+            
+            typingDiv.appendChild(text);
+            typingDiv.appendChild(dotsDiv);
+            chatContainer.appendChild(typingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            return typingDiv;
+        }
+        
+        // دالة لإرسال الرسالة
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            
+            if (message) {
+                addMessage(message, true);
+                userInput.value = '';
+                
+                // عرض مؤشر الكتابة
+                const typingIndicator = showTypingIndicator();
+                
+                try {
+                    // هنا سيتم استدعاء API الذكاء الاصطناعي
+                    // يمكنك استخدام أي من
