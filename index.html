@@ -1,708 +1,35 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الذكاء الاصطناعي المتقدم</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --accent-color: #3b82f6;
-            --light-color: #f3f4f6;
-            --dark-color: #1f2937;
-            --text-color: #333;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-        
-        header {
-            background: var(--gradient);
-            color: white;
-            padding: 15px 0;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            margin-left: 10px;
-            font-size: 28px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 20px;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        
-        nav ul li a i {
-            margin-left: 5px;
-        }
-        
-        nav ul li a:hover {
-            opacity: 0.8;
-        }
-        
-        .main-content {
-            display: flex;
-            margin-top: 30px;
-            gap: 30px;
-        }
-        
-        .chat-container {
-            flex: 2;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 70vh;
-        }
-        
-        .chat-header {
-            padding: 20px;
-            background: var(--gradient);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .chat-title {
-            display: flex;
-            align-items: center;
-        }
-        
-        .chat-title h2 {
-            margin-right: 10px;
-        }
-        
-        .status {
-            background: rgba(255, 255, 255, 0.3);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            margin-left: 5px;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background: #fafafa;
-        }
-        
-        .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            line-height: 1.4;
-            position: relative;
-            animation: fadeIn 0.3s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .user-message {
-            align-self: flex-end;
-            background: var(--primary-color);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .ai-message {
-            align-self: flex-start;
-            background: var(--light-color);
-            color: var(--dark-color);
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .message-content {
-            margin-bottom: 5px;
-        }
-        
-        .message-time {
-            font-size: 0.7em;
-            opacity: 0.7;
-            text-align: left;
-            margin-top: 5px;
-        }
-        
-        .message-typing {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            background: var(--light-color);
-            border-radius: 18px;
-            align-self: flex-start;
-            margin-bottom: 10px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        .typing-dots {
-            display: flex;
-            margin-right: 8px;
-        }
-        
-        .typing-dots span {
-            width: 6px;
-            height: 6px;
-            background: #999;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typing 1.4s infinite both;
-        }
-        
-        .typing-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes typing {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); }
-            100% { transform: scale(1); }
-        }
-        
-        .chat-input {
-            display: flex;
-            padding: 15px;
-            background: #f9f9f9;
-            border-top: 1px solid #eee;
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 24px;
-            outline: none;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        .chat-input input:focus {
-            border-color: var(--accent-color);
-        }
-        
-        .chat-input button {
-            margin-right: 10px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s, transform 0.2s;
-        }
-        
-        .chat-input button:hover {
-            background: var(--secondary-color);
-            transform: scale(1.05);
-        }
-        
-        .sidebar {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-        }
-        
-        .card h3 i {
-            margin-left: 10px;
-        }
-        
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .feature {
-            background: var(--light-color);
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            transition: background 0.3s;
-        }
-        
-        .feature:hover {
-            background: #e5e7eb;
-        }
-        
-        .feature i {
-            margin-left: 5px;
-            color: var(--primary-color);
-        }
-        
-        .examples {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .example {
-            padding: 12px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        
-        .example i {
-            margin-left: 8px;
-            color: var(--primary-color);
-        }
-        
-        .example:hover {
-            background: #edf2ff;
-            transform: translateX(5px);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-size: 14px;
-            background: white;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .mode-toggle {
-            background: var(--light-color);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: var(--dark-color);
-            transition: background 0.3s;
-        }
-        
-        .mode-toggle:hover {
-            background: #e5e7eb;
-        }
-        
-        .mode-toggle i {
-            margin-left: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 15px;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            nav ul li {
-                margin: 5px 10px;
-            }
-            
-            .message {
-                max-width: 90%;
-            }
-            
-            .chat-header {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-        }
-    </style>
+    <title> إسأل </title>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <span>مساعد الذكاء الاصطناعي المتقدم</span>
-                <div class="logo-icon">🧠</div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="#"><i class="fas fa-star"></i> الميزات</a></li>
-                    <li><a href="#"><i class="fas fa-tags"></i> الأسعار</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="main-content">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <div class="chat-title">
-                        <h2>المساعد الافتراضي</h2>
-                        <div class="status">
-                            <span>نشط</span>
-                            <div class="status-dot"></div>
-                        </div>
-                    </div>
-                    <button class="mode-toggle">
-                        <i class="fas fa-cog"></i>
-                        <span>الإعدادات</span>
-                    </button>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message ai-message">
-                        <div class="message-content">مرحبًا! أنا مساعدك الافتراضي المتقدم. يمكنني الإجابة على أسئلتك في مجالات متنوعة مثل التكنولوجيا، العلوم، التاريخ، البرمجة، والأسئلة العامة. كيف يمكنني مساعدتك اليوم؟</div>
-                        <div class="message-time">الآن</div>
-                    </div>
-                </div>
-                <div class="chat-input">
-                    <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
-                    <button id="send-btn">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="sidebar">
-                <div class="card">
-                    <h3><i class="fas fa-bolt"></i> ميزات النظام</h3>
-                    <div class="features">
-                        <div class="feature"><i class="fas fa-question-circle"></i> إجابة على الأسئلة</div>
-                        <div class="feature"><i class="fas fa-file-alt"></i> توليد نصوص</div>
-                        <div class="feature"><i class="fas fa-language"></i> ترجمة لغوية</div>
-                        <div class="feature"><i class="fas fa-file-contract"></i> تلخيص النصوص</div>
-                        <div class="feature"><i class="fas fa-smile"></i> تحليل المشاعر</div>
-                        <div class="feature"><i class="fas fa-code"></i> كتابة أكواد</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3><i class="fas fa-lightbulb"></i> أمثلة للاستخدام</h3>
-                    <div class="examples">
-                        <div class="example"><i class="fas fa-search"></i> "كيف يمكنني تحسين محركات البحث لموقعي؟"</div>
-                        <div class="example"><i class="fas fa-envelope"></i> "اكتب رسالة ترحيب للعملاء الجدد"</div>
-                        <div class="example"><i class="fas fa-microchip"></i> "ما هي أحدث تقنيات الذكاء الاصطناعي؟"</div>
-                        <div class="example"><i class="fas fa-business-time"></i> "ساعدني في كتابة خطة عمل لمشروع ناشئ"</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3><i class="fas fa-chart-line"></i> إحصائيات</h3>
-                    <div class="examples">
-                        <div class="example"><i class="fas fa-database"></i> قاعدة المعرفة: 5 مليون معلومة</div>
-                        <div class="example"><i class="fas fa-globe"></i> يدعم 15 لغة مختلفة</div>
-                        <div class="example"><i class="fas fa-brain"></i> 10 مليار معلمة ذكاء اصطناعي</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>© 2023 نظام الذكاء الاصطناعي المتقدم. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
+    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
+    <button onclick="getDeepSeekResponse()">إرسال</button>
+    <div id="response"></div>
 
     <script>
-        // عناصر DOM
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        
-        // قاعدة معرفة موسعة للإجابات
-        const knowledgeBase = {
-            // تحيات
-            "مرحبا": ["مرحبًا بك! كيف يمكنني مساعدتك اليوم؟", "أهلاً وسهلاً! ما الذي يمكنني فعله لك؟", "مرحبًا! سعيد برؤيتك هنا. كيف يمكنني مساعدتك؟"],
-            "السلام عليكم": ["وعليكم السلام ورحمة الله وبركاته! كيف حالك اليوم؟", "وعليكم السلام! كيف يمكنني مساعدتك؟"],
-            "كيف حالك": ["أنا بخير، شكرًا لسؤالك! كيف يمكنني مساعدك؟", "الحمد لله بأفضل حال، كيف يمكنني خدمتك اليوم؟"],
-            
-            // أسئلة تقنية
-            "ما هو الذكاء الاصطناعي": ["الذكاء الاصطناعي هو محاكاة عمليات الذكاء البشري بواسطة الآلات، وخاصة أنظمة الكمبيوتر. التطبيقات الخاصة تشمل الأنظمة الخبيرة، معالجة اللغة الطبيعية، التعرف على الكلام والرؤية الآلية."],
-            "ما هي لغة البرمجة": ["لغة البرمجة هي لغة رسمية تتكون من مجموعة من التعليمات التي تنتج أنواعًا مختلفة من المخرجات. تستخدم لغات البرمجة في برمجة الكمبيوتر لتنفيذ الخوارزميات. معظم لغات البرمجة تتكون من تعليمات لأجهزة الكمبيوتر."],
-            "ما هي HTML": ["HTML (لغة ترميز النص التشعبي) هي لغة ترميزية تستخدم لإنشاء صفحات الويب وتطبيقات الويب. مع CSS وJavaScript، تشكل HTML ثالوث التكنولوجيات الأساسية لشبكة الويب العالمية."],
-            "ما هي CSS": ["CSS (أوراق الأنماط المتتالية) هي لغة تستخدم لوصف مظهر وتبويب الوثائق المكتوبة بلغة ترميز مثل HTML. تتحكم CSS في الألوان، الخطوط، المسافات، وتخطيط الصفحة."],
-            "ما هو JavaScript": ["JavaScript هي لغة برمجة عالية المستوى تستخدم principalmente لجعل صفحات الويب تفاعلية. وهي واحدة من التقنيات الأساسية لشبكة الويب العالمية إلى جانب HTML وCSS."],
-            
-            // أسئلة عامة
-            "ما هو الوقت": ["أنا لا أملك صلاحية الوصول إلى الوقت الحالي في نموذج المتصفح هذا. يمكنك التحقق من الوقت في جهازك."],
-            "ما هو الطقس": ["للحصول على معلومات دقيقة عن الطقس، يرجى استخدام خدمة الطقس عبر الإنترنت أو التطبيق المخصص لذلك."],
-            "من أنت": ["أنا مساعد ذكاء اصطناعي مصمم للإجابة على أسئلتك ومساعدتك في مختلف المواضيع. يمكنني المساعدة في مواضيع مثل التكنولوجيا، العلوم، البرمجة، والأسئلة العامة."],
-            "ما هو اسمك": ["أنا مساعدك الافتراضي، يمكنك تسميتي كما تريد!"],
-            "شكرا": ["على الرحب والسعة! هل هناك شيء آخر يمكنني مساعدتك فيه؟"],
-            
-            // أسئلة ثقافية
-            "ما هي عاصمة فرنسا": ["عاصمة فرنسا هي باريس، وهي واحدة من أشهر المدن في العالم وتشتهر ببرج إيفل ومتحف اللوفر."],
-            "ما هي عاصمة السعودية": ["عاصمة المملكة العربية السعودية هي الرياض، وهي واحدة من أسرع المدن نموًا في العالم."],
-            "ما هي أطول نهر في العالم": ["نهر النيل في أفريقيا يعتبر تقليديا أطول نهر في العالم، لكن بعض القياسات الحديثة تشير إلى أن نهر الأمازون في أمريكا الجنوبية قد يكون أطول."],
-            "ما هي أكبر دولة في العالم": ["أكبر دولة في العالم من حيث المساحة هي روسيا، تليها كندا ثم الصين والولايات المتحدة الأمريكية."],
-            
-            // أسئلة دينية
-            "ما هي أركان الإسلام": ["أركان الإسلام خمسة: الشهادتان (شهادة أن لا إله إلا الله وأن محمدًا رسول الله)، إقامة الصلاة، إيتاء الزكاة، صوم رمضان، وحج البيت لمن استطاع إليه سبيلا."],
-            "ما هي أركان الإيمان": ["أركان الإيمان ستة: الإيمان بالله، وملائكته، وكتبه، ورسله، واليوم الآخر، والقدر خيره وشره."],
-            "كم عدد سور القرآن": ["عدد سور القرآن الكريم هو 114 سورة، منها 86 سورة مكية و28 سورة مدنية."],
-            
-            // أسئلة علمية
-            "ما هو النظام الشمسي": ["النظام الشمسي يتكون من الشمس وكل ما يدور حولها من كواكب، including الأرض، والأقمار، والكويكبات، والمذنبات، وغيرها من الأجرام السماوية."],
-            "ما هي الجاذبية": ["الجاذبية هي قوة طبيعية تجذب الأجسام toward بعضها البعض. على الأرض، تعطي الجاذبية وزناً للأجسام المادية، وتجذب الغلاف الجوي للأرض."],
-            "ما هو الضوء": ["الضوء هو إشعاع كهرومغناطيسي يمكن رؤيته بالعين البشرية. ينتقل الضوء في الفراغ بسرعة ثابتة تبلغ حوالي 300,000 كيلومتر في الثانية."],
-            
-            // إجابة افتراضية
-            "default": ["هذا سؤال مثير للاهتمام! يمكنني مساعدتك في البحث عن المعلومات ذات الصلة.", 
-                       "أحتاج إلى مزيد من السياق للإجابة على هذا السؤال بدقة. هل يمكنك إعادة صياغة سؤالك؟",
-                       "حاليًا، لا أملك معلومات كافية للإجابة على هذا السؤال. هل لديك أسئلة أخرى؟",
-                       "هذا خارج نطاق معرفتي الحالي. هل تود الاستفسار عن شيء آخر؟",
-                       "أعتذر، لا أستطيع الإجابة على هذا السؤال تحديدًا. لكن يمكنني مساعدتك في مواضيع أخرى ذات صلة."]
-        };
-        
-        // دالة لإضافة رسائل جديدة إلى المحادثة
-        function addMessage(text, isUser) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
-            
-            const messageContent = document.createElement('div');
-            messageContent.classList.add('message-content');
-            messageContent.textContent = text;
-            
-            const messageTime = document.createElement('div');
-            messageTime.classList.add('message-time');
-            messageTime.textContent = getCurrentTime();
-            
-            messageDiv.appendChild(messageContent);
-            messageDiv.appendChild(messageTime);
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        // دالة للحصول على الوقت الحالي
-        function getCurrentTime() {
-            const now = new Date();
-            return `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-        }
-        
-        // دالة لمحاكاة الكتابة
-        function showTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('message-typing');
-            typingDiv.id = 'typing-indicator';
-            
-            const dotsDiv = document.createElement('div');
-            dotsDiv.classList.add('typing-dots');
-            
-            for (let i = 0; i < 3; i++) {
-                const dot = document.createElement('span');
-                dotsDiv.appendChild(dot);
-            }
-            
-            typingDiv.appendChild(dotsDiv);
-            typingDiv.appendChild(document.createTextNode('يكتب...'));
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            return typingDiv;
-        }
-        
-        // دالة للعثور على أفضل إجابة للسؤال
-        function findBestAnswer(question) {
-            const lowerQuestion = question.toLowerCase();
-            
-            // البحث عن تطابق كامل أولاً
-            for (const [key, answers] of Object.entries(knowledgeBase)) {
-                if (lowerQuestion.includes(key.toLowerCase())) {
-                    const randomIndex = Math.floor(Math.random() * answers.length);
-                    return answers[randomIndex];
-                }
-            }
-            
-            // إذا لم يتم العثور على تطابق كامل، البحث عن كلمات مفتاحية
-            const keywords = {
-                "برمجة": ["لغة البرمجة هي أداة رائعة لبناء التطبيقات. أي لغة برمجة تهمك تحديدًا؟", "البرمجة مجال مثير للاهتمام. هل تقصد لغة برمجة معينة؟"],
-                "إنترنت": ["الإنترنت هو شبكة عالمية تربط مليارات الأجهزة حول العالم. هل تريد معرفة شيء محدد عن الإنترنت؟"],
-                "كمبيوتر": ["أجهزة الكمبيوتر غيرت طريقة عملنا وحياتنا. أي جانب من الكمبيوتر يهمك؟"],
-                "تطبيق": ["تطوير التطبيقات مجال واسع. هل تقصد تطبيقات الجوال أم الويب؟"],
-                "موقع": ["مواقع الويب أصبحت أساسية لأي عمل اليوم. هل تريد إنشاء موقع ويب؟"],
-                "سعودي": ["المملكة العربية السعودية هي دولة عربية تقع في شبه الجزيرة العربية. عاصمتها الرياض وعملتها الريال السعودي."],
-                "دين": ["هل تقصد سؤالاً عن الدين الإسلامي أم الأديان الأخرى؟ يمكنني المساعدة في معلومات عامة عن الأديان."],
-                "علم": ["العلم مجال واسع يشمل الفيزياء، الكيمياء، الأحياء، وغيرها. أي علم يهمك؟"],
-                "تاريخ": ["التاريخ مليء بالأحداث المثيرة للاهتمام. أي فترة تاريخية تهمك؟"],
-                "رياضيات": ["الرياضيات هي لغة العلم. أي فرع من فروع الرياضيات يهمك؟ الجبر، الهندسة، الإحصاء؟"],
-                "صحة": ["الصحة موضوع مهم للجميع. هل تريد معرفة شيء عن التغذية، التمارين، أو الأمراض؟"],
-                "تعلم": ["التعلم عملية مستمرة طوال الحياة. ما الموضوع الذي تريد تعلمه؟"],
-                "عمل": ["العمل جزء أساسي من حياتنا. هل تبحث عن نصائح للتوظيف، الترقية، أو بدء عمل خاص؟"],
-                "سفر": ["السفر يوسع الآفاق. هل تخطط لرحلة ما؟ أي بلد تريد زيارته؟"],
-                "طعام": ["الطعام جزء مهم من الثقافة. أي نوع من الطعام يهمك؟ المطابخ العالمية، الوصفات، التغذية؟"],
-                "مال": ["الإدارة المالية مهارة مهمة. هل تبحث عن نصائح للادخار، الاستثمار، أو إدارة الدخل؟"],
-                "سيارة": ["السيارات وسيلة نقل أساسية. هل تبحث عن معلومات عن أنواع السيارات، الصيانة، أو الشراء؟"],
-                "هاتف": ["الهواتف الذكية أصبحت جزءًا لا يتجزأ من حياتنا. هل تبحث عن معلومات عن أنواع الهواتف، التطبيقات، أو الاستخدام الأمثل؟"]
-            };
-            
-            for (const [key, answers] of Object.entries(keywords)) {
-                if (lowerQuestion.includes(key)) {
-                    const randomIndex = Math.floor(Math.random() * answers.length);
-                    return answers[randomIndex];
-                }
-            }
-            
-            // إذا لم يتم العثور على أي تطابق، استخدام الإجابة الافتراضية
-            const defaultAnswers = knowledgeBase["default"];
-            const randomIndex = Math.floor(Math.random() * defaultAnswers.length);
-            return defaultAnswers[randomIndex];
-        }
-        
-        // إرسال الرسالة عند الضغط على الزر
-        sendBtn.addEventListener('click', function() {
-            const message = userInput.value.trim();
-            
-            if (message) {
-                addMessage(message, true);
-                userInput.value = '';
-                
-                // عرض مؤشر الكتابة
-                const typingIndicator = showTypingIndicator();
-                
-                // محاكاة وقت معالجة السؤال
-                setTimeout(() => {
-                    // إزالة مؤشر الكتابة
-                    typingIndicator.remove();
-                    
-                    // إضافة رد المساعد
-                    const answer = findBestAnswer(message);
-                    addMessage(answer, false);
-                }, 1500);
-            }
-        });
-        
-        // إرسال الرسالة عند الضغط على Enter
-        userInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendBtn.click();
-            }
-        });
-        
-        // إضافة وظائف للنقر على الأمثلة
-        document.querySelectorAll('.example').forEach(example => {
-            example.addEventListener('click', function() {
-                const text = this.textContent.trim().replace(/"(.+)"/, '$1');
-                userInput.value = text;
-                sendBtn.click();
+        async function getDeepSeekResponse() {
+            const userInput = document.getElementById('userInput').value;
+            const apiKey = 'YOUR_API_KEY'; // استبدل هذا بمفتاح API الخاص بك
+            const url = 'https://api.deepseek.com/v1/chat/completions';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'deepseek-chat',
+                    messages: [{ role: 'user', content: userInput }]
+                })
             });
-        });
+
+            const data = await response.json();
+            document.getElementById('response').innerText = data.choices[0].message.content;
+        }
     </script>
 </body>
 </html>
