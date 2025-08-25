@@ -5,25 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FadhelTalk — مساعدك الذكي</title>
   <style>
-    body { margin:0; font-family: system-ui, sans-serif; background:#f9fafb; color:#111; }
-    header { text-align:center; padding:20px; background:#00c4ca; color:#fff; font-size:22px; font-weight:bold; }
-    .wrap { max-width:720px; margin:auto; padding:16px; }
-    .chat { border:1px solid #ddd; border-radius:12px; padding:12px; background:#fff; height:60vh; overflow:auto; }
-    .row { margin:8px 0; }
-    .user { text-align:right; color:#2563eb; }
-    .bot { text-align:left; color:#111; background:#f1f5f9; padding:8px 10px; border-radius:8px; display:inline-block; }
-    textarea { width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical; }
-    .controls { margin-top:8px; display:flex; gap:8px; }
-    input { padding:8px; flex:1; border:1px solid #ccc; border-radius:8px; }
-    button { background:#00c4ca; border:none; color:#fff; font-weight:bold; padding:10px 16px; border-radius:8px; cursor:pointer; }
-    button:disabled { opacity:.6; }
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,"Noto Kufi Arabic",sans-serif;background:#f6f9fc;color:#0f172a}
+    header{text-align:center;padding:16px 10px;background:#00c4ca;color:#063d3f;font-weight:800;font-size:22px}
+    .wrap{max-width:720px;margin:auto;padding:16px}
+    .row{margin:10px 0}
+    .chat{background:#fff;border:1px solid #e5ecf5;border-radius:14px;padding:12px;height:62vh;overflow:auto}
+    .user{text-align:right;color:#2563eb}
+    .bot{display:inline-block;background:#f1f5f9;border-radius:10px;padding:8px 10px}
+    textarea{width:100%;border:1px solid #e5ecf5;border-radius:12px;padding:10px;resize:vertical}
+    .controls{display:flex;gap:8px;margin-top:8px}
+    input{flex:1;border:1px solid #e5ecf5;border-radius:12px;padding:10px}
+    button{background:#00c4ca;border:0;color:#053033;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
+    button:disabled{opacity:.6}
+    .hint{font-size:12px;color:#5b6b84;margin-top:6px}
   </style>
 </head>
 <body>
-  <header>FadhelTalk — مساعدك الذكي</header>
+  <header>FadhelTalk — مساعدك الذكي (وضع API)</header>
   <div class="wrap">
-    <input id="apikey" placeholder="ضع مفتاح OpenAI هنا" />
+    <input id="apikey" placeholder="ضع مفتاح OpenAI هنا (للتجربة)" />
+    <div class="hint">مهم: لا تنشر المفتاح علنًا. للاستخدام العام استعمل خادمًا وسيطًا لاحقًا.</div>
     <div class="chat" id="chat"></div>
+
     <textarea id="inp" placeholder="اكتب سؤالك هنا..."></textarea>
     <div class="controls">
       <button id="send">أرسل</button>
@@ -38,39 +41,53 @@
   const clearBtn = document.getElementById('clear');
   const keyInput = document.getElementById('apikey');
 
-  function add(role, text) {
+  function add(role, text){
     const div = document.createElement('div');
-    div.className = 'row ' + role;
+    div.className = 'row '+role;
     div.innerHTML = role==='user' ? `<div class="user">${text}</div>` : `<div class="bot">${text}</div>`;
     chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
   }
+  function historyToMessages(){
+    const nodes = [...chat.querySelectorAll('.user,.bot')];
+    const msgs = [];
+    for(const n of nodes){
+      msgs.push({role: n.classList.contains('user')?'user':'assistant', content: n.textContent});
+    }
+    return msgs;
+  }
 
-  async function send() {
-    const q = inp.value.trim(); if(!q) return;
-    const key = keyInput.value.trim();
-    if(!key){ alert("ضع مفتاح OpenAI أولاً"); return; }
+  async function send(){
+    const q = (inp.value||'').trim(); if(!q) return;
+    const key = (keyInput.value||'').trim();
+    if(!key){ alert('ضع مفتاح OpenAI أولاً'); return; }
+
     inp.value=''; add('user', q);
-    const m = [...chat.querySelectorAll('.user,.bot')].map(el=>({
-      role: el.classList.contains('user')?'user':'assistant',
-      content: el.textContent
-    }));
-    try {
-      sendBtn.disabled=true;
-      const res = await fetch("https://api.openai.com/v1/chat/completions",{
-        method:"POST",
-        headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
-        body: JSON.stringify({model:"gpt-4o-mini",messages:[...m,{role:"user",content:q}]})
+    sendBtn.disabled = true;
+
+    try{
+      const res = await fetch('https://api.openai.com/v1/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body: JSON.stringify({
+          model:'gpt-4o-mini',
+          messages:[...historyToMessages(), {role:'user', content:q}],
+          temperature:0.6
+        })
       });
       const data = await res.json();
-      const ans = data.choices?.[0]?.message?.content || "خطأ في الاستجابة";
+      const ans = data?.choices?.[0]?.message?.content || 'خطأ في الاستجابة';
       add('bot', ans);
-    } catch(e){ add('bot',"تعذّر الاتصال: "+e.message); }
-    sendBtn.disabled=false;
+    }catch(e){
+      add('bot','تعذّر الاتصال: '+(e?.message||''));
+    }finally{
+      sendBtn.disabled = false;
+    }
   }
 
   sendBtn.onclick = send;
   clearBtn.onclick = ()=>{ chat.innerHTML=''; };
-  inp.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }});
+  add('bot','مرحبًا! ألصق مفتاح OpenAI في الحقل بالأعلى ثم اسألني أي شيء.');
 </script>
 </body>
 </html>
