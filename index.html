@@ -10,7 +10,7 @@
     .wrap{max-width:720px;margin:auto;padding:16px}
     .chat{background:#fff;border:1px solid #e5ecf5;border-radius:14px;padding:12px;height:60vh;overflow:auto}
     .row{margin:10px 0}
-    .user{text-align:right;color:#2563eb}
+    .user{text-align:right;color:#2563eb;white-space:pre-wrap}
     .bot{display:inline-block;background:#f1f5f9;border-radius:10px;padding:8px 10px;white-space:pre-wrap}
     textarea{width:100%;border:1px solid #e5ecf5;border-radius:12px;padding:10px;resize:vertical}
     .controls{display:flex;gap:8px;margin-top:8px}
@@ -18,7 +18,7 @@
     button:disabled{opacity:.6}
     .hint{font-size:12px;color:#5b6b84;margin-top:6px}
   </style>
-  <!-- يعمل محليًا عبر WASM (بدون WebGPU وبدون مفاتيح) -->
+  <!-- Transformers.js (WASM) — يعمل بدون مفاتيح -->
   <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js"></script>
 </head>
 <body>
@@ -26,7 +26,7 @@
   <div class="wrap">
     <div class="hint" id="status">سيتم تنزيل النموذج الخفيف عند أول استخدام…</div>
     <div class="chat" id="chat"></div>
-    <textarea id="inp" placeholder="اكتب سؤالك هنا... (الجودة بسيطة لأن النموذج صغير)"></textarea>
+    <textarea id="inp" placeholder="اكتب سؤالك هنا... (النموذج خفيف، فالإجابات مختصرة)"></textarea>
     <div class="controls">
       <button id="send">أرسل</button>
       <button id="clear">مسح</button>
@@ -54,20 +54,22 @@
     loading = true; sendBtn.disabled = true;
     statusEl.textContent = 'جاري تحميل النموذج الخفيف…';
     const { pipeline } = window.transformers;
-    // نموذج صغير متوافق مع الجوال
-    pipe = await pipeline('text-generation', 'Xenova/distilGPT2', { quantized: true });
+    // نموذج أصغر: LaMini-T5-61M (يدعم text2text-generation)
+    pipe = await pipeline('text2text-generation', 'Xenova/LaMini-T5-61M', { quantized: true });
     statusEl.textContent = 'جاهز';
     loading = false; sendBtn.disabled = false;
     return pipe;
   }
 
-  // نبني محادثة قصيرة لنوجّه النموذج للعربية قدر الإمكان
   function buildPrompt(history, user){
-    let p = "هذه محادثة قصيرة. أجب بالعربية الفصحى باختصار ووضوح.\n";
-    for (const m of history){
-      p += (m.role==='user' ? "المستخدم: " : "المساعد: ") + m.content + "\n";
+    // نوجّه للناتج العربي المختصر
+    let p = "أجب بالعربية الفصحى بإيجاز ووضوح.\n";
+    // يمكن تمرير آخر تبادلين فقط للاختصار
+    const last = history.slice(-4);
+    for (const m of last){
+      p += (m.role==='user' ? "سؤال: " : "جواب: ") + m.content + "\n";
     }
-    p += "المستخدم: " + user + "\nالمساعد:";
+    p += "سؤال: " + user + "\nجواب:";
     return p;
   }
 
@@ -76,19 +78,17 @@
     inp.value=''; add('user', q);
     try{
       await ensureModel();
-      // تاريخ مبسط
       const nodes = [...chat.querySelectorAll('.user,.bot')];
-      const history = nodes.slice(0, -1).map(el => ({
+      const history = nodes.map(el => ({
         role: el.classList.contains('user') ? 'user' : 'assistant',
         content: el.textContent
       }));
       statusEl.textContent = 'يولّد الإجابة…';
       const out = await pipe(buildPrompt(history, q), {
-        max_new_tokens: 80, temperature: 0.7, top_p: 0.9, do_sample: true, repetition_penalty: 1.2
+        max_new_tokens: 96, temperature: 0.6
       });
-      const txt = out[0]?.generated_text || '';
-      const answer = txt.split("المساعد:").pop().trim();
-      add('bot', answer || '…');
+      const ans = out?.[0]?.generated_text?.trim() || '…';
+      add('bot', ans);
     }catch(e){
       add('bot', 'تعذّر التوليد: ' + (e?.message || ''));
     }finally{
@@ -100,7 +100,7 @@
   clearBtn.onclick = ()=>{ chat.innerHTML=''; };
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
 
-  add('bot','مرحبًا! هذه نسخة تعمل بدون مفتاح وبدون خادم. اكتب سؤالك ثم اضغط «أرسل».');
+  add('bot','مرحبًا! هذه نسخة تعمل بدون مفتاح وبدون خادم باستخدام نموذج صغير. اكتب سؤالك ثم اضغط «أرسل».');
 </script>
 </body>
 </html>
