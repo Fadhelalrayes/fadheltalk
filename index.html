@@ -1,152 +1,76 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FadhelTalk — مساعدك الذكي</title>
-  <meta name="description" content="FadhelTalk: دردشة ذكاء اصطناعي أنيقة وخفيفة تعمل داخل المتصفح بدون خادم أو مفاتيح API." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
   <style>
-    /* تصميم فاتح، بسيط، بلا فوضى */
-    :root{
-      --bg:#f6f9fc;        /* خلفية فاتحة */
-      --card:#ffffff;      /* بطاقات ناصعة */
-      --ink:#0f172a;       /* نص داكن مريح */
-      --muted:#5b6b84;     /* نص ثانوي */
-      --edge:#e5ecf5;      /* حدود ناعمة */
-      --brand:#00b3b8;     /* تركواز جذاب */
-      --brand2:#ffb703;    /* عنبر دافئ */
-      --accent:#2563eb;    /* أزرق للتفاعل */
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:radial-gradient(800px 400px at 90% -10%, #c7fbff33, transparent 60%), var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Kufi Arabic",sans-serif}
-    a{color:var(--accent)}
-    .wrap{max-width:880px;margin:auto;padding:18px}header{display:flex;justify-content:center}
-.brand{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#00d1d6,#75e0e3);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand h1{font-size:clamp(22px,4vw,34px);margin:8px 0}
-
-.card{background:var(--card);border:1px solid var(--edge);border-radius:18px;box-shadow:0 8px 30px #1f3b6a10}
-
-.chat{padding:14px;height:min(64vh,620px);overflow:auto}
-.row{display:flex;gap:10px;margin:10px 0;align-items:flex-start}
-.avatar{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#e9fbfc;color:#047878;font-weight:700}
-.msg{background:#f7fbff;border:1px solid var(--edge);border-radius:14px;padding:12px 14px;line-height:1.75;max-width:85%;white-space:pre-wrap;word-break:break-word}
-.user .msg{background:#fff7e6;border-color:#ffecb3}
-
-.pane{padding:12px;border-top:1px solid var(--edge);display:grid;gap:10px}
-textarea{width:100%;min-height:84px;resize:y;background:#ffffff;border:1px solid var(--edge);border-radius:14px;padding:12px;line-height:1.85;font-size:15px}
-.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-.left, .right{display:flex;gap:10px;align-items:center}
-.btn{background:linear-gradient(180deg,#00c4ca,#00aab0);border:0;color:#062b2c;padding:10px 16px;border-radius:12px;font-weight:800;cursor:pointer}
-.btn.alt{background:linear-gradient(180deg,#ffd166,#fdbb2d);color:#5c3b00}
-.btn.ghost{background:#ffffff;border:1px solid var(--edge);color:var(--ink)}
-.btn[disabled]{opacity:.6;cursor:not-allowed}
-
-.meta{font-size:12px;color:var(--muted)}
-select{background:#fff;border:1px solid var(--edge);border-radius:10px;padding:8px}
-
-footer{margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
-
+    body { margin:0; font-family: system-ui, sans-serif; background:#f9fafb; color:#111; }
+    header { text-align:center; padding:20px; background:#00c4ca; color:#fff; font-size:22px; font-weight:bold; }
+    .wrap { max-width:720px; margin:auto; padding:16px; }
+    .chat { border:1px solid #ddd; border-radius:12px; padding:12px; background:#fff; height:60vh; overflow:auto; }
+    .row { margin:8px 0; }
+    .user { text-align:right; color:#2563eb; }
+    .bot { text-align:left; color:#111; background:#f1f5f9; padding:8px 10px; border-radius:8px; display:inline-block; }
+    textarea { width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; resize:vertical; }
+    .controls { margin-top:8px; display:flex; gap:8px; }
+    input { padding:8px; flex:1; border:1px solid #ccc; border-radius:8px; }
+    button { background:#00c4ca; border:none; color:#fff; font-weight:bold; padding:10px 16px; border-radius:8px; cursor:pointer; }
+    button:disabled { opacity:.6; }
   </style>
-  <script src="https://unpkg.com/@mlc-ai/web-llm@0.2.77/dist/index.min.js"></script>
 </head>
 <body>
+  <header>FadhelTalk — مساعدك الذكي</header>
   <div class="wrap">
-    <header>
-      <div class="brand">
-        <h1>FadhelTalk — مساعدك الذكي</h1>
-      </div>
-    </header><section class="card">
-  <div class="chat" id="chat"></div>
-  <div class="pane">
-    <textarea id="inp" placeholder="اكتب سؤالك هنا… مثال: لخص لي الحوسبة السحابية في 3 نقاط."></textarea>
+    <input id="apikey" placeholder="ضع مفتاح OpenAI هنا" />
+    <div class="chat" id="chat"></div>
+    <textarea id="inp" placeholder="اكتب سؤالك هنا..."></textarea>
     <div class="controls">
-      <div class="left meta">
-        <span id="status">سيتم تحميل النموذج عند أول سؤال.</span>
-      </div>
-      <div class="right">
-        <select id="model" title="النموذج">
-          <option value="Phi-3-mini-4k-instruct-q4f16_1-MLC" selected>Phi‑3‑mini (خفيف وثابت)</option>
-          <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen2.5‑0.5B (أخف)</option>
-        </select>
-        <button class="btn" id="send">أرسل</button>
-        <button class="btn ghost" id="clear">مسح</button>
-      </div>
+      <button id="send">أرسل</button>
+      <button id="clear">مسح</button>
     </div>
   </div>
-</section>
 
-<footer>
-  © <span id="year"></span> FadhelTalk — تصميم فاتح وجميل، يعمل محليًا داخل المتصفح (WebLLM)
-</footer>
-
-  </div><script>
+<script>
   const chat = document.getElementById('chat');
   const inp = document.getElementById('inp');
   const sendBtn = document.getElementById('send');
   const clearBtn = document.getElementById('clear');
-  const modelSel = document.getElementById('model');
-  const statusEl = document.getElementById('status');
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const keyInput = document.getElementById('apikey');
 
-  let engine = null; let busy=false;
-  let msgs = [{role:'system', content:'أنت مساعد مهذب يجيب بالعربية بوضوح واختصار.'}];
-  const modelList = [
-    'Phi-3-mini-4k-instruct-q4f16_1-MLC',
-    'Qwen2.5-0.5B-Instruct-q4f16_1-MLC'
-  ];
-
-  function timeStr(){
-    return new Date().toLocaleTimeString('ar', {hour:'2-digit', minute:'2-digit'});
-  }
-  function row(role, html){
-    const r = document.createElement('div');
-    r.className = 'row ' + (role==='user'?'user':'bot');
-    r.innerHTML = `<div class="avatar">${role==='user'?'👤':'🤖'}</div><div><div class="msg">${html}</div><div class="meta">${timeStr()}</div></div>`;
-    chat.appendChild(r); chat.scrollTop = chat.scrollHeight; return r.querySelector('.msg');
-  }
-  function esc(s){return s.replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
-  function setStatus(t){ statusEl.textContent = t; }
-
-  async function ensure(){
-    if(engine) return engine; busy=true; setStatus('جارِ التحميل…');
-    // جرّب تحميل النموذج المحدد، وإن فشل، بدّل تلقائيًا إلى نموذج آخر أخف
-    const tryLoad = async (name)=>{
-      return await webllm.CreateMLCEngine(name, {initProgressCallback:(p)=>setStatus('تحميل النموذج: '+Math.round((p.progress||0)*100)+'%')});
-    };
-    try{
-      const selected = modelSel.value || modelList[0];
-      try{ engine = await tryLoad(selected); }
-      catch(_){
-        const alt = modelList.find(m=>m!==selected);
-        setStatus('فشل التحميل، التحويل تلقائيًا إلى نموذج أخف…');
-        modelSel.value = alt; engine = await tryLoad(alt);
-      }
-      setStatus('جاهز');
-      return engine;
-    }catch(e){
-      console.error(e); setStatus('فشل تحميل النموذج. جرّب تحديث الصفحة أو افتح الرابط في متصفح كروم الحديث.');
-      throw e;
-    }finally{busy=false;}
+  function add(role, text) {
+    const div = document.createElement('div');
+    div.className = 'row ' + role;
+    div.innerHTML = role==='user' ? `<div class="user">${text}</div>` : `<div class="bot">${text}</div>`;
+    chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
   }
 
-  async function send(){
-    const q = (inp.value||'').trim(); if(!q || busy) return; inp.value='';
-    row('user', esc(q)); const out = row('bot','');
-    try{ await ensure(); busy=true; setStatus('يُجيب…');
-      const stream = await engine.chat.completions.create({stream:true, messages:[...msgs,{role:'user',content:q}], temperature:0.6, max_tokens:384});
-      let acc=''; for await (const ch of stream){ const d = ch?.choices?.[0]?.delta?.content || ''; acc+=d; out.textContent = acc; chat.scrollTop = chat.scrollHeight; }
-      msgs.push({role:'user',content:q}); msgs.push({role:'assistant',content:out.textContent});
-      setStatus('جاهز');
-    }catch(e){ out.textContent = 'تعذّر توليد الإجابة. جرّب تغيير المتصفح إلى Chrome وتحديثه أو بدّل النموذج من القائمة.'; }
-    finally{ busy=false; }
+  async function send() {
+    const q = inp.value.trim(); if(!q) return;
+    const key = keyInput.value.trim();
+    if(!key){ alert("ضع مفتاح OpenAI أولاً"); return; }
+    inp.value=''; add('user', q);
+    const m = [...chat.querySelectorAll('.user,.bot')].map(el=>({
+      role: el.classList.contains('user')?'user':'assistant',
+      content: el.textContent
+    }));
+    try {
+      sendBtn.disabled=true;
+      const res = await fetch("https://api.openai.com/v1/chat/completions",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+        body: JSON.stringify({model:"gpt-4o-mini",messages:[...m,{role:"user",content:q}]})
+      });
+      const data = await res.json();
+      const ans = data.choices?.[0]?.message?.content || "خطأ في الاستجابة";
+      add('bot', ans);
+    } catch(e){ add('bot',"تعذّر الاتصال: "+e.message); }
+    sendBtn.disabled=false;
   }
 
-  sendBtn.addEventListener('click', send);
-  inp.addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }});
-  clearBtn.addEventListener('click', ()=>{ chat.innerHTML=''; msgs=[msgs[0]]; row('bot','مرحبًا! أنا <b>FadhelTalk</b>. اسألني أي شيء.'); });
-  modelSel.addEventListener('change', ()=>{ engine=null; setStatus('سيُعاد تحميل النموذج عند السؤال القادم.'); });
-
-  row('bot','مرحبًا! هذه نسخة بسيطة ونظيفة من <b>FadhelTalk</b> بلا فوضى وبألوان فاتحة. اكتب سؤالك في الصندوق ثم اضغط «أرسل».');
-</script></body>
+  sendBtn.onclick = send;
+  clearBtn.onclick = ()=>{ chat.innerHTML=''; };
+  inp.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
+</script>
+</body>
 </html>
