@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج محادثة فائق الجمال</title>
+    <title>FadhelTalk - تطبيق المحادثة الذكية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -87,7 +87,7 @@
         }
         
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 5px;
             letter-spacing: -0.5px;
@@ -232,31 +232,13 @@
             transform: translateY(0);
         }
         
-        .suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 0 20px 20px;
-            background: #f8fafc;
-            justify-content: center;
-        }
-        
-        .suggestion {
-            background: white;
-            color: #7c3aed;
-            border: 1px solid #ddd6fe;
-            border-radius: 18px;
-            padding: 10px 16px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .suggestion:hover {
-            background: #f5f3ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(124, 58, 237, 0.15);
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 12px;
+            border-top: 1px solid #e2e8f0;
         }
         
         .typing-indicator {
@@ -339,11 +321,11 @@
         <div class="header">
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fas fa-robot"></i>
+                    <i class="fas fa-comments"></i>
                 </div>
             </div>
-            <h1>المساعد الذكي</h1>
-            <p class="subtitle">أساعدك في الإجابة على استفساراتك بكل ود</p>
+            <h1>FadhelTalk</h1>
+            <p class="subtitle">تطبيق المحادثة الذكية</p>
             <div class="status">
                 <span>متصل الآن</span>
                 <div class="status-dot"></div>
@@ -352,7 +334,7 @@
         
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك الذكي الجديد. كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
@@ -365,10 +347,8 @@
             </button>
         </div>
         
-        <div class="suggestions">
-            <div class="suggestion" data-question="ما هو الذكاء الاصطناعي؟">ما هو الذكاء الاصطناعي؟</div>
-            <div class="suggestion" data-question="كيف أتعلم البرمجة؟">كيف أتعلم البرمجة؟</div>
-            <div class="suggestion" data-question="ما هي أحدث تقنيات الويب؟">أحدث تقنيات الويب</div>
+        <div class="footer">
+            برمجة وتطوير: فاضل الريس | جميع الحقوق محفوظة
         </div>
     </div>
 
@@ -378,7 +358,6 @@
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
         const currentTimeElement = document.getElementById('current-time');
-        const suggestions = document.querySelectorAll('.suggestion');
         
         // تحديث الوقت الحالي
         function updateCurrentTime() {
@@ -511,15 +490,6 @@
             if (e.key === 'Enter') {
                 sendMessage();
             }
-        });
-        
-        // إضافة اقتراحات الأسئلة
-        suggestions.forEach(suggestion => {
-            suggestion.addEventListener('click', function() {
-                const question = this.getAttribute('data-question');
-                userInput.value = question;
-                sendMessage();
-            });
         });
         
         // التركيز على حقل الإدخال عند التحميل
