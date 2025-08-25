@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FadhelTalk — بدون مفتاح</title>
+  <title>FadhelTalk — مساعدك الذكي</title>
   <style>
     body{margin:0;font-family:system-ui,Segoe UI,Roboto,"Noto Kufi Arabic",sans-serif;background:#f6f9fc;color:#0f172a}
     header{text-align:center;padding:16px;background:#00c4ca;color:#053437;font-weight:800;font-size:22px}
@@ -20,19 +20,74 @@
   </style>
 </head>
 <body>
-  <header>FadhelTalk — مساعدك الذكي (بدون مفتاح)</header>
+  <header>FadhelTalk — مساعدك الذكي</header>
   <div class="wrap">
-    <div class="hint" id="status">سيتم تنزيل نموذج خفيف عند أول استخدام…</div>
+    <div class="hint" id="status">جاهز — اسألني أي شيء</div>
     <div class="chat" id="chat"></div>
-    <textarea id="inp" placeholder="اكتب سؤالك هنا... (النموذج خفيف، فالإجابات مختصرة)"></textarea>
+    <textarea id="inp" placeholder="اكتب سؤالك هنا..."></textarea>
     <div class="controls">
       <button id="send">أرسل</button>
       <button id="clear">مسح</button>
     </div>
   </div>
 
-<script type="module">
+<script>
+  // 🔥 غيّر هذا بالرابط الخاص بالـ Worker بعد ما تنشئه على Cloudflare
+  const API_URL = "https://اسم-worker.اسمك.workers.dev";
+
   const chat = document.getElementById('chat');
   const inp  = document.getElementById('inp');
   const sendBtn = document.getElementById('send');
-  const clearBtn =
+  const clearBtn = document.getElementById('clear');
+  const statusEl = document.getElementById('status');
+
+  function add(role, text){
+    const div = document.createElement('div');
+    div.className = 'row '+role;
+    div.innerHTML = role==='user'
+      ? `<div class="user">${text}</div>`
+      : `<div class="bot">${text}</div>`;
+    chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
+  }
+
+  function historyToMessages(){
+    const nodes = [...chat.querySelectorAll('.user,.bot')];
+    const msgs = [];
+    for(const n of nodes){
+      msgs.push({
+        role: n.classList.contains('user')?'user':'assistant',
+        content: n.textContent
+      });
+    }
+    return msgs;
+  }
+
+  async function send(){
+    const q = (inp.value||'').trim(); if(!q) return;
+    inp.value=''; add('user', q);
+    sendBtn.disabled = true; statusEl.textContent = 'جاري توليد الإجابة...';
+
+    try{
+      const res = await fetch(API_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ messages:[...historyToMessages(), {role:'user', content:q}] })
+      });
+      const data = await res.json();
+      const ans = data?.choices?.[0]?.message?.content || 'خطأ في الاستجابة';
+      add('bot', ans);
+    }catch(e){
+      add('bot','تعذّر الاتصال: '+(e.message||''));
+    }finally{
+      sendBtn.disabled = false; statusEl.textContent = 'جاهز';
+    }
+  }
+
+  sendBtn.onclick = send;
+  clearBtn.onclick = ()=>{ chat.innerHTML=''; };
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
+
+  add('bot','مرحبًا! اسألني أي شيء وسأجيبك.');
+</script>
+</body>
+</html>
