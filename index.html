@@ -91,6 +91,10 @@ footer{margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
 
   let engine = null; let busy=false;
   let msgs = [{role:'system', content:'أنت مساعد مهذب يجيب بالعربية بوضوح واختصار.'}];
+  const modelList = [
+    'Phi-3-mini-4k-instruct-q4f16_1-MLC',
+    'Qwen2.5-0.5B-Instruct-q4f16_1-MLC'
+  ];
 
   function timeStr(){
     return new Date().toLocaleTimeString('ar', {hour:'2-digit', minute:'2-digit'});
@@ -102,19 +106,29 @@ footer{margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
     chat.appendChild(r); chat.scrollTop = chat.scrollHeight; return r.querySelector('.msg');
   }
   function esc(s){return s.replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
+  function setStatus(t){ statusEl.textContent = t; }
 
   async function ensure(){
     if(engine) return engine; busy=true; setStatus('جارِ التحميل…');
+    // جرّب تحميل النموذج المحدد، وإن فشل، بدّل تلقائيًا إلى نموذج آخر أخف
+    const tryLoad = async (name)=>{
+      return await webllm.CreateMLCEngine(name, {initProgressCallback:(p)=>setStatus('تحميل النموذج: '+Math.round((p.progress||0)*100)+'%')});
+    };
     try{
-      engine = await webllm.CreateMLCEngine(modelSel.value, {initProgressCallback:(p)=>setStatus('تحميل النموذج: '+Math.round((p.progress||0)*100)+'%')});
+      const selected = modelSel.value || modelList[0];
+      try{ engine = await tryLoad(selected); }
+      catch(_){
+        const alt = modelList.find(m=>m!==selected);
+        setStatus('فشل التحميل، التحويل تلقائيًا إلى نموذج أخف…');
+        modelSel.value = alt; engine = await tryLoad(alt);
+      }
       setStatus('جاهز');
       return engine;
     }catch(e){
-      console.error(e); setStatus('فشل تحميل النموذج. جرّب نموذجًا آخر أو أعد تحديث الصفحة.');
+      console.error(e); setStatus('فشل تحميل النموذج. جرّب تحديث الصفحة أو افتح الرابط في متصفح كروم الحديث.');
       throw e;
     }finally{busy=false;}
   }
-  function setStatus(t){ statusEl.textContent = t; }
 
   async function send(){
     const q = (inp.value||'').trim(); if(!q || busy) return; inp.value='';
@@ -124,7 +138,7 @@ footer{margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
       let acc=''; for await (const ch of stream){ const d = ch?.choices?.[0]?.delta?.content || ''; acc+=d; out.textContent = acc; chat.scrollTop = chat.scrollHeight; }
       msgs.push({role:'user',content:q}); msgs.push({role:'assistant',content:out.textContent});
       setStatus('جاهز');
-    }catch(e){ out.textContent = 'تعذّر توليد الإجابة. تحقق من الإنترنت أو بدّل النموذج من القائمة.'; }
+    }catch(e){ out.textContent = 'تعذّر توليد الإجابة. جرّب تغيير المتصفح إلى Chrome وتحديثه أو بدّل النموذج من القائمة.'; }
     finally{ busy=false; }
   }
 
