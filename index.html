@@ -3,31 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FadhelTalk — مساعدك الذكي</title>
+  <title>FadhelTalk — مساعدك الذكي (بدون مفتاح)</title>
   <style>
     body{margin:0;font-family:system-ui,Segoe UI,Roboto,"Noto Kufi Arabic",sans-serif;background:#f6f9fc;color:#0f172a}
-    header{text-align:center;padding:16px 10px;background:#00c4ca;color:#063d3f;font-weight:800;font-size:22px}
+    header{text-align:center;padding:16px;background:#00c4ca;color:#053437;font-weight:800;font-size:22px}
     .wrap{max-width:720px;margin:auto;padding:16px}
+    .chat{background:#fff;border:1px solid #e5ecf5;border-radius:14px;padding:12px;height:60vh;overflow:auto}
     .row{margin:10px 0}
-    .chat{background:#fff;border:1px solid #e5ecf5;border-radius:14px;padding:12px;height:62vh;overflow:auto}
     .user{text-align:right;color:#2563eb}
-    .bot{display:inline-block;background:#f1f5f9;border-radius:10px;padding:8px 10px}
+    .bot{display:inline-block;background:#f1f5f9;border-radius:10px;padding:8px 10px;white-space:pre-wrap}
     textarea{width:100%;border:1px solid #e5ecf5;border-radius:12px;padding:10px;resize:vertical}
     .controls{display:flex;gap:8px;margin-top:8px}
-    input{flex:1;border:1px solid #e5ecf5;border-radius:12px;padding:10px}
-    button{background:#00c4ca;border:0;color:#053033;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
+    button{background:#00c4ca;border:0;color:#053437;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
     button:disabled{opacity:.6}
     .hint{font-size:12px;color:#5b6b84;margin-top:6px}
   </style>
+  <!-- مكتبة Transformers.js تعمل على WASM (بدون WebGPU / بدون مفاتيح) -->
+  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js"></script>
 </head>
 <body>
-  <header>FadhelTalk — مساعدك الذكي (وضع API)</header>
+  <header>FadhelTalk — مساعدك الذكي (بدون مفتاح)</header>
   <div class="wrap">
-    <input id="apikey" placeholder="ضع مفتاح OpenAI هنا (للتجربة)" />
-    <div class="hint">مهم: لا تنشر المفتاح علنًا. للاستخدام العام استعمل خادمًا وسيطًا لاحقًا.</div>
+    <div class="hint" id="status">سيتم تنزيل النموذج الصغير عند أول استخدام…</div>
     <div class="chat" id="chat"></div>
-
-    <textarea id="inp" placeholder="اكتب سؤالك هنا..."></textarea>
+    <textarea id="inp" placeholder="اكتب سؤالك هنا... (الجودة بسيطة لأن النموذج صغير)"></textarea>
     <div class="controls">
       <button id="send">أرسل</button>
       <button id="clear">مسح</button>
@@ -36,10 +35,13 @@
 
 <script>
   const chat = document.getElementById('chat');
-  const inp = document.getElementById('inp');
+  const inp  = document.getElementById('inp');
   const sendBtn = document.getElementById('send');
   const clearBtn = document.getElementById('clear');
-  const keyInput = document.getElementById('apikey');
+  const statusEl = document.getElementById('status');
+
+  let pipe = null;      // خط الأنابيب للنموذج
+  let loading = false;
 
   function add(role, text){
     const div = document.createElement('div');
@@ -47,47 +49,69 @@
     div.innerHTML = role==='user' ? `<div class="user">${text}</div>` : `<div class="bot">${text}</div>`;
     chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
   }
-  function historyToMessages(){
-    const nodes = [...chat.querySelectorAll('.user,.bot')];
-    const msgs = [];
-    for(const n of nodes){
-      msgs.push({role: n.classList.contains('user')?'user':'assistant', content: n.textContent});
+
+  async function ensureModel(){
+    if (pipe) return pipe;
+    loading = true; sendBtn.disabled = true;
+    statusEl.textContent = 'جاري تحميل النموذج الخفيف…';
+    // نموذج صغير: distilGPT2 (الأخف دعماً على الجوال — قد يُنتج إنجليزي/عربي بسيط)
+    const { pipeline } = window.transformers;
+    pipe = await pipeline('text-generation', 'Xenova/distilGPT2', { quantized: true });
+    statusEl.textContent = 'جاهز';
+    loading = false; sendBtn.disabled = false;
+    return pipe;
+  }
+
+  // قالب محادثة بسيط لتحسين العربية قدر الإمكان
+  function buildPrompt(history, user){
+    // history: مصفوفة {role, content}
+    let prompt = "هذه محادثة قصيرة. أجب بالعربية الفصحى باختصار ووضوح.\n";
+    for (const m of history){
+      prompt += (m.role === 'user' ? "المستخدم: " : "المساعد: ") + m.content + "\n";
     }
-    return msgs;
+    prompt += "المستخدم: " + user + "\nالمساعد:";
+    return prompt;
   }
 
   async function send(){
-    const q = (inp.value||'').trim(); if(!q) return;
-    const key = (keyInput.value||'').trim();
-    if(!key){ alert('ضع مفتاح OpenAI أولاً'); return; }
-
+    const q = (inp.value||'').trim(); if(!q || loading) return;
     inp.value=''; add('user', q);
-    sendBtn.disabled = true;
+    await ensureModel();
+
+    // اجمع التاريخ من الدردشة (بسيط)
+    const nodes = [...chat.querySelectorAll('.user,.bot')];
+    const history = nodes.slice(0, -1).map(el => ({
+      role: el.classList.contains('user') ? 'user' : 'assistant',
+      content: el.textContent
+    }));
 
     try{
-      const res = await fetch('https://api.openai.com/v1/chat/completions',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-        body: JSON.stringify({
-          model:'gpt-4o-mini',
-          messages:[...historyToMessages(), {role:'user', content:q}],
-          temperature:0.6
-        })
+      statusEl.textContent = 'يولّد الإجابة… قد يأخذ بضع ثوانٍ على الجوال';
+      const prompt = buildPrompt(history, q);
+      const out = await pipe(prompt, {
+        max_new_tokens: 80,
+        temperature: 0.7,
+        top_p: 0.9,
+        do_sample: true,
+        repetition_penalty: 1.2
       });
-      const data = await res.json();
-      const ans = data?.choices?.[0]?.message?.content || 'خطأ في الاستجابة';
-      add('bot', ans);
+      let text = out[0]?.generated_text || '';
+      // قصّ النص على آخر "المساعد:" فقط
+      const cut = text.split("المساعد:").pop().trim();
+      add('bot', cut || '…');
     }catch(e){
-      add('bot','تعذّر الاتصال: '+(e?.message||''));
+      add('bot', 'تعذّر التوليد: ' + (e?.message || ''));
     }finally{
-      sendBtn.disabled = false;
+      statusEl.textContent = 'جاهز';
     }
   }
 
   sendBtn.onclick = send;
   clearBtn.onclick = ()=>{ chat.innerHTML=''; };
-  inp.addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }});
-  add('bot','مرحبًا! ألصق مفتاح OpenAI في الحقل بالأعلى ثم اسألني أي شيء.');
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(); }});
+
+  // رسالة ترحيب
+  add('bot', 'مرحبًا! هذه نسخة تعمل بدون مفتاح وبدون خادم. الجودة بسيطة لأنها تعتمد على نموذج صغير في المتصفح.');
 </script>
 </body>
 </html>
