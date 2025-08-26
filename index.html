@@ -381,6 +381,17 @@
             color: #991b1b;
         }
         
+        .change-key-btn {
+            background: transparent;
+            color: #7c3aed;
+            border: 1px solid #7c3aed;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
         @media (max-width: 600px) {
             .container { 
                 border-radius: 20px; 
@@ -449,6 +460,7 @@
         <div class="key-info hidden" id="key-info">
             <i class="fas fa-key"></i>
             <span>مفتاح API مفعل</span>
+            <button class="change-key-btn" id="change-key-btn">تغيير المفتاح</button>
         </div>
 
         <div class="api-status" id="api-status">
@@ -488,6 +500,7 @@
         const keyStatus = document.getElementById('key-status');
         const keyInfo = document.getElementById('key-info');
         const apiKeyContainer = document.getElementById('api-key-container');
+        const changeKeyBtn = document.getElementById('change-key-btn');
 
         // حالة التطبيق
         let isConnected = false;
@@ -573,6 +586,12 @@
                     
                     return true;
                 } else {
+                    // في حالة خطأ 401، نقوم بإزالة المفتاح القديم غير الصالح
+                    if (response.status === 401) {
+                        localStorage.removeItem('fadheltalk_api_key');
+                        API_KEY = "";
+                        showApiKeyInput();
+                    }
                     throw new Error(`خطأ في الخدمة: ${response.status}`);
                 }
             } catch (error) {
@@ -651,6 +670,10 @@
 
                 if (!response.ok) {
                     if (response.status === 401) {
+                        // في حالة خطأ المصادقة، نطلب من المستخدم إدخال مفتاح جديد
+                        localStorage.removeItem('fadheltalk_api_key');
+                        API_KEY = "";
+                        showApiKeyInput();
                         updateConnectionStatus(false, "مفتاح API غير صالح");
                         throw new Error("مفتاح API غير صالح أو منتهي الصلاحية");
                     } else if (response.status === 429) {
@@ -720,6 +743,16 @@
             }, 1500);
         }
 
+        // عرض واجهة إدخال المفتاح
+        function showApiKeyInput() {
+            apiKeyContainer.style.display = 'flex';
+            keyInfo.classList.add('hidden');
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+            apiKeyInput.value = '';
+            apiKeyInput.focus();
+        }
+
         // تهيئة الأحداث
         function initEvents() {
             sendBtn.addEventListener('click', sendMessage);
@@ -731,6 +764,8 @@
             apiKeyInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') saveApiKey();
             });
+            
+            changeKeyBtn.addEventListener('click', showApiKeyInput);
             
             window.addEventListener('load', () => {
                 if (!checkSavedKey()) {
