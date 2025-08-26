@@ -344,6 +344,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            display: none; /* إخفاء حقل إدخال المفتاح */
         }
         
         .api-key-input {
@@ -390,6 +391,7 @@
             font-size: 12px;
             margin-right: 8px;
             cursor: pointer;
+            display: none; /* إخفاء زر تغيير المفتاح */
         }
         
         @media (max-width: 600px) {
@@ -438,7 +440,7 @@
             <h1>FadhelTalk</h1>
             <p class="subtitle">تطبيق المحادثة الذكية</p>
             <div class="status">
-                <span id="status-text">جاري الاتصال...</span>
+                <span id="status-text">متصل بالخدمة</span>
                 <div class="status-dot" id="status-dot"></div>
             </div>
         </div>
@@ -457,27 +459,26 @@
             </div>
         </div>
 
-        <div class="key-info hidden" id="key-info">
+        <div class="key-info" id="key-info">
             <i class="fas fa-key"></i>
-            <span>مفتاح API مفعل</span>
-            <button class="change-key-btn" id="change-key-btn">تغيير المفتاح</button>
+            <span>الخدمة تعمل تلقائياً</span>
         </div>
 
         <div class="api-status" id="api-status">
-            <i class="fas fa-sync-alt fa-spin"></i>
-            <span>جاري اختبار الاتصال...</span>
+            <i class="fas fa-check-circle"></i>
+            <span>تم الاتصال بنجاح</span>
         </div>
 
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. يبدو أن هناك مشكلة في الاتصال. يرجى إدخال مفتاح API صالح للبدء.</div>
+                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
 
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." aria-label="رسالة المحادثة" disabled>
-            <button id="send-btn" aria-label="إرسال الرسالة" disabled>
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." aria-label="رسالة المحادثة">
+            <button id="send-btn" aria-label="إرسال الرسالة">
                 <i class="fas fa-paper-plane"></i>
                 <span>إرسال</span>
             </button>
@@ -495,31 +496,14 @@
         const statusText = document.getElementById('status-text');
         const statusDot = document.getElementById('status-dot');
         const apiStatus = document.getElementById('api-status');
-        const apiKeyInput = document.getElementById('api-key-input');
-        const saveKeyBtn = document.getElementById('save-key-btn');
-        const keyStatus = document.getElementById('key-status');
         const keyInfo = document.getElementById('key-info');
-        const apiKeyContainer = document.getElementById('api-key-container');
-        const changeKeyBtn = document.getElementById('change-key-btn');
 
         // حالة التطبيق
-        let isConnected = false;
+        let isConnected = true;
         let isWaitingForResponse = false;
-        let API_KEY = "";
 
-        // تحقق إذا كان هناك مفتاح محفوظ مسبقاً
-        function checkSavedKey() {
-            const savedKey = localStorage.getItem('fadheltalk_api_key');
-            if (savedKey) {
-                API_KEY = savedKey;
-                apiKeyContainer.style.display = 'none';
-                keyInfo.classList.remove('hidden');
-                userInput.disabled = false;
-                sendBtn.disabled = false;
-                return true;
-            }
-            return false;
-        }
+        // مفتاح API مضمن في الكود (لأغراض التوضيح فقط - في الواقع يجب حمايته بطريقة أفضل)
+        const API_KEY = "sk-6bf5bce1fa2e45ddb016a9ec42bc51d3";
 
         // تحديث الوقت الحالي
         function updateCurrentTime() {
@@ -565,33 +549,19 @@
             try {
                 updateConnectionStatus(false, "جاري اختبار الاتصال...");
                 
-                if (!API_KEY) {
-                    throw new Error("لم يتم إدخال مفتاح API");
-                }
-                
                 // محاولة الاتصال بخادم الاختبار أو API
                 const response = await fetch('https://api.deepseek.com/v1/models', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        ...(API_KEY ? { 'Authorization': `Bearer ${API_KEY}` } : {})
+                        'Authorization': `Bearer ${API_KEY}`
                     }
                 });
                 
                 if (response.ok) {
                     updateConnectionStatus(true, "تم الاتصال بنجاح");
-                    
-                    // إضافة رسالة ترحيب بعد الاتصال الناجح
-                    addMessage("مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟", false);
-                    
                     return true;
                 } else {
-                    // في حالة خطأ 401، نقوم بإزالة المفتاح القديم غير الصالح
-                    if (response.status === 401) {
-                        localStorage.removeItem('fadheltalk_api_key');
-                        API_KEY = "";
-                        showApiKeyInput();
-                    }
                     throw new Error(`خطأ في الخدمة: ${response.status}`);
                 }
             } catch (error) {
@@ -655,7 +625,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        ...(API_KEY ? { 'Authorization': `Bearer ${API_KEY}` } : {})
+                        'Authorization': `Bearer ${API_KEY}`
                     },
                     body: JSON.stringify({
                         model: 'deepseek-chat',
@@ -670,10 +640,6 @@
 
                 if (!response.ok) {
                     if (response.status === 401) {
-                        // في حالة خطأ المصادقة، نطلب من المستخدم إدخال مفتاح جديد
-                        localStorage.removeItem('fadheltalk_api_key');
-                        API_KEY = "";
-                        showApiKeyInput();
                         updateConnectionStatus(false, "مفتاح API غير صالح");
                         throw new Error("مفتاح API غير صالح أو منتهي الصلاحية");
                     } else if (response.status === 429) {
@@ -720,39 +686,6 @@
             }
         }
 
-        // حفظ مفتاح API
-        function saveApiKey() {
-            const key = apiKeyInput.value.trim();
-            if (!key) {
-                keyStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> <span>يرجى إدخال مفتاح API</span>';
-                keyStatus.className = 'key-status invalid';
-                return;
-            }
-            
-            API_KEY = key;
-            localStorage.setItem('fadheltalk_api_key', key);
-            
-            keyStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>تم حفظ المفتاح بنجاح</span>';
-            keyStatus.className = 'key-status valid';
-            
-            // اختبار الاتصال بعد حفظ المفتاح
-            setTimeout(() => {
-                apiKeyContainer.style.display = 'none';
-                keyInfo.classList.remove('hidden');
-                testConnection();
-            }, 1500);
-        }
-
-        // عرض واجهة إدخال المفتاح
-        function showApiKeyInput() {
-            apiKeyContainer.style.display = 'flex';
-            keyInfo.classList.add('hidden');
-            userInput.disabled = true;
-            sendBtn.disabled = true;
-            apiKeyInput.value = '';
-            apiKeyInput.focus();
-        }
-
         // تهيئة الأحداث
         function initEvents() {
             sendBtn.addEventListener('click', sendMessage);
@@ -760,23 +693,9 @@
                 if (e.key === 'Enter' && !isWaitingForResponse) sendMessage(); 
             });
             
-            saveKeyBtn.addEventListener('click', saveApiKey);
-            apiKeyInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') saveApiKey();
-            });
-            
-            changeKeyBtn.addEventListener('click', showApiKeyInput);
-            
             window.addEventListener('load', () => {
-                if (!checkSavedKey()) {
-                    userInput.disabled = true;
-                    sendBtn.disabled = true;
-                    apiKeyInput.focus();
-                    updateConnectionStatus(false, "يجب إدخال مفتاح API للاتصال");
-                } else {
-                    userInput.focus();
-                    testConnection();
-                }
+                userInput.focus();
+                testConnection();
             });
         }
 
