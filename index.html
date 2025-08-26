@@ -427,8 +427,8 @@
             <h1>FadhelTalk</h1>
             <p class="subtitle">تطبيق المحادثة الذكية</p>
             <div class="status">
-                <span id="status-text">متصل بالخدمة</span>
-                <div class="status-dot"></div>
+                <span id="status-text">جاري الاتصال...</span>
+                <div class="status-dot" id="status-dot"></div>
             </div>
         </div>
 
@@ -441,8 +441,8 @@
                 </button>
             </div>
             <div class="key-status valid" id="key-status">
-                <i class="fas fa-check-circle"></i>
-                <span>تم حفظ المفتاح بنجاح</span>
+                <i class="fas fa-info-circle"></i>
+                <span>يرجى إدخال مفتاح API صالح للاتصال بالخدمة</span>
             </div>
         </div>
 
@@ -452,20 +452,20 @@
         </div>
 
         <div class="api-status" id="api-status">
-            <i class="fas fa-check-circle"></i>
-            <span>تم الاتصال بنجاح</span>
+            <i class="fas fa-sync-alt fa-spin"></i>
+            <span>جاري اختبار الاتصال...</span>
         </div>
 
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. يبدو أن هناك مشكلة في الاتصال. يرجى إدخال مفتاح API صالح للبدء.</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
 
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." aria-label="رسالة المحادثة">
-            <button id="send-btn" aria-label="إرسال الرسالة">
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." aria-label="رسالة المحادثة" disabled>
+            <button id="send-btn" aria-label="إرسال الرسالة" disabled>
                 <i class="fas fa-paper-plane"></i>
                 <span>إرسال</span>
             </button>
@@ -481,6 +481,7 @@
         const sendBtn = document.getElementById('send-btn');
         const currentTimeElement = document.getElementById('current-time');
         const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
         const apiStatus = document.getElementById('api-status');
         const apiKeyInput = document.getElementById('api-key-input');
         const saveKeyBtn = document.getElementById('save-key-btn');
@@ -489,7 +490,7 @@
         const apiKeyContainer = document.getElementById('api-key-container');
 
         // حالة التطبيق
-        let isConnected = true;
+        let isConnected = false;
         let isWaitingForResponse = false;
         let API_KEY = "";
 
@@ -500,6 +501,8 @@
                 API_KEY = savedKey;
                 apiKeyContainer.style.display = 'none';
                 keyInfo.classList.remove('hidden');
+                userInput.disabled = false;
+                sendBtn.disabled = false;
                 return true;
             }
             return false;
@@ -520,13 +523,19 @@
             
             if (connected) {
                 statusText.textContent = "متصل بالخدمة";
+                statusDot.style.background = "#10b981";
                 apiStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>تم الاتصال بنجاح</span>';
-                apiStatus.classList.remove('error');
+                apiStatus.className = 'api-status';
+                userInput.disabled = false;
+                sendBtn.disabled = false;
             } else {
                 statusText.textContent = "غير متصل";
+                statusDot.style.background = "#ef4444";
                 apiStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>${message}</span> 
                                        <button class="retry-btn" id="retry-btn">إعادة المحاولة</button>`;
-                apiStatus.classList.add('error');
+                apiStatus.className = 'api-status error';
+                userInput.disabled = true;
+                sendBtn.disabled = true;
                 
                 // إضافة حدث لإعادة المحاولة
                 setTimeout(() => {
@@ -558,6 +567,10 @@
                 
                 if (response.ok) {
                     updateConnectionStatus(true, "تم الاتصال بنجاح");
+                    
+                    // إضافة رسالة ترحيب بعد الاتصال الناجح
+                    addMessage("مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟", false);
+                    
                     return true;
                 } else {
                     throw new Error(`خطأ في الخدمة: ${response.status}`);
@@ -724,6 +737,7 @@
                     userInput.disabled = true;
                     sendBtn.disabled = true;
                     apiKeyInput.focus();
+                    updateConnectionStatus(false, "يجب إدخال مفتاح API للاتصال");
                 } else {
                     userInput.focus();
                     testConnection();
