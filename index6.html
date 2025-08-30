@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>المسبحة الفاخرة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&family=Amiri:wght@700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --navy1:#0a1931; --navy2:#102542;
+  --gold1:#d4af37; --gold2:#f9e79f;
+  --white:#ffffff;
+  /* ارتفاع الهيدر الثابت */
+  --APPBAR-H: calc(70px + env(safe-area-inset-top, 0px));
+}
+
+/* أساسيات */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Cairo",sans-serif;
+  background:linear-gradient(160deg,var(--navy1),var(--navy2));
+  color:var(--white);
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* هيدر ثابت خارج البطاقة (لا خطوط تقطع المحتوى) */
+.appbar{
+  position:fixed; inset-inline:0; top:0; z-index:9999;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  height:var(--APPBAR-H);
+  padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px 16px;
+  background:linear-gradient(180deg,rgba(10,25,49,.98),rgba(16,37,66,.85));
+}
+.appbar .title{
+  font-weight:900; font-size:22px;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  white-space:nowrap;
+}
+.icon-btn{
+  width:50px; height:50px; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 30% 30%, #1b2c49, #0a1931);
+  border:2px solid var(--gold1);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 12px rgba(212,175,55,.6), inset 0 0 8px rgba(0,0,0,.3);
+  outline:none!important;
+}
+.icon-btn svg{ width:28px; height:28px; stroke:var(--gold2); stroke-width:2.8; fill:none; overflow:visible }
+
+@media (max-height:720px){ :root{ --APPBAR-H: calc(88px + env(safe-area-inset-top,0px)); } }
+@media (max-width:360px){ .icon-btn{width:46px;height:46px} .icon-btn svg{width:24px;height:24px} }
+
+/* مساحة فارغة تحت الهيدر حتى ما يغطي أي شيء */
+.header-spacer{ height:var(--APPBAR-H) }
+
+/* بطاقة التطبيق */
+.container{ display:grid; place-items:center; padding:8px }
+.screen{
+  width:min(480px,100%);
+  background:linear-gradient(180deg,var(--navy1),var(--navy2));
+  border-radius:28px;
+  box-shadow:0 25px 70px rgba(0,0,0,.6);
+  overflow:hidden;                 /* للحواف الدائرية لكن كل شيء داخل البطاقة */
+  display:flex; flex-direction:column;
+}
+
+/* تبويبات */
+.tabs{display:flex; gap:12px; justify-content:center; padding:12px 16px}
+.tab{
+  flex:1; padding:12px; border-radius:14px; cursor:pointer; text-align:center;
+  background:rgba(255,255,255,.08);
+  border:2px solid rgba(212,175,55,.4);
+  color:#d6dbff; font-weight:800; outline:none!important;
+}
+.tab.active{ background:linear-gradient(145deg,var(--gold1),var(--gold2)); color:var(--navy1) }
+
+/* الذكر والعداد */
+.phrase{ text-align:center; font-size:40px; font-weight:900; margin:12px 0 }
+.counter{
+  width:86%; margin:10px auto; display:flex; justify-content:space-between;
+  padding:12px 20px; border-radius:16px; border:2px solid var(--gold1);
+  background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  font-size:26px; font-weight:900; color:var(--gold2)
+}
+
+/* المؤشر */
+.ring-wrap{ width:86%; aspect-ratio:1/1; margin:18px auto; position:relative }
+.outer-ring{
+  position:absolute; inset:0; border-radius:50%;
+  background:conic-gradient(var(--gold1) var(--deg,0deg), rgba(255,255,255,.14) 0);
+  box-shadow:0 0 25px rgba(212,175,55,.35), inset 0 0 30px rgba(0,0,0,.7);
+}
+.ticks{
+  position:absolute; inset:8px; border-radius:50%;
+  background:repeating-conic-gradient(var(--gold1) 0deg 2deg, transparent 2deg 10deg);
+  -webkit-mask:radial-gradient(circle, transparent 78%, #000 79%);
+  opacity:.35;
+}
+
+/* زر اضغط */
+.center-btn{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:70%; height:70%; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--white), var(--gold2), var(--gold1));
+  border:3px solid var(--gold1);
+  display:grid; place-items:center;
+  font-family:"Amiri","Tahoma",serif; font-weight:700; font-size:clamp(26px,5.2vw,34px); color:var(--navy1);
+  cursor:pointer;
+  box-shadow:0 0 35px rgba(212,175,55,.65);
+  transition:transform .1s, box-shadow .25s ease;
+  outline:none!important;
+}
+.center-btn:active{ transform:translate(-50%,-50%) scale(.95) }
+.glow{ box-shadow:0 0 55px 20px rgba(212,175,55,.85)!important }
+
+/* الحديث والمصدر */
+.hadith-box{
+  background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.05));
+  border:2px solid var(--gold1);
+  border-radius:16px;
+  margin:8px 16px 10px;
+  padding:16px;
+  color:#f7f8fb;
+  text-align:center;
+}
+.hadith-title{ color:var(--gold2); font-weight:900; margin-bottom:10px; font-size:16px }
+.hadith-text{ font-size:16px; line-height:1.85 }
+
+.source-box{
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+  border:2px dashed var(--gold1);
+  border-radius:12px;
+  margin:6px 16px 18px;
+  padding:10px 14px;
+  color:#e8eaf3; font-size:14px; text-align:center;
+}
+.source-title{ color:var(--gold2); font-weight:800; margin-bottom:4px }
+
+/* إزالة أي فوكس/هالة افتراضية */
+.center-btn,.icon-btn,.tab{ -webkit-tap-highlight-color:transparent; outline:none!important; }
+.center-btn:focus,.center-btn:focus-visible,.center-btn:active,
+.icon-btn:focus,.icon-btn:focus-visible,.icon-btn:active,
+.tab:focus,.tab:focus-visible,.tab:active{ outline:none!important; box-shadow:none!important }
+.center-btn::-moz-focus-inner,.icon-btn::-moz-focus-inner,.tab::-moz-focus-inner{ border:0 }
+</style>
+</head>
+<body>
+
+<!-- هيدر ثابت خارج البطاقة -->
+<div class="appbar" role="banner" aria-label="التحكم">
+  <button class="icon-btn" id="btn-reset" title="إعادة">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"/>
+    </svg>
+  </button>
+  <div class="title">المسبحة</div>
+  <button class="icon-btn" id="btn-next" title="التالي">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 6l6 6-6 6"/>
+    </svg>
+  </button>
+</div>
+
+<!-- مسافة تحت الهيدر -->
+<div class="header-spacer" aria-hidden="true"></div>
+
+<!-- بطاقة التطبيق -->
+<div class="container">
+  <div class="screen" role="application" aria-label="المسبحة">
+    <div class="tabs" role="tablist">
+      <button id="tabZ" class="tab active" role="tab" aria-selected="true">تسبيح الزهراء</button>
+      <button id="tabO" class="tab" role="tab" aria-selected="false">التسبيح المفتوح</button>
+    </div>
+
+    <div class="phrase" id="phrase">الله أكبر</div>
+    <div class="counter"><div id="leftNum">34</div><div id="rightNum">0</div></div>
+
+    <div class="ring-wrap">
+      <div class="outer-ring" id="ring"></div>
+      <div class="ticks"></div>
+      <button class="center-btn" id="press" type="button" aria-label="إضغط">إضغط</button>
+    </div>
+
+    <div class="hadith-box" id="hadithBox"></div>
+    <div class="source-box" id="sourceBox"></div>
+  </div>
+</div>
+
+<script>
+/* أحاديث + مصادر (عشوائي كل زيارة) */
+const ahadith = [
+  {text:'قال الصادق (عليه السلام): من سبّح تسبيح فاطمة (عليها السلام) قبل أن يثني رجليه بعد انصرافه من صلاة الغداة غفر له، ويبدأ بالتكبير، ثمّ قال (عليه السلام) لحمزة بن حمران: حسبك بها يا حمزة.',src:'قرب الإسناد'},
+  {text:'قال أبو هارون المكفوف: قال الصادق (عليه السلام): يا أبا هارون، إنّا نأمر صبياننا بتسبيح فاطمة (عليها السلام) كما نأمرهم بالصلاة فالزمه، فإنّه لم يلزمه عبد فشقي.',src:'بحار الأنوار: ج٨٢، ص٣٢٨'},
+  {text:'قال الباقر (عليه السلام): من سبّح تسبيح الزهراء (عليها السلام) ثمّ استغفر غفر له، وهي مائة باللسان وألف في الميزان، وتطرد الشيطان وترضي الرحمن.',src:'ثواب الأعمال / بحار الأنوار: ج٨٢، ص٣٣٢'}
+];
+(function showRandomHadith(){
+  const h = ahadith[Math.floor(Math.random()*ahadith.length)];
+  document.getElementById('hadithBox').innerHTML =
+    `<div class="hadith-title">ثواب تسبيح فاطمة الزهراء (عليها السلام)</div>
+     <div class="hadith-text">${h.text}</div>`;
+  document.getElementById('sourceBox').innerHTML =
+    `<div class="source-title">المصدر</div><div>${h.src}</div>`;
+})();
+
+/* التسبيح */
+const SEQ=[{text:"الله أكبر",max:34},{text:"الحمد لله",max:33},{text:"سبحان الله",max:33}];
+let mode='zahra';
+let zh={step:0,count:0};
+let op={text:'سبحان الله',count:0,target:0};
+
+const phrase=document.getElementById('phrase'),
+      left=document.getElementById('leftNum'),
+      right=document.getElementById('rightNum'),
+      ring=document.getElementById('ring'),
+      press=document.getElementById('press'),
+      tabZ=document.getElementById('tabZ'),
+      tabO=document.getElementById('tabO');
+
+function vibrate(p){ try{ navigator.vibrate && navigator.vibrate(p); }catch{} }
+
+function render(){
+  if(mode==='zahra'){
+    const c=SEQ[zh.step]||{text:'تم',max:1};
+    phrase.textContent=c.text;
+    left.textContent=c.max;
+    right.textContent=zh.count;
+    ring.style.setProperty('--deg', (zh.count/c.max*360) + 'deg');
+  }else{
+    phrase.textContent=op.text;
+    left.textContent=op.target>0?op.target:'∞';
+    right.textContent=op.count;
+    ring.style.setProperty('--deg', (op.target?op.count/op.target*360:0) + 'deg');
+  }
+}
+
+function tick(){
+  if(mode==='zahra'){
+    const c=SEQ[zh.step];
+    if(c){
+      zh.count++;
+      if(zh.count>=c.max){
+        zh.step++; zh.count=0;
+        vibrate([120,60,120]);
+        press.classList.add('glow'); setTimeout(()=>press.classList.remove('glow'),800);
+      }
+    }
+    if(zh.step>=SEQ.length){
+      phrase.textContent='تم التسبيح ✔';
+      left.textContent='0'; right.textContent='0';
+      ring.style.setProperty('--deg','360deg');
+      vibrate([200,100,200]);
+      press.classList.add('glow'); setTimeout(()=>press.classList.remove('glow'),1500);
+    }
+  }else{
+    op.count++;
+    if(op.target>0 && op.count>=op.target){
+      vibrate([200,100,200]);
+      press.classList.add('glow'); setTimeout(()=>press.classList.remove('glow'),1200);
+    }
+  }
+  render();
+}
+
+press.addEventListener('click', tick);
+document.getElementById('btn-next').onclick=()=>{ mode = (mode==='zahra') ? 'open' : 'zahra'; tabZ.classList.toggle('active',mode==='zahra'); tabO.classList.toggle('active',mode==='open'); render(); };
+document.getElementById('btn-reset').onclick=()=>{ if(confirm('تصفير العدّاد؟')){ zh={step:0,count:0}; op={text:'سبحان الله',count:0,target:0}; render(); } };
+tabZ.onclick=()=>{ mode='zahra'; tabZ.classList.add('active'); tabO.classList.remove('active'); render(); };
+tabO.onclick=()=>{ mode='open';  tabO.classList.add('active'); tabZ.classList.remove('active'); render(); };
+
+render();
+</script>
+</body>
+</html>
