@@ -6,24 +6,16 @@
 <title>مواقيت الصلاة وفق المذهب الجعفري</title>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0f172a; --muted:#6b7280; --bg:#f6f8fb; --border:#e5e7eb;
-    --accent:#0ea5a6; --shadow:0 8px 20px rgba(2,6,23,.08);
-    --hadith-color:#0d2a58;
-  }
+  :root{ --ink:#0f172a; --muted:#6b7280; --bg:#f6f8fb; --border:#e5e7eb; --accent:#0ea5a6; --shadow:0 8px 20px rgba(2,6,23,.08); --hadith-color:#0d2a58; }
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); font-family:"Tajawal",sans-serif; color:var(--ink); padding:16px;}
   .container{width:min(1000px,100%); margin:auto; display:flex; flex-direction:column; gap:16px}
-
   .topClock{text-align:right; font-size:.95rem; font-weight:700; color:#084241}
-
   .hero{background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px; text-align:center}
   .heroTitle{margin:0; font-family:"Reem Kufi",sans-serif; font-size:1.4rem; color:var(--ink)}
-
   .locationBox{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px 14px; display:flex; justify-content:space-between; align-items:center}
   .place{font-weight:800}
   .changeBtn{background:#eef6ff; border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-weight:800; cursor:pointer}
-
   .infoRow{display:grid; grid-template-columns:1fr 1fr; gap:16px}
   @media(max-width:720px){.infoRow{grid-template-columns:1fr}}
   .chip{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px; display:flex; align-items:center; gap:12px}
@@ -31,18 +23,16 @@
   .stack{display:flex; flex-direction:column}
   .label{font-size:.85rem; color:var(--muted); font-weight:700}
   .value{font-weight:800; font-size:1rem; font-variant-numeric:tabular-nums}
-
   .card{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px}
-  .card h3{margin:0 0 10px; font-size:1rem; font-weight:800}
+  .card h3{margin:0 0 10px; font-size:1rem; font-weight:800; text-align:center;} /* وسط */
   table{width:100%; border-collapse:collapse}
   th,td{padding:12px; border-bottom:1px solid #f0f0f0; font-size:1rem}
   th{background:#fafafa; font-weight:800}
   td.name{text-align:right; font-weight:700}
   td.time{text-align:left; font-weight:800}
   tr.next td{background:linear-gradient(90deg,#0ea5a61a,transparent)}
-
   .events{display:none; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:14px}
-  .events h3{margin:0 0 8px; font-size:1rem; font-weight:800}
+  .events h3{margin:0 0 8px; font-size:1rem; font-weight:800; text-align:center;} /* وسط */
   .evtGrid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
   @media(max-width:720px){.evtGrid{grid-template-columns:1fr}}
   .evtCol{border:1px dashed #e3e8f0; border-radius:10px; padding:10px}
@@ -50,14 +40,11 @@
   .evtItem{padding:6px 0; border-bottom:1px solid #f0f0f0}
   .evtItem:last-child{border-bottom:none}
   .evtText{font-weight:700}
-
   .hadith{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:16px; text-align:center}
   .htext{margin:0; font-size:1.06rem; color:var(--hadith-color); line-height:1.9}
   .hsrc{display:inline-block; margin-top:12px; padding:6px 14px; border-radius:10px; background:#f5f7fa; border:1px solid var(--border); font-weight:800; color:#3b4656}
-
   footer{text-align:center; margin-top:8px}
   .credit{color:var(--hadith-color); font-weight:800}
-
   .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(15,23,42,.28); z-index:60}
   .modal.open{display:grid}
   .box{width:min(520px,96%); background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px}
@@ -101,11 +88,12 @@
       </table>
     </section>
 
+    <!-- يظهر فقط عند وجود مناسبات -->
     <section class="events" id="eventsBox">
       <h3>مناسبات اليوم</h3>
       <div class="evtGrid">
-        <div class="evtCol"><h4>اليوم</h4><div id="eventsToday"></div></div>
-        <div class="evtCol"><h4>الليلة</h4><div id="eventsTonight"></div></div>
+        <div class="evtCol" id="colToday"><h4>اليوم</h4><div id="eventsToday"></div></div>
+        <div class="evtCol" id="colNight"><h4>الليلة</h4><div id="eventsTonight"></div></div>
       </div>
     </section>
 
@@ -140,7 +128,7 @@
   </div>
 
 <script>
-/* ===== بيانات البلدان والمدن ===== */
+/* ========================= إعدادات عامة ========================= */
 const MAP=[
  {ar:"البحرين",en:"Bahrain",tz:"Asia/Bahrain",cities:[
    {ar:"المنامة",en:"Manama"},{ar:"المحرق",en:"Muharraq"},{ar:"مدينة عيسى",en:"Isa Town"},
@@ -151,16 +139,11 @@ const MAP=[
  {ar:"العراق",en:"Iraq",tz:"Asia/Baghdad",cities:[{ar:"بغداد",en:"Baghdad"},{ar:"البصرة",en:"Basrah"},{ar:"أربيل",en:"Erbil"}]},
  {ar:"إيران",en:"Iran",tz:"Asia/Tehran",cities:[{ar:"طهران",en:"Tehran"},{ar:"مشهد",en:"Mashhad"},{ar:"أصفهان",en:"Isfahan"}]},
  {ar:"الكويت",en:"Kuwait",tz:"Asia/Kuwait",cities:[{ar:"مدينة الكويت",en:"Kuwait City"},{ar:"حولي",en:"Hawalli"},{ar:"الأحمدي",en:"Al Ahmadi"}]},
- {ar:"السعودية",en:"Saudi Arabia",tz:"Asia/Riyadh",cities:[
-   {ar:"الرياض",en:"Riyadh"},{ar:"جدة",en:"Jeddah"},{ar:"الدمام",en:"Dammam"},{ar:"مكة",en:"Mecca"},{ar:"المدينة",en:"Medina"}]}
+ {ar:"السعودية",en:"Saudi Arabia",tz:"Asia/Riyadh",cities:[{ar:"الرياض",en:"Riyadh"},{ar:"جدة",en:"Jeddah"},{ar:"الدمام",en:"Dammam"},{ar:"مكة",en:"Mecca"},{ar:"المدينة",en:"Medina"}]}
 ];
-
 const DEFAULT={countryEn:"Bahrain",countryAr:"البحرين",cityEn:"Manama",cityAr:"المنامة",tz:"Asia/Bahrain"};
 let current = JSON.parse(localStorage.getItem("jaq_prayer_place")||"null") || {...DEFAULT};
 let HIJRI_OFFSET_DAYS = Number(localStorage.getItem("jaq_hijri_offset_days")||"0");
-
-/* مصدر هجري خارجي (اختياري) — اتركه null إن لم يكن لديك مصدر */
-const HIJRI_SOURCE_URL = null;
 
 /* أحاديث */
 const HADITHS=[
@@ -177,23 +160,25 @@ function setHadith(){
   hadithText.textContent=h.t; hadithSource.textContent=h.s;
 }
 
-/* مناسبات (مفتاح m-d هجري) */
-const EVENTS={
+/* تقويم مناسبات (مختصر قابل للتوسعة) */
+let EVENTS={
   "1-1":[{t:"رأس السنة الهجرية"}],
   "1-2":[{t:"دخول الإمام الحسين ع كربلاء"}],
   "1-7":[{t:"بدء منع الماء عن خيام الحسين ع"}],
   "1-9":[{t:"تاسوعاء – يوم أبي الفضل العباس ع"}],
-  "1-10":[{t:"عاشوراء – شهادة الإمام الحسين ع وأهل بيته وأصحابه"}],
-  "2-7":[{t:"(بعض الأقوال) شهادة الإمام الحسن المجتبى ع"}],
+  "1-10":[{t:"عاشوراء – شهادة الإمام الحسين ع"}],
+  "1-12":[{t:"دفن الأجساد الطاهرة بكربلاء"}],
+  "1-25":[{t:"شهادة الإمام زين العابدين ع"}],
+  "2-7":[{t:"شهادة الإمام الحسن المجتبى ع (اختلاف الروايات)"}],
   "2-20":[{t:"الأربعين – زيارة الإمام الحسين ع"}],
-  "2-28":[{t:"وفاة النبي الأكرم ﷺ عند الشيعة"},{t:"شهادة الإمام الحسن المجتبى ع"}],
+  "2-28":[{t:"وفاة النبي الأكرم ﷺ (على المشهور)"},{t:"شهادة الإمام الحسن المجتبى ع (قول مشهور)"}],
   "3-8":[{t:"شهادة الإمام الحسن العسكري ع"}],
-  "3-9":[{t:"فرحة الزهراء (عيد البَقر)"}],
-  "3-17":[{t:"المولد النبوي الشريف (عند الشيعة)"}],
-  "4-8":[{t:"(بعض الأقوال) ولادة الإمام الحسن العسكري ع"}],
-  "4-10":[{t:"(أقوال) ولادة الإمام الحسن العسكري ع"}],
+  "3-9":[{t:"فرحة الزهراء (يوم البراءة)"}],
+  "3-17":[{t:"المولد النبوي الشريف (عند الإمامية)"}],
+  "4-8":[{t:"ولادة الإمام الحسن العسكري ع (اختلاف الروايات)"}],
+  "4-10":[{t:"ولادة الإمام الحسن العسكري ع (اختلاف الروايات)"}],
   "5-5":[{t:"مولد السيدة زينب بنت علي ع"}],
-  "5-13":[{t:"(قول) شهادة السيدة فاطمة الزهراء ع"}],
+  "5-13":[{t:"شهادة السيدة فاطمة الزهراء ع (إحدى الروايات)"}],
   "6-3":[{t:"شهادة السيدة فاطمة الزهراء ع (قول مشهور)"}],
   "6-20":[{t:"مولد السيدة فاطمة الزهراء ع"}],
   "7-1":[{t:"مولد الإمام محمد الباقر ع"}],
@@ -205,15 +190,22 @@ const EVENTS={
   "8-3":[{t:"مولد الإمام الحسين ع"}],
   "8-4":[{t:"مولد أبي الفضل العباس ع"}],
   "8-5":[{t:"مولد الإمام زين العابدين ع"}],
+  "8-11":[{t:"مولد علي الأكبر ع"}],
   "8-15":[{t:"مولد الإمام المهدي عجل الله فرجه"}],
+  "9-10":[{t:"وفاة السيدة خديجة الكبرى ع"}],
   "9-15":[{t:"مولد الإمام الحسن المجتبى ع"}],
   "9-19":[{t:"ضربة الإمام علي ع – ليلة قدر"}],
   "9-21":[{t:"شهادة الإمام علي ع – ليلة قدر"}],
   "9-23":[{t:"ليلة القدر (قول مشهور)"}],
   "10-1":[{t:"عيد الفطر المبارك"}],
+  "10-8":[{t:"ذكرى هدم قبور البقيع"}],
+  "10-25":[{t:"شهادة الإمام جعفر الصادق ع"}],
+  "11-1":[{t:"مولد السيدة فاطمة المعصومة ع"}],
   "11-11":[{t:"مولد الإمام علي بن موسى الرضا ع"}],
   "11-23":[{t:"دحو الأرض"}],
+  "11-29":[{t:"شهادة الإمام محمد الجواد ع"}],
   "12-7":[{t:"يوم التروية"}],
+  "12-8":[{t:"الخروج إلى عرفة"}],
   "12-9":[{t:"يوم عرفة (وشهادة مسلم بن عقيل ع عند بعض الروايات)"}],
   "12-10":[{t:"عيد الأضحى المبارك"}],
   "12-18":[{t:"عيد الغدير الأغر"}],
@@ -221,142 +213,103 @@ const EVENTS={
   "12-25":[{t:"يوم نزول سورة الإنسان"}]
 };
 
-/* ===== وظائف مساعدة ===== */
+/* أدوات وقت/تنسيق */
 function to12h(raw){
   if(!raw) return "--:-- --";
-  const pure=String(raw).replace(/\s*\(.*?\)\s*/g,"");
-  const [H,M]=pure.split(":").map(Number); if(Number.isNaN(H)||Number.isNaN(M)) return raw;
-  let h=H%12||12; return `${h}:${String(M).padStart(2,"0")} ${H<12?"AM":"PM"}`;
+  const pure=String(raw).replace(/\s*\(.*?\)\s*/g,"").trim();
+  if(!/^\d{1,2}:\d{2}$/.test(pure)) return raw;
+  let [H,M]=pure.split(":").map(Number);
+  H = (H===24)?0:H;
+  const h=H%12||12; return `${h}:${String(M).padStart(2,"0")} ${H<12?"AM":"PM"}`;
 }
 function updateClock(){
   topClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:current.tz,hour:'2-digit',minute:'2-digit',hour12:true}).format(new Date());
 }
-function fmtGreg(){
-  return new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
-}
-function hijriYMD(d){
-  const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(d);
-  return {y:+parts.find(p=>p.type==='year').value, m:+parts.find(p=>p.type==='month').value, d:+parts.find(p=>p.type==='day').value};
+function ymdInTZ(date, tz){
+  const p=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
+  return {Y:p.find(x=>x.type==='year').value, M:p.find(x=>x.type==='month').value, D:p.find(x=>x.type==='day').value};
 }
 
-/* مساعد لالتقاط مفاتيح بأسماء مختلفة */
-function pick(obj, keys){
-  for (const k of keys){
-    if (obj && Object.prototype.hasOwnProperty.call(obj, k) && obj[k] != null && obj[k] !== "")
-      return obj[k];
-  }
-  return undefined;
-}
+/* الهجري (Aladhan + تعويض) مع مطابقة اسم يوم الميلادي */
 const HIJRI_MONTHS_AR=["","محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
-
-/* محاولة جلب التاريخ الهجري من مصدر خارجي (اختياري) */
-async function fetchHijriFromSource(){
-  if (!HIJRI_SOURCE_URL) return null;
+function hasIntlIslamic(){ try{ new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric'}).format(new Date()); return true; }catch{ return false; } }
+function g2jd(y,m,d){ const a=Math.floor((14-m)/12); y=y+4800-a; m=m+12*a-3; return d + Math.floor((153*m+2)/5) + 365*y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) - 32045; }
+function jd2islamic(jd){
+  const l = jd - 1948440 + 10632;
+  const n = Math.floor((l - 1) / 10631);
+  let l2 = l - 10631*n + 354;
+  const j = (Math.floor((10985 - l2)/5316)) * (Math.floor((50*l2)/17719)) + (Math.floor(l2/5670)) * (Math.floor((43*l2)/15238));
+  l2 = l2 - (Math.floor((30 - j)/15)) * (Math.floor((17719*j)/50)) - (Math.floor(j/16)) * (Math.floor((15238*j)/43)) + 29;
+  const m = Math.floor((24*l2)/709);
+  const d = l2 - Math.floor((709*m)/24);
+  const y = 30*n + j - 30;
+  return {y,m,d};
+}
+async function fetchHijriFromAladhan(refDate){
+  const {Y,M,D}=ymdInTZ(refDate, current.tz);
+  const url=`https://api.aladhan.com/v1/gToH?date=${encodeURIComponent(`${D}-${M}-${Y}`)}&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`;
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok) throw new Error("Hijri API HTTP "+r.status);
+  const j=await r.json();
+  const hj=j?.data?.hijri; if(!hj) throw new Error("Hijri API malformed");
+  return hj;
+}
+function formatHijriFromObj(h, civilWeekday){
+  const day = Number(h.day||h.date?.split('-')[0]);
+  const monthName = h?.month?.ar || HIJRI_MONTHS_AR[h?.month?.number||0] || '';
+  const year = h.year || (h.date? h.date.split('-')[2] : '');
+  return `${civilWeekday}، ${day} ${monthName} ${year} هـ`;
+}
+function localHijriFallback(refDate, civilWeekday){
   try{
-    const r = await fetch(HIJRI_SOURCE_URL, {cache:"no-store"});
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    const j = await r.json();
-
-    const hijriObj = pick(j, ["hijri","Hijri","الهجري"]) || j;
-    const y = Number(pick(hijriObj, ["year","Year","y","hijriYear","HijriYear","الهجري_سنة"]));
-    let  m = pick(hijriObj, ["month","Month","m","hijriMonth","HijriMonth","الهجري_شهر"]);
-    const d = Number(pick(hijriObj, ["day","Day","d","hijriDay","HijriDay","الهجري_يوم"]));
-
-    if (typeof m === "string"){
-      const idx = HIJRI_MONTHS_AR.findIndex(n => n === m.trim());
-      if (idx > 0) m = idx;
+    if(hasIntlIslamic()){
+      const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(refDate);
+      const y=+parts.find(p=>p.type==='year').value;
+      const m=+parts.find(p=>p.type==='month').value;
+      const d=+parts.find(p=>p.type==='day').value;
+      return `${civilWeekday}، ${d} ${HIJRI_MONTHS_AR[m]} ${y} هـ`;
+    }else{
+      const p=ymdInTZ(refDate,current.tz);
+      const jd=g2jd(+p.Y,+p.M,+p.D), h=jd2islamic(jd);
+      return `${civilWeekday}، ${h.d} ${HIJRI_MONTHS_AR[h.m]} ${h.y} هـ`;
     }
-    m = Number(m);
-
-    if (!y || !m || !d) return null;
-
-    const weekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(new Date());
-    const monthName = HIJRI_MONTHS_AR[m] || String(m);
-    return `${weekday}، ${d} ${monthName} ${y} هـ`;
-  }catch(e){
-    return null;
-  }
+  }catch{ return "التاريخ الهجري (غير متاح)"; }
 }
 
-/* تحديد الحدث/الوقت القادم لتظليل الصف */
+/* أوقات الصلاة + تحديد القادم */
+let lastTimings=null;
 function nextKey(t, tz){
   const order=["Imsak","Fajr","Sunrise","Dhuhr","Asr","Sunset","Maghrib","Isha","Midnight"];
   const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
-  const ds=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(nowTZ).split('-').map(Number);
-  const [Y,M,D]=ds;
+  const {Y,M,D}=ymdInTZ(nowTZ, tz);
   const cand=order.map(k=>{
-    const raw=(t[k]||"").replace(/\s*\(.*?\)\s*/g,"");
-    if(!raw.includes(':')) return {k,diff:Infinity};
-    const [HH,MM]=raw.split(':').map(Number);
-    return {k,diff:new Date(Y,M-1,D,HH||0,MM||0,0)-nowTZ};
+    const raw=(t[k]||"").replace(/\s*\(.*?\)\s*/g,"").trim();
+    if(!/^\d{1,2}:\d{2}$/.test(raw)) return {k,diff:Infinity};
+    let [HH,MM]=raw.split(':').map(Number); HH=(HH===24)?0:HH;
+    return {k,diff:new Date(+Y,+M-1,+D,HH||0,MM||0,0)-nowTZ};
   });
   let n=cand.filter(x=>x.diff>=0).sort((a,b)=>a.diff-b.diff)[0];
   if(!n) n=cand.sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff))[0];
   return n?.k||null;
 }
-
-/* بناء صف جدول */
 function tr(name,val,next=false){return `<tr class="${next?'next':''}"><td class="name">${name}</td><td class="time">${to12h(val||'')}</td></tr>`;}
-
-/* تقدير الإمساك إن لم يقدَّم */
 function ensureImsak(t){
   if(!t.Imsak && t.Fajr){
-    const [H,M]=String(t.Fajr).replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
-    const d=new Date(); d.setHours(H||0, (M||0)-10, 0, 0);
+    const pure=String(t.Fajr).replace(/\s*\(.*?\)\s*/g,"").trim();
+    let [H,M]=pure.split(":").map(Number);
+    const d=new Date(); d.setHours((H||0), (M||0)-10, 0, 0);
     t.Imsak = `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   }
   return t;
 }
-
-/* جلب المواقيت (method=0 جعفري) */
 async function fetchTimings(countryEn, cityEn){
   const url=`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(cityEn)}&country=${encodeURIComponent(countryEn)}&method=0`;
-  const r=await fetch(url); if(!r.ok) throw new Error("تعذّر جلب المواقيت"); const j=await r.json();
+  const r=await fetch(url); if(!r.ok) throw new Error("تعذّر جلب المواقيت");
+  const j=await r.json();
   return j.data.timings;
 }
 
-/* يبدأ اليوم الهجري بعد المغرب + تطبيق التعويض اليدوي */
-function getHijriDateString(){
-  const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-  let base = new Date(nowTZ);
-
-  if(lastTimings?.Maghrib){
-    const [H,M] = lastTimings.Maghrib.replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
-    const magh = new Date(nowTZ); magh.setHours(H||0,M||0,0,0);
-    if(nowTZ >= magh) base = new Date(nowTZ.getTime() + 24*60*60*1000);
-  }
-  if(HIJRI_OFFSET_DAYS){
-    base = new Date(base.getTime() + HIJRI_OFFSET_DAYS*24*60*60*1000);
-  }
-
-  try{
-    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(base);
-  }catch{
-    return "التاريخ الهجري (غير مدعوم)";
-  }
-}
-
-/* إرجاع (y,m,d) هجري لأغراض المناسبات بنفس منطق أعلى */
-function hijriYMD_byCustom(dateLike){
-  const nowOrGiven = new Date(dateLike);
-  let base = nowOrGiven;
-
-  if(lastTimings?.Maghrib){
-    const ref = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-    const [H,M] = lastTimings.Maghrib.replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
-    const magh = new Date(ref); magh.setHours(H||0,M||0,0,0);
-    base = (ref >= magh) ? new Date(ref.getTime() + 24*60*60*1000) : ref;
-  }
-  if(HIJRI_OFFSET_DAYS){
-    base = new Date(base.getTime() + HIJRI_OFFSET_DAYS*24*60*60*1000);
-  }
-
-  const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(base);
-  return {y:+parts.find(p=>p.type==='year').value, m:+parts.find(p=>p.type==='month').value, d:+parts.find(p=>p.type==='day').value};
-}
-
-/* رسم الجدول + المناسبات (Async لاحتمال جلب الهجري من مصدر خارجي) */
-let lastTimings=null;
+/* رسم الجدول + التاريخين + المناسبات */
 async function renderTimes(t, tz){
   const timings=ensureImsak({...t}); 
   lastTimings=timings;
@@ -375,41 +328,95 @@ async function renderTimes(t, tz){
   const k=nextKey(timings,tz);
   times.innerHTML=rows.map(r=>tr(r.n,timings[r.k],r.k===k)).join("");
 
-  // أولوية: مصدر هجري خارجي (إن وُجد) ثم منطق ما بعد المغرب + التعويض
-  const hijriFromSource = await fetchHijriFromSource();
-  hijri.textContent = hijriFromSource || getHijriDateString();
+  const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
+  greg.textContent = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(nowTZ);
 
-  renderEvents();
+  const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(nowTZ);
+  try{
+    const hijriObj = await fetchHijriFromAladhan(nowTZ); // لليوم المدني الحالي
+    hijri.textContent = formatHijriFromObj(hijriObj, civilWeekday);
+    await renderEventsWithHijri(hijriObj, nowTZ);
+  }catch(e){
+    hijri.textContent = localHijriFallback(nowTZ, civilWeekday);
+    renderEventsFallback(nowTZ);
+  }
 }
 
-/* مناسبات اليوم/الليلة */
-function eventsForHijri(hm, hd){ return EVENTS[`${hm}-${hd}`] || []; }
-function renderEvents(){
-  const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
+/* مناسبات باستخدام كائن الهجري من API */
+async function renderEventsWithHijri(hijriObjToday, refToday){
+  const todayM = Number(hijriObjToday?.month?.number||0);
+  const todayD = Number(hijriObjToday?.day||0);
 
-  const {m:tm,d:td}=hijriYMD_byCustom(nowTZ);                               // اليوم
-  const {m:nm,d:nd}=hijriYMD_byCustom(new Date(nowTZ.getTime()+24*60*60*1000)); // الليلة
+  const refTonight = new Date(refToday.getTime()+86400000);
+  let hijriTomorrow=null;
+  try{ hijriTomorrow = await fetchHijriFromAladhan(refTonight); }catch{}
 
-  const todayList=eventsForHijri(tm,td);
-  const nightList=eventsForHijri(nm,nd);
+  const nightM = Number(hijriTomorrow?.month?.number||0);
+  const nightD = Number(hijriTomorrow?.day||0);
 
+  drawEvents(todayM, todayD, nightM, nightD);
+}
+
+/* مناسبات Fallback */
+function renderEventsFallback(ref){
+  let todayM,todayD,nightM,nightD;
+  if(hasIntlIslamic()){
+    const p1=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(ref);
+    todayM=+p1.find(x=>x.type==='month').value; todayD=+p1.find(x=>x.type==='day').value;
+    const ref2=new Date(ref.getTime()+86400000);
+    const p2=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(ref2);
+    nightM=+p2.find(x=>x.type==='month').value; nightD=+p2.find(x=>x.type==='day').value;
+  }else{
+    const {Y,M,D}=ymdInTZ(ref,current.tz);
+    const h1=jd2islamic(g2jd(+Y,+M,+D));
+    const h2=jd2islamic(g2jd(+Y,+M,+D+1));
+    todayM=h1.m; todayD=h1.d; nightM=h2.m; nightD=h2.d;
+  }
+  drawEvents(todayM, todayD, nightM, nightD);
+}
+
+/* إظهار/إخفاء المناسبات حسب وجودها */
+function drawEvents(todayM,todayD,nightM,nightD){
   const box=document.getElementById('eventsBox');
+  const colToday=document.getElementById('colToday');
+  const colNight=document.getElementById('colNight');
   const todayEl=document.getElementById('eventsToday');
   const nightEl=document.getElementById('eventsTonight');
 
-  if(todayList.length===0 && nightList.length===0){ box.style.display='none'; return; }
+  const todayList = EVENTS[`${todayM}-${todayD}`] || [];
+  const nightList = EVENTS[`${nightM}-${nightD}`] || [];
+
+  if(todayList.length===0 && nightList.length===0){
+    box.style.display='none';
+    todayEl.innerHTML=""; nightEl.innerHTML="";
+    return;
+  }
+
   box.style.display='block';
 
-  const itemHTML=(e)=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`;
-  todayEl.innerHTML = todayList.length ? todayList.map(itemHTML).join("") : `<div class="evtItem"><span class="evtText">لا توجد مناسبة.</span></div>`;
-  nightEl.innerHTML = nightList.length ? nightList.map(itemHTML).join("") : `<div class="evtItem"><span class="evtText">لا توجد مناسبة.</span></div>`;
+  if(todayList.length){
+    colToday.style.display='block';
+    todayEl.innerHTML = todayList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
+  }else{
+    colToday.style.display='none';
+    todayEl.innerHTML="";
+  }
+
+  if(nightList.length){
+    colNight.style.display='block';
+    nightEl.innerHTML = nightList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
+  }else{
+    colNight.style.display='none';
+    nightEl.innerHTML="";
+  }
 }
 
-/* تحميل عام */
+/* ========================= التشغيل ========================= */
+function fmtGreg(){ return new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date()); }
 async function load(){
   place.textContent=`${current.cityAr}، ${current.countryAr}`;
-  greg.textContent=fmtGreg();
   hijri.textContent="--";
+  greg.textContent=fmtGreg();
   times.innerHTML="<tr><td colspan=2>...</td></tr>";
   try{
     const t=await fetchTimings(current.countryEn,current.cityEn);
@@ -417,9 +424,14 @@ async function load(){
   }catch{
     times.innerHTML=`<tr><td colspan="2" style="color:#b91c1c">تعذّر جلب المواقيت.</td></tr>`;
     document.getElementById('eventsBox').style.display='none';
+    const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
+    const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(nowTZ);
     try{
-      hijri.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
-    }catch{ hijri.textContent="التاريخ الهجري (غير مدعوم)"; }
+      const hj = await fetchHijriFromAladhan(nowTZ);
+      hijri.textContent = formatHijriFromObj(hj, civilWeekday);
+    }catch{
+      hijri.textContent = localHijriFallback(nowTZ, civilWeekday);
+    }
   }
 }
 
@@ -427,7 +439,7 @@ async function load(){
 setInterval(updateClock,1000); updateClock();
 setHadith();
 
-/* ===== نافذة الإعداد ===== */
+/* نافذة الإعداد */
 const modal=document.getElementById("modal");
 const openPicker=document.getElementById("openPicker");
 const cancelPlace=document.getElementById("cancelPlace");
@@ -449,11 +461,7 @@ function openModal(){
   modal.classList.add("open");
   document.body.style.overflow='hidden';
 }
-function closeModal(){
-  modal.classList.remove("open");
-  document.body.style.overflow='';
-}
-
+function closeModal(){ modal.classList.remove("open"); document.body.style.overflow=''; }
 openPicker.addEventListener("click",openModal);
 cancelPlace.addEventListener("click",closeModal);
 modal.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
@@ -476,3 +484,4 @@ load();
 </script>
 </body>
 </html>
+```0
