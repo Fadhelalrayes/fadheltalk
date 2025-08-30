@@ -9,27 +9,21 @@
   :root{
     --ink:#0f172a; --muted:#6b7280; --bg:#f6f8fb; --border:#e5e7eb;
     --accent:#0ea5a6; --shadow:0 8px 20px rgba(2,6,23,.08);
-    /* لون موحّد لخط الأحاديث والفوتر */
     --hadith-color:#0d2a58;
-    --r:14px;
   }
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); font-family:"Tajawal",sans-serif; color:var(--ink); padding:16px;}
   .container{width:min(1000px,100%); margin:auto; display:flex; flex-direction:column; gap:16px}
 
-  /* ساعة صغيرة أعلى الصفحة */
   .topClock{text-align:right; font-size:.95rem; font-weight:700; color:#084241}
 
-  /* العنوان */
   .hero{background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px; text-align:center}
   .heroTitle{margin:0; font-family:"Reem Kufi",sans-serif; font-size:1.4rem; color:var(--ink)}
 
-  /* المكان */
   .locationBox{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px 14px; display:flex; justify-content:space-between; align-items:center}
   .place{font-weight:800}
   .changeBtn{background:#eef6ff; border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-weight:800; cursor:pointer}
 
-  /* التاريخين */
   .infoRow{display:grid; grid-template-columns:1fr 1fr; gap:16px}
   @media(max-width:720px){.infoRow{grid-template-columns:1fr}}
   .chip{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px; display:flex; align-items:center; gap:12px}
@@ -38,7 +32,6 @@
   .label{font-size:.85rem; color:var(--muted); font-weight:700}
   .value{font-weight:800; font-size:1rem; font-variant-numeric:tabular-nums}
 
-  /* جدول المواقيت */
   .card{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px}
   .card h3{margin:0 0 10px; font-size:1rem; font-weight:800}
   table{width:100%; border-collapse:collapse}
@@ -48,7 +41,6 @@
   td.time{text-align:left; font-weight:800}
   tr.next td{background:linear-gradient(90deg,#0ea5a61a,transparent)}
 
-  /* مناسبات اليوم — مخفي افتراضيًا */
   .events{display:none; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:14px}
   .events h3{margin:0 0 8px; font-size:1rem; font-weight:800}
   .evtGrid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -59,21 +51,18 @@
   .evtItem:last-child{border-bottom:none}
   .evtText{font-weight:700}
 
-  /* الحديث + المصدر */
   .hadith{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:16px; text-align:center}
   .htext{margin:0; font-size:1.06rem; color:var(--hadith-color); line-height:1.9}
   .hsrc{display:inline-block; margin-top:12px; padding:6px 14px; border-radius:10px; background:#f5f7fa; border:1px solid var(--border); font-weight:800; color:#3b4656}
 
-  /* فوتر بنفس لون الأحاديث */
   footer{text-align:center; margin-top:8px}
   .credit{color:var(--hadith-color); font-weight:800}
 
-  /* نافذة تغيير البلد/المدينة */
   .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(15,23,42,.28); z-index:60}
   .modal.open{display:grid}
   .box{width:min(520px,96%); background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px}
   .rowCtrl{display:flex; gap:10px; align-items:center; margin:8px 0}
-  .rowCtrl label{width:80px; color:var(--muted); font-weight:700}
+  .rowCtrl label{width:110px; color:var(--muted); font-weight:700}
   select{flex:1; padding:12px; border-radius:12px; border:1px solid var(--border); font-weight:700}
   .actions{display:flex; gap:10px; margin-top:12px}
   .btn{border:1px solid var(--border); border-radius:10px; padding:.55rem .9rem; font-weight:800; cursor:pointer; background:#fff}
@@ -82,36 +71,36 @@
 </head>
 <body>
   <div class="container">
-    <!-- ساعة -->
     <div class="topClock" id="topClock">--:-- --</div>
 
-    <!-- عنوان -->
     <section class="hero">
       <h1 class="heroTitle">مواقيت الصلاة وفق المذهب الجعفري</h1>
     </section>
 
-    <!-- المكان -->
     <div class="locationBox">
       <div class="place" id="place">المنامة، البحرين</div>
       <button class="changeBtn" id="openPicker" type="button">تغيير</button>
     </div>
 
-    <!-- التاريخ -->
     <section class="infoRow">
-      <div class="chip"><div class="ico">🗓</div><div class="stack"><div class="label">التاريخ الهجري</div><div class="value" id="hijri">--</div></div></div>
-      <div class="chip"><div class="ico">📅</div><div class="stack"><div class="label">التاريخ الميلادي</div><div class="value" id="greg">--</div></div></div>
+      <div class="chip">
+        <div class="ico">🗓</div>
+        <div class="stack"><div class="label">التاريخ الهجري</div><div class="value" id="hijri">--</div></div>
+      </div>
+      <div class="chip">
+        <div class="ico">📅</div>
+        <div class="stack"><div class="label">التاريخ الميلادي</div><div class="value" id="greg">--</div></div>
+      </div>
     </section>
 
-    <!-- الجدول -->
     <section class="card">
       <h3>الجدول اليومي</h3>
       <table>
-        <thead><tr><th>الصلاة</th><th>الوقت</th></tr></thead>
+        <thead><tr><th>الحدث</th><th>الوقت</th></tr></thead>
         <tbody id="times"><tr><td colspan="2">جاري التحميل…</td></tr></tbody>
       </table>
     </section>
 
-    <!-- المناسبات (يظهر فقط عند وجود مناسبات) -->
     <section class="events" id="eventsBox">
       <h3>مناسبات اليوم</h3>
       <div class="evtGrid">
@@ -120,21 +109,29 @@
       </div>
     </section>
 
-    <!-- الحديث -->
     <section class="hadith">
       <p class="htext" id="hadithText"></p>
       <div class="hsrc" id="hadithSource"></div>
     </section>
 
-    <!-- فوتر -->
     <footer><span class="credit">برمجة وتطوير فاضل الريس</span></footer>
   </div>
 
-  <!-- نافذة تغيير البلد/المدينة -->
+  <!-- نافذة الإعدادات -->
   <div class="modal" id="modal">
     <div class="box">
       <div class="rowCtrl"><label>البلد</label><select id="countrySel"></select></div>
       <div class="rowCtrl"><label>المدينة</label><select id="citySel"></select></div>
+      <div class="rowCtrl">
+        <label>تعويض الهجري</label>
+        <select id="hijriOffsetSel">
+          <option value="-2">-2 يوم</option>
+          <option value="-1">-1 يوم</option>
+          <option value="0" selected>بدون تعويض</option>
+          <option value="1">+1 يوم</option>
+          <option value="2">+2 يوم</option>
+        </select>
+      </div>
       <div class="actions">
         <button class="btn primary" id="savePlace" type="button">حفظ</button>
         <button class="btn" id="cancelPlace" type="button">إلغاء</button>
@@ -143,7 +140,7 @@
   </div>
 
 <script>
-/* ===== البيانات الثابتة ===== */
+/* ===== بيانات البلدان والمدن ===== */
 const MAP=[
  {ar:"البحرين",en:"Bahrain",tz:"Asia/Bahrain",cities:[
    {ar:"المنامة",en:"Manama"},{ar:"المحرق",en:"Muharraq"},{ar:"مدينة عيسى",en:"Isa Town"},
@@ -160,6 +157,10 @@ const MAP=[
 
 const DEFAULT={countryEn:"Bahrain",countryAr:"البحرين",cityEn:"Manama",cityAr:"المنامة",tz:"Asia/Bahrain"};
 let current = JSON.parse(localStorage.getItem("jaq_prayer_place")||"null") || {...DEFAULT};
+let HIJRI_OFFSET_DAYS = Number(localStorage.getItem("jaq_hijri_offset_days")||"0");
+
+/* مصدر هجري خارجي (اختياري) — اتركه null إن لم يكن لديك مصدر */
+const HIJRI_SOURCE_URL = null;
 
 /* أحاديث */
 const HADITHS=[
@@ -176,7 +177,7 @@ function setHadith(){
   hadithText.textContent=h.t; hadithSource.textContent=h.s;
 }
 
-/* مناسبات شيعية (مفتاح m-d) */
+/* مناسبات (مفتاح m-d هجري) */
 const EVENTS={
   "1-1":[{t:"رأس السنة الهجرية"}],
   "1-2":[{t:"دخول الإمام الحسين ع كربلاء"}],
@@ -233,19 +234,53 @@ function updateClock(){
 function fmtGreg(){
   return new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
 }
-function fmtHijri(){
-  try{
-    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
-  }catch{ return "التاريخ الهجري (غير مدعوم)"; }
-}
 function hijriYMD(d){
   const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(d);
   return {y:+parts.find(p=>p.type==='year').value, m:+parts.find(p=>p.type==='month').value, d:+parts.find(p=>p.type==='day').value};
 }
 
-/* تحديد الصلاة القادمة لتظليل الصف */
+/* مساعد لالتقاط مفاتيح بأسماء مختلفة */
+function pick(obj, keys){
+  for (const k of keys){
+    if (obj && Object.prototype.hasOwnProperty.call(obj, k) && obj[k] != null && obj[k] !== "")
+      return obj[k];
+  }
+  return undefined;
+}
+const HIJRI_MONTHS_AR=["","محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
+
+/* محاولة جلب التاريخ الهجري من مصدر خارجي (اختياري) */
+async function fetchHijriFromSource(){
+  if (!HIJRI_SOURCE_URL) return null;
+  try{
+    const r = await fetch(HIJRI_SOURCE_URL, {cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const j = await r.json();
+
+    const hijriObj = pick(j, ["hijri","Hijri","الهجري"]) || j;
+    const y = Number(pick(hijriObj, ["year","Year","y","hijriYear","HijriYear","الهجري_سنة"]));
+    let  m = pick(hijriObj, ["month","Month","m","hijriMonth","HijriMonth","الهجري_شهر"]);
+    const d = Number(pick(hijriObj, ["day","Day","d","hijriDay","HijriDay","الهجري_يوم"]));
+
+    if (typeof m === "string"){
+      const idx = HIJRI_MONTHS_AR.findIndex(n => n === m.trim());
+      if (idx > 0) m = idx;
+    }
+    m = Number(m);
+
+    if (!y || !m || !d) return null;
+
+    const weekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(new Date());
+    const monthName = HIJRI_MONTHS_AR[m] || String(m);
+    return `${weekday}، ${d} ${monthName} ${y} هـ`;
+  }catch(e){
+    return null;
+  }
+}
+
+/* تحديد الحدث/الوقت القادم لتظليل الصف */
 function nextKey(t, tz){
-  const order=["Imsak","Fajr","Dhuhr","Asr","Maghrib","Isha","Midnight"];
+  const order=["Imsak","Fajr","Sunrise","Dhuhr","Asr","Sunset","Maghrib","Isha","Midnight"];
   const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
   const ds=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(nowTZ).split('-').map(Number);
   const [Y,M,D]=ds;
@@ -253,21 +288,21 @@ function nextKey(t, tz){
     const raw=(t[k]||"").replace(/\s*\(.*?\)\s*/g,"");
     if(!raw.includes(':')) return {k,diff:Infinity};
     const [HH,MM]=raw.split(':').map(Number);
-    return {k,diff:new Date(Y,M-1,D,HH,MM,0)-nowTZ};
+    return {k,diff:new Date(Y,M-1,D,HH||0,MM||0,0)-nowTZ};
   });
   let n=cand.filter(x=>x.diff>=0).sort((a,b)=>a.diff-b.diff)[0];
   if(!n) n=cand.sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff))[0];
   return n?.k||null;
 }
 
-/* بناء صف */
+/* بناء صف جدول */
 function tr(name,val,next=false){return `<tr class="${next?'next':''}"><td class="name">${name}</td><td class="time">${to12h(val||'')}</td></tr>`;}
 
-/* تقدير الإمساك إن غاب */
+/* تقدير الإمساك إن لم يقدَّم */
 function ensureImsak(t){
   if(!t.Imsak && t.Fajr){
     const [H,M]=String(t.Fajr).replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
-    const d=new Date(); d.setHours(H, (M||0)-10, 0, 0);
+    const d=new Date(); d.setHours(H||0, (M||0)-10, 0, 0);
     t.Imsak = `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   }
   return t;
@@ -280,40 +315,80 @@ async function fetchTimings(countryEn, cityEn){
   return j.data.timings;
 }
 
-/* رسم الجدول + المناسبات */
+/* يبدأ اليوم الهجري بعد المغرب + تطبيق التعويض اليدوي */
+function getHijriDateString(){
+  const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
+  let base = new Date(nowTZ);
+
+  if(lastTimings?.Maghrib){
+    const [H,M] = lastTimings.Maghrib.replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
+    const magh = new Date(nowTZ); magh.setHours(H||0,M||0,0,0);
+    if(nowTZ >= magh) base = new Date(nowTZ.getTime() + 24*60*60*1000);
+  }
+  if(HIJRI_OFFSET_DAYS){
+    base = new Date(base.getTime() + HIJRI_OFFSET_DAYS*24*60*60*1000);
+  }
+
+  try{
+    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(base);
+  }catch{
+    return "التاريخ الهجري (غير مدعوم)";
+  }
+}
+
+/* إرجاع (y,m,d) هجري لأغراض المناسبات بنفس منطق أعلى */
+function hijriYMD_byCustom(dateLike){
+  const nowOrGiven = new Date(dateLike);
+  let base = nowOrGiven;
+
+  if(lastTimings?.Maghrib){
+    const ref = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
+    const [H,M] = lastTimings.Maghrib.replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
+    const magh = new Date(ref); magh.setHours(H||0,M||0,0,0);
+    base = (ref >= magh) ? new Date(ref.getTime() + 24*60*60*1000) : ref;
+  }
+  if(HIJRI_OFFSET_DAYS){
+    base = new Date(base.getTime() + HIJRI_OFFSET_DAYS*24*60*60*1000);
+  }
+
+  const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(base);
+  return {y:+parts.find(p=>p.type==='year').value, m:+parts.find(p=>p.type==='month').value, d:+parts.find(p=>p.type==='day').value};
+}
+
+/* رسم الجدول + المناسبات (Async لاحتمال جلب الهجري من مصدر خارجي) */
 let lastTimings=null;
-function renderTimes(t, tz){
-  const timings=ensureImsak({...t}); lastTimings=timings;
+async function renderTimes(t, tz){
+  const timings=ensureImsak({...t}); 
+  lastTimings=timings;
+
   const rows=[
     {n:"الإمساك",k:"Imsak"},
     {n:"أذان الفجر",k:"Fajr"},
+    {n:"الشروق",k:"Sunrise"},
     {n:"أذان الظهر",k:"Dhuhr"},
     {n:"أذان العصر",k:"Asr"},
+    {n:"الغروب",k:"Sunset"},
     {n:"أذان المغرب",k:"Maghrib"},
     {n:"أذان العشاء",k:"Isha"},
     {n:"منتصف الليل",k:"Midnight"}
   ];
   const k=nextKey(timings,tz);
   times.innerHTML=rows.map(r=>tr(r.n,timings[r.k],r.k===k)).join("");
-  renderEvents(); // بعد معرفة وقت المغرب
+
+  // أولوية: مصدر هجري خارجي (إن وُجد) ثم منطق ما بعد المغرب + التعويض
+  const hijriFromSource = await fetchHijriFromSource();
+  hijri.textContent = hijriFromSource || getHijriDateString();
+
+  renderEvents();
 }
 
-/* مناسبات اليوم/الليلة — إظهار/إخفاء الصندوق */
+/* مناسبات اليوم/الليلة */
 function eventsForHijri(hm, hd){ return EVENTS[`${hm}-${hd}`] || []; }
 function renderEvents(){
-  const now=new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-  const {m:tm,d:td}=hijriYMD(now);
+  const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
 
-  // الليلة: بعد المغرب نعدّ الليلة للهجري التالي
-  let tonightDate=new Date(now);
-  if(lastTimings?.Maghrib){
-    const [H,M]=lastTimings.Maghrib.replace(/\s*\(.*?\)\s*/g,"").split(":").map(Number);
-    const magh=new Date(now); magh.setHours(H,M,0,0);
-    if(now>=magh) tonightDate=new Date(now.getTime()+24*60*60*1000);
-  }else{
-    tonightDate=new Date(now.getTime()+24*60*60*1000);
-  }
-  const {m:nm,d:nd}=hijriYMD(tonightDate);
+  const {m:tm,d:td}=hijriYMD_byCustom(nowTZ);                               // اليوم
+  const {m:nm,d:nd}=hijriYMD_byCustom(new Date(nowTZ.getTime()+24*60*60*1000)); // الليلة
 
   const todayList=eventsForHijri(tm,td);
   const nightList=eventsForHijri(nm,nd);
@@ -333,14 +408,18 @@ function renderEvents(){
 /* تحميل عام */
 async function load(){
   place.textContent=`${current.cityAr}، ${current.countryAr}`;
-  hijri.textContent=fmtHijri(); greg.textContent=fmtGreg();
+  greg.textContent=fmtGreg();
+  hijri.textContent="--";
   times.innerHTML="<tr><td colspan=2>...</td></tr>";
   try{
     const t=await fetchTimings(current.countryEn,current.cityEn);
-    renderTimes(t,current.tz);
+    await renderTimes(t,current.tz);
   }catch{
     times.innerHTML=`<tr><td colspan="2" style="color:#b91c1c">تعذّر جلب المواقيت.</td></tr>`;
     document.getElementById('eventsBox').style.display='none';
+    try{
+      hijri.textContent=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
+    }catch{ hijri.textContent="التاريخ الهجري (غير مدعوم)"; }
   }
 }
 
@@ -348,13 +427,14 @@ async function load(){
 setInterval(updateClock,1000); updateClock();
 setHadith();
 
-/* ===== نافذة تغيير البلد/المدينة ===== */
+/* ===== نافذة الإعداد ===== */
 const modal=document.getElementById("modal");
 const openPicker=document.getElementById("openPicker");
 const cancelPlace=document.getElementById("cancelPlace");
 const savePlace=document.getElementById("savePlace");
 const countrySel=document.getElementById("countrySel");
 const citySel=document.getElementById("citySel");
+const hijriOffsetSel=document.getElementById("hijriOffsetSel");
 
 function populateCities(countryEn){
   const c=MAP.find(x=>x.en===countryEn);
@@ -365,6 +445,7 @@ function openModal(){
   countrySel.value=current.countryEn;
   populateCities(countrySel.value);
   citySel.value=current.cityEn;
+  hijriOffsetSel.value=String(HIJRI_OFFSET_DAYS);
   modal.classList.add("open");
   document.body.style.overflow='hidden';
 }
@@ -383,9 +464,11 @@ savePlace.addEventListener("click",()=>{
   if(c&&m){
     current={countryEn:c.en,countryAr:c.ar,cityEn:m.en,cityAr:m.ar,tz:c.tz};
     localStorage.setItem("jaq_prayer_place",JSON.stringify(current));
-    closeModal();
-    load();
   }
+  HIJRI_OFFSET_DAYS = Number(hijriOffsetSel.value||"0");
+  localStorage.setItem("jaq_hijri_offset_days", String(HIJRI_OFFSET_DAYS));
+  closeModal();
+  load();
 });
 
 /* بدء التشغيل */
