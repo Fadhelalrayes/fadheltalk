@@ -77,6 +77,28 @@ body{
 }
 .tab.active{ background:linear-gradient(145deg,var(--gold1),var(--gold2)); color:var(--navy1) }
 
+/* أزرار العدّ المباشر */
+.quick-actions{
+  display:flex; gap:10px; justify-content:center;
+  padding:0 16px 6px;
+}
+.qa{
+  flex:1; padding:10px 12px; border-radius:12px; font-weight:800; cursor:pointer;
+  border:2px solid transparent; text-align:center;
+}
+.qa-gold{
+  background:linear-gradient(145deg,var(--gold1),var(--gold2));
+  color:var(--navy1); box-shadow:0 0 14px rgba(212,175,55,.35);
+}
+.qa-outline{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(212,175,55,.4); color:#e8eaf3;
+}
+.qa:focus-visible{
+  outline:3px solid rgba(212,175,55,.5);
+  outline-offset:2px;
+}
+
 /* الذكر والعداد */
 .phrase{ text-align:center; font-size:40px; font-weight:900; margin:12px 0 }
 .counter{
@@ -269,6 +291,12 @@ body{
       <button id="tabO" class="tab" role="tab" aria-selected="false" aria-controls="panel">التسبيح المفتوح</button>
     </div>
 
+    <!-- ✅ أزرار العدّ المباشر -->
+    <div class="quick-actions" aria-label="أزرار عدّ مباشرة">
+      <button class="qa qa-gold" id="qaZ" type="button" aria-label="عدّ تسبيح الزهراء">تسبيح الزهراء +1</button>
+      <button class="qa qa-outline" id="qaO" type="button" aria-label="عدّ التسبيح المفتوح">التسبيح المفتوح +1</button>
+    </div>
+
     <!-- لوحة واحدة تتبدّل محتواها مع التبويبات -->
     <div id="panel" role="tabpanel" aria-labelledby="tabZ">
       <div class="phrase" id="phrase" aria-live="polite">الله أكبر</div>
@@ -287,7 +315,7 @@ body{
       <div class="hadith-box" id="hadithBox"></div>
       <div class="source-box" id="sourceBox"></div>
 
-      <!-- التذييل المطلوب -->
+      <!-- التذييل -->
       <div class="credit">برمجة وتطوير : فاضل الريس</div>
     </div>
 
@@ -412,7 +440,7 @@ function render(){
   save();
 }
 
-/* نقرة */
+/* نقرة التسبيح */
 function tick(){
   if(mode==='zahra'){
     const c=SEQ[zh.step];
@@ -454,7 +482,10 @@ function setTab(active){ // 'zahra' | 'open'
   render();
 }
 
+/* الضغط الأساسي داخل الحلقة */
 press.addEventListener('click', tick);
+
+/* زر التالي للتبديل */
 document.getElementById('btn-next').onclick=()=> setTab(mode==='zahra' ? 'open' : 'zahra');
 
 /* ===================== مودال/توست التصفير ===================== */
@@ -518,6 +549,18 @@ document.querySelector('.tabs').addEventListener('keydown', (e)=>{
     setTab(mode==='zahra' ? 'open' : 'zahra');
   }
 });
+
+/* ====== أزرار العدّ المباشر (+1) لكل وضع ====== */
+function tickZDirect(){
+  setTab('zahra');  // يعرض لوحة الزهراء
+  tick();           // يعدّ ضغطة واحدة
+}
+function tickODirect(){
+  setTab('open');   // يعرض لوحة المفتوح
+  tick();           // يعدّ ضغطة واحدة
+}
+document.getElementById('qaZ').addEventListener('click', tickZDirect);
+document.getElementById('qaO').addEventListener('click', tickODirect);
 
 /* تشغيل أولي */
 setTab(mode); // يضبط ARIA ويستدعي render
