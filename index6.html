@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>المسبحة </title>
+<title>المسبحة الفاخرة</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&family=Amiri:wght@700&display=swap" rel="stylesheet" />
 <style>
 :root{
@@ -163,6 +163,82 @@ body{
 @media (prefers-reduced-motion: reduce){
   .center-btn, .icon-btn{ transition: none !important; animation: none !important; }
 }
+
+/* ===================== مودال التصفير ===================== */
+.modal-backdrop{
+  position:fixed; inset:0; z-index:10000; /* فوق الهيدر */
+  background:rgba(0,0,0,.55);
+  display:none; align-items:center; justify-content:center;
+  padding:16px;
+}
+.modal-backdrop.show{ display:flex; animation:fadeIn .18s ease }
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+.modal-card{
+  width:min(420px,100%);
+  background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border:2px solid var(--gold1);
+  border-radius:18px;
+  box-shadow:0 18px 60px rgba(0,0,0,.6);
+  padding:18px;
+  text-align:center;
+  color:#f7f8fb;
+}
+.modal-icon{
+  width:64px; height:64px; border-radius:50%;
+  margin:0 auto 10px;
+  display:grid; place-items:center;
+  color:var(--gold2);
+  background:radial-gradient(circle at 30% 30%, #1b2c49, #0a1931);
+  border:2px solid var(--gold1);
+  box-shadow:0 0 12px rgba(212,175,55,.5), inset 0 0 8px rgba(0,0,0,.3);
+}
+.modal-icon svg{ width:36px; height:36px }
+.modal-title{
+  font-weight:900; font-size:20px;
+  background:linear-gradient(90deg,var(--gold1),var(--gold2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin:6px 0 4px;
+}
+.modal-text{ opacity:.95; font-size:15px; margin-bottom:10px }
+.modal-opt{
+  display:flex; align-items:center; gap:8px; justify-content:center;
+  font-size:14px; color:#f1e9c9; margin:6px 0 12px;
+}
+.modal-actions{ display:flex; gap:10px; justify-content:center }
+.btn{
+  min-width:120px; padding:10px 14px; border-radius:12px; font-weight:800; cursor:pointer;
+  border:2px solid transparent;
+}
+.btn-outline{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(212,175,55,.4); color:#e8eaf3;
+}
+.btn-outline:focus-visible{ outline:3px solid rgba(212,175,55,.5) }
+.btn-gold{
+  background:linear-gradient(145deg,var(--gold1),var(--gold2));
+  color:var(--navy1);
+  box-shadow:0 0 14px rgba(212,175,55,.35);
+}
+
+/* ===================== Toast ===================== */
+.toast{
+  position:fixed; left:50%; transform:translateX(-50%) translateY(20px);
+  bottom:18px; z-index:10001;
+  background:linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  color:#f7f8fb; border:2px solid var(--gold1); border-radius:12px;
+  padding:10px 14px; font-size:14px; box-shadow:0 10px 40px rgba(0,0,0,.5);
+  opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+}
+.toast.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0) }
+.toast .undo{
+  margin-inline-start:10px; background:transparent; border:none; color:var(--gold2);
+  font-weight:900; cursor:pointer; text-decoration:underline;
+}
+@media (prefers-reduced-motion: reduce){
+  .modal-backdrop.show{ animation:none }
+  .toast{ transition:none }
+}
 </style>
 </head>
 <body>
@@ -213,6 +289,32 @@ body{
 
       <!-- التذييل المطلوب -->
       <div class="credit">برمجة وتطوير : فاضل الريس</div>
+    </div>
+
+    <!-- مودال تأكيد التصفير -->
+    <div class="modal-backdrop" id="resetModal" role="dialog" aria-modal="true" aria-labelledby="resetTitle" aria-describedby="resetDesc">
+      <div class="modal-card">
+        <div class="modal-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+        </div>
+        <div class="modal-title" id="resetTitle">تصفير العدّاد؟</div>
+        <div class="modal-text" id="resetDesc">سيبدأ تسبيح جديد، ولن تتغيّر إعداداتك الأخرى.</div>
+
+        <label class="modal-opt">
+          <input type="checkbox" id="skipConfirm"> لا تسألني مرّة أخرى
+        </label>
+
+        <div class="modal-actions">
+          <button class="btn btn-outline" id="btnCancelReset" type="button">إلغاء</button>
+          <button class="btn btn-gold" id="btnDoReset" type="button">تصفير</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast مع تراجع -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      تم التصفير.
+      <button class="undo" id="btnUndo" type="button" aria-label="تراجع عن التصفير">تراجع</button>
     </div>
   </div>
 </div>
@@ -353,18 +455,60 @@ function setTab(active){ // 'zahra' | 'open'
 }
 
 press.addEventListener('click', tick);
-
 document.getElementById('btn-next').onclick=()=> setTab(mode==='zahra' ? 'open' : 'zahra');
-document.getElementById('btn-reset').onclick=()=>{ 
-  if(confirm('تصفير العدّاد؟')){
-    zh={step:0,count:0};
-    op={text:'سبحان الله',count:0,target:0};
-    save(); render();
-  }
-};
 
-tabZ.addEventListener('click', ()=> setTab('zahra'));
-tabO.addEventListener('click', ()=> setTab('open'));
+/* ===================== مودال/توست التصفير ===================== */
+let preResetState = null;
+const resetModal = document.getElementById('resetModal');
+const btnCancelReset = document.getElementById('btnCancelReset');
+const btnDoReset = document.getElementById('btnDoReset');
+const skipConfirm = document.getElementById('skipConfirm');
+const toast = document.getElementById('toast');
+const btnUndo = document.getElementById('btnUndo');
+
+let lastFocusEl = null;
+
+function openResetModal(){
+  if(localStorage.getItem('rs-noConfirm') === '1'){
+    doReset(); return;
+  }
+  lastFocusEl = document.activeElement;
+  resetModal.classList.add('show');
+  btnDoReset.focus();
+}
+function closeResetModal(){
+  resetModal.classList.remove('show');
+  if(lastFocusEl) lastFocusEl.focus();
+}
+function showToast(){
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=> toast.classList.remove('show'), 5000);
+}
+function doReset(){
+  preResetState = JSON.stringify({mode, zh, op});
+  zh = {step:0, count:0};
+  op = {text:'سبحان الله', count:0, target:0};
+  save(); render();
+  closeResetModal();
+  if(skipConfirm && skipConfirm.checked) localStorage.setItem('rs-noConfirm','1');
+  showToast();
+}
+
+btnCancelReset.addEventListener('click', closeResetModal);
+btnDoReset.addEventListener('click', doReset);
+resetModal.addEventListener('click', (e)=>{ if(e.target === resetModal) closeResetModal(); });
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && resetModal.classList.contains('show')) closeResetModal(); });
+btnUndo.addEventListener('click', ()=>{
+  if(!preResetState) return;
+  const s = JSON.parse(preResetState);
+  mode = s.mode; zh = s.zh; op = s.op;
+  save(); render();
+  toast.classList.remove('show');
+});
+
+/* اربط زر الإعادة بالمودال */
+document.getElementById('btn-reset').onclick = openResetModal;
 
 /* تنقّل لوحة المفاتيح بالأسهم */
 document.querySelector('.tabs').addEventListener('keydown', (e)=>{
