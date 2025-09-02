@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>الأيام الصالحة للزواج وفق المذهب الشيعي</title>
+  <meta name="description" content="تقويم تفاعلي يوضح الأيام المباركة والصالحة والمكروهة للعقد والزواج وفق المذهب الشيعي لعام 1447 هـ.">
+  <meta name="keywords" content="الأيام الصالحة للزواج, المذهب الشيعي, تقويم هجري, 1447, زواج, عقد القران">
+
+  <!-- خط + أيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg1:#0B132B; --bg2:#e6e7ea;
+      --ok:#16a34a; --good:#00B3C4; --bad:#ef4444; --muted:#9ca3af;
+      --txt:#0b0f19; --card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html{font-size:16px}
+    body{
+      margin:0;background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      font-family:'Cairo',system-ui,Arial,sans-serif;color:var(--txt);line-height:1.8
+    }
+
+    header{padding:20px;text-align:center;color:#fff}
+    header h1{margin:0;font-size:1rem;font-weight:600}
+
+    .wrap{max-width:980px;margin:16px auto 24px;padding:0 12px}
+    .calendar{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
+
+    .controls{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .calendar h3{margin:8px 0;font-size:1rem;font-weight:600;color:#0B132B}
+    .nav-btn{
+      padding:8px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#0b0f19;
+      font-weight:600;cursor:pointer;transition:.2s transform,.2s box-shadow
+    }
+    .nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.08)}
+
+    .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:12px}
+    .cell{
+      aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border-radius:12px;
+      font-weight:600;border:1px solid #eef2f7;background:#f8fafc;font-size:1rem;cursor:pointer;outline:none;
+      transition:.15s box-shadow,.15s transform
+    }
+    .cell:hover{box-shadow:0 6px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
+    .wk{background:#fff;font-weight:600;cursor:default}
+    .cell.ok{background:rgba(22,163,74,.12)}
+    .cell.good{background:rgba(0,179,196,.12)}
+    .cell.bad{background:rgba(239,68,68,.12)}
+    .cell.muted{color:var(--muted)}
+
+    .legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+    .legend div{display:flex;align-items:center;gap:6px;font-size:1rem}
+    .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+    .info-bar{
+      max-width:900px;margin:12px auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;
+      padding:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center
+    }
+    .badge{padding:4px 10px;border-radius:999px;font-weight:600;color:#fff;background:#9ca3af}
+    .badge.ok{background:#16a34a}.badge.good{background:#00B3C4;color:#002c33}.badge.bad{background:#ef4444}
+
+    /* مربع الملاحظة */
+    .note{
+      background:#fff;margin-top:12px;border-radius:14px;padding:14px 16px;
+      box-shadow:0 4px 10px rgba(0,0,0,.05);text-align:justify;text-justify:inter-word;border:1px solid #eceff3;
+      font-size:1rem;color:#0b0f19
+    }
+
+    /* مربع الأحاديث */
+    .hadith-card{
+      background:#fff;margin-top:12px;border-radius:14px;padding:14px 16px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);border:1px solid #e9edf2
+    }
+    .hadith-title{margin:0 0 8px;font-weight:600;color:#0B132B}
+    .hadith-text{margin:0 0 8px;text-align:justify}
+    .hadith-source{font-size:.95rem;color:#374151;background:#f3f4f6;padding:6px 10px;border-radius:10px;display:inline-block}
+
+    footer{text-align:center;padding:20px 10px}
+    /* أيقونات المشاركة (مربّعات ناعمة) */
+    .share{margin-bottom:12px}
+    .share h4{margin-bottom:8px;font-size:1rem;color:#fff}
+    .share a{
+      display:inline-block;margin:0 5px;font-size:1.1rem;width:32px;height:32px;line-height:32px;text-align:center;
+      border-radius:8px;color:#fff;transition:.2s
+    }
+    .share a.fb{background:#1877f2}.share a.tw{background:#1da1f2}.share a.wa{background:#25d366}.share a.tg{background:#0088cc}.share a.cp{background:#6b7280}
+    .share a:hover{opacity:.85;transform:scale(1.05)}
+    .copied-msg{margin-top:8px;font-size:.9rem;color:#d1fae5;display:none}
+
+    /* عبارة التطوير (آخر الصفحة) */
+    .dev{margin-top:14px;font-size:.95rem}
+    .dev a{color:#e3e7ee;text-decoration:none;font-weight:600}
+    .dev a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <header><h1>الأيام الصالحة للزواج وفق المذهب الشيعي</h1></header>
+
+  <div class="wrap">
+    <section class="calendar" aria-label="تقويم هجري تفاعلي 1447 هـ">
+      <div class="controls">
+        <button class="nav-btn" id="prevMonth" aria-label="الشهر السابق">‹</button>
+        <h3 id="calTitle">ربيع الأول 1447 هـ</h3>
+        <button class="nav-btn" id="nextMonth" aria-label="الشهر التالي">›</button>
+      </div>
+
+      <div class="grid" id="calGrid" aria-label="أيام الشهر"></div>
+
+      <div class="legend" aria-label="الدليل اللوني">
+        <div><span class="dot" style="background:var(--ok)"></span> مباركة</div>
+        <div><span class="dot" style="background:var(--good)"></span> صالحة</div>
+        <div><span class="dot" style="background:var(--bad)"></span> مكروهة</div>
+        <div><span class="dot" style="background:var(--muted)"></span> غير محددة</div>
+      </div>
+
+      <div class="info-bar" id="infoBar" aria-live="polite">
+        <div><strong>التاريخ الهجري:</strong> <span id="hijriOut">—</span></div>
+        <div><strong>التاريخ الميلادي:</strong> <span id="gregOut">—</span></div>
+        <div><strong>الحكم:</strong> <span id="statusOut" class="badge">—</span></div>
+      </div>
+
+      <!-- مربع الملاحظة -->
+      <div class="note">
+        يُعرض حكم الليالي (مباركة/صالحة/مكروهة) للعقد والزواج لعام 1447 هـ. يبدأ اليوم الشرعي من الغروب وقد يختلف يومًا تبعًا لرؤية الهلال.
+      </div>
+
+      <!-- مربع الأحاديث -->
+      <div class="hadith-card" id="hadithBox" aria-live="polite">
+        <h4 class="hadith-title">📜 حديث</h4>
+        <p class="hadith-text" id="hadithText"></p>
+        <span class="hadith-source" id="hadithSource"></span>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <!-- أيقونات المشاركة -->
+    <div class="share" aria-label="مشاركة الصفحة">
+      <h4>مشاركة الصفحة</h4>
+      <a href="#" class="fb" id="shareFB" title="فيسبوك" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="tw" id="shareTW" title="تويتر" aria-label="تويتر"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" class="wa" id="shareWA" title="واتساب" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" class="tg" id="shareTG" title="تيليجرام" aria-label="تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+      <a href="#" class="cp" id="shareCP" title="نسخ الرابط" aria-label="نسخ الرابط"><i class="fas fa-link"></i></a>
+      <div class="copied-msg" id="copiedMsg">✅ تم نسخ الرابط</div>
+    </div>
+
+    <!-- عبارة التطوير (آخر عنصر) -->
+    <div class="dev">
+      <a href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">
+        برمجة وتطوير: فاضل الريس
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    /* ====================== بيانات 1447 هـ ====================== */
+    const DATA_1447={
+      3:{blessed:[1,2,6,7,12,18,19,20,23,27,28,30],good:[9,11,14,15,22],disliked:[3,4,5,8,10,13,16,17,21,24,25,26,29]},
+      4:{blessed:[2,4,6,7,12,17,19,20,23,27,28,30],good:[9,10,11,14],disliked:[1,3,5,8,13,15,16,18,21,22,24,25,26,29]},
+      5:{blessed:[1,2,4,7,12,17,19,23,28],good:[8,9,10,11,14,15,22],disliked:[3,5,6,13,16,18,20,21,24,25,26,27,29]},
+      6:{blessed:[1,2,4,6,7,17,18,20,23,27,28,30],good:[8,9,10,11,14,15,22],disliked:[3,5,12,13,16,19,21,24,25,26,29]},
+      7:{blessed:[1,2,4,6,7,18,19,20,23,27,28,30],good:[8,9,11,14,22],disliked:[3,5,10,12,13,15,16,17,21,24,25,26,29]},
+      8:{blessed:[2,4,6,7,12,17,18,19,20,27,28],good:[9,10,11,14,23],disliked:[1,3,5,8,13,15,16,21,22,24,25,26,29]},
+      9:{blessed:[1,2,4,6,17,18,27,30],good:[9,10,11,12,15,22,23],disliked:[3,5,7,8,13,14,16,19,20,21,24,25,26,28,29]},
+      10:{blessed:[1,4,6,7,17,18,20,23,27,28],good:[8,9,10,11,14,15,22],disliked:[2,3,5,12,13,16,19,21,24,25,26,29]},
+      11:{blessed:[1,2,6,7,12,17,19,20,23,27,28],good:[8,9,10,14,15],disliked:[3,4,5,11,13,16,18,21,22,24,25,26,29]},
+      12:{blessed:[1,2,4,6,12,18,19,20,23,27,28,30],good:[9,11,14,15,22],disliked:[3,5,7,8,10,13,16,17,21,24,25,26,29]}
+    };
+    const H_MONTHS=['محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الثانية','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+    const G_MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+    /* ================= تحويلات هجري → ميلادي (بدون أي إزاحة) ================= */
+    const ISLAMIC_EPOCH=1948439.5;
+    function islamicToJD(y,m,d){return d+Math.ceil(29.5*(m-1))+(y-1)*354+Math.floor((3+11*y)/30)+ISLAMIC_EPOCH-1;}
+    function jdToGregorian(jd){
+      const Z=Math.floor(jd+0.5),F=(jd+0.5)-Z;let A=Z;
+      if(Z>=2299161){const alpha=Math.floor((Z-1867216.25)/36524.25);A=Z+1+alpha-Math.floor(alpha/4);}
+      const B=A+1524,C=Math.floor((B-122.1)/365.25),D=Math.floor(365.25*C),E=Math.floor((B-D)/30.6001);
+      const day=B-D-Math.floor(30.6001*E)+F,month=E<14?E-1:E-13,year=month>2?C-4716:C-4715;
+      return [year,month,Math.round(day)];
+    }
+    const HAS_UMALQURA=(()=>{ try{ new Intl.DateTimeFormat('en-u-ca-islamic-umalqura').format(new Date()); return true; }catch{ return false; } })();
+    function hijriToGregorian(y,m,d){
+      if(HAS_UMALQURA){
+        const fmt=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{year:'numeric',month:'numeric',day:'numeric',timeZone:'UTC'});
+        const approx=jdToGregorian(islamicToJD(y,m,d));
+        const base=new Date(Date.UTC(approx[0],approx[1]-1,approx[2]));
+        function parts(dt){let yy,mm,dd;for(const p of fmt.formatToParts(dt)){if(p.type==='year')yy=+p.value;else if(p.type==='month')mm=+p.value;else if(p.type==='day')dd=+p.value;}return[yy,mm,dd];}
+        for(let k=-3;k<=3;k++){const dt=new Date(base);dt.setUTCDate(dt.getUTCDate()+k);const[yy,mm,dd]=parts(dt);if(yy===y&&mm===m&&dd===d)return[dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate()];}
+      }
+      return jdToGregorian(islamicToJD(y,m,d));
+    }
+
+    /* ================= عناصر الواجهة ================= */
+    let currentMonth=3, selectedDay=1;
+    const calTitle=document.getElementById('calTitle');
+    const calGrid =document.getElementById('calGrid');
+    const prevBtn =document.getElementById('prevMonth');
+    const nextBtn =document.getElementById('nextMonth');
+    const hijriOut=document.getElementById('hijriOut');
+    const gregOut =document.getElementById('gregOut');
+    const statusOut=document.getElementById('statusOut');
+
+    function renderCalendar(){
+      calTitle.textContent=`${H_MONTHS[currentMonth-1]} 1447 هـ`;
+      calGrid.innerHTML='';
+      // رؤوس الأسبوع
+      ['س','أ','ث','أر','خ','ج','س'].forEach(w=>{
+        const head=document.createElement('div');
+        head.textContent=w; head.className='cell wk'; head.setAttribute('aria-hidden','true');
+        calGrid.appendChild(head);
+      });
+      // أيام 1..30
+      for(let d=1; d<=30; d++){
+        const cls=DATA_1447[currentMonth].blessed.includes(d)?'ok'
+                 :DATA_1447[currentMonth].good.includes(d)?'good'
+                 :DATA_1447[currentMonth].disliked.includes(d)?'bad':'muted';
+        const cell=document.createElement('div');
+        cell.className=`cell ${cls}`; cell.textContent=d;
+        cell.title=(cls==='ok'?'مباركة':cls==='good'?'صالحة':cls==='bad'?'مكروهة':'غير محددة');
+        cell.dataset.day=String(d);
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function showInfo(day){
+      selectedDay=day;
+      const cls=DATA_1447[currentMonth].blessed.includes(day)?'ok'
+              :DATA_1447[currentMonth].good.includes(day)?'good'
+              :DATA_1447[currentMonth].disliked.includes(day)?'bad':'muted';
+      const statusTxt=cls==='ok'?'مباركة':cls==='good'?'صالحة':cls==='bad'?'مكروهة':'غير محددة';
+      const [gy,gm,gd]=hijriToGregorian(1447,currentMonth,day);
+      hijriOut.textContent=`${day} ${H_MONTHS[currentMonth-1]} 1447 هـ`;
+      gregOut.textContent =`${gd} ${G_MONTHS[gm-1]} ${gy} م`;
+      statusOut.textContent=statusTxt; statusOut.className=`badge ${cls}`;
+    }
+
+    // اختيار اليوم الهجري الحالي تلقائيًا عند فتح الصفحة (إن كان ضمن 1447 هـ)
+    function pickTodayHijri(){
+      if(HAS_UMALQURA){
+        const fmt=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{year:'numeric',month:'numeric',day:'numeric'});
+        let y,m,d;
+        for(const p of fmt.formatToParts(new Date())){
+          if(p.type==='year') y=+p.value; else if(p.type==='month') m=+p.value; else if(p.type==='day') d=+p.value;
+        }
+        if(y===1447 && m>=3 && m<=12){ currentMonth=m; selectedDay=d; }
+      }
+    }
+
+    // أحداث التقويم
+    calGrid.addEventListener('click',e=>{
+      const el=e.target.closest('.cell'); if(!el || el.classList.contains('wk')) return;
+      const d=+el.dataset.day; if(d) showInfo(d);
+    });
+    prevBtn.addEventListener('click',()=>{ currentMonth--; if(currentMonth<3) currentMonth=12; renderCalendar(); showInfo(Math.min(selectedDay,30)); });
+    nextBtn.addEventListener('click',()=>{ currentMonth++; if(currentMonth>12) currentMonth=3; renderCalendar(); showInfo(Math.min(selectedDay,30)); });
+
+    /* ================= أحاديث (تتغيّر كل زيارة) ================= */
+    const HADITHS=[
+      {text:"عن الرسول الأكرم صلى الله عليه وآله وسلم: النكاح من سنّتي، فمن رغب عنه فقد رغب عن سنّتي.",src:"المصدر: مستدرك الوسائل ـ الميرزا النوري، ج 41 ص 153."},
+      {text:"عنه صلى الله عليه وآله وسلم: يا معشر الشباب من استطاع منكم الباه فليتزوَّج، فإنَّه أغضُّ للبصر، وأحصنُ للفرج، ومن لم يستطع فليصُم، فإنَّ الصوم له وجاء.",src:"المصدر: جامع أحاديث الشيعة."},
+      {text:"عنه صلى الله عليه وآله وسلم: إذا تزوّج الرجل أحرز نصف دينه، فليتقِّ الله في النصف الآخر.",src:"المصدر: الكافي."},
+      {text:"عنه صلى الله عليه وآله وسلم: من سرّه أن يلقى الله طاهراً مطهَّراً، فليلقه بزوجة.",src:"المصدر: وسائل الشيعة."}
+    ];
+    function nextVisitIndex(){
+      const key='hadithIndex';
+      const last=parseInt(localStorage.getItem(key)||'-1',10);
+      const idx=((isNaN(last)?-1:last)+1)%HADITHS.length;
+      localStorage.setItem(key,String(idx));
+      return idx;
+    }
+    function renderHadith(){
+      const h=HADITHS[nextVisitIndex()];
+      document.getElementById('hadithText').textContent=h.text;
+      document.getElementById('hadithSource').textContent=h.src;
+    }
+
+    /* ================= مشاركة الصفحة + نسخ الرابط ================= */
+    const pageUrl = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(document.title);
+    function initShareLinks(){
+      document.getElementById('shareFB').href=`https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+      document.getElementById('shareTW').href=`https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+      document.getElementById('shareWA').href=`https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+      document.getElementById('shareTG').href=`https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
+      document.getElementById('shareCP').addEventListener('click',e=>{
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href).then(()=>{
+          const msg=document.getElementById('copiedMsg');
+          msg.style.display='block';
+          setTimeout(()=>{msg.style.display='none';},2000);
+        });
+      });
+    }
+
+    /* ================= تشغيل أولي ================= */
+    (function init(){
+      pickTodayHijri();     // يضبط اليوم الحالي إن أمكن
+      renderCalendar();     // يرسم التقويم
+      showInfo(selectedDay);// يعرض التاريخ والحكم مباشرة
+      renderHadith();       // يعرض حديث الزيارة
+      initShareLinks();     // يجهّز روابط المشاركة
+    })();
+  </script>
+</body>
+</html>
