@@ -5,73 +5,73 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>خط التماس الأخباري</title>
 
-<!-- خط -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020;
-    --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
-    --green1:#11c295; --green2:#0aa27a; --green3:#0a865f;
-    --barH:8px;
+    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020; --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
+    --green1:#11c295; --green2:#0aa27a; --green3:#0a865f; --barH:8px;
   }
-  body{margin:0; background:var(--bg); color:var(--ink);
-       font:16px/1.75 "Cairo",system-ui,Arial,sans-serif}
+  body{margin:0; background:var(--bg); color:var(--ink); font:16px/1.75 "Cairo",system-ui,Arial,sans-serif}
 
   /* هيدر */
-  header{
-    position:sticky; top:0; z-index:20; color:#fff;
-    background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3) 100%);
-  }
-  header::after{
-    content:""; display:block; height:var(--barH);
-    background:linear-gradient(90deg,var(--green1),#86f0d3,var(--green1));
-  }
+  header{position:sticky; top:0; z-index:20; color:#fff;
+    background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3) 100%)}
+  header::after{content:""; display:block; height:var(--barH);
+    background:linear-gradient(90deg,var(--green1),#86f0d3,var(--green1))}
   .container{max-width:1200px; margin:auto; padding:16px 18px}
   .header-center{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center}
-  .logo{
-    width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff;
+  .logo{width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff;
     background:radial-gradient(circle at 30% 30%,#9ff5df,#37d7ae 55%,#0ca878 100%);
-    box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 24px rgba(255,255,255,.12);
-  }
+    box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 24px rgba(255,255,255,.12)}
   .logo svg{width:30px; height:30px}
   h1{margin:0; font-size:2.1rem; font-weight:800}
   .tagline{opacity:.95; font-size:1rem; margin:0}
 
   /* بطاقات */
-  .grid{display:grid; gap:16px; margin-top:16px;
-        grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-  article.card{background:var(--card); border:1px solid var(--ring); border-radius:18px;
-               padding:0; box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden}
+  .grid{display:grid; gap:16px; margin-top:16px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  article.card{background:var(--card); border:1px solid var(--ring); border-radius:18px; padding:0;
+    box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden}
   .thumb{width:100%; max-height:220px; object-fit:cover; display:block; aspect-ratio:16/9; background:#eef3f7}
   .card-body{padding:14px 16px}
   .badge{display:inline-flex; gap:8px; align-items:center; font-size:.8rem; color:var(--green2);
-         background:#e8fbf5; border:1px solid #b9f0df; padding:6px 10px; border-radius:999px}
+    background:#e8fbf5; border:1px solid #b9f0df; padding:6px 10px; border-radius:999px}
   .title{font-size:1.12rem; font-weight:800; margin:8px 0 0}
   .excerpt{color:#2c3e50; font-size:.98rem}
   .meta{display:flex; gap:10px; color:#5f7286; font-size:.85rem}
   .top-row{display:flex; align-items:center; gap:8px}
   .more{margin-inline-start:auto; width:36px; height:36px; border-radius:12px;
-        border:1px solid var(--ring); background:#fff; display:grid; place-items:center; cursor:pointer}
+    border:1px solid var(--ring); background:#fff; display:grid; place-items:center; cursor:pointer}
   .more svg{width:18px; height:18px; color:#0b2e3f}
   details{border-top:1px dashed var(--ring); padding-top:10px; margin-top:6px}
   summary{list-style:none; cursor:pointer; display:flex; gap:8px}
   summary::-webkit-details-marker{display:none}
 
-  /* مشاركة */
+  /* رسالة الفشل (تظهر فقط عند العجز) */
+  .fail-msg{display:none; margin:12px 0 0; padding:12px 14px; border-radius:14px;
+    background:#fff6da; border:1px solid #ffe19c; color:#7a5a00; font-weight:800; text-align:center}
+
+  /* مشاركة — أيقونات ممتلئة دائرية */
   .sharebar-wrap{border-top:1px solid var(--ring); margin-top:26px; padding:16px 0}
-  .sharebar{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
-  .sharebtn{width:42px; height:42px; border-radius:12px; background:#fff; border:1px solid var(--ring);
-            display:grid; place-items:center; cursor:pointer}
-  .sharebtn svg{width:22px; height:22px; stroke:#0a1020}
+  .sharebar{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .sharebtn{width:44px; height:44px; border-radius:50%; background:#fff; border:1px solid var(--ring);
+    display:grid; place-items:center; cursor:pointer; transition:.15s}
+  .sharebtn:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(12,57,95,.12)}
+  .sharebtn svg{width:22px; height:22px}
+  .sharebtn[data-share="whatsapp"] svg{fill:#2BC85B}
+  .sharebtn[data-share="telegram"] svg{fill:#229ED9}
+  .sharebtn[data-share="facebook"] svg{fill:#1877F2}
+  .sharebtn[data-share="x"] svg{fill:#111}
+  .sharebtn[data-share="linkedin"] svg{fill:#0A66C2}
+  .sharebtn[data-share="copy"] svg{fill:#444}
 
   /* تذييل */
   footer.site-footer{max-width:1200px; margin:8px auto 24px; text-align:center}
   a.credit{display:inline-flex; align-items:center; gap:8px; text-decoration:none;
-           border:1px solid var(--ring); background:#fff; color:#0a1020;
-           padding:8px 12px; border-radius:12px; font:600 13px/1.2 "Noto Kufi Arabic",sans-serif;
-           box-shadow:0 6px 16px rgba(12,57,95,.12)}
+    border:1px solid var(--ring); background:#fff; color:#0a1020;
+    padding:8px 12px; border-radius:12px; font:600 13px/1.2 "Noto Kufi Arabic",sans-serif;
+    box-shadow:0 6px 16px rgba(12,57,95,.12)}
   .site-bottom-bar{height:var(--barH);
     background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3) 100%)}
 </style>
@@ -80,10 +80,9 @@
   <header>
     <div class="container">
       <div class="header-center">
-        <div class="logo">
+        <div class="logo" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white"/>
-            <path d="M4 12h3l2-3 2 6 2-4 2 3h3" stroke="white" stroke-width="1.6"
-                  stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <path d="M4 12h3l2-3 2 6 2-4 2 3h3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h1>خط التماس الأخباري</h1>
         <p class="tagline">أخبار رياضية عربية</p>
@@ -92,78 +91,159 @@
   </header>
 
   <main class="container">
+    <div id="failMsg" class="fail-msg">انتظر نحن نأتي لك بالآخبار الآن</div>
     <section id="news" class="grid" aria-live="polite"></section>
 
     <div class="sharebar-wrap">
-      <div class="sharebar">
-        <button class="sharebtn" data-share="whatsapp"><svg viewBox="0 0 24 24"><path d="M4 20l1.8-3.8A8 8 0 1 1 12 20a8.5 8.5 0 0 1-4-.9L4 20Z"/><path d="M9 9.5c.2 2.6 2.7 5.1 5.3 5.3.4 0 .7-.1.9-.3l.6-.6M10 7l-1 1"/></svg></button>
-        <button class="sharebtn" data-share="telegram"><svg viewBox="0 0 24 24"><path d="M20.8 4.2 9 10l3 2 8-7.5M12 12l1.2 7 2.3-3.8"/></svg></button>
-        <button class="sharebtn" data-share="facebook"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M13 10h2V8h-2c-1.1 0-2 .9-2 2v2H9v2h2v4h2v-4h2l.6-2H13v-2Z"/></svg></button>
-        <button class="sharebtn" data-share="x"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke-width="2"/></svg></button>
-        <button class="sharebtn" data-share="linkedin"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8" cy="9" r="1.2"/><path d="M8 18v-6M12 18v-3c0-1.3 1.1-2.4 2.4-2.4S17 13.7 17 15v3"/></svg></button>
-        <button class="sharebtn" data-share="copy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="9" height="11" rx="2"/><rect x="6" y="4" width="9" height="11" rx="2"/></svg></button>
+      <div class="sharebar" aria-label="مشاركة الصفحة">
+        <!-- واتساب -->
+        <button class="sharebtn" data-share="whatsapp" title="واتساب">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.4 15.4L3 22l4.8-1.6A10 10 0 1 0 12 2Z"/>
+            <path d="M16.2 14.6c-.2.5-1 .9-1.6 1-2.4.1-5.6-2.9-5.7-5.4 0-.6.5-1.4 1-1.6.4-.2.7-.2 1 .1l.9.9c.2.2.3.5.2.8-.1.3-.3.6-.5.8.6 1.1 1.6 2.1 2.7 2.7.2-.2.5-.4.8-.5.3-.1.6 0 .8.2l.9.9c.2.3.2.6 0 1Z" fill="#fff"/></svg>
+        </button>
+        <!-- تيليجرام -->
+        <button class="sharebtn" data-share="telegram" title="تيليجرام">
+          <svg viewBox="0 0 24 24"><path d="M21.5 4.5 10 11l3 2 8.5-8.5ZM13 13l1.2 7L17 16"/></svg>
+        </button>
+        <!-- فيسبوك -->
+        <button class="sharebtn" data-share="facebook" title="فيسبوك">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Z"/><path d="M13 10h2V8h-2c-1.1 0-2 .9-2 2v2H9v2h2v4h2v-4h2l.6-2H13v-2Z" fill="#fff"/></svg>
+        </button>
+        <!-- X -->
+        <button class="sharebtn" data-share="x" title="X">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <!-- لينكدإن -->
+        <button class="sharebtn" data-share="linkedin" title="لينكدإن">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z"/><path d="M8.2 9.2a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4ZM7.6 17h1.2v-6H7.6v6Zm3.4 0h1.2v-3c0-1.1.9-2 2-2s2 .9 2 2v3H17v-3a3.2 3.2 0 0 0-3.2-3.2c-1 0-1.9.5-2.4 1.3V11H11v6Z" fill="#fff"/></svg>
+        </button>
+        <!-- نسخ -->
+        <button class="sharebtn" data-share="copy" title="نسخ الرابط">
+          <svg viewBox="0 0 24 24"><path d="M7 7h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><path d="M9 4h8a2 2 0 0 1 2 2v8" fill="#fff"/></svg>
+        </button>
       </div>
     </div>
   </main>
 
   <footer class="site-footer">
-    <a class="credit" href="https://api.whatsapp.com/send/?phone=97333375858" target="_blank">برمجة وتطوير: <strong>فاضل الريس</strong></a>
+    <a class="credit" href="https://api.whatsapp.com/send/?phone=97333375858" target="_blank" rel="noopener">
+      برمجة وتطوير: <strong>فاضل الريس</strong>
+    </a>
   </footer>
-
   <div class="site-bottom-bar"></div>
 
 <script>
 (() => {
   const SUCCESS_REFRESH_MS = 30000, FAIL_REFRESH_MS = 1000, FEED_TIMEOUT_MS = 8000, LIMIT = 48;
+
+  // مصادر رياضية فقط
   const FEEDS = [
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.alarabiya.net/.mrss/ar/sports.xml'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://aawsat.com/rss/section/sport'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://arabic.rt.com/rss/sport/'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.skynewsarabia.com/rss/sports')
   ];
-  const $grid=document.getElementById('news');
-  const SPORTS=/رياضة|رياضي|كرة|قدم|دوري|مباراة|منتخب|كأس|بطولة|نادي|مدرب|لاعب/i;
-  const POL=/سياسة|رئيس|وزير|حكومة|انتخابات|حرب|مجلس|برلمان|احتلال|عقوبات/i;
-  function ok(t,c){return SPORTS.test(t)&&!POL.test(t);}
-  function strip(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||'';}
-  function img(n){return n.querySelector('enclosure[url]')?.getAttribute('url')||'';}
+
+  const $grid = document.getElementById('news');
+  const $fail = document.getElementById('failMsg');
+
+  // فلترة رياضية صارمة
+  const SPORTS = /رياضة|رياضي|كرة|قدم|دوري|مباراة|منتخب|كأس|بطولة|نادي|مدرب|لاعب|هدف|تصفيات|شوط|فريق|تنس|سلة|طائرة|يد|أولمبي|فورمولا/i;
+  const POL = /سياسة|رئيس|وزير|حكومة|انتخابات|حرب|مجلس|برلمان|احتلال|عقوبات|هدنة|مفاوضات|هجوم|عملية\s*عسكرية/i;
+  const isSportsOnly = (t)=> SPORTS.test(t) && !POL.test(t);
+
+  function strip(html){ const d=document.createElement('div'); d.innerHTML=html||''; return (d.textContent||'').replace(/\s+/g,' ').trim(); }
+  function getImageFromNode(n){
+    const enc=n.querySelector('enclosure[url][type*="image"]')?.getAttribute('url');
+    if(enc) return enc;
+    const raw=n.querySelector('description, summary, content')?.textContent||'';
+    const m=raw.match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:'';
+  }
+  function esc(s){return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');}
   function card({title,excerpt,date,image}){return `
     <article class="card">
-      ${image?`<img class="thumb" src="${image}" loading="lazy"/>`:''}
+      ${image?`<img class="thumb" src="${image}" loading="lazy" referrerpolicy="no-referrer"/>`:''}
       <div class="card-body">
         <div class="top-row"><span class="badge">⚽ رياضة</span>
-          <button class="more"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Z"/></svg></button>
+          <button class="more" title="مزيد"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Z"/></svg></button>
         </div>
-        <h2 class="title">${title}</h2>
+        <h2 class="title">${esc(title)}</h2>
         <div class="meta">🕒 ${new Date(date).toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})}</div>
-        <details><summary>عرض المقتطف</summary><p class="excerpt">${excerpt}</p></details>
+        <details><summary>عرض المقتطف</summary><p class="excerpt">${esc(excerpt||'—')}</p></details>
       </div>
     </article>`;}
-  async function fetchT(u){const c=new AbortController();setTimeout(()=>c.abort(),FEED_TIMEOUT_MS);
-    const r=await fetch(u,{signal:c.signal});return r.ok? r.text():"";}
-  function parse(x){const out=[];const xml=new DOMParser().parseFromString(x,'text/xml');
-    xml.querySelectorAll('item').forEach(n=>{
-      const t=(n.querySelector('title')?.textContent||'').trim();
-      const d=n.querySelector('description')?.textContent||'';
-      if(!ok(t+d,''))return;
-      out.push({title:t,excerpt:strip(d).slice(0,260),date:new Date(),image:img(n)});
-    });return out;}
+
+  async function fetchWithTimeout(url, timeoutMs){
+    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),timeoutMs);
+    try{ const r=await fetch(url,{signal:ctrl.signal,cache:'no-store'}); if(!r.ok) throw 0; return await r.text(); }
+    finally{ clearTimeout(t); }
+  }
+
+  function parseFeed(xmlText){
+    const out=[]; try{
+      const xml=new DOMParser().parseFromString(xmlText,'text/xml');
+      const nodes=[...xml.querySelectorAll('item, entry')];
+      for(const n of nodes){
+        const title=(n.querySelector('title')?.textContent||'').trim();
+        if(!title) continue;
+        const desc=n.querySelector('description, summary, content')?.textContent||'';
+        const text=`${title} ${strip(desc)}`;
+        if(!isSportsOnly(text)) continue;
+        out.push({
+          title, excerpt: strip(desc).slice(0,260),
+          date: new Date(n.querySelector('pubDate, updated, published')?.textContent||Date.now()),
+          image: getImageFromNode(n)
+        });
+      }
+    }catch{} return out;
+  }
+
   let timer=null;
-  function schedule(ms){clearTimeout(timer);timer=setTimeout(load,ms);}
+  function schedule(ms){ clearTimeout(timer); timer=setTimeout(load, ms); }
+
   async function load(){
     try{
       let items=[];
-      for(const u of FEEDS){try{const txt=await fetchT(u);items=items.concat(parse(txt));}catch{}}
-      if(!items.length) throw "fail";
-      const seen=new Set(),uniq=[];for(const it of items){if(seen.has(it.title))continue;seen.add(it.title);uniq.push(it);}
-      uniq.sort((a,b)=>b.date-a.date);$grid.innerHTML=uniq.slice(0,LIMIT).map(card).join('');
-      schedule(SUCCESS_REFRESH_MS);
-    }catch{schedule(FAIL_REFRESH_MS);}
+      for(const url of FEEDS){
+        try{ const txt=await fetchWithTimeout(url, FEED_TIMEOUT_MS); items=items.concat(parseFeed(txt)); }
+        catch{}
+      }
+      if(!items.length) throw 0;
+
+      const seen=new Set(), unique=[];
+      for(const it of items){ const k=it.title.toLowerCase(); if(seen.has(k)) continue; seen.add(k); unique.push(it); }
+      unique.sort((a,b)=>b.date-a.date);
+
+      $grid.innerHTML = unique.slice(0,48).map(card).join('');
+      $fail.style.display='none';                 // إخفاء رسالة الفشل عند النجاح
+      schedule(SUCCESS_REFRESH_MS);               // نجاح → 30 ثانية
+    }catch{
+      $fail.style.display='block';                // فشل → أظهر الرسالة
+      schedule(FAIL_REFRESH_MS);                  // وأعد المحاولة بعد ثانية
+    }
   }
-  document.addEventListener('click',e=>{
-    const b=e.target.closest('.more');if(!b)return;
-    const det=b.closest('.card')?.querySelector('details');if(det)det.open=!det.open;
+
+  // «مزيد»
+  document.addEventListener('click',(e)=>{
+    const btn=e.target.closest('.more'); if(!btn) return;
+    const det=btn.closest('.card')?.querySelector('details'); if(det) det.open=!det.open;
   });
+
+  // مشاركة
+  const shareText='تابع «خط التماس الأخباري»: أحدث الأخبار الرياضية العربية.';
+  function openShare(u){ window.open(u,'_blank','noopener'); }
+  document.querySelectorAll('.sharebtn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const kind=btn.dataset.share, url=encodeURIComponent(location.href), msg=encodeURIComponent(shareText);
+      if(kind==='copy'){ try{ await navigator.clipboard.writeText(`${shareText}\n${location.href}`);}catch{} return; }
+      if(kind==='whatsapp') openShare(`https://wa.me/?text=${msg}%0A${url}`);
+      if(kind==='telegram') openShare(`https://t.me/share/url?url=${url}&text=${msg}`);
+      if(kind==='facebook') openShare(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${msg}`);
+      if(kind==='x') openShare(`https://x.com/intent/tweet?text=${msg}&url=${url}`);
+      if(kind==='linkedin') openShare(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+    });
+  });
+
   load();
 })();
 </script>
