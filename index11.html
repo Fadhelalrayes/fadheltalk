@@ -5,447 +5,167 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>خط التماس الأخباري</title>
 
-<!-- خط الواجهة -->
+<!-- خط -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet" />
-<!-- خط أصغر للتذييل -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020; --muted:#5a6b7d;
+    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020;
     --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
     --green1:#11c295; --green2:#0aa27a; --green3:#0a865f;
-    --barH:8px; /* سماكة الهيدر والسفلية */
-    --danger:#d9534f; --warn:#f0ad4e; --ok:#0aa27a;
+    --barH:8px;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
   body{margin:0; background:var(--bg); color:var(--ink);
-       font:16px/1.75 "Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+       font:16px/1.75 "Cairo",system-ui,Arial,sans-serif}
 
-  /* هيدر أخضر تدرّجي */
+  /* هيدر */
   header{
     position:sticky; top:0; z-index:20; color:#fff;
-    background:linear-gradient(180deg, var(--green1), var(--green2) 70%, var(--green3) 100%);
-    border-bottom:0;
+    background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3) 100%);
   }
   header::after{
     content:""; display:block; height:var(--barH);
-    background:linear-gradient(90deg, var(--green1), #86f0d3, var(--green1));
+    background:linear-gradient(90deg,var(--green1),#86f0d3,var(--green1));
   }
   .container{max-width:1200px; margin:auto; padding:16px 18px}
-  .header-center{display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center}
-  .header-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
-
+  .header-center{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center}
   .logo{
     width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff;
-    background:radial-gradient(circle at 30% 30%, #9ff5df, #37d7ae 55%, #0ca878 100%);
+    background:radial-gradient(circle at 30% 30%,#9ff5df,#37d7ae 55%,#0ca878 100%);
     box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 24px rgba(255,255,255,.12);
   }
   .logo svg{width:30px; height:30px}
-  h1{margin:0; font-size:2.1rem; font-weight:800; letter-spacing:.3px; white-space:nowrap}
+  h1{margin:0; font-size:2.1rem; font-weight:800}
   .tagline{opacity:.95; font-size:1rem; margin:0}
 
-  /* زر تحديث الآن */
-  .btn{
-    border:1px solid rgba(255,255,255,.35);
-    background:rgba(255,255,255,.12);
-    color:#fff; border-radius:12px; padding:10px 14px; cursor:pointer; transition:.2s; font-weight:800
-  }
-  .btn:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.18)}
-  .hint{font-size:.9rem; opacity:.85}
-
-  /* شريط حالة أعلى البطاقات */
-  .statusbar{
-    margin:10px 0 0; padding:10px 12px; border-radius:12px; border:1px solid var(--ring);
-    background:#fff; display:none; align-items:center; gap:10px; color:#334; font-weight:700
-  }
-  .statusbar.ok{display:flex; border-color:#b9f0df; color:#0a7d60; background:#e8fbf5}
-  .statusbar.warn{display:flex; border-color:#ffe3a6; color:#7a5a00; background:#fff6da}
-  .statusbar.err{display:flex; border-color:#ffc7c5; color:#8a2421; background:#ffeeed}
-  .spin{width:16px; height:16px; border-radius:50%; border:2px solid #fff; border-top-color:#0aa27a; animation:sp 1s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
-
-  /* بطاقات الأخبار */
-  .grid{display:grid; gap:16px; margin-top:16px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-  article.card{
-    background:var(--card); border:1px solid var(--ring); border-radius:18px; padding:0;
-    box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden
-  }
-  .thumb{
-    width:100%; max-height:220px; object-fit:cover; display:block;
-    aspect-ratio:16/9; background:#eef3f7;
-  }
+  /* بطاقات */
+  .grid{display:grid; gap:16px; margin-top:16px;
+        grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  article.card{background:var(--card); border:1px solid var(--ring); border-radius:18px;
+               padding:0; box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden}
+  .thumb{width:100%; max-height:220px; object-fit:cover; display:block; aspect-ratio:16/9; background:#eef3f7}
   .card-body{padding:14px 16px}
-  .badge{
-    display:inline-flex; gap:8px; align-items:center; font-size:.8rem; color:var(--green2);
-    background:#e8fbf5; border:1px solid #b9f0df; padding:6px 10px; border-radius:999px; width:max-content
-  }
+  .badge{display:inline-flex; gap:8px; align-items:center; font-size:.8rem; color:var(--green2);
+         background:#e8fbf5; border:1px solid #b9f0df; padding:6px 10px; border-radius:999px}
   .title{font-size:1.12rem; font-weight:800; margin:8px 0 0}
   .excerpt{color:#2c3e50; font-size:.98rem}
   .meta{display:flex; gap:10px; color:#5f7286; font-size:.85rem}
   .top-row{display:flex; align-items:center; gap:8px}
-  .more{
-    margin-inline-start:auto; width:36px; height:36px; border-radius:12px;
-    border:1px solid var(--ring); background:#fff; display:grid; place-items:center; cursor:pointer; transition:.2s
-  }
-  .more:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(12,57,95,.12)}
+  .more{margin-inline-start:auto; width:36px; height:36px; border-radius:12px;
+        border:1px solid var(--ring); background:#fff; display:grid; place-items:center; cursor:pointer}
   .more svg{width:18px; height:18px; color:#0b2e3f}
   details{border-top:1px dashed var(--ring); padding-top:10px; margin-top:6px}
-  details[open] summary{opacity:.7}
-  summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px}
+  summary{list-style:none; cursor:pointer; display:flex; gap:8px}
   summary::-webkit-details-marker{display:none}
-  .empty,.error{text-align:center; color:#5b6b7c; padding:50px 20px; border:1px dashed var(--ring); border-radius:18px; background:#fff}
 
-  /* شريط مشاركة خطّي */
+  /* مشاركة */
   .sharebar-wrap{border-top:1px solid var(--ring); margin-top:26px; padding:16px 0}
-  .sharebar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center}
-  .sharebtn{
-    width:42px; height:42px; border-radius:12px;
-    background:#fff; border:1px solid var(--ring); display:grid; place-items:center; cursor:pointer; transition:.2s
-  }
-  .sharebtn:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(12,57,95,.12)}
+  .sharebar{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .sharebtn{width:42px; height:42px; border-radius:12px; background:#fff; border:1px solid var(--ring);
+            display:grid; place-items:center; cursor:pointer}
   .sharebtn svg{width:22px; height:22px; stroke:#0a1020}
 
-  /* تذييل أصغر بخط مختلف */
-  footer.site-footer{max-width:1200px; margin:8px auto 24px; padding:0 18px; text-align:center}
-  a.credit{
-    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
-    border:1px solid var(--ring); background:#fff; color:#0a1020;
-    padding:8px 12px; border-radius:12px; font:600 13px/1.2 "Noto Kufi Arabic",sans-serif;
-    box-shadow:0 6px 16px rgba(12,57,95,.12); transition:.2s
-  }
-  a.credit:hover{transform:translateY(-1px)}
-
-  /* شريط سفلي يطابق الهيدر (نفس التدرّج ونفس السماكة) */
-  .site-bottom-bar{
-    height:var(--barH);
-    background:linear-gradient(180deg, var(--green1), var(--green2) 70%, var(--green3) 100%);
-    border-top:0;
-  }
-
-  .copy-toast{
-    position:fixed; bottom:18px; inset-inline:0; margin:auto; width:max-content;
-    background:linear-gradient(90deg,var(--green1),var(--green2)); color:white; padding:10px 14px;
-    border-radius:12px; box-shadow:0 8px 30px rgba(10,162,122,.25); font-weight:800; display:none
-  }
+  /* تذييل */
+  footer.site-footer{max-width:1200px; margin:8px auto 24px; text-align:center}
+  a.credit{display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+           border:1px solid var(--ring); background:#fff; color:#0a1020;
+           padding:8px 12px; border-radius:12px; font:600 13px/1.2 "Noto Kufi Arabic",sans-serif;
+           box-shadow:0 6px 16px rgba(12,57,95,.12)}
+  .site-bottom-bar{height:var(--barH);
+    background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3) 100%)}
 </style>
 </head>
 <body>
   <header>
     <div class="container">
       <div class="header-center">
-        <div class="logo" aria-hidden="true" title="شعار خط التماس">
-          <!-- لوجو: كرة مع نبضة -->
-          <svg viewBox="0 0 24 24" fill="none" role="img" aria-label="شعار">
-            <circle cx="12" cy="12" r="9" stroke="white" stroke-opacity=".9" />
-            <path d="M4 12h3l2-3 2 6 2-4 2 3h3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white"/>
+            <path d="M4 12h3l2-3 2 6 2-4 2 3h3" stroke="white" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h1>خط التماس الأخباري</h1>
         <p class="tagline">أخبار رياضية عربية</p>
-
-        <!-- زر تحديث الآن + تلميح -->
-        <div class="header-actions">
-          <button class="btn" id="refreshBtn" type="button" title="تحديث الآن" aria-label="تحديث الآن">تحديث الآن</button>
-          <span class="hint" id="refreshHint">يُحدّث تلقائيًا • يعيد المحاولة عند الفشل</span>
-        </div>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <div id="statusbar" class="statusbar" role="status" aria-live="polite"></div>
+    <section id="news" class="grid" aria-live="polite"></section>
 
-    <section id="news" class="grid" aria-live="polite" aria-busy="true"></section>
-    <div id="status" class="empty" hidden>يتم جلب الأخبار…</div>
-
-    <!-- شريط مشاركة بأيقونات خطّية -->
     <div class="sharebar-wrap">
-      <div class="sharebar" aria-label="مشاركة الصفحة">
-        <!-- واتساب -->
-        <button class="sharebtn" data-share="whatsapp" title="واتساب" aria-label="مشاركة واتساب">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20l1.8-3.8A8 8 0 1 1 12 20a8.5 8.5 0 0 1-4-.9L4 20Z" stroke-width="1.6"/><path d="M9 9.5c.2 2.6 2.7 5.1 5.3 5.3.4 0 .7-.1.9-.3l.6-.6M10 7l-1 1" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </button>
-        <!-- تيليجرام -->
-        <button class="sharebtn" data-share="telegram" title="تيليجرام" aria-label="مشاركة تيليجرام">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M20.8 4.2 9 10l3 2 8-7.5M12 12l1.2 7 2.3-3.8" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </button>
-        <!-- فيسبوك -->
-        <button class="sharebtn" data-share="facebook" title="فيسبوك" aria-label="مشاركة فيسبوك">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke-width="1.6"/><path d="M13 10h2V8h-2c-1.1 0-2 .9-2 2v2H9v2h2v4h2v-4h2l.6-2H13v-2Z" stroke-width="0" fill="currentColor"/></svg>
-        </button>
-        <!-- X -->
-        <button class="sharebtn" data-share="x" title="X" aria-label="مشاركة X">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5 5 19" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-        <!-- لينكدإن -->
-        <button class="sharebtn" data-share="linkedin" title="لينكدإن" aria-label="مشاركة لينكدإن">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke-width="1.6"/><circle cx="8" cy="9" r="1.2"/><path d="M8 18v-6M12 18v-3c0-1.3 1.1-2.4 2.4-2.4S17 13.7 17 15v3" stroke-linecap="round" stroke-width="1.6"/></svg>
-        </button>
-        <!-- نسخ -->
-        <button class="sharebtn" data-share="copy" title="نسخ الرابط" aria-label="نسخ الرابط">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="9" height="11" rx="2" stroke-width="1.6"/><rect x="6" y="4" width="9" height="11" rx="2" stroke-width="1.6"/></svg>
-        </button>
+      <div class="sharebar">
+        <button class="sharebtn" data-share="whatsapp"><svg viewBox="0 0 24 24"><path d="M4 20l1.8-3.8A8 8 0 1 1 12 20a8.5 8.5 0 0 1-4-.9L4 20Z"/><path d="M9 9.5c.2 2.6 2.7 5.1 5.3 5.3.4 0 .7-.1.9-.3l.6-.6M10 7l-1 1"/></svg></button>
+        <button class="sharebtn" data-share="telegram"><svg viewBox="0 0 24 24"><path d="M20.8 4.2 9 10l3 2 8-7.5M12 12l1.2 7 2.3-3.8"/></svg></button>
+        <button class="sharebtn" data-share="facebook"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M13 10h2V8h-2c-1.1 0-2 .9-2 2v2H9v2h2v4h2v-4h2l.6-2H13v-2Z"/></svg></button>
+        <button class="sharebtn" data-share="x"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke-width="2"/></svg></button>
+        <button class="sharebtn" data-share="linkedin"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8" cy="9" r="1.2"/><path d="M8 18v-6M12 18v-3c0-1.3 1.1-2.4 2.4-2.4S17 13.7 17 15v3"/></svg></button>
+        <button class="sharebtn" data-share="copy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="9" height="11" rx="2"/><rect x="6" y="4" width="9" height="11" rx="2"/></svg></button>
       </div>
     </div>
   </main>
 
-  <!-- «برمجة وتطوير: فاضل الريس» (يفتح واتساب) -->
   <footer class="site-footer">
-    <a class="credit" href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1&fbclid=PAVERDUAMmpVFleHRuA2FlbQIxMAABpyJPbGGA99AFnmjozjUr8s9ejerL-tlDxOqcQ4PlUxZoQi3rSh4orLwyOCk1_aem_Qwij4KmGwbbQgFaNdtN4ZA"
-       target="_blank" rel="noopener" aria-label="التواصل عبر واتساب">
-      برمجة وتطوير: <strong>فاضل الريس</strong>
-    </a>
+    <a class="credit" href="https://api.whatsapp.com/send/?phone=97333375858" target="_blank">برمجة وتطوير: <strong>فاضل الريس</strong></a>
   </footer>
 
-  <!-- شريط سفلي يطابق الهيدر تمامًا -->
-  <div class="site-bottom-bar" aria-hidden="true"></div>
-
-  <div class="copy-toast" id="copyToast">تم نسخ الرابط 👌</div>
+  <div class="site-bottom-bar"></div>
 
 <script>
 (() => {
-  // —— إعدادات عامة —— //
-  const BASE_REFRESH_MS = 30_000;     // فترة التحديث الأساسية
-  const MAX_REFRESH_MS  = 3 * 60_000; // أقصى فترة بعد التراجع التدريجي
-  const FEED_TIMEOUT_MS = 8000;       // مهلة المصدر الواحد
-  const LIMIT = 48;
-
-  // —— مصادر رياضية فقط —— //
+  const SUCCESS_REFRESH_MS = 30000, FAIL_REFRESH_MS = 1000, FEED_TIMEOUT_MS = 8000, LIMIT = 48;
   const FEEDS = [
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.alarabiya.net/.mrss/ar/sports.xml'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://aawsat.com/rss/section/sport'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://arabic.rt.com/rss/sport/'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.skynewsarabia.com/rss/sports')
   ];
-
-  // عناصر DOM
-  const $grid = document.getElementById('news');
-  const $status = document.getElementById('status');
-  const $statusbar = document.getElementById('statusbar');
-  const $refresh = document.getElementById('refreshBtn');
-
-  // فلترة صارمة: رياضة فقط + حظر سياسي
-  const SPORTS_POSITIVE = /رياضة|رياضي|كرة|قدم|دوري|مباراة|مواجه|جولة|هدف|هداف|صدارة|تشكيل|منتخب|كأس|بطولة|نادي|مدرب|لاعب|انتقال|إعارة|تعاقد|تصفيات|ملعب|شوط|فريق|كلاسيكو|ركلة|ركنيات|VAR|حكم|تتويج|جائزة|ميدالية|ألعاب|أولمبي|سلة|طائرة|يد|تنس|مضرب|فورمولا|محترفين|كاراتيه|جودو/i;
-  const POLITICS_NEGATIVE = /سياسة|سياسي|رئيس|وزير|وزارة|حكومة|برلمان|انتخابات|حزب|مجلس|احتلال|حرب|جبهة|هدنة|سلام|مفاوضات|طاقة|غاز|نفط|سوق|بورصة|غزة|إسرائيل|سورية|سوريا|اليمن|ليبيا|العراق|مجلس\s*الأمن|عقوبات|انقلاب|قصف|هجوم|عملية\s*عسكرية|اغتيال|سجال|ائتلاف|معارضة|دبلوما/i;
-
-  function isSportsOnly(text, cats){
-    const blob = `${text} ${cats||''}`;
-    return SPORTS_POSITIVE.test(blob) && !POLITICS_NEGATIVE.test(blob);
-  }
-
-  function strip(html){
-    const tmp = document.createElement('div');
-    tmp.innerHTML = (html || '')
-      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'')
-      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'');
-    return (tmp.textContent || tmp.innerText || '').replace(/\s+/g,' ').trim();
-  }
-
-  // استخراج صورة
-  function getImageFromNode(n){
-    const enc = n.querySelector('enclosure[url][type*="image"]')?.getAttribute('url');
-    if(enc) return enc;
-    const m1 = n.querySelector('media\\:content[url], content[url], media\\:thumbnail[url], thumbnail[url]');
-    if(m1 && m1.getAttribute) {
-      const url = m1.getAttribute('url');
-      if(url) return url;
-    }
-    const raw = n.querySelector('description, summary, content')?.textContent || '';
-    const imgMatch = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if(imgMatch && imgMatch[1]) return imgMatch[1];
-    return '';
-  }
-
-  function escapeHTML(s){return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');}
-
-  function card({title, excerpt, date, image}){
-    const id = btoa(unescape(encodeURIComponent(title))).slice(0,24);
-    return `
-      <article class="card" data-id="${id}">
-        ${image ? `<img class="thumb" src="${image}" alt="صورة الخبر" loading="lazy" referrerpolicy="no-referrer" />` : ''}
-        <div class="card-body">
-          <div class="top-row">
-            <span class="badge" aria-label="تصنيف الخبر">⚽ رياضة</span>
-            <button class="more" title="مزيد" aria-label="مزيد (فتح المقتطف)">
-              <svg viewBox="0 0 24 24" role="img" aria-label="مزيد">
-                <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/>
-              </svg>
-            </button>
-          </div>
-          <h2 class="title">${escapeHTML(title)}</h2>
-          <div class="meta">🕒 <span>${new Date(date).toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})}</span></div>
-          <details><summary>عرض المقتطف</summary><p class="excerpt">${escapeHTML(excerpt || '—')}</p></details>
+  const $grid=document.getElementById('news');
+  const SPORTS=/رياضة|رياضي|كرة|قدم|دوري|مباراة|منتخب|كأس|بطولة|نادي|مدرب|لاعب/i;
+  const POL=/سياسة|رئيس|وزير|حكومة|انتخابات|حرب|مجلس|برلمان|احتلال|عقوبات/i;
+  function ok(t,c){return SPORTS.test(t)&&!POL.test(t);}
+  function strip(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||'';}
+  function img(n){return n.querySelector('enclosure[url]')?.getAttribute('url')||'';}
+  function card({title,excerpt,date,image}){return `
+    <article class="card">
+      ${image?`<img class="thumb" src="${image}" loading="lazy"/>`:''}
+      <div class="card-body">
+        <div class="top-row"><span class="badge">⚽ رياضة</span>
+          <button class="more"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Z"/></svg></button>
         </div>
-      </article>
-    `;
-  }
-
-  async function fetchWithTimeout(url, timeoutMs){
-    const ctrl = new AbortController();
-    const t = setTimeout(()=>ctrl.abort('timeout'), timeoutMs);
-    try{
-      const r = await fetch(url, {cache:'no-store', signal:ctrl.signal});
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return await r.text();
-    } finally { clearTimeout(t); }
-  }
-
-  function parseFeed(xmlText){
-    const out = [];
-    try{
-      const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
-      const nodes = Array.from(xml.querySelectorAll('item, entry'));
-      for(const n of nodes){
-        const title = (n.querySelector('title')?.textContent || '').trim();
-        if(!title) continue;
-        const descNode = n.querySelector('description, summary, content');
-        const desc = descNode?.textContent || '';
-        const cats = Array.from(n.querySelectorAll('category, section')).map(x=>x.textContent).join(' ');
-        const pub  = n.querySelector('pubDate, updated, published')?.textContent || new Date().toISOString();
-        const date = new Date(pub);
-        const plain = strip(desc);
-
-        if(!isSportsOnly(`${title} ${plain}`, cats)) continue;
-
-        const image = getImageFromNode(n);
-        out.push({ title, excerpt: plain.slice(0,260), date: isNaN(date) ? new Date() : date, image });
-      }
-    }catch{/* تجاهُل */}
-    return out;
-  }
-
-  // —— التحديث الذكي مع تراجع تدريجي —— //
-  let timer = null;
-  let currentInterval = BASE_REFRESH_MS;
-  let consecutiveFailures = 0;
-
-  function setStatus(kind, text){
-    if(!text){ $statusbar.style.display='none'; $statusbar.className='statusbar'; $statusbar.textContent=''; return; }
-    $statusbar.className = 'statusbar ' + kind;
-    $statusbar.innerHTML = (kind==='ok' ? '✅ ' : kind==='warn' ? '⚠️ ' : '⛔ ') + escapeHTML(text);
-    $statusbar.style.display='flex';
-  }
-
+        <h2 class="title">${title}</h2>
+        <div class="meta">🕒 ${new Date(date).toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})}</div>
+        <details><summary>عرض المقتطف</summary><p class="excerpt">${excerpt}</p></details>
+      </div>
+    </article>`;}
+  async function fetchT(u){const c=new AbortController();setTimeout(()=>c.abort(),FEED_TIMEOUT_MS);
+    const r=await fetch(u,{signal:c.signal});return r.ok? r.text():"";}
+  function parse(x){const out=[];const xml=new DOMParser().parseFromString(x,'text/xml');
+    xml.querySelectorAll('item').forEach(n=>{
+      const t=(n.querySelector('title')?.textContent||'').trim();
+      const d=n.querySelector('description')?.textContent||'';
+      if(!ok(t+d,''))return;
+      out.push({title:t,excerpt:strip(d).slice(0,260),date:new Date(),image:img(n)});
+    });return out;}
+  let timer=null;
+  function schedule(ms){clearTimeout(timer);timer=setTimeout(load,ms);}
   async function load(){
-    // إظهار حالة "جاري التحديث"
-    setStatus('warn', 'يتم جلب الأخبار…');
-    $grid.setAttribute('aria-busy','true');
-    $status.hidden = false; $status.className='empty'; $status.textContent = 'يتم جلب الأخبار…';
-
     try{
-      const CONCURRENCY = 4;
-      let items = [];
-      for(let i=0;i<FEEDS.length;i+=CONCURRENCY){
-        const batch = FEEDS.slice(i,i+CONCURRENCY);
-        const texts = await Promise.allSettled(batch.map(u => fetchWithTimeout(u, FEED_TIMEOUT_MS)));
-        const parsed = texts
-          .filter(x=>x.status==='fulfilled')
-          .flatMap(x=>parseFeed(x.value));
-        items = items.concat(parsed);
-      }
-
-      // إذا لم ينجح أي مصدر اعتبرها فشل جولة
-      if(items.length === 0) throw new Error('لا توجد استجابات صالحة من المصادر');
-
-      // إزالة التكرارات + فرز
-      const seen = new Set(), unique = [];
-      for(const it of items){
-        const k = it.title.trim().toLowerCase();
-        if(seen.has(k)) continue; seen.add(k); unique.push(it);
-      }
-      unique.sort((a,b)=> b.date - a.date);
-      const limited = unique.slice(0, LIMIT);
-
-      if(!limited.length){
-        $grid.innerHTML=''; $status.hidden=false; $status.textContent='لا توجد عناصر رياضية الآن.';
-        setStatus('warn','لا توجد عناصر رياضية الآن — سنعاود التحديث تلقائيًا.');
-      } else {
-        $status.hidden=true; $grid.innerHTML = limited.map(card).join('');
-        setStatus('ok','تم التحديث بنجاح.');
-      }
-
-      // نجاح: صفّر الفشل وأعد الفترة للأساس
-      consecutiveFailures = 0;
-      if(currentInterval !== BASE_REFRESH_MS){
-        currentInterval = BASE_REFRESH_MS;
-        scheduleNext(); // طبّق الفترة الجديدة
-      }
-    }catch(e){
-      console.error(e);
-      // فشل: أعرض رسالة، زد التراجع، وعاود لاحقًا
-      consecutiveFailures++;
-      currentInterval = Math.min(MAX_REFRESH_MS, Math.round(BASE_REFRESH_MS * Math.pow(1.8, consecutiveFailures)));
-      $grid.innerHTML=''; $status.hidden=false; $status.className='error';
-      $status.textContent='تعذّر الجلب الآن. سيُعاد المحاولة تلقائيًا.';
-      setStatus('err', `تعذّر الجلب (#${consecutiveFailures}). سيُعاد المحاولة تلقائيًا خلال ${(currentInterval/1000)|0} ثانية.`);
-      scheduleNext();
-    } finally {
-      $grid.removeAttribute('aria-busy');
-    }
+      let items=[];
+      for(const u of FEEDS){try{const txt=await fetchT(u);items=items.concat(parse(txt));}catch{}}
+      if(!items.length) throw "fail";
+      const seen=new Set(),uniq=[];for(const it of items){if(seen.has(it.title))continue;seen.add(it.title);uniq.push(it);}
+      uniq.sort((a,b)=>b.date-a.date);$grid.innerHTML=uniq.slice(0,LIMIT).map(card).join('');
+      schedule(SUCCESS_REFRESH_MS);
+    }catch{schedule(FAIL_REFRESH_MS);}
   }
-
-  function clearNext(){
-    if(timer){ clearTimeout(timer); timer = null; }
-  }
-  function scheduleNext(){
-    clearNext();
-    timer = setTimeout(load, currentInterval);
-  }
-
-  // زر تحديث الآن
-  if($refresh){ $refresh.addEventListener('click', () => { clearNext(); load(); }); }
-
-  // التعامل مع انقطاع/عودة الشبكة
-  window.addEventListener('offline', () => {
-    setStatus('err','لا يوجد اتصال بالإنترنت. سنعاود المحاولة تلقائيًا عند عودته.');
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('.more');if(!b)return;
+    const det=b.closest('.card')?.querySelector('details');if(det)det.open=!det.open;
   });
-  window.addEventListener('online', () => {
-    setStatus('warn','عاد الاتصال — يتم التحقق من التحديثات الآن…');
-    clearNext(); load();
-  });
-
-  // النقر على «مزيد»
-  document.addEventListener('click', (ev) => {
-    const btn = ev.target.closest('.more');
-    if(!btn) return;
-    const det = btn.closest('.card')?.querySelector('details');
-    if(det) det.open = !det.open;
-  });
-
-  // مشاركة
-  const shareText = 'تابع «خط التماس الأخباري»: أحدث الأخبار الرياضية العربية.';
-  function openShare(url){ window.open(url, '_blank','noopener'); }
-  document.querySelectorAll('.sharebtn').forEach(btn=>{
-    btn.addEventListener('click', async ()=>{
-      const kind = btn.dataset.share, pageURL = location.href;
-      if(kind==='copy'){
-        try{
-          await navigator.clipboard.writeText(`${shareText}\n${pageURL}`);
-          const t = document.getElementById('copyToast');
-          t.style.display='block'; setTimeout(()=>t.style.display='none', 1600);
-        }catch{}
-        return;
-      }
-      const msg = encodeURIComponent(shareText), url = encodeURIComponent(pageURL);
-      if(kind==='whatsapp') openShare(`https://wa.me/?text=${msg}%0A${url}`);
-      if(kind==='telegram') openShare(`https://t.me/share/url?url=${url}&text=${msg}`);
-      if(kind==='facebook') openShare(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${msg}`);
-      if(kind==='x') openShare(`https://x.com/intent/tweet?text=${msg}&url=${url}`);
-      if(kind==='linkedin') openShare(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
-    });
-  });
-
-  // تشغيل أولي + جدولة
   load();
-  scheduleNext();
-  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) { clearNext(); load(); } });
 })();
 </script>
 </body>
-
-<!-- شريط سفلي يطابق الهيدر تمامًا -->
-<div class="site-bottom-bar" aria-hidden="true"></div>
-<div class="copy-toast" id="copyToast">تم نسخ الرابط 👌</div>
 </html>
