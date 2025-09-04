@@ -16,6 +16,7 @@
     --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
     --green1:#11c295; --green2:#0aa27a; --green3:#0a865f;
     --barH:8px; /* سماكة الهيدر والسفلية */
+    --danger:#d9534f; --warn:#f0ad4e; --ok:#0aa27a;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -32,9 +33,10 @@
     content:""; display:block; height:var(--barH);
     background:linear-gradient(90deg, var(--green1), #86f0d3, var(--green1));
   }
-
   .container{max-width:1200px; margin:auto; padding:16px 18px}
-  .header-center{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center}
+  .header-center{display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center}
+  .header-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+
   .logo{
     width:56px; height:56px; border-radius:16px; display:grid; place-items:center; color:#fff;
     background:radial-gradient(circle at 30% 30%, #9ff5df, #37d7ae 55%, #0ca878 100%);
@@ -44,10 +46,30 @@
   h1{margin:0; font-size:2.1rem; font-weight:800; letter-spacing:.3px; white-space:nowrap}
   .tagline{opacity:.95; font-size:1rem; margin:0}
 
+  /* زر تحديث الآن */
+  .btn{
+    border:1px solid rgba(255,255,255,.35);
+    background:rgba(255,255,255,.12);
+    color:#fff; border-radius:12px; padding:10px 14px; cursor:pointer; transition:.2s; font-weight:800
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.18)}
+  .hint{font-size:.9rem; opacity:.85}
+
+  /* شريط حالة أعلى البطاقات */
+  .statusbar{
+    margin:10px 0 0; padding:10px 12px; border-radius:12px; border:1px solid var(--ring);
+    background:#fff; display:none; align-items:center; gap:10px; color:#334; font-weight:700
+  }
+  .statusbar.ok{display:flex; border-color:#b9f0df; color:#0a7d60; background:#e8fbf5}
+  .statusbar.warn{display:flex; border-color:#ffe3a6; color:#7a5a00; background:#fff6da}
+  .statusbar.err{display:flex; border-color:#ffc7c5; color:#8a2421; background:#ffeeed}
+  .spin{width:16px; height:16px; border-radius:50%; border:2px solid #fff; border-top-color:#0aa27a; animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
   /* بطاقات الأخبار */
   .grid{display:grid; gap:16px; margin-top:16px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
   article.card{
-    background:var(--card); border:1px solid var(--ring); border-radius:18px; padding:0; /* صفر لأن الصورة أعلى */
+    background:var(--card); border:1px solid var(--ring); border-radius:18px; padding:0;
     box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden
   }
   .thumb{
@@ -122,11 +144,19 @@
         </div>
         <h1>خط التماس الأخباري</h1>
         <p class="tagline">أخبار رياضية عربية</p>
+
+        <!-- زر تحديث الآن + تلميح -->
+        <div class="header-actions">
+          <button class="btn" id="refreshBtn" type="button" title="تحديث الآن" aria-label="تحديث الآن">تحديث الآن</button>
+          <span class="hint" id="refreshHint">يُحدّث تلقائيًا • يعيد المحاولة عند الفشل</span>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="container">
+    <div id="statusbar" class="statusbar" role="status" aria-live="polite"></div>
+
     <section id="news" class="grid" aria-live="polite" aria-busy="true"></section>
     <div id="status" class="empty" hidden>يتم جلب الأخبار…</div>
 
@@ -176,11 +206,13 @@
 
 <script>
 (() => {
-  const REFRESH_MS = 30_000;
-  const FEED_TIMEOUT_MS = 6000;
+  // —— إعدادات عامة —— //
+  const BASE_REFRESH_MS = 30_000;     // فترة التحديث الأساسية
+  const MAX_REFRESH_MS  = 3 * 60_000; // أقصى فترة بعد التراجع التدريجي
+  const FEED_TIMEOUT_MS = 8000;       // مهلة المصدر الواحد
   const LIMIT = 48;
 
-  /* ✅ مصادر رياضية فقط لتفادي التسرب السياسي */
+  // —— مصادر رياضية فقط —— //
   const FEEDS = [
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.alarabiya.net/.mrss/ar/sports.xml'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://aawsat.com/rss/section/sport'),
@@ -188,10 +220,13 @@
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.skynewsarabia.com/rss/sports')
   ];
 
+  // عناصر DOM
   const $grid = document.getElementById('news');
   const $status = document.getElementById('status');
+  const $statusbar = document.getElementById('statusbar');
+  const $refresh = document.getElementById('refreshBtn');
 
-  /* فلترة صارمة: رياضة فقط + حظر سياسي */
+  // فلترة صارمة: رياضة فقط + حظر سياسي
   const SPORTS_POSITIVE = /رياضة|رياضي|كرة|قدم|دوري|مباراة|مواجه|جولة|هدف|هداف|صدارة|تشكيل|منتخب|كأس|بطولة|نادي|مدرب|لاعب|انتقال|إعارة|تعاقد|تصفيات|ملعب|شوط|فريق|كلاسيكو|ركلة|ركنيات|VAR|حكم|تتويج|جائزة|ميدالية|ألعاب|أولمبي|سلة|طائرة|يد|تنس|مضرب|فورمولا|محترفين|كاراتيه|جودو/i;
   const POLITICS_NEGATIVE = /سياسة|سياسي|رئيس|وزير|وزارة|حكومة|برلمان|انتخابات|حزب|مجلس|احتلال|حرب|جبهة|هدنة|سلام|مفاوضات|طاقة|غاز|نفط|سوق|بورصة|غزة|إسرائيل|سورية|سوريا|اليمن|ليبيا|العراق|مجلس\s*الأمن|عقوبات|انقلاب|قصف|هجوم|عملية\s*عسكرية|اغتيال|سجال|ائتلاف|معارضة|دبلوما/i;
 
@@ -202,14 +237,13 @@
 
   function strip(html){
     const tmp = document.createElement('div');
-    // أزل السكريبتات والستايلات
     tmp.innerHTML = (html || '')
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'')
       .replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'');
     return (tmp.textContent || tmp.innerText || '').replace(/\s+/g,' ').trim();
   }
 
-  // استخراج أول صورة متاحة من العنصر (enclosure/media/content + من داخل النص)
+  // استخراج صورة
   function getImageFromNode(n){
     const enc = n.querySelector('enclosure[url][type*="image"]')?.getAttribute('url');
     if(enc) return enc;
@@ -218,7 +252,6 @@
       const url = m1.getAttribute('url');
       if(url) return url;
     }
-    // بعض الخلاصات تضع <img> داخل الوصف/المحتوى
     const raw = n.querySelector('description, summary, content')?.textContent || '';
     const imgMatch = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
     if(imgMatch && imgMatch[1]) return imgMatch[1];
@@ -237,7 +270,7 @@
             <span class="badge" aria-label="تصنيف الخبر">⚽ رياضة</span>
             <button class="more" title="مزيد" aria-label="مزيد (فتح المقتطف)">
               <svg viewBox="0 0 24 24" role="img" aria-label="مزيد">
-                <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/>
+                <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/>
               </svg>
             </button>
           </div>
@@ -274,33 +307,48 @@
         const date = new Date(pub);
         const plain = strip(desc);
 
-        // حصر رياضي فقط
         if(!isSportsOnly(`${title} ${plain}`, cats)) continue;
 
         const image = getImageFromNode(n);
-
-        out.push({
-          title,
-          excerpt: plain.slice(0,260),
-          date: isNaN(date) ? new Date() : date,
-          image
-        });
+        out.push({ title, excerpt: plain.slice(0,260), date: isNaN(date) ? new Date() : date, image });
       }
-    }catch{/* تجاهُل المصدر المعطّل */}
+    }catch{/* تجاهُل */}
     return out;
   }
 
+  // —— التحديث الذكي مع تراجع تدريجي —— //
+  let timer = null;
+  let currentInterval = BASE_REFRESH_MS;
+  let consecutiveFailures = 0;
+
+  function setStatus(kind, text){
+    if(!text){ $statusbar.style.display='none'; $statusbar.className='statusbar'; $statusbar.textContent=''; return; }
+    $statusbar.className = 'statusbar ' + kind;
+    $statusbar.innerHTML = (kind==='ok' ? '✅ ' : kind==='warn' ? '⚠️ ' : '⛔ ') + escapeHTML(text);
+    $statusbar.style.display='flex';
+  }
+
   async function load(){
+    // إظهار حالة "جاري التحديث"
+    setStatus('warn', 'يتم جلب الأخبار…');
     $grid.setAttribute('aria-busy','true');
     $status.hidden = false; $status.className='empty'; $status.textContent = 'يتم جلب الأخبار…';
+
     try{
       const CONCURRENCY = 4;
       let items = [];
       for(let i=0;i<FEEDS.length;i+=CONCURRENCY){
         const batch = FEEDS.slice(i,i+CONCURRENCY);
         const texts = await Promise.allSettled(batch.map(u => fetchWithTimeout(u, FEED_TIMEOUT_MS)));
-        items = items.concat(texts.filter(x=>x.status==='fulfilled').flatMap(x=>parseFeed(x.value)));
+        const parsed = texts
+          .filter(x=>x.status==='fulfilled')
+          .flatMap(x=>parseFeed(x.value));
+        items = items.concat(parsed);
       }
+
+      // إذا لم ينجح أي مصدر اعتبرها فشل جولة
+      if(items.length === 0) throw new Error('لا توجد استجابات صالحة من المصادر');
+
       // إزالة التكرارات + فرز
       const seen = new Set(), unique = [];
       for(const it of items){
@@ -312,18 +360,53 @@
 
       if(!limited.length){
         $grid.innerHTML=''; $status.hidden=false; $status.textContent='لا توجد عناصر رياضية الآن.';
+        setStatus('warn','لا توجد عناصر رياضية الآن — سنعاود التحديث تلقائيًا.');
       } else {
         $status.hidden=true; $grid.innerHTML = limited.map(card).join('');
+        setStatus('ok','تم التحديث بنجاح.');
+      }
+
+      // نجاح: صفّر الفشل وأعد الفترة للأساس
+      consecutiveFailures = 0;
+      if(currentInterval !== BASE_REFRESH_MS){
+        currentInterval = BASE_REFRESH_MS;
+        scheduleNext(); // طبّق الفترة الجديدة
       }
     }catch(e){
       console.error(e);
-      $grid.innerHTML=''; $status.hidden=false; $status.className='error'; $status.textContent='تعذّر الجلب الآن. سنحاول مجددًا.';
-    }finally{
+      // فشل: أعرض رسالة، زد التراجع، وعاود لاحقًا
+      consecutiveFailures++;
+      currentInterval = Math.min(MAX_REFRESH_MS, Math.round(BASE_REFRESH_MS * Math.pow(1.8, consecutiveFailures)));
+      $grid.innerHTML=''; $status.hidden=false; $status.className='error';
+      $status.textContent='تعذّر الجلب الآن. سيُعاد المحاولة تلقائيًا.';
+      setStatus('err', `تعذّر الجلب (#${consecutiveFailures}). سيُعاد المحاولة تلقائيًا خلال ${(currentInterval/1000)|0} ثانية.`);
+      scheduleNext();
+    } finally {
       $grid.removeAttribute('aria-busy');
     }
   }
 
-  // «مزيد»
+  function clearNext(){
+    if(timer){ clearTimeout(timer); timer = null; }
+  }
+  function scheduleNext(){
+    clearNext();
+    timer = setTimeout(load, currentInterval);
+  }
+
+  // زر تحديث الآن
+  if($refresh){ $refresh.addEventListener('click', () => { clearNext(); load(); }); }
+
+  // التعامل مع انقطاع/عودة الشبكة
+  window.addEventListener('offline', () => {
+    setStatus('err','لا يوجد اتصال بالإنترنت. سنعاود المحاولة تلقائيًا عند عودته.');
+  });
+  window.addEventListener('online', () => {
+    setStatus('warn','عاد الاتصال — يتم التحقق من التحديثات الآن…');
+    clearNext(); load();
+  });
+
+  // النقر على «مزيد»
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('.more');
     if(!btn) return;
@@ -354,9 +437,10 @@
     });
   });
 
+  // تشغيل أولي + جدولة
   load();
-  setInterval(load, REFRESH_MS);
-  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) load(); });
+  scheduleNext();
+  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) { clearNext(); load(); } });
 })();
 </script>
 </body>
