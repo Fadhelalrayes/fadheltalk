@@ -6,55 +6,64 @@
 <title>خط التماس الأخباري</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020; --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
-    --green1:#11c295; --green2:#0aa27a; --green3:#0a865f; --barH:8px;
+    --bg:#f6f8fb; --card:#ffffff; --ink:#0a1020;
+    --ring:#e5eef6; --shadow:0 10px 25px rgba(19,52,89,.08);
+    --green1:#11c295; --green2:#0aa27a; --green3:#0a865f;
+    --barH:8px;
   }
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Cairo",system-ui,Arial,sans-serif}
 
-  /* هيدر */
-  header{position:sticky;top:0;z-index:20;color:#fff;background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3))}
-  header::after{content:"";display:block;height:var(--barH);background:linear-gradient(90deg,var(--green1),#86f0d3,var(--green1))}
+  /* الهيدر الأخضر */
+  header{position:sticky;top:0;z-index:20;color:#fff;
+    background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3))}
+  header::after{content:"";display:block;height:var(--barH);
+    background:linear-gradient(90deg,var(--green1),#86f0d3,var(--green1))}
   .container{max-width:1200px;margin:auto;padding:16px 18px}
   .header-center{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
-  .logo{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;background:radial-gradient(circle at 30% 30%,#9ff5df,#37d7ae 55%,#0ca878);box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 24px rgba(255,255,255,.12)}
+  .logo{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;
+    background:radial-gradient(circle at 30% 30%,#9ff5df,#37d7ae 55%,#0ca878);box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 24px rgba(255,255,255,.12)}
   .logo svg{width:30px;height:30px}
-  h1{margin:0;font-size:2.1rem;font-weight:800}
+  h1{margin:0;font-size:2.1rem;font-weight:800;white-space:nowrap}
   .tagline{margin:0;opacity:.95}
 
-  /* رسالة الفشل */
-  .fail-wrap{margin:12px 0 0}
+  /* رسالة الانتظار عند الفشل/عدم وجود أخبار */
+  .fail-wrap{margin:14px auto 0;max-width:600px}
   .fail-msg{
-    display:none;justify-content:center;align-items:center;gap:10px;
+    display:flex;justify-content:center;align-items:center;gap:10px;
     padding:12px 14px;border-radius:14px;background:#fff6da;border:1px solid #ffe19c;
     color:#7a5a00;font-weight:800;text-align:center
   }
-  .spinner{width:16px;height:16px;border-radius:50%;border:2px solid #ffd477;border-top-color:#7a5a00;animation:sp 1s linear infinite}
+  .spinner{width:16px;height:16px;border-radius:50%;
+    border:2px solid #ffd477;border-top-color:#7a5a00;animation:sp 1s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
 
-  /* بطاقات */
+  /* بطاقات الأخبار */
   .grid{display:grid;gap:16px;margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-  article.card{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:0;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+  article.card{background:var(--card);border:1px solid var(--ring);border-radius:18px;padding:0;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
   .thumb{width:100%;max-height:220px;object-fit:cover;display:block;aspect-ratio:16/9;background:#eef3f7}
   .card-body{padding:14px 16px}
-  .badge{display:inline-flex;gap:8px;align-items:center;font-size:.8rem;color:var(--green2);background:#e8fbf5;border:1px solid #b9f0df;padding:6px 10px;border-radius:999px}
+  .badge{display:inline-flex;gap:8px;align-items:center;font-size:.8rem;color:var(--green2);
+    background:#e8fbf5;border:1px solid #b9f0df;padding:6px 10px;border-radius:999px}
   .title{font-size:1.12rem;font-weight:800;margin:8px 0 0}
   .excerpt{color:#2c3e50}
   .meta{display:flex;gap:10px;color:#5f7286;font-size:.85rem}
   .top-row{display:flex;align-items:center;gap:8px}
-  .more{margin-inline-start:auto;width:36px;height:36px;border-radius:12px;border:1px solid var(--ring);background:#fff;display:grid;place-items:center;cursor:pointer}
+  .more{margin-inline-start:auto;width:36px;height:36px;border-radius:12px;
+    border:1px solid var(--ring);background:#fff;display:grid;place-items:center;cursor:pointer}
   .more svg{width:18px;height:18px;color:#0b2e3f}
   details{border-top:1px dashed var(--ring);padding-top:10px;margin-top:6px}
   summary{list-style:none;cursor:pointer;display:flex;gap:8px}
   summary::-webkit-details-marker{display:none}
 
-  /* مشاركة — أيقونات ممتلئة دائرية */
+  /* شريط المشاركة — أيقونات ممتلئة دائرية */
   .sharebar-wrap{border-top:1px solid var(--ring);margin-top:26px;padding:16px 0}
   .sharebar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .sharebtn{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--ring);display:grid;place-items:center;cursor:pointer;transition:.15s}
+  .sharebtn{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--ring);
+    display:grid;place-items:center;cursor:pointer;transition:.15s}
   .sharebtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(12,57,95,.12)}
   .sharebtn svg{width:22px;height:22px}
   .sharebtn[data-share="whatsapp"] svg{fill:#2BC85B}
@@ -64,9 +73,10 @@
   .sharebtn[data-share="linkedin"] svg{fill:#0A66C2}
   .sharebtn[data-share="copy"] svg{fill:#444}
 
-  /* تذييل */
-  footer.site-footer{max-width:1200px;margin:8px auto 24px;text-align:center}
-  a.credit{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--ring);background:#fff;color:#0a1020;padding:8px 12px;border-radius:12px;font:600 13px/1.2 "Noto Kufi Arabic",sans-serif;box-shadow:0 6px 16px rgba(12,57,95,.12)}
+  /* التذييل والخط السفلي */
+  footer{max-width:1200px;margin:16px auto;text-align:center}
+  a.credit{padding:8px 12px;border-radius:12px;background:#fff;border:1px solid var(--ring);
+    font:600 13px "Cairo",sans-serif;color:#0a1020;text-decoration:none}
   .site-bottom-bar{height:var(--barH);background:linear-gradient(180deg,var(--green1),var(--green2) 70%,var(--green3))}
 </style>
 </head>
@@ -84,10 +94,10 @@
     </div>
   </header>
 
-  <main class="container">
-    <!-- رسالة الفشل (تظهر فقط عند العجز) -->
-    <div class="fail-wrap"><div id="failMsg" class="fail-msg"><span class="spinner" aria-hidden="true"></span> انتظر نحن نأتي لك بالآخبار الآن</div></div>
+  <!-- الرسالة تظهر منذ الفتح وتختفي عند أول نجاح -->
+  <div class="fail-wrap"><div id="failMsg" class="fail-msg"><span class="spinner" aria-hidden="true"></span> انتظر نحن نأتي لك بالآخبار الآن</div></div>
 
+  <main class="container">
     <section id="news" class="grid" aria-live="polite"></section>
 
     <!-- شريط المشاركة -->
@@ -115,7 +125,7 @@
     </div>
   </main>
 
-  <footer class="site-footer">
+  <footer>
     <a class="credit" href="https://api.whatsapp.com/send/?phone=97333375858" target="_blank" rel="noopener">
       برمجة وتطوير: <strong>فاضل الريس</strong>
     </a>
@@ -124,8 +134,12 @@
 
 <script>
 (() => {
-  const SUCCESS_REFRESH_MS = 30000, FAIL_REFRESH_MS = 1000, FEED_TIMEOUT_MS = 8000, LIMIT = 48;
+  const SUCCESS_REFRESH_MS = 30000;  // عند النجاح
+  const FAIL_REFRESH_MS    = 1000;   // عند الفشل
+  const FEED_TIMEOUT_MS    = 8000;
+  const LIMIT              = 48;
 
+  // مصادر رياضية عربية فقط
   const FEEDS = [
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.alarabiya.net/.mrss/ar/sports.xml'),
     'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://aawsat.com/rss/section/sport'),
@@ -136,16 +150,22 @@
   const $grid = document.getElementById('news');
   const $fail = document.getElementById('failMsg');
 
-  const SPORTS = /رياضة|رياضي|كرة|قدم|دوري|مباراة|منتخب|كأس|بطولة|نادي|مدرب|لاعب|هدف|تصفيات|شوط|فريق|تنس|سلة|طائرة|يد|أولمبي|فورمولا/i;
-  const POL = /سياسة|رئيس|وزير|حكومة|انتخابات|حرب|مجلس|برلمان|احتلال|عقوبات|هدنة|مفاوضات|هجوم|عملية\s*عسكرية/i;
+  // فلترة رياضية صارمة (استبعاد السياسي)
+  const SPORTS = /رياضة|رياضي|كرة|قدم|دوري|مباراة|منتخب|كأس|بطولة|نادي|مدرب|لاعب|هدف|تصفيات|شوط|فريق|تنس|سلة|طائرة|يد|أولمبي|فورمولا|محترفين/i;
+  const POL    = /سياسة|سياسي|رئيس|وزير|حكومة|انتخابات|حرب|مجلس|برلمان|احتلال|عقوبات|هدنة|مفاوضات|قصف|عملية\s*عسكرية|هجوم/i;
   const isSportsOnly = (t)=> SPORTS.test(t) && !POL.test(t);
 
-  function strip(html){ const d=document.createElement('div'); d.innerHTML=html||''; return (d.textContent||'').replace(/\s+/g,' ').trim(); }
+  function strip(html){
+    const d=document.createElement('div');
+    d.innerHTML=(html||'').replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'');
+    return (d.textContent||'').replace(/\s+/g,' ').trim();
+  }
   function getImageFromNode(n){
-    const enc=n.querySelector('enclosure[url][type*="image"]')?.getAttribute('url');
+    const enc = n.querySelector('enclosure[url][type*="image"]')?.getAttribute('url');
     if(enc) return enc;
-    const raw=n.querySelector('description, summary, content')?.textContent||'';
-    const m=raw.match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:'';
+    const raw = n.querySelector('description, summary, content')?.textContent || '';
+    const m   = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m?m[1]:'';
   }
   function esc(s){return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');}
   function card({title,excerpt,date,image}){return `
@@ -153,7 +173,7 @@
       ${image?`<img class="thumb" src="${image}" loading="lazy" referrerpolicy="no-referrer"/>`:''}
       <div class="card-body">
         <div class="top-row"><span class="badge">⚽ رياضة</span>
-          <button class="more" title="مزيد"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 0a1 1 0 1 1 0 2Zm8 0a1 1 0 1 1 0 2Z"/></svg></button>
+          <button class="more" title="مزيد"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-4 9a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Zm4 0a1 1 0 1 1 0 2Z"/></svg></button>
         </div>
         <h2 class="title">${esc(title)}</h2>
         <div class="meta">🕒 ${new Date(date).toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})}</div>
@@ -162,7 +182,7 @@
     </article>`;}
 
   async function fetchWithTimeout(url, timeoutMs){
-    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),timeoutMs);
+    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(), timeoutMs);
     try{ const r=await fetch(url,{signal:ctrl.signal,cache:'no-store'}); if(!r.ok) throw 0; return await r.text(); }
     finally{ clearTimeout(t); }
   }
@@ -174,12 +194,13 @@
       for(const n of nodes){
         const title=(n.querySelector('title')?.textContent||'').trim();
         if(!title) continue;
-        const desc=n.querySelector('description, summary, content')?.textContent||'';
-        const text=`${title} ${strip(desc)}`;
+        const desc = n.querySelector('description, summary, content')?.textContent || '';
+        const text = `${title} ${strip(desc)}`;
         if(!isSportsOnly(text)) continue;
         out.push({
-          title, excerpt: strip(desc).slice(0,260),
-          date: new Date(n.querySelector('pubDate, updated, published')?.textContent||Date.now()),
+          title,
+          excerpt: strip(desc).slice(0,260),
+          date: new Date(n.querySelector('pubDate, updated, published')?.textContent || Date.now()),
           image: getImageFromNode(n)
         });
       }
@@ -200,30 +221,21 @@
       const seen=new Set(), unique=[];
       for(const it of items){ const k=it.title.toLowerCase(); if(seen.has(k)) continue; seen.add(k); unique.push(it); }
       unique.sort((a,b)=>b.date-a.date);
-      $grid.innerHTML = unique.slice(0, LIMIT).map(card).join('');
 
-      // نجاح: أخفِ الرسالة وحدّد التحديث التالي
-      $fail.style.display='none';
-      schedule(SUCCESS_REFRESH_MS);
+      $grid.innerHTML = unique.slice(0, LIMIT).map(card).join('');
+      $fail.style.display='none';                 // أخفِ الرسالة عند النجاح
+      schedule(SUCCESS_REFRESH_MS);               // عد للتحديث المعتاد
     }catch{
-      // فشل: أظهر الرسالة بشكل واضح، وجدول إعادة المحاولة
-      $fail.style.display='flex';
-      if(!$grid.innerHTML) { /* لا شيء */ }
-      schedule(FAIL_REFRESH_MS);
+      // لا عناصر أو فشل الشبكة
+      $fail.style.display='flex';                 // أظهر الرسالة فورًا
+      schedule(FAIL_REFRESH_MS);                  // أعد المحاولة بعد ثانية
     }
   }
 
-  // إظهار الرسالة فور فقد الاتصال أيضًا
-  window.addEventListener('offline',()=>{ $fail.style.display='flex'; });
-  window.addEventListener('online', ()=>{ /* سيُخفيها load عند أول نجاح */ });
+  // شغّل الجلب مباشرة
+  load();
 
-  // «مزيد»
-  document.addEventListener('click',(e)=>{
-    const btn=e.target.closest('.more'); if(!btn) return;
-    const det=btn.closest('.card')?.querySelector('details'); if(det) det.open=!det.open;
-  });
-
-  // مشاركة
+  // مشاركة الصفحة
   const shareText='تابع «خط التماس الأخباري»: أحدث الأخبار الرياضية العربية.';
   function openShare(u){ window.open(u,'_blank','noopener'); }
   document.querySelectorAll('.sharebtn').forEach(btn=>{
@@ -238,7 +250,9 @@
     });
   });
 
-  load();
+  // تغيير حالة الرسالة مع انقطاع/عودة الإنترنت
+  window.addEventListener('offline', ()=>{ $fail.style.display='flex'; });
+  window.addEventListener('online',  ()=>{ /* سيخفيها load عند أول نجاح */ });
 })();
 </script>
 </body>
