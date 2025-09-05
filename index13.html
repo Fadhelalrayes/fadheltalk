@@ -23,10 +23,9 @@
     .lang-btn{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:var(--shadow)}
     .lang-btn:hover{filter:brightness(.98)}
 
-    /* نموذج */
     form.search{display:grid;gap:12px;margin-top:18px}
 
-    /* أزرار نمط الرحلة (كبسولات احترافية) */
+    /* أزرار نمط الرحلة */
     .mode{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .chip{
       display:inline-flex; align-items:center; gap:10px;
@@ -57,35 +56,37 @@
     .fld{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
     .fld:focus-within{border-color:var(--brand);box-shadow:var(--shadow),var(--ring)}
     .lbl{font-size:13px;color:var(--muted);margin-bottom:6px}
-    .mini-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:15px;margin:6px 0 10px;background:#f8fafc}
+    .mini-search{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;margin:6px 0 10px;background:#f8fafc}
     select,input{width:100%;border:0;outline:none;background:transparent;font-size:18px;padding:8px 0;color:var(--ink)}
     input[type=date]{font-size:16px;padding:6px}
     .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .fld.hid{display:none}
 
+    /* زر ابحث (بدون أيقونة) وخط أوضح */
     .cta{
       width:100%;
       background:linear-gradient(180deg,var(--brand),var(--brand2));
       color:#fff;border:0;border-radius:18px;padding:16px;
-      font-weight:900;cursor:pointer;font-size:18px;box-shadow:var(--shadow);
-      letter-spacing:.2px
+      font-weight:900;cursor:pointer;font-size:19px;box-shadow:var(--shadow);
+      letter-spacing:.3px
     }
     .cta:hover{filter:brightness(.98)}
 
-    /* تذييل + تنويه + تواصل */
-    footer{margin:22px auto 10px;max-width:980px;padding:0 16px;text-align:center}
+    /* تذييل */
+    footer{margin:26px auto 16px;max-width:980px;padding:0 16px;text-align:center}
     .disclaimer{
       font-size:15px;color:#1f2937;background:linear-gradient(180deg,#fefefe,#f1f5f9);
-      border:1px solid #e2e8f0;border-radius:14px;padding:16px 20px;margin-bottom:14px;
+      border:1px solid #e2e8f0;border-radius:14px;padding:16px 20px;margin-bottom:16px;
       line-height:1.9;text-align:justify;box-shadow:0 4px 10px rgba(0,0,0,.05)
     }
     .disclaimer strong{color:#d97706}
     .disclaimer::before{content:"⚠️ ";font-size:20px;vertical-align:middle;margin-left:4px}
 
-    .social{margin-bottom:12px}
-    .social a{display:inline-block;margin:0 6px;width:28px;height:28px}
-    .social img{width:100%;height:100%;object-fit:contain;filter:grayscale(20%);transition:.2s}
-    .social img:hover{filter:none;transform:scale(1.1)}
+    /* أيقونات التواصل (SVG مضمنة لضمان ظهورها) */
+    .social{margin-bottom:12px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .social a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .social a:hover{transform:translateY(-1px)}
+    .social svg{width:18px;height:18px;fill:#0f172a}
 
     .credit{font-size:16px;color:#475569;margin-top:10px}
     .credit a{color:#0ea5e9;text-decoration:none;font-weight:900}
@@ -97,7 +98,6 @@
     <div class="container">
       <div class="brand">
         <div class="lang-toggle">
-          <!-- زر نصّي فقط بدون أيقونات -->
           <button id="langBtn" class="lang-btn" type="button">EN</button>
         </div>
         <div id="siteTitle" class="title">تذكرتك</div>
@@ -173,7 +173,7 @@
           </select>
         </div>
 
-        <button id="searchBtn" class="cta" type="submit">ابحث 🔎</button>
+        <button id="searchBtn" class="cta" type="submit">ابحث</button>
       </form>
     </div>
   </header>
@@ -185,19 +185,23 @@
       تلك المواقع.
     </div>
 
-    <!-- أيقونات المشاركة -->
+    <!-- أيقونات المشاركة (SVG مضمنة لضمان الظهور) -->
     <div class="social">
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://fadhel-alrayes.fun/index13.html" target="_blank" rel="noopener">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://fadhel-alrayes.fun/index13.html" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5 3.66 9.14 8.44 9.94v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.5-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.77l-.44 2.9h-2.33V22c4.78-.8 8.43-4.94 8.43-9.94z"/></svg>
       </a>
-      <a href="https://twitter.com/intent/tweet?url=https://fadhel-alrayes.fun/index13.html&text=شاهد%20تذكرتك" target="_blank" rel="noopener">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+      <!-- X/Twitter -->
+      <a href="https://twitter.com/intent/tweet?url=https://fadhel-alrayes.fun/index13.html&text=شاهد%20تذكرتك" target="_blank" rel="noopener" aria-label="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h4.6l5.1 6.9L18.3 3H21l-7.8 9.7L21.4 21h-4.6l-5.5-7.4L9.7 21H3l8.2-10.3L3 3z"/></svg>
       </a>
-      <a href="https://api.whatsapp.com/send?text=جرب%20موقع%20تذكرتك%20%20https://fadhel-alrayes.fun/index13.html" target="_blank" rel="noopener">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+      <!-- WhatsApp -->
+      <a href="https://api.whatsapp.com/send?text=جرب%20موقع%20تذكرتك%20%20https://fadhel-alrayes.fun/index13.html" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.85 11.85 0 0 0 12.06 0c-6.6 0-11.96 5.36-11.96 11.96 0 2.11.56 4.17 1.62 5.99L0 24l6.23-1.64a11.97 11.97 0 0 0 5.83 1.49h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.21-3.51-8.4zM12.06 21.8h-.01a9.83 9.83 0 0 1-4.99-1.36l-.36-.21-3.7.98.99-3.6-.24-.37a9.85 9.85 0 1 1 18.29-5.28c0 5.44-4.43 9.84-9.98 9.84zm5.48-7.34c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16-.35.22-.65.07c-.3-.15-1.28-.47-2.44-1.5-.9-.8-1.51-1.78-1.69-2.08s-.02-.46.13-.61c.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.09 4.49.71.31 1.26.5 1.69.64.71.23 1.35.2 1.86.12.57-.08 1.75-.72 2-1.41.25-.69.25-1.28.18-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
       </a>
-      <a href="https://t.me/share/url?url=https://fadhel-alrayes.fun/index13.html&text=تذكرتك%20ابحث%20عن%20أرخص%20تذاكر%20الطيران" target="_blank" rel="noopener">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+      <!-- Telegram -->
+      <a href="https://t.me/share/url?url=https://fadhel-alrayes.fun/index13.html&text=تذكرتك%20ابحث%20عن%20أرخص%20تذاكر%20الطيران" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.04 15.52 8.7 20.7c.57 0 .81-.25 1.1-.55l2.65-2.54 5.5 4.02c1.01.56 1.74.27 2-.94l3.62-16.96h.01c.32-1.5-.54-2.08-1.52-1.72L1.4 9.22c-1.45.56-1.43 1.36-.25 1.72l5.87 1.83L19.57 5.3c.67-.41 1.27-.18.77.26"/></svg>
       </a>
     </div>
 
@@ -209,10 +213,9 @@
   </footer>
 
   <script>
-    /************ 1) بيانات المطارات ************/
+    /************ المطارات ************/
     const ARAB_AIRPORTS = [
       {country:'البحرين', city:'المنامة', code:'BAH'},
-
       {country:'السعودية', city:'الرياض', code:'RUH'},{country:'السعودية', city:'جدة', code:'JED'},
       {country:'السعودية', city:'الدمام', code:'DMM'},{country:'السعودية', city:'المدينة', code:'MED'},
       {country:'السعودية', city:'أبها', code:'AHB'},{country:'السعودية', city:'القصيم', code:'ELQ'},
@@ -238,15 +241,10 @@
 
       {country:'لبنان', city:'بيروت', code:'BEY'},
 
-      {country:'مصر', city:'القاهرة', code:'CAI'},
-      {country:'مصر', city:'الإسكندرية/برج العرب', code:'HBE'},
-      {country:'مصر', city:'الغردقة', code:'HRG'},
-      {country:'مصر', city:'شرم الشيخ', code:'SSH'},
-      {country:'مصر', city:'الأقصر', code:'LXR'},
-      {country:'مصر', city:'أسوان', code:'ASW'},
-      {country:'مصر', city:'مرسى علم', code:'RMF'},
-      {country:'مصر', city:'سوهاج', code:'HMB'},
-      {country:'مصر', city:'أسيوط', code:'ATZ'},
+      {country:'مصر', city:'القاهرة', code:'CAI'},{country:'مصر', city:'الإسكندرية/برج العرب', code:'HBE'},
+      {country:'مصر', city:'الغردقة', code:'HRG'},{country:'مصر', city:'شرم الشيخ', code:'SSH'},
+      {country:'مصر', city:'الأقصر', code:'LXR'},{country:'مصر', city:'أسوان', code:'ASW'},
+      {country:'مصر', city:'مرسى علم', code:'RMF'},{country:'مصر', city:'سوهاج', code:'HMB'},{country:'مصر', city:'أسيوط', code:'ATZ'},
 
       {country:'السودان', city:'الخرطوم', code:'KRT'},{country:'السودان', city:'بورتسودان', code:'PZU'},
 
@@ -301,7 +299,7 @@
 
     const ALL_AIRPORTS = [...ARAB_AIRPORTS, ...IRAQ_AIRPORTS, ...IRAN_AIRPORTS, ...INTL_AIRPORTS];
 
-    /************ 2) بناء القوائم + مربعات البحث ************/
+    /* بناء القوائم + مربعات البحث */
     function renderAirportSelect(selectEl, filterText=''){
       const txt = filterText.trim().toLowerCase();
       const byCountry = {};
@@ -327,7 +325,6 @@
         selectEl.appendChild(opt);
       }
     }
-
     function setupSearch(filterInputId, selectId, defaultValue){
       const inp = document.getElementById(filterInputId);
       const sel = document.getElementById(selectId);
@@ -340,7 +337,7 @@
       if(defaultValue){ sel.value = defaultValue; }
     }
 
-    /************ 3) بناء الروابط ************/
+    /* الروابط */
     const kayakCabin = c => ({economy:'e',business:'b',first:'f'}[c]||'e');
     const ymd = d => d || "";
     const ymdCompact = d => d ? d.replace(/-/g,'') : "";
@@ -389,43 +386,23 @@
       window.open(url,'_blank','noopener');
     }
 
-    /************ 4) واجهة نمط الرحلة: تفعيل زر + إظهار/إخفاء العودة ************/
+    /* تفعيل حالة الأزرار + إظهار/إخفاء العودة */
     function handleModeUI(){
       const mode = document.querySelector('input[name="tripmode"]:checked').value;
       const retFld = document.getElementById('retFld');
-
-      // حالة الزرار (active)
       document.querySelectorAll('#tripModeGroup .chip').forEach(l=>l.classList.remove('active'));
       const checkedLabel = document.querySelector('#tripModeGroup input[name="tripmode"]:checked')?.closest('.chip');
       if(checkedLabel) checkedLabel.classList.add('active');
-
-      // إظهار/إخفاء العودة
-      if(mode==='oneway' || mode==='multicity'){
-        retFld.classList.add('hid');
-      }else{
-        retFld.classList.remove('hid');
-      }
+      if(mode==='oneway' || mode==='multicity'){ retFld.classList.add('hid'); } else { retFld.classList.remove('hid'); }
     }
-    document.addEventListener('change', (e)=>{
-      if(e.target.name==='tripmode') handleModeUI();
-    });
+    document.addEventListener('change', (e)=>{ if(e.target.name==='tripmode') handleModeUI(); });
 
-    /************ 5) لغة الموقع (نص فقط EN/AR) ************/
+    /* تعدد اللغات (زر EN نصّي فقط) */
     const STR = {
-      ar: {
-        title:'تذكرتك', tag:'استكشف أرخص أسعار تذاكر الطيران',
-        return:'ذهاب وعودة', oneway:'ذهاب فقط', multicity:'وجهات متعددة',
-        from:'من', to:'إلى', depart:'تاريخ الذهاب', returnDate:'تاريخ العودة',
-        pax:'عدد المسافرين', cabin:'الدرجة', provider:'الموقع', search:'ابحث 🔎',
-        langBtn:'EN'
-      },
-      en: {
-        title:'Tathkirtak', tag:'Find the cheapest flight tickets',
-        return:'Return', oneway:'One way', multicity:'Multi-city',
-        from:'From', to:'To', depart:'Depart', returnDate:'Return',
-        pax:'Passengers', cabin:'Cabin', provider:'Provider', search:'Search 🔎',
-        langBtn:'AR'
-      }
+      ar: { title:'تذكرتك', tag:'استكشف أرخص أسعار تذاكر الطيران', return:'ذهاب وعودة', oneway:'ذهاب فقط', multicity:'وجهات متعددة',
+            from:'من', to:'إلى', depart:'تاريخ الذهاب', returnDate:'تاريخ العودة', pax:'عدد المسافرين', cabin:'الدرجة', provider:'الموقع', search:'ابحث', langBtn:'EN' },
+      en: { title:'Tathkirtak', tag:'Find the cheapest flight tickets', return:'Return', oneway:'One way', multicity:'Multi-city',
+            from:'From', to:'To', depart:'Depart', returnDate:'Return', pax:'Passengers', cabin:'Cabin', provider:'Provider', search:'Search', langBtn:'AR' }
     };
     function applyLang(lang){
       document.documentElement.lang = (lang==='en'?'en':'ar');
@@ -453,13 +430,11 @@
       applyLang(next);
     });
 
-    /************ 6) تهيئة الصفحة ************/
+    /* تهيئة */
     (function init(){
-      // بناء القوائم + مربعات البحث
       setupSearch('search-origin','origin','BAH');
       setupSearch('search-destination','destination','CAI');
 
-      // تواريخ: اليوم + غدًا
       const now = new Date();
       const tomorrow = new Date(now); tomorrow.setDate(now.getDate()+1);
       const iso = d => d.toISOString().slice(0,10);
@@ -470,11 +445,8 @@
       document.getElementById('cabin').value = 'economy';
       document.getElementById('provider').value = 'skyscanner';
 
-      // لغة افتراضية
       const saved = localStorage.getItem('tathkirtak_lang') || 'ar';
       applyLang(saved);
-
-      // مظهر أزرار الرحلة + إخفاء/إظهار العودة
       handleModeUI();
     })();
   </script>
