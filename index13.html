@@ -9,8 +9,8 @@
     :root{
       --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
       --brand:#0ea5e9; --brand2:#0284c7; --shadow:0 12px 30px rgba(2,132,199,.12);
-      --radius:18px; --ring:0 0 0 3px rgba(14,165,233,.25);
       --chip:#f1f5f9; --chip-border:#e5e7eb; --chip-active:#e0f2fe;
+      --radius:18px; --ring:0 0 0 3px rgba(14,165,233,.25);
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,Segoe UI,Roboto,Arial}
@@ -23,34 +23,18 @@
     .lang-btn{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:var(--shadow)}
     .lang-btn:hover{filter:brightness(.98)}
 
+    /* نموذج البحث */
     form.search{display:grid;gap:12px;margin-top:18px}
-
-    /* أزرار نمط الرحلة */
     .mode{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .chip{
-      display:inline-flex; align-items:center; gap:10px;
-      background:var(--chip);
-      border:2px solid var(--chip-border);
-      border-radius:999px;
-      padding:10px 16px;
-      cursor:pointer;
-      box-shadow:0 2px 10px rgba(0,0,0,.04);
-      transition:all .18s ease;
-      font-weight:800; color:#0b2540; letter-spacing:.2px;
-      user-select:none;
+      display:inline-flex;align-items:center;gap:10px;background:var(--chip);
+      border:2px solid var(--chip-border);border-radius:999px;padding:10px 16px;
+      cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.04);transition:.18s;font-weight:800;color:#0b2540
     }
     .chip input{display:none}
     .chip:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(2,132,199,.12)}
-    .chip.active{
-      background:linear-gradient(180deg,var(--chip-active),#ffffff);
-      border-color:#7dd3fc;
-      box-shadow:0 10px 22px rgba(14,165,233,.18), var(--ring);
-      color:#075985;
-    }
-    .chip .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:#94a3b8;border:2px solid #e2e8f0; transition:.18s;
-    }
+    .chip.active{background:linear-gradient(180deg,var(--chip-active),#ffffff);border-color:#7dd3fc;box-shadow:0 10px 22px rgba(14,165,233,.18), var(--ring);color:#075985}
+    .chip .dot{width:10px;height:10px;border-radius:50%;background:#94a3b8;border:2px solid #e2e8f0;transition:.18s}
     .chip.active .dot{background:#0284c7;border-color:#bae6fd}
 
     .fld{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
@@ -62,18 +46,15 @@
     .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .fld.hid{display:none}
 
-    /* زر ابحث (بدون أيقونة) وخط أوضح */
-    .cta{
-      width:100%;
-      background:linear-gradient(180deg,var(--brand),var(--brand2));
-      color:#fff;border:0;border-radius:18px;padding:16px;
-      font-weight:900;cursor:pointer;font-size:19px;box-shadow:var(--shadow);
-      letter-spacing:.3px
-    }
+    .cta{width:100%;background:linear-gradient(180deg,var(--brand),var(--brand2));color:#fff;border:0;border-radius:18px;padding:16px;font-weight:900;cursor:pointer;font-size:19px;box-shadow:var(--shadow)}
     .cta:hover{filter:brightness(.98)}
 
-    /* تذييل */
-    footer{margin:26px auto 16px;max-width:980px;padding:0 16px;text-align:center}
+    /* تذييل: نضمن ظهوره حتى لو كان هناك CSS خارجي */
+    footer#appFooter{
+      margin:26px auto 16px;max-width:980px;padding:0 16px;text-align:center;
+      display:block !important; visibility:visible !important; opacity:1 !important;
+      position:relative; z-index:5;
+    }
     .disclaimer{
       font-size:15px;color:#1f2937;background:linear-gradient(180deg,#fefefe,#f1f5f9);
       border:1px solid #e2e8f0;border-radius:14px;padding:16px 20px;margin-bottom:16px;
@@ -82,18 +63,25 @@
     .disclaimer strong{color:#d97706}
     .disclaimer::before{content:"⚠️ ";font-size:20px;vertical-align:middle;margin-left:4px}
 
-    /* أيقونات التواصل (SVG مضمنة لضمان ظهورها) */
-    .social{margin-bottom:12px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-    .social a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+    /* أيقونات التواصل (SVG مضمنة) */
+    .social{
+      margin-bottom:12px;display:flex !important;justify-content:center;gap:12px;flex-wrap:wrap;
+      visibility:visible !important; opacity:1 !important;
+    }
+    .social a{
+      display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+      background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);text-decoration:none
+    }
     .social a:hover{transform:translateY(-1px)}
     .social svg{width:18px;height:18px;fill:#0f172a}
 
-    .credit{font-size:16px;color:#475569;margin-top:10px}
+    .credit{font-size:16px;color:#475569;margin-top:10px;display:block !important}
     .credit a{color:#0ea5e9;text-decoration:none;font-weight:900}
     .credit a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
+  <!-- رأس الصفحة -->
   <header>
     <div class="container">
       <div class="brand">
@@ -104,41 +92,26 @@
         <div id="siteTag" class="tag">استكشف أرخص أسعار تذاكر الطيران</div>
       </div>
 
+      <!-- نموذج البحث -->
       <form class="search" onsubmit="event.preventDefault(); openSelected();">
-        <!-- نمط الرحلة -->
         <div class="mode" id="tripModeGroup">
-          <label class="chip active">
-            <span class="dot"></span>
-            <input type="radio" name="tripmode" value="return" checked>
-            <span data-i18n="return">ذهاب وعودة</span>
-          </label>
-          <label class="chip">
-            <span class="dot"></span>
-            <input type="radio" name="tripmode" value="oneway">
-            <span data-i18n="oneway">ذهاب فقط</span>
-          </label>
-          <label class="chip">
-            <span class="dot"></span>
-            <input type="radio" name="tripmode" value="multicity">
-            <span data-i18n="multicity">وجهات متعددة</span>
-          </label>
+          <label class="chip active"><span class="dot"></span><input type="radio" name="tripmode" value="return" checked><span data-i18n="return">ذهاب وعودة</span></label>
+          <label class="chip"><span class="dot"></span><input type="radio" name="tripmode" value="oneway"><span data-i18n="oneway">ذهاب فقط</span></label>
+          <label class="chip"><span class="dot"></span><input type="radio" name="tripmode" value="multicity"><span data-i18n="multicity">وجهات متعددة</span></label>
         </div>
 
-        <!-- من -->
         <div class="fld">
           <div class="lbl" data-i18n="from">من</div>
           <input id="search-origin" class="mini-search" type="search" placeholder="ابحث عن دولة أو مطار...">
           <select id="origin"></select>
         </div>
 
-        <!-- إلى -->
         <div class="fld">
           <div class="lbl" data-i18n="to">إلى</div>
           <input id="search-destination" class="mini-search" type="search" placeholder="ابحث عن دولة أو مطار...">
           <select id="destination"></select>
         </div>
 
-        <!-- التواريخ -->
         <div class="row2">
           <div class="fld">
             <div class="lbl" data-i18n="depart">تاريخ الذهاب</div>
@@ -150,7 +123,6 @@
           </div>
         </div>
 
-        <!-- الركاب والدرجة -->
         <div class="fld">
           <div class="lbl" data-i18n="pax">عدد المسافرين</div>
           <input id="pax" type="number" min="1" value="1">
@@ -164,7 +136,6 @@
           </select>
         </div>
 
-        <!-- الموقع -->
         <div class="fld">
           <div class="lbl" data-i18n="provider">الموقع</div>
           <select id="provider">
@@ -178,15 +149,15 @@
     </div>
   </header>
 
-  <footer>
+  <!-- التذييل -->
+  <footer id="appFooter" role="contentinfo">
     <div class="disclaimer">
       <strong>تنويه:</strong> نحن لا نبيع التذاكر ولا نعمل كوسيط. هذه الخدمة أداة بحث فقط
       تقوم بإحالتك مباشرةً إلى مواقع الحجز المعروفة لإتمام عملية الحجز بنفسك. الأسعار والتوافر يخضعان لشروط
       تلك المواقع.
     </div>
 
-    <!-- أيقونات المشاركة (SVG مضمنة لضمان الظهور) -->
-    <div class="social">
+    <div class="social" id="socialIcons">
       <!-- Facebook -->
       <a href="https://www.facebook.com/sharer/sharer.php?u=https://fadhel-alrayes.fun/index13.html" target="_blank" rel="noopener" aria-label="Facebook">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5 3.66 9.14 8.44 9.94v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.5-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.77l-.44 2.9h-2.33V22c4.78-.8 8.43-4.94 8.43-9.94z"/></svg>
@@ -205,7 +176,7 @@
       </a>
     </div>
 
-    <p class="credit">
+    <p class="credit" id="creditLine">
       برمجة وتطوير:
       <a href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1"
          target="_blank" rel="noopener">فاضل الريس</a>
@@ -213,241 +184,113 @@
   </footer>
 
   <script>
-    /************ المطارات ************/
-    const ARAB_AIRPORTS = [
-      {country:'البحرين', city:'المنامة', code:'BAH'},
-      {country:'السعودية', city:'الرياض', code:'RUH'},{country:'السعودية', city:'جدة', code:'JED'},
-      {country:'السعودية', city:'الدمام', code:'DMM'},{country:'السعودية', city:'المدينة', code:'MED'},
-      {country:'السعودية', city:'أبها', code:'AHB'},{country:'السعودية', city:'القصيم', code:'ELQ'},
-      {country:'السعودية', city:'جازان', code:'GIZ'},{country:'السعودية', city:'حائل', code:'HAS'},
-      {country:'السعودية', city:'تبوك', code:'TUU'},{country:'السعودية', city:'العلا', code:'ULH'},
-      {country:'السعودية', city:'ينبع', code:'YNB'},{country:'السعودية', city:'الطائف', code:'TIF'},
-      {country:'السعودية', city:'نجران', code:'EAM'},
+    /************ المطارات (مختصرة هنا — نفس التي أرسلناها لك سابقًا) ************/
+    const ARAB_AIRPORTS=[{country:'البحرين',city:'المنامة',code:'BAH'},{country:'السعودية',city:'الرياض',code:'RUH'},{country:'السعودية',city:'جدة',code:'JED'},{country:'السعودية',city:'الدمام',code:'DMM'},{country:'السعودية',city:'المدينة',code:'MED'},{country:'السعودية',city:'أبها',code:'AHB'},{country:'السعودية',city:'القصيم',code:'ELQ'},{country:'السعودية',city:'جازان',code:'GIZ'},{country:'السعودية',city:'حائل',code:'HAS'},{country:'السعودية',city:'تبوك',code:'TUU'},{country:'السعودية',city:'العلا',code:'ULH'},{country:'السعودية',city:'ينبع',code:'YNB'},{country:'السعودية',city:'الطائف',code:'TIF'},{country:'السعودية',city:'نجران',code:'EAM'},{country:'الإمارات',city:'دبي',code:'DXB'},{country:'الإمارات',city:'أبوظبي',code:'AUH'},{country:'الإمارات',city:'الشارقة',code:'SHJ'},{country:'الإمارات',city:'رأس الخيمة',code:'RKT'},{country:'الإمارات',city:'العين',code:'AAN'},{country:'قطر',city:'الدوحة',code:'DOH'},{country:'الكويت',city:'الكويت',code:'KWI'},{country:'عُمان',city:'مسقط',code:'MCT'},{country:'عُمان',city:'صلالة',code:'SLL'},{country:'عُمان',city:'صحار',code:'OHS'},{country:'اليمن',city:'صنعاء',code:'SAH'},{country:'اليمن',city:'عدن',code:'ADE'},{country:'اليمن',city:'سيئون',code:'GXF'},{country:'سوريا',city:'دمشق',code:'DAM'},{country:'سوريا',city:'حلب',code:'ALP'},{country:'سوريا',city:'اللاذقية',code:'LTK'},{country:'الأردن',city:'عمّان',code:'AMM'},{country:'الأردن',city:'العقبة',code:'AQJ'},{country:'لبنان',city:'بيروت',code:'BEY'},{country:'مصر',city:'القاهرة',code:'CAI'},{country:'مصر',city:'الإسكندرية/برج العرب',code:'HBE'},{country:'مصر',city:'الغردقة',code:'HRG'},{country:'مصر',city:'شرم الشيخ',code:'SSH'},{country:'مصر',city:'الأقصر',code:'LXR'},{country:'مصر',city:'أسوان',code:'ASW'},{country:'مصر',city:'مرسى علم',code:'RMF'},{country:'مصر',city:'سوهاج',code:'HMB'},{country:'مصر',city:'أسيوط',code:'ATZ'},{country:'السودان',city:'الخرطوم',code:'KRT'},{country:'السودان',city:'بورتسودان',code:'PZU'},{country:'ليبيا',city:'طرابلس معيتيقة',code:'MJI'},{country:'ليبيا',city:'بنغازي',code:'BEN'},{country:'ليبيا',city:'مصراتة',code:'MRA'},{country:'تونس',city:'تونس قرطاج',code:'TUN'},{country:'تونس',city:'صفاقس',code:'SFA'},{country:'تونس',city:'جربة/جرجيس',code:'DJE'},{country:'تونس',city:'المنستير',code:'MIR'},{country:'تونس',city:'النفيضة',code:'NBE'},{country:'الجزائر',city:'الجزائر',code:'ALG'},{country:'الجزائر',city:'وهران',code:'ORN'},{country:'الجزائر',city:'قسنطينة',code:'CZL'},{country:'الجزائر',city:'غرداية',code:'GHA'},{country:'المغرب',city:'الدار البيضاء',code:'CMN'},{country:'المغرب',city:'الرباط',code:'RBA'},{country:'المغرب',city:'مراكش',code:'RAK'},{country:'المغرب',city:'طنجة',code:'TNG'},{country:'المغرب',city:'أكادير',code:'AGA'},{country:'المغرب',city:'فاس',code:'FEZ'},{country:'المغرب',city:'وجدة',code:'OUD'},{country:'موريتانيا',city:'نواكشوط',code:'NKC'},{country:'جيبوتي',city:'جيبوتي',code:'JIB'},{country:'الصومال',city:'مقديشو',code:'MGQ'},{country:'الصومال',city:'هرجيسا',code:'HGA'},{country:'جزر القمر',city:'موروني',code:'HAH'}];
+    const IRAQ_AIRPORTS=[{country:'العراق',city:'بغداد',code:'BGW'},{country:'العراق',city:'أربيل',code:'EBL'},{country:'العراق',city:'السليمانية',code:'ISU'},{country:'العراق',city:'البصرة',code:'BSR'},{country:'العراق',city:'النجف',code:'NJF'},{country:'العراق',city:'الموصل',code:'OSM'},{country:'العراق',city:'كربلاء (أقرب: النجف)',code:'NJF'}];
+    const IRAN_AIRPORTS=[{country:'إيران',city:'طهران الإمام الخميني',code:'IKA'},{country:'إيران',city:'طهران مهرآباد',code:'THR'},{country:'إيران',city:'مشهد',code:'MHD'},{country:'إيران',city:'شيراز',code:'SYZ'},{country:'إيران',city:'تبريز',code:'TBZ'},{country:'إيران',city:'أصفهان',code:'IFN'},{country:'إيران',city:'كِش',code:'KIH'},{country:'إيران',city:'بندر عباس',code:'BND'},{country:'إيران',city:'كرمنشاه',code:'KSH'},{country:'إيران',city:'أهواز',code:'AWZ'},{country:'إيران',city:'يزد',code:'AZD'},{country:'إيران',city:'كرمان',code:'KER'},{country:'إيران',city:'زاهدان',code:'ZAH'},{country:'إيران',city:'رشت',code:'RAS'},{country:'إيران',city:'ساري',code:'SRY'},{country:'إيران',city:'رامسر',code:'RZR'},{country:'إيران',city:'بوشهر',code:'BUZ'},{country:'إيران',city:'قشم',code:'GSM'},{country:'إيران',city:'أُرومية',code:'OMH'},{country:'إيران',city:'سنندج',code:'SDG'},{country:'إيران',city:'ماهشهر',code:'MRX'},{country:'إيران',city:'نوشهر',code:'NSH'},{country:'إيران',city:'جرجان',code:'GBT'},{country:'إيران',city:'لار',code:'LRR'},{country:'إيران',city:'إيلام',code:'IIL'}];
+    const INTL_AIRPORTS=[{country:'تركيا',city:'إسطنبول الجديدة',code:'IST'},{country:'تركيا',city:'صبيحة كوكجن',code:'SAW'},{country:'تركيا',city:'أنطاليا',code:'AYT'},{country:'تركيا',city:'طرابزون',code:'TZX'},{country:'فرنسا',city:'باريس شارل ديغول',code:'CDG'},{country:'المملكة المتحدة',city:'لندن هيثرو',code:'LHR'},{country:'ألمانيا',city:'فرانكفورت',code:'FRA'},{country:'هولندا',city:'أمستردام',code:'AMS'},{country:'سويسرا',city:'زيورخ',code:'ZRH'},{country:'إيطاليا',city:'روما فيوميتشينو',code:'FCO'},{country:'إسبانيا',city:'برشلونة',code:'BCN'}];
+    const ALL_AIRPORTS=[...ARAB_AIRPORTS,...IRAQ_AIRPORTS,...IRAN_AIRPORTS,...INTL_AIRPORTS];
 
-      {country:'الإمارات', city:'دبي', code:'DXB'},{country:'الإمارات', city:'أبوظبي', code:'AUH'},
-      {country:'الإمارات', city:'الشارقة', code:'SHJ'},{country:'الإمارات', city:'رأس الخيمة', code:'RKT'},
-      {country:'الإمارات', city:'العين', code:'AAN'},
-
-      {country:'قطر', city:'الدوحة', code:'DOH'},
-      {country:'الكويت', city:'الكويت', code:'KWI'},
-
-      {country:'عُمان', city:'مسقط', code:'MCT'},{country:'عُمان', city:'صلالة', code:'SLL'},{country:'عُمان', city:'صحار', code:'OHS'},
-
-      {country:'اليمن', city:'صنعاء', code:'SAH'},{country:'اليمن', city:'عدن', code:'ADE'},{country:'اليمن', city:'سيئون', code:'GXF'},
-
-      {country:'سوريا', city:'دمشق', code:'DAM'},{country:'سوريا', city:'حلب', code:'ALP'},{country:'سوريا', city:'اللاذقية', code:'LTK'},
-
-      {country:'الأردن', city:'عمّان', code:'AMM'},{country:'الأردن', city:'العقبة', code:'AQJ'},
-
-      {country:'لبنان', city:'بيروت', code:'BEY'},
-
-      {country:'مصر', city:'القاهرة', code:'CAI'},{country:'مصر', city:'الإسكندرية/برج العرب', code:'HBE'},
-      {country:'مصر', city:'الغردقة', code:'HRG'},{country:'مصر', city:'شرم الشيخ', code:'SSH'},
-      {country:'مصر', city:'الأقصر', code:'LXR'},{country:'مصر', city:'أسوان', code:'ASW'},
-      {country:'مصر', city:'مرسى علم', code:'RMF'},{country:'مصر', city:'سوهاج', code:'HMB'},{country:'مصر', city:'أسيوط', code:'ATZ'},
-
-      {country:'السودان', city:'الخرطوم', code:'KRT'},{country:'السودان', city:'بورتسودان', code:'PZU'},
-
-      {country:'ليبيا', city:'طرابلس معيتيقة', code:'MJI'},{country:'ليبيا', city:'بنغازي', code:'BEN'},{country:'ليبيا', city:'مصراتة', code:'MRA'},
-
-      {country:'تونس', city:'تونس قرطاج', code:'TUN'},{country:'تونس', city:'صفاقس', code:'SFA'},
-      {country:'تونس', city:'جربة/جرجيس', code:'DJE'},{country:'تونس', city:'المنستير', code:'MIR'},{country:'تونس', city:'النفيضة', code:'NBE'},
-
-      {country:'الجزائر', city:'الجزائر', code:'ALG'},{country:'الجزائر', city:'وهران', code:'ORN'},
-      {country:'الجزائر', city:'قسنطينة', code:'CZL'},{country:'الجزائر', city:'غرداية', code:'GHA'},
-
-      {country:'المغرب', city:'الدار البيضاء', code:'CMN'},{country:'المغرب', city:'الرباط', code:'RBA'},
-      {country:'المغرب', city:'مراكش', code:'RAK'},{country:'المغرب', city:'طنجة', code:'TNG'},
-      {country:'المغرب', city:'أكادير', code:'AGA'},{country:'المغرب', city:'فاس', code:'FEZ'},{country:'المغرب', city:'وجدة', code:'OUD'},
-
-      {country:'موريتانيا', city:'نواكشوط', code:'NKC'},
-      {country:'جيبوتي', city:'جيبوتي', code:'JIB'},
-      {country:'الصومال', city:'مقديشو', code:'MGQ'},{country:'الصومال', city:'هرجيسا', code:'HGA'},
-      {country:'جزر القمر', city:'موروني', code:'HAH'}
-    ];
-
-    const IRAQ_AIRPORTS = [
-      {country:'العراق', city:'بغداد', code:'BGW'},{country:'العراق', city:'أربيل', code:'EBL'},
-      {country:'العراق', city:'السليمانية', code:'ISU'},{country:'العراق', city:'البصرة', code:'BSR'},
-      {country:'العراق', city:'النجف', code:'NJF'},{country:'العراق', city:'الموصل', code:'OSM'},
-      {country:'العراق', city:'كربلاء (أقرب: النجف)', code:'NJF'}
-    ];
-
-    const IRAN_AIRPORTS = [
-      {country:'إيران', city:'طهران الإمام الخميني', code:'IKA'},{country:'إيران', city:'طهران مهرآباد', code:'THR'},
-      {country:'إيران', city:'مشهد', code:'MHD'},{country:'إيران', city:'شيراز', code:'SYZ'},
-      {country:'إيران', city:'تبريز', code:'TBZ'},{country:'إيران', city:'أصفهان', code:'IFN'},
-      {country:'إيران', city:'كِش', code:'KIH'},{country:'إيران', city:'بندر عباس', code:'BND'},
-      {country:'إيران', city:'كرمنشاه', code:'KSH'},{country:'إيران', city:'أهواز', code:'AWZ'},
-      {country:'إيران', city:'يزد', code:'AZD'},{country:'إيران', city:'كرمان', code:'KER'},
-      {country:'إيران', city:'زاهدان', code:'ZAH'},{country:'إيران', city:'رشت', code:'RAS'},
-      {country:'إيران', city:'ساري', code:'SRY'},{country:'إيران', city:'رامسر', code:'RZR'},
-      {country:'إيران', city:'بوشهر', code:'BUZ'},{country:'إيران', city:'قشم', code:'GSM'},
-      {country:'إيران', city:'أُرومية', code:'OMH'},{country:'إيران', city:'سنندج', code:'SDG'},
-      {country:'إيران', city:'ماهشهر', code:'MRX'},{country:'إيران', city:'نوشهر', code:'NSH'},
-      {country:'إيران', city:'جرجان', code:'GBT'},{country:'إيران', city:'لار', code:'LRR'},{country:'إيران', city:'إيلام', code:'IIL'}
-    ];
-
-    const INTL_AIRPORTS = [
-      {country:'تركيا', city:'إسطنبول الجديدة', code:'IST'},{country:'تركيا', city:'صبيحة كوكجن', code:'SAW'},
-      {country:'تركيا', city:'أنطاليا', code:'AYT'},{country:'تركيا', city:'طرابزون', code:'TZX'},
-      {country:'فرنسا', city:'باريس شارل ديغول', code:'CDG'},{country:'المملكة المتحدة', city:'لندن هيثرو', code:'LHR'},
-      {country:'ألمانيا', city:'فرانكفورت', code:'FRA'},{country:'هولندا', city:'أمستردام', code:'AMS'},
-      {country:'سويسرا', city:'زيورخ', code:'ZRH'},{country:'إيطاليا', city:'روما فيوميتشينو', code:'FCO'},
-      {country:'إسبانيا', city:'برشلونة', code:'BCN'}
-    ];
-
-    const ALL_AIRPORTS = [...ARAB_AIRPORTS, ...IRAQ_AIRPORTS, ...IRAN_AIRPORTS, ...INTL_AIRPORTS];
-
-    /* بناء القوائم + مربعات البحث */
-    function renderAirportSelect(selectEl, filterText=''){
-      const txt = filterText.trim().toLowerCase();
-      const byCountry = {};
-      ALL_AIRPORTS.forEach(a=>{
-        const label = `${a.country} — ${a.city} (${a.code})`.toLowerCase();
-        if(!txt || label.includes(txt)){ (byCountry[a.country] ||= []).push(a); }
-      });
-      const countries = Object.keys(byCountry).sort((a,b)=>a.localeCompare(b,'ar'));
-      selectEl.innerHTML = '';
+    function renderAirportSelect(selectEl,filterText=''){
+      const txt=filterText.trim().toLowerCase(); const byCountry={};
+      ALL_AIRPORTS.forEach(a=>{const label=`${a.country} — ${a.city} (${a.code})`.toLowerCase(); if(!txt||label.includes(txt)){(byCountry[a.country] ||= []).push(a)}});
+      const countries=Object.keys(byCountry).sort((a,b)=>a.localeCompare(b,'ar')); selectEl.innerHTML='';
       countries.forEach(country=>{
-        const group = document.createElement('optgroup');
-        group.label = country;
+        const group=document.createElement('optgroup'); group.label=country;
         byCountry[country].sort((a,b)=>a.city.localeCompare(b.city,'ar')).forEach(a=>{
-          const opt = document.createElement('option');
-          opt.value = a.code;
-          opt.textContent = `${country} — ${a.city} (${a.code})`;
-          group.appendChild(opt);
+          const opt=document.createElement('option'); opt.value=a.code; opt.textContent=`${country} — ${a.city} (${a.code})`; group.appendChild(opt);
         });
         selectEl.appendChild(group);
       });
-      if(!countries.length){
-        const opt = document.createElement('option'); opt.textContent='لا توجد نتائج مطابقة'; opt.disabled=true;
-        selectEl.appendChild(opt);
-      }
+      if(!countries.length){const opt=document.createElement('option'); opt.textContent='لا توجد نتائج مطابقة'; opt.disabled=true; selectEl.appendChild(opt);}
     }
-    function setupSearch(filterInputId, selectId, defaultValue){
-      const inp = document.getElementById(filterInputId);
-      const sel = document.getElementById(selectId);
+    function setupSearch(filterInputId,selectId,defaultValue){
+      const inp=document.getElementById(filterInputId); const sel=document.getElementById(selectId);
       renderAirportSelect(sel);
-      inp.addEventListener('input', ()=>{
-        const prev = sel.value;
-        renderAirportSelect(sel, inp.value);
-        if([...sel.querySelectorAll('option')].some(o=>o.value===prev)) sel.value = prev;
-      });
-      if(defaultValue){ sel.value = defaultValue; }
+      inp.addEventListener('input',()=>{const prev=sel.value; renderAirportSelect(sel,inp.value); if([...sel.querySelectorAll('option')].some(o=>o.value===prev)) sel.value=prev;});
+      if(defaultValue){sel.value=defaultValue;}
     }
 
-    /* الروابط */
-    const kayakCabin = c => ({economy:'e',business:'b',first:'f'}[c]||'e');
-    const ymd = d => d || "";
-    const ymdCompact = d => d ? d.replace(/-/g,'') : "";
-
-    function buildURL(provider, mode, o, d, dep, ret, pax, cabin){
-      const depYMD = ymd(dep), retYMD = ymd(ret);
-      const depSC  = ymdCompact(dep), retSC = ymdCompact(ret);
-
-      if(mode === 'multicity'){
-        return provider==='skyscanner'
-          ? 'https://www.skyscanner.net/transport/flights/multi-city/?locale=ar-SA'
-          : 'https://www.kayak.ae/flights/multi-stop?lang=ar';
-      }
-
+    const kayakCabin=c=>({economy:'e',business:'b',first:'f'}[c]||'e');
+    const ymd=d=>d||""; const ymdCompact=d=>d?d.replace(/-/g,''):"";
+    function buildURL(provider,mode,o,d,dep,ret,pax,cabin){
+      const depYMD=ymd(dep), retYMD=ymd(ret); const depSC=ymdCompact(dep), retSC=ymdCompact(ret);
+      if(mode==='multicity'){return provider==='skyscanner'?'https://www.skyscanner.net/transport/flights/multi-city/?locale=ar-SA':'https://www.kayak.ae/flights/multi-stop?lang=ar';}
       switch(provider){
-        case 'skyscanner': {
-          let base = `https://www.skyscanner.net/transport/flights/${o}/${d}`;
-          if(depSC) base += `/${depSC}`;
-          if(mode==='return' && retSC) base += `/${retSC}`;
-          return `${base}/?adults=${encodeURIComponent(pax)}&cabinclass=${encodeURIComponent(cabin)}&locale=ar-SA`;
-        }
-        case 'kayak': {
-          let base = `https://www.kayak.ae/flights/${o}-${d}`;
-          if(depYMD) base += `/${depYMD}`;
-          if(mode==='return' && retYMD) base += `/${retYMD}`;
-          return `${base}?adults=${encodeURIComponent(pax)}&cabin=${encodeURIComponent(kayakCabin(cabin))}&lang=ar&sort=price_a`;
-        }
-        default: return '#';
+        case 'skyscanner':{let base=`https://www.skyscanner.net/transport/flights/${o}/${d}`; if(depSC) base+=`/${depSC}`; if(mode==='return'&&retSC) base+=`/${retSC}`; return `${base}/?adults=${encodeURIComponent(pax)}&cabinclass=${encodeURIComponent(cabin)}&locale=ar-SA`;}
+        case 'kayak':{let base=`https://www.kayak.ae/flights/${o}-${d}`; if(depYMD) base+=`/${depYMD}`; if(mode==='return'&&retYMD) base+=`/${retYMD}`; return `${base}?adults=${encodeURIComponent(pax)}&cabin=${encodeURIComponent(kayakCabin(cabin))}&lang=ar&sort=price_a`;}
+        default:return '#';
       }
     }
-
     function openSelected(){
-      const mode = document.querySelector('input[name="tripmode"]:checked').value;
-      const o = document.getElementById('origin').value;
-      const d = document.getElementById('destination').value;
-      const p = document.getElementById('provider').value;
-      const dep = document.getElementById('dep').value;
-      const ret = document.getElementById('ret').value;
-      const pax = document.getElementById('pax').value || 1;
-      const cabin = document.getElementById('cabin').value;
-
-      if(!o || !d){ alert('اختر: من / إلى'); return; }
-      if(mode!=='multicity' && !dep){ alert('اختر تاريخ الذهاب.'); return; }
-
-      const url = buildURL(p, mode, o, d, dep, ret, pax, cabin);
-      window.open(url,'_blank','noopener');
+      const mode=document.querySelector('input[name="tripmode"]:checked').value;
+      const o=document.getElementById('origin').value; const d=document.getElementById('destination').value;
+      const p=document.getElementById('provider').value; const dep=document.getElementById('dep').value; const ret=document.getElementById('ret').value;
+      const pax=document.getElementById('pax').value||1; const cabin=document.getElementById('cabin').value;
+      if(!o||!d){alert('اختر: من / إلى');return;} if(mode!=='multicity' && !dep){alert('اختر تاريخ الذهاب.');return;}
+      const url=buildURL(p,mode,o,d,dep,ret,pax,cabin); window.open(url,'_blank','noopener');
     }
-
-    /* تفعيل حالة الأزرار + إظهار/إخفاء العودة */
     function handleModeUI(){
-      const mode = document.querySelector('input[name="tripmode"]:checked').value;
-      const retFld = document.getElementById('retFld');
+      const mode=document.querySelector('input[name="tripmode"]:checked').value; const retFld=document.getElementById('retFld');
       document.querySelectorAll('#tripModeGroup .chip').forEach(l=>l.classList.remove('active'));
-      const checkedLabel = document.querySelector('#tripModeGroup input[name="tripmode"]:checked')?.closest('.chip');
-      if(checkedLabel) checkedLabel.classList.add('active');
-      if(mode==='oneway' || mode==='multicity'){ retFld.classList.add('hid'); } else { retFld.classList.remove('hid'); }
+      const checkedLabel=document.querySelector('#tripModeGroup input[name="tripmode"]:checked')?.closest('.chip'); if(checkedLabel) checkedLabel.classList.add('active');
+      if(mode==='oneway'||mode==='multicity'){retFld.classList.add('hid')} else {retFld.classList.remove('hid')}
     }
-    document.addEventListener('change', (e)=>{ if(e.target.name==='tripmode') handleModeUI(); });
+    document.addEventListener('change',(e)=>{if(e.target.name==='tripmode') handleModeUI();});
 
-    /* تعدد اللغات (زر EN نصّي فقط) */
-    const STR = {
-      ar: { title:'تذكرتك', tag:'استكشف أرخص أسعار تذاكر الطيران', return:'ذهاب وعودة', oneway:'ذهاب فقط', multicity:'وجهات متعددة',
-            from:'من', to:'إلى', depart:'تاريخ الذهاب', returnDate:'تاريخ العودة', pax:'عدد المسافرين', cabin:'الدرجة', provider:'الموقع', search:'ابحث', langBtn:'EN' },
-      en: { title:'Tathkirtak', tag:'Find the cheapest flight tickets', return:'Return', oneway:'One way', multicity:'Multi-city',
-            from:'From', to:'To', depart:'Depart', returnDate:'Return', pax:'Passengers', cabin:'Cabin', provider:'Provider', search:'Search', langBtn:'AR' }
-    };
+    const STR={ar:{title:'تذكرتك',tag:'استكشف أرخص أسعار تذاكر الطيران',return:'ذهاب وعودة',oneway:'ذهاب فقط',multicity:'وجهات متعددة',from:'من',to:'إلى',depart:'تاريخ الذهاب',returnDate:'تاريخ العودة',pax:'عدد المسافرين',cabin:'الدرجة',provider:'الموقع',search:'ابحث',langBtn:'EN'},en:{title:'Tathkirtak',tag:'Find the cheapest flight tickets',return:'Return',oneway:'One way',multicity:'Multi-city',from:'From',to:'To',depart:'Depart',returnDate:'Return',pax:'Passengers',cabin:'Cabin',provider:'Provider',search:'Search',langBtn:'AR'}};
     function applyLang(lang){
-      document.documentElement.lang = (lang==='en'?'en':'ar');
-      document.documentElement.dir  = (lang==='en'?'ltr':'rtl');
-      const t = STR[lang];
-      document.getElementById('siteTitle').textContent = t.title;
-      document.getElementById('siteTag').textContent = t.tag;
-      document.querySelector('[data-i18n="return"]').textContent = t.return;
-      document.querySelector('[data-i18n="oneway"]').textContent = t.oneway;
-      document.querySelector('[data-i18n="multicity"]').textContent = t.multicity;
-      document.querySelector('[data-i18n="from"]').textContent = t.from;
-      document.querySelector('[data-i18n="to"]').textContent = t.to;
-      document.querySelector('[data-i18n="depart"]').textContent = t.depart;
-      document.querySelector('[data-i18n="returnDate"]').textContent = t.returnDate;
-      document.querySelector('[data-i18n="pax"]').textContent = t.pax;
-      document.querySelector('[data-i18n="cabin"]').textContent = t.cabin;
-      document.querySelector('[data-i18n="provider"]').textContent = t.provider;
-      document.getElementById('searchBtn').textContent = t.search;
-      document.getElementById('langBtn').textContent = t.langBtn;
+      document.documentElement.lang=(lang==='en'?'en':'ar'); document.documentElement.dir=(lang==='en'?'ltr':'rtl');
+      const t=STR[lang];
+      document.getElementById('siteTitle').textContent=t.title; document.getElementById('siteTag').textContent=t.tag;
+      document.querySelector('[data-i18n="return"]').textContent=t.return;
+      document.querySelector('[data-i18n="oneway"]').textContent=t.oneway;
+      document.querySelector('[data-i18n="multicity"]').textContent=t.multicity;
+      document.querySelector('[data-i18n="from"]').textContent=t.from;
+      document.querySelector('[data-i18n="to"]').textContent=t.to;
+      document.querySelector('[data-i18n="depart"]').textContent=t.depart;
+      document.querySelector('[data-i18n="returnDate"]').textContent=t.returnDate;
+      document.querySelector('[data-i18n="pax"]').textContent=t.pax;
+      document.querySelector('[data-i18n="cabin"]').textContent=t.cabin;
+      document.querySelector('[data-i18n="provider"]').textContent=t.provider;
+      document.getElementById('searchBtn').textContent=t.search; document.getElementById('langBtn').textContent=t.langBtn;
     }
-    document.getElementById('langBtn').addEventListener('click', ()=>{
-      const cur = document.documentElement.lang==='en' ? 'en' : 'ar';
-      const next = (cur==='ar' ? 'en' : 'ar');
-      localStorage.setItem('tathkirtak_lang', next);
-      applyLang(next);
-    });
+    document.getElementById('langBtn').addEventListener('click',()=>{const cur=document.documentElement.lang==='en'?'en':'ar'; const next=(cur==='ar'?'en':'ar'); localStorage.setItem('tathkirtak_lang',next); applyLang(next);});
 
-    /* تهيئة */
+    /* شبكة أمان: إن أخفى CSS خارجي التذييل أو الأيقونات، نعيد تمكينها */
+    function ensureFooterVisible(){
+      const footer=document.getElementById('appFooter');
+      const social=document.getElementById('socialIcons');
+      const credit=document.getElementById('creditLine');
+      [footer,social,credit].forEach(el=>{
+        if(!el) return;
+        const style=getComputedStyle(el);
+        if(style.display==='none' || style.visibility==='hidden' || style.opacity==='0'){
+          el.style.display='block'; el.style.visibility='visible'; el.style.opacity='1';
+        }
+      });
+    }
+
     (function init(){
       setupSearch('search-origin','origin','BAH');
       setupSearch('search-destination','destination','CAI');
 
-      const now = new Date();
-      const tomorrow = new Date(now); tomorrow.setDate(now.getDate()+1);
-      const iso = d => d.toISOString().slice(0,10);
-      document.getElementById('dep').value = iso(now);
-      document.getElementById('ret').value = iso(tomorrow);
+      const now=new Date(); const tomorrow=new Date(now); tomorrow.setDate(now.getDate()+1);
+      const iso=d=>d.toISOString().slice(0,10);
+      document.getElementById('dep').value=iso(now);
+      document.getElementById('ret').value=iso(tomorrow);
 
-      document.getElementById('pax').value = 1;
-      document.getElementById('cabin').value = 'economy';
-      document.getElementById('provider').value = 'skyscanner';
+      document.getElementById('pax').value=1;
+      document.getElementById('cabin').value='economy';
+      document.getElementById('provider').value='skyscanner';
 
-      const saved = localStorage.getItem('tathkirtak_lang') || 'ar';
-      applyLang(saved);
+      const saved=localStorage.getItem('tathkirtak_lang')||'ar'; applyLang(saved);
       handleModeUI();
+
+      // تأكيد ظهور التذييل والأيقونات
+      ensureFooterVisible();
+      // أيضاً بعد ثانية (في حال تحميل CSS خارجي متأخر)
+      setTimeout(ensureFooterVisible, 1000);
     })();
   </script>
 </body>
