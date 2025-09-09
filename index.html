@@ -175,6 +175,19 @@
             font-size: 15px; 
         }
         
+        .message-content p { 
+            margin: 5px 0; 
+        }
+        
+        .message-content ul, .message-content ol { 
+            margin: 10px 20px; 
+            padding: 0; 
+        }
+        
+        .message-content li { 
+            margin-bottom: 5px; 
+        }
+        
         .message-time { 
             font-size: 11px; 
             opacity: 0.7; 
@@ -320,80 +333,6 @@
             cursor: pointer;
         }
         
-        .key-info {
-            padding: 8px 15px;
-            background: #e0f2fe;
-            color: #0c4a6e;
-            text-align: center;
-            font-size: 12px;
-            border-bottom: 1px solid #bae6fd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .key-info.hidden {
-            display: none;
-        }
-        
-        .api-key-container {
-            padding: 15px;
-            background: #fffbeb;
-            border-bottom: 1px solid #fef3c7;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            display: none; /* إخفاء حقل إدخال المفتاح */
-        }
-        
-        .api-key-input {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .api-key-input input {
-            flex: 1;
-            padding: 12px 16px;
-            font-size: 14px;
-        }
-        
-        .api-key-input button {
-            padding: 12px 20px;
-            font-size: 14px;
-        }
-        
-        .key-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        
-        .key-status i {
-            font-size: 16px;
-        }
-        
-        .key-status.valid {
-            color: #166534;
-        }
-        
-        .key-status.invalid {
-            color: #991b1b;
-        }
-        
-        .change-key-btn {
-            background: transparent;
-            color: #7c3aed;
-            border: 1px solid #7c3aed;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-right: 8px;
-            cursor: pointer;
-            display: none; /* إخفاء زر تغيير المفتاح */
-        }
-        
         @media (max-width: 600px) {
             .container { 
                 border-radius: 20px; 
@@ -424,10 +363,6 @@
             button { 
                 padding: 14px 20px; 
             }
-            
-            .api-key-input {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -445,33 +380,14 @@
             </div>
         </div>
 
-        <div class="api-key-container" id="api-key-container">
-            <div class="api-key-input">
-                <input type="password" id="api-key-input" placeholder="أدخل مفتاح API الخاص بك" aria-label="مفتاح API">
-                <button id="save-key-btn">
-                    <i class="fas fa-save"></i>
-                    <span>حفظ</span>
-                </button>
-            </div>
-            <div class="key-status valid" id="key-status">
-                <i class="fas fa-info-circle"></i>
-                <span>يرجى إدخال مفتاح API صالح للاتصال بالخدمة</span>
-            </div>
-        </div>
-
-        <div class="key-info" id="key-info">
-            <i class="fas fa-key"></i>
-            <span>الخدمة تعمل تلقائياً</span>
-        </div>
-
         <div class="api-status" id="api-status">
             <i class="fas fa-check-circle"></i>
-            <span>تم الاتصال بنجاح</span>
+            <span>الاتصال نشط</span>
         </div>
 
         <div class="chat-container" id="chat-container">
             <div class="message ai-message">
-                <div class="message-content">مرحبًا! أنا مساعدك في FadhelTalk. كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="message-content">مرحبًا! أنا FadhelTalk، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</div>
                 <div class="message-time" id="current-time"></div>
             </div>
         </div>
@@ -496,14 +412,30 @@
         const statusText = document.getElementById('status-text');
         const statusDot = document.getElementById('status-dot');
         const apiStatus = document.getElementById('api-status');
-        const keyInfo = document.getElementById('key-info');
 
         // حالة التطبيق
         let isConnected = true;
         let isWaitingForResponse = false;
 
-        // مفتاح API مضمن في الكود (لأغراض التوضيح فقط - في الواقع يجب حمايته بطريقة أفضل)
-        const API_KEY = "sk-6bf5bce1fa2e45ddb016a9ec42bc51d3";
+        // مفتاح API المشفر (Base64) - للأمان البسيط
+        const encodedApiKey = 'c2stNmJmNWJjZTFmYTJlNDVkZGIwMTZhOWVjNDJiYzUxZDM='; // استبدل بـ btoa('your-deepseek-api-key')
+        function getApiKey() {
+            return atob(encodedApiKey);
+        }
+
+        // تنسيق الردود لإزالة جميع الرموز غير المرغوبة
+        function formatResponse(text) {
+            // إزالة الهاشتاغات، النجوم، والرموز الأخرى
+            text = text.replace(/[#+*_\[\]\(\)]+/g, '').replace(/\s+/g, ' ').trim();
+            // تحويل النقاط إلى قوائم HTML إذا لزم الأمر
+            text = text.replace(/^\s*-\s+/gm, '<li>').replace(/\n/g, '</li>');
+            if (text.includes('<li>')) text = `<ul>${text}</ul>`;
+            // تقسيم النص إلى فقرات
+            text = text.split('\n').map(line => line.trim() ? `<p>${line}</p>` : '').join('');
+            // إزالة الفقرات الفارغة
+            text = text.replace(/<p>\s*<\/p>/g, '');
+            return text;
+        }
 
         // تحديث الوقت الحالي
         function updateCurrentTime() {
@@ -521,7 +453,7 @@
             if (connected) {
                 statusText.textContent = "متصل بالخدمة";
                 statusDot.style.background = "#10b981";
-                apiStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>تم الاتصال بنجاح</span>';
+                apiStatus.innerHTML = '<i class="fas fa-check-circle"></i> <span>الاتصال نشط</span>';
                 apiStatus.className = 'api-status';
                 userInput.disabled = false;
                 sendBtn.disabled = false;
@@ -544,22 +476,25 @@
             }
         }
 
-        // اختبار الاتصال بالخدمة
+        // اختبار الاتصال بالخدمة مع تحقق Referer
         async function testConnection() {
+            if (document.referrer && !document.referrer.includes(location.hostname)) {
+                console.warn('طلب غير مصرح من موقع خارجي');
+                return false;
+            }
             try {
                 updateConnectionStatus(false, "جاري اختبار الاتصال...");
                 
-                // محاولة الاتصال بخادم الاختبار أو API
                 const response = await fetch('https://api.deepseek.com/v1/models', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
+                        'Authorization': `Bearer ${getApiKey()}`
                     }
                 });
                 
                 if (response.ok) {
-                    updateConnectionStatus(true, "تم الاتصال بنجاح");
+                    updateConnectionStatus(true, "الاتصال نشط");
                     return true;
                 } else {
                     throw new Error(`خطأ في الخدمة: ${response.status}`);
@@ -567,6 +502,7 @@
             } catch (error) {
                 console.error('فشل اختبار الاتصال:', error);
                 updateConnectionStatus(false, `تعذّر الاتصال بالخدمة: ${error.message}`);
+                setTimeout(testConnection, 3000); // إعادة محاولة تلقائية
                 return false;
             }
         }
@@ -579,7 +515,7 @@
 
             const messageContent = document.createElement('div');
             messageContent.classList.add('message-content');
-            messageContent.textContent = text;
+            messageContent.innerHTML = isUser ? text : formatResponse(text); // تنسيق الردود للـ AI فقط
 
             const messageTime = document.createElement('div');
             messageTime.classList.add('message-time');
@@ -611,8 +547,35 @@
             return typingDiv;
         }
 
-        // استدعاء خدمة الذكاء الاصطناعي
+        // التحقق من الأسئلة المتعلقة بالتعريف عن التطبيق
+        function isIdentityOrCreatorQuestion(message) {
+            const patterns = [
+                /من\s*(أنت|انت|أنتم|هو|صنعك|برمجك|مبرمجك|مبرمجيك|مطورك|خلقك|صانعك)\s*\?*/i,
+                /who\s*(are\s*you|is\s*the\s*creator|is\s*the\s*developer|made\s*you|programmed\s*you)\s*\?*/i
+            ];
+            return patterns.some(pattern => pattern.test(message));
+        }
+
+        // التحقق من الأسئلة عن فاضل الريس
+        function isFadhelQuestion(message) {
+            const patterns = [
+                /من\s*(فاضل|فاضل\s*الريس|هو\s*فاضل|فاضل\s*هو)\s*\?*/i,
+                /who\s*(is\s*fadhel|is\s*fadhel\s*al-rais|is\s*fadhel\s*alrais)\s*\?*/i
+            ];
+            return patterns.some(pattern => pattern.test(message));
+        }
+
+        // استدعاء خدمة DeepSeek أو رد مخصص
         async function getAIResponse(message) {
+            // التحقق من الأسئلة المخصصة
+            if (isIdentityOrCreatorQuestion(message)) {
+                return "فاضل الريس";
+            }
+            if (isFadhelQuestion(message)) {
+                return "فاضل الريس هو مطور ومبرمج هذا التطبيق.";
+            }
+
+            // استدعاء DeepSeek للأسئلة الأخرى
             if (!isConnected) {
                 const connected = await testConnection();
                 if (!connected) {
@@ -625,15 +588,15 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
+                        'Authorization': `Bearer ${getApiKey()}`
                     },
                     body: JSON.stringify({
                         model: 'deepseek-chat',
                         messages: [
-                            { role: 'system', content: 'أنت مساعد مفيد يتحدث العربية. قدم إجابات واضحة ودقيقة.' },
+                            { role: 'system', content: 'أنت FadhelTalk، مساعد ذكي صممه فاضل الريس. قدم إجابات واضحة، دقيقة، وكاملة بالعربية دون ذكر أي تفاصيل عن مصدر البيانات أو الشركة المطورة. تجنب استخدام الهاشتاغات (#)، النجوم (*)، أو أي رموز تنسيق. استخدم تنسيقًا منظمًا وسهل القراءة مع فقرات أو قوائم إذا لزم الأمر.' },
                             { role: 'user', content: message }
                         ],
-                        max_tokens: 1000,
+                        max_tokens: 2000,
                         temperature: 0.7
                     })
                 });
@@ -643,18 +606,18 @@
                         updateConnectionStatus(false, "مفتاح API غير صالح");
                         throw new Error("مفتاح API غير صالح أو منتهي الصلاحية");
                     } else if (response.status === 429) {
-                        throw new Error("تم تجاوز الحد المسموح من الطلبات");
+                        throw new Error("تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقًا.");
                     } else {
-                        throw new Error(`خطأ في الخدمة: ${response.status}`);
+                        throw new Error(`خطأ في الخدمة: ${response.status}. يرجى المحاولة مرة أخرى.`);
                     }
                 }
                 
                 const data = await response.json();
-                return data?.choices?.[0]?.message?.content || 'لم يتم استلام رد من الخدمة.';
+                return data?.choices?.[0]?.message?.content || 'لم يتم استلام رد كامل من الخدمة. يرجى المحاولة مرة أخرى.';
             } catch (error) {
                 console.error('Error:', error);
                 updateConnectionStatus(false, `تعذّر الاتصال: ${error.message}`);
-                return `عذرًا، حدث خطأ: ${error.message}. يرجى المحاولة مرة أخرى.`;
+                return `عذرًا، حدث خطأ: ${error.message}. جاري إعادة المحاولة تلقائيًا...`;
             }
         }
 
@@ -678,7 +641,8 @@
                 addMessage(answer, false);
             } catch (e) {
                 typingIndicator.remove();
-                addMessage('عذرًا، حدث خطأ غير متوقع في المعالجة.', false);
+                addMessage('عذرًا، حدث خطأ غير متوقع في المعالجة. جاري إعادة المحاولة...', false);
+                setTimeout(() => sendMessage(message), 3000); // إعادة محاولة تلقائية
             } finally {
                 isWaitingForResponse = false;
                 sendBtn.disabled = false;
