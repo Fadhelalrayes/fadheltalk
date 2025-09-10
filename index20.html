@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دوري يا مبيركة</title>
+
+  <!-- سياسة أمان المحتوى: السماح بـ Google Fonts و Font Awesome و Unsplash -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' data: https://images.unsplash.com https://*.unsplash.com;
+                 script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+                 font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+                 connect-src 'self';
+                 object-src 'none';
+                 base-uri 'self';
+                 frame-ancestors 'self';
+                 upgrade-insecure-requests">
+
+  <!-- تحسين الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- أيقونات (اختياري) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root{
+      --brand1:#F26522; --brand2:#FF8C00; --dark:#333; --muted:#777; --bg:#f8f8f8;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--dark);line-height:1.6;font-family:'Cairo', Tahoma, 'Segoe UI', Arial, sans-serif}
+
+    header{
+      background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      color:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;
+      position:sticky;top:0;z-index:1000;box-shadow:0 4px 10px rgba(0,0,0,.1)
+    }
+    header .logo{font-size:2rem;font-weight:700}
+    header nav a{color:#fff;text-decoration:none;margin-left:1.5rem;font-size:1.05rem;transition:.3s}
+    header nav a:hover{color:#FFD700;transform:scale(1.05)}
+    header nav a i{margin-left:.3rem}
+
+    .hero{
+      background:
+        linear-gradient(rgba(242,101,34,.7), rgba(255,140,0,.5)),
+        url('images/hero.jpg') no-repeat center/cover;
+      height:500px;display:flex;justify-content:center;align-items:center;text-align:center;color:#fff;position:relative
+    }
+    .hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.3)}
+    .hero-content{z-index:1;max-width:800px;padding:0 2rem}
+    .hero h1{font-size:3rem;margin-bottom:1rem;font-weight:700}
+    .hero p{font-size:1.3rem;margin-bottom:2rem;font-weight:400}
+
+    .search-bar{
+      display:flex;justify-content:center;max-width:600px;margin:0 auto;background:#fff;border-radius:50px;overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,.1);padding:.2rem
+    }
+    .search-bar input{flex:1;padding:1rem 1.5rem;border:none;outline:none;font-size:1.05rem;background:transparent}
+    .search-bar button{padding:1rem 1.6rem;border:none;background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      color:#fff;cursor:pointer;font-size:1.05rem;font-weight:700;transition:.3s;border-radius:50px}
+    .search-bar button:hover{transform:scale(1.05)}
+
+    .section{padding:4rem 2rem;text-align:center}
+    .section h2{font-size:2.2rem;margin-bottom:2.2rem;color:var(--brand1);font-weight:800}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1200px;margin:0 auto}
+    .card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.1);transition:.3s}
+    .card:hover{transform:translateY(-10px);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+    .card img{display:block;width:100%;height:200px;object-fit:cover;background:#eaeaea}
+    .card-content{padding:1.5rem}
+    .card h3{font-size:1.25rem;margin-bottom:.5rem;color:#333;font-weight:700}
+    .card p{color:var(--muted);font-size:1rem;margin-bottom:1rem}
+    .card a{display:inline-block;margin-top:1rem;padding:.8rem 2rem;background:linear-gradient(135deg,var(--brand1),var(--brand2));
+      color:#fff;text-decoration:none;border-radius:30px;font-weight:700;transition:.3s}
+    .card a:hover{transform:scale(1.05)}
+
+    .supermarket{background:linear-gradient(135deg,#f9f9f9,#ffffff)}
+
+    footer{background:linear-gradient(135deg,#2E2E2E,#1a1a1a);color:#fff;padding:2rem;text-align:center;font-size:.95rem}
+    footer p{margin-bottom:.5rem}
+
+    @media (max-width:768px){
+      header{flex-direction:column;text-align:center;padding:1rem}
+      header nav{margin-top:1rem}
+      .hero h1{font-size:2.2rem}
+      .hero p{font-size:1.1rem}
+      .search-bar{flex-direction:column;border-radius:15px}
+      .search-bar input{border-radius:15px 15px 0 0;padding:1rem}
+      .search-bar button{border-radius:0 0 15px 15px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">دوري يا مبيركة</div>
+    <nav>
+      <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="#" onclick="showComingSoon('restaurants')"><i class="fas fa-utensils"></i> المطاعم</a>
+      <a href="#" onclick="showComingSoon('offers')"><i class="fas fa-tags"></i> العروض</a>
+      <a href="#" onclick="showComingSoon('supermarket')"><i class="fas fa-shopping-cart"></i> السوبر ماركت</a>
+      <a href="#" onclick="showComingSoon('contact')"><i class="fas fa-envelope"></i> تواصل معنا</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>اطلب طعامك المفضل مع دوري يا مبيركة!</h1>
+      <p>توصيل سريع من أفضل المطاعم والسوبر ماركت إلى بابك</p>
+      <div class="search-bar">
+        <input id="searchInput" type="text" placeholder="ابحث عن مطعم أو طبق أو منتج...">
+        <button onclick="performSearch()"><i class="fas fa-search"></i> ابحث الآن</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Restaurants -->
+  <section class="section" id="restaurants">
+    <h2>استكشف المطاعم الرائعة</h2>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy"
+             src="images/restaurant1.jpg"
+             data-remote="https://images.unsplash.com/photo-1600585156236-ab8a1b38f8a0?w=1200&q=80&auto=format"
+             alt="مطعم الشرق - وجبة شرقية"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>مطعم الشرق</h3>
+          <p>مأكولات شرقية أصيلة بجودة عالية</p>
+          <a href="#" onclick="showComingSoon('restaurant1')">اطلب الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/restaurant2.jpg"
+             data-remote="https://images.unsplash.com/photo-1565299626231-9e0a2f71fd36?w=1200&q=80&auto=format"
+             alt="بيتزا هت - بيتزا طازجة"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>بيتزا هت</h3>
+          <p>بيتزا طازجة مع مكونات مميزة</p>
+          <a href="#" onclick="showComingSoon('restaurant2')">اطلب الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/restaurant3.jpg"
+             data-remote="https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80&auto=format"
+             alt="برغر كينج - برغر مشوي"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>برغر كينج</h3>
+          <p>برغر مشوي على اللهب بمذاق لا يُنسى</p>
+          <a href="#" onclick="showComingSoon('restaurant3')">اطلب الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/restaurant4.jpg"
+             data-remote="https://images.unsplash.com/photo-1567621146492-7b6c1f7e0f4b?w=1200&q=80&auto=format"
+             alt="مطعم المذاق - وجبة متنوعة"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>مطعم المذاق</h3>
+          <p>تجربة طعام فريدة تناسب جميع الأذواق</p>
+          <a href="#" onclick="showComingSoon('restaurant4')">اطلب الآن</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Supermarket -->
+  <section class="section supermarket" id="supermarket">
+    <h2>تسوق من السوبر ماركت</h2>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy"
+             src="images/market1.jpg"
+             data-remote="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format"
+             alt="سوبر ماركت الفرح - خضروات"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>سوبر ماركت الفرح</h3>
+          <p>منتجات طازجة وبأسعار تنافسية</p>
+          <a href="#" onclick="showComingSoon('supermarket1')">تسوق الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/market2.jpg"
+             data-remote="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=1200&q=80&auto=format"
+             alt="سوبر ماركت الجودة - فواكه"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>سوبر ماركت الجودة</h3>
+          <p>تشكيلة واسعة من السلع اليومية</p>
+          <a href="#" onclick="showComingSoon('supermarket2')">تسوق الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/market3.jpg"
+             data-remote="https://images.unsplash.com/photo-1601001435828-89a1e4a5d230?w=1200&q=80&auto=format"
+             alt="سوبر ماركت السريع - منتجات حليب"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>سوبر ماركت السريع</h3>
+          <p>توصيل سريع لاحتياجاتك اليومية</p>
+          <a href="#" onclick="showComingSoon('supermarket3')">تسوق الآن</a>
+        </div>
+      </div>
+      <div class="card">
+        <img loading="lazy"
+             src="images/market4.jpg"
+             data-remote="https://images.unsplash.com/photo-1582359645151-237d4e8f7e54?w=1200&q=80&auto=format"
+             alt="سوبر ماركت المنزل - بقالة"
+             onerror="imgSwap(this)">
+        <div class="card-content">
+          <h3>سوبر ماركت المنزل</h3>
+          <p>كل ما تحتاجه في مكان واحد</p>
+          <a href="#" onclick="showComingSoon('supermarket4')">تسوق الآن</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>جميع الحقوق محفوظة © 2025 دوري يا مبيركة</p>
+    <p>برمجة وتطوير: فاضل الريس</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="coming-soon" id="comingSoonModal" role="dialog" aria-modal="true" aria-labelledby="comingSoonTitle"
+       style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:1001">
+    <div class="coming-soon-content" style="background:linear-gradient(135deg,var(--brand1),var(--brand2));color:#fff;padding:2rem;border-radius:15px;text-align:center;max-width:400px;box-shadow:0 6px 20px rgba(0,0,0,.2)">
+      <h3 id="comingSoonTitle" style="font-size:1.8rem;margin-bottom:1rem">دوري يا مبيركة</h3>
+      <p style="font-size:1.1rem;margin-bottom:1.5rem">هذه الصفحة قيد التطوير وستكون متاحة قريبًا!</p>
+      <button onclick="hideComingSoon()" style="padding:.7rem 1.4rem;border:none;border-radius:10px;background:#fff;color:#333;cursor:pointer">حسنًا</button>
+    </div>
+  </div>
+
+  <script>
+    // تدرّج صامت بدون نص كـFallback نهائي
+    const SILENT_PLACEHOLDER =
+      "data:image/svg+xml;utf8," + encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400'>
+           <defs>
+             <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+               <stop stop-color='#eeeeee' offset='0'/>
+               <stop stop-color='#dcdcdc' offset='1'/>
+             </linearGradient>
+           </defs>
+           <rect width='100%' height='100%' fill='url(#g)'/>
+         </svg>`
+      );
+
+    // ترتيب المحاولات: محلي -> نسخة Remote -> تدرّج صامت
+    function imgSwap(img){
+      if (!img.dataset.triedRemote && img.dataset.remote){
+        img.dataset.triedRemote = '1';
+        img.src = img.dataset.remote;
+      } else if (!img.dataset.fallbackApplied){
+        img.dataset.fallbackApplied = '1';
+        img.removeAttribute('srcset');
+        img.src = SILENT_PLACEHOLDER; // لا نص ظاهر
+      }
+    }
+
+    function performSearch(){
+      const q = document.getElementById('searchInput').value.trim();
+      if(q){ window.location.href = `search.html?q=${encodeURIComponent(q)}`; }
+      else { alert('الرجاء إدخال اسم مطعم أو طبق أو منتج'); }
+    }
+    document.getElementById('searchInput').addEventListener('keypress', e => {
+      if(e.key === 'Enter') performSearch();
+    });
+
+    function showComingSoon(section){
+      document.getElementById('comingSoonModal').style.display = 'flex';
+      console.log('Coming soon:', section);
+    }
+    function hideComingSoon(){
+      document.getElementById('comingSoonModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
