@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>المتبقّي من عمرك — تقدير رسمي (UN/WB)</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8; --ink:#111827; --muted:#6b7280;
+    --card:#ffffff; --line:#e5e7eb;
+    --gold:#b58900; --gold-soft:#f5d574;
+    --ocean:#0b4d8a; --emerald:#059669; --crimson:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:var(--ink)}
+  header{text-align:center; padding:24px 12px}
+  .brand{font-family:"Amiri",serif; font-size:clamp(26px,4.5vw,42px); color:var(--gold)}
+  .tag{margin-top:6px; font-size:14px; color:#6b7280}
+  .shell{max-width:980px; margin:0 auto; padding:0 16px}
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.05)}
+  .row{display:grid; gap:16px}
+  @media(min-width:920px){ .row{grid-template-columns:1.2fr .8fr} }
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:12px}
+  .center{text-align:center}
+  .date-grid{display:flex; justify-content:center; gap:8px; flex-wrap:wrap}
+  .date-grid input[type="number"]{
+    width:110px; padding:10px; border:1px solid var(--line); border-radius:10px; text-align:center; font-family:monospace;
+  }
+  .seg{display:flex; gap:6px; justify-content:center; flex-wrap:wrap}
+  .seg button{flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:#f9fafb; cursor:pointer; max-width:160px}
+  .seg button.on{background:var(--gold); color:#fff; border-color:var(--gold)}
+  .btn{padding:12px 20px; border-radius:10px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; display:block; margin:0 auto}
+  .badge{display:inline-block; padding:10px 14px; border-radius:10px; margin-top:12px}
+  .ok{background:#eff6ff; color:var(--ocean)}
+
+  .kpi{display:grid; gap:10px; grid-template-columns:repeat(2,1fr); margin-top:10px}
+  .k{background:#f9fafb; border:1px solid var(--line); border-radius:10px; padding:10px; text-align:center}
+  .k .v{font-weight:700; font-size:18px}
+
+  .eqwrap{display:none; margin-top:8px}
+  .eqbox{background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; text-align:center}
+  .eqbox .v{font-weight:700; font-size:16px; margin-bottom:4px; color:#111}
+  .eqbox .l{font-size:12px; color:#6b7280}
+
+  .deck{display:grid; gap:12px; grid-template-columns:1fr; margin-top:16px}
+  @media(min-width:860px){ .deck{grid-template-columns:repeat(3,1fr)} }
+  .card{background:#fdfdfd; border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,.04)}
+  .card h3{margin:0 0 6px; font-family:"Amiri",serif; color:var(--gold)}
+  .card p, .card ul{margin:0; font-size:14px; color:#374151; line-height:1.6}
+  .card ul{margin-top:8px; padding-inline-start:20px}
+
+  .counter{ margin:14px auto 0; max-width:720px;
+    background:linear-gradient(90deg, #fff7e6, #fff); border:1px solid #f3e8c8; border-radius:16px; padding:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.05) }
+  .counter.alt{ background:linear-gradient(90deg, #eef6ff, #fff); border-color:#cfe6ff }
+  .counter h4{margin:0 0 8px; font-family:"Amiri",serif; color:#8b6a00; text-align:center}
+  .counter.alt h4{color:#0b4d8a}
+  .cflex{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+  .cbox{min-width:110px; padding:10px 12px; border:1px solid var(--line); background:#fff; border-radius:12px; text-align:center}
+  .cbox .num{font-weight:800; font-size:22px}
+  .cbox .lbl{font-size:12px; color:#6b7280}
+
+  /* مشاركة */
+  .sharewrap{margin:16px 0; text-align:center}
+  .share-title{font-family:"Amiri",serif; color:var(--gold); margin-bottom:8px; cursor:pointer; display:inline-block}
+  .share-title:hover{text-decoration:underline}
+  .sharebar{display:flex; justify-content:center; gap:8px; flex-wrap:wrap}
+  .iconbtn{width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:#fff; cursor:pointer}
+  .iconbtn svg{width:18px; height:18px; fill:#374151}
+
+  footer{text-align:center; margin:12px 0 24px; font-size:12px; color:#6b7280}
+  .ghost-link{color:inherit; text-decoration:none; cursor:default}
+
+  /* القائمة المنسدلة */
+  .select{ position:relative; display:inline-block; width:100% }
+  .select select{
+    width:100%; appearance:none; background:#fff; border:1px solid var(--gold); border-radius:10px;
+    padding:10px 42px 10px 12px; font-size:1rem; cursor:pointer; color:#111; transition:.15s; text-align:right; box-shadow:0 1px 0 rgba(0,0,0,.02)
+  }
+  .select select:hover{ box-shadow:0 0 0 3px rgba(245,213,116,.15) }
+  .select select:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(245,213,116,.35) }
+  .select::after{
+    content:""; position:absolute; top:50%; transform:translateY(-50%); right:12px; width:18px; height:18px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+    -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    pointer-events:none; opacity:.95;
+  }
+
+  /* إشعار أنيق بالأسفل */
+  .notice{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%) translateY(10px);
+    background:#fff; border:1px solid var(--gold); border-radius:12px; padding:10px 14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.12); display:flex; align-items:center; gap:10px;
+    opacity:0; transition:.25s ease; z-index:9999; max-width:92vw; font-size:14px; color:#111;
+  }
+  .notice.show{ opacity:1; transform:translateX(-50%) translateY(0) }
+  .notice .dot{width:10px; height:10px; border-radius:50%; background:linear-gradient(90deg,var(--gold),var(--gold-soft))}
+  .notice .close{ margin-inline-start:8px; cursor:pointer; border:none; background:transparent; font-size:18px; line-height:1; color:#6b7280 }
+  .notice.error{ border-color:#fecaca }
+  .notice.error .dot{ background:linear-gradient(90deg,#fecaca,#fee2e2) }
+
+  /* زر تنزيل PDF */
+  .pdfwrap{margin-top:12px; text-align:center; display:none}
+  .pdfbtn{padding:10px 16px; border-radius:10px; border:1px solid var(--gold); background:#fff; cursor:pointer; font-weight:700}
+  .pdfbtn:hover{ box-shadow:0 0 0 3px rgba(245,213,116,.15) }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">المتبقّي من عمرك</div>
+  <div class="tag">القيم تُجلب آليًا من البنك الدولي (UN WPP) لكل دولة وجنس. أضِف عوامل نمط الحياة لتحصل على تقدير شخصي تقريبي.</div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="row">
+      <div>
+        <!-- التاريخ -->
+        <div class="field center">
+          <label><strong>تاريخ الميلاد (ميلادي)</strong></label>
+          <div class="date-grid" dir="ltr">
+            <input id="d" type="number" inputmode="numeric" placeholder="اليوم"  min="1"  max="31"  autocomplete="off"/>
+            <input id="m" type="number" inputmode="numeric" placeholder="الشهر" min="1"  max="12"  autocomplete="off"/>
+            <input id="y" type="number" inputmode="numeric" placeholder="السنة" min="1900" max="2100" autocomplete="off"/>
+          </div>
+        </div>
+
+        <!-- الدولة -->
+        <div class="field center">
+          <label><strong>الدولة</strong></label>
+          <div class="select">
+            <select id="countrySelect" aria-label="اختر الدولة">
+              <option value="DZA">الجزائر</option>
+              <option value="BHR" selected>البحرين</option>
+              <option value="COM">جزر القمر</option>
+              <option value="DJI">جيبوتي</option>
+              <option value="EGY">مصر</option>
+              <option value="IRQ">العراق</option>
+              <option value="JOR">الأردن</option>
+              <option value="KWT">الكويت</option>
+              <option value="LBN">لبنان</option>
+              <option value="LBY">ليبيا</option>
+              <option value="MRT">موريتانيا</option>
+              <option value="MAR">المغرب</option>
+              <option value="OMN">عُمان</option>
+              <option value="PSE">فلسطين</option>
+              <option value="QAT">قطر</option>
+              <option value="SAU">المملكة العربية السعودية</option>
+              <option value="SOM">الصومال</option>
+              <option value="SDN">السودان</option>
+              <option value="SYR">سوريا</option>
+              <option value="TUN">تونس</option>
+              <option value="ARE">الإمارات العربية المتحدة</option>
+              <option value="YEM">اليمن</option>
+              <option value="IRN">إيران</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- النوع -->
+        <div class="field center">
+          <label><strong>النوع</strong></label>
+          <div class="seg" id="sexSeg">
+            <button type="button" class="on" data-sex="male">رجل</button>
+            <button type="button" data-sex="female">امرأة</button>
+          </div>
+        </div>
+
+        <!-- نمط الحياة -->
+        <div class="field center">
+          <label><strong>عوامل مؤثرة</strong></label>
+          <div class="seg" id="smokeSeg">
+            <button type="button" class="on" data-smoke="no">غير مدخّن</button>
+            <button type="button" data-smoke="yes">مدخّن</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="chronicSeg">
+            <button type="button" class="on" data-chronic="no">لا أمراض مزمنة</button>
+            <button type="button" data-chronic="yes">أمراض مزمنة</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="activitySeg">
+            <button type="button" class="on" data-activity="active">نشِط بدنيًا</button>
+            <button type="button" data-activity="inactive">غير نشِط</button>
+          </div>
+        </div>
+
+        <button class="btn" id="calc">احسب المتبقّي</button>
+
+        <!-- زر تنزيل PDF -->
+        <div class="pdfwrap" id="pdfwrap">
+          <button class="pdfbtn" id="pdfBtn">تنزيل النتائج PDF</button>
+        </div>
+      </div>
+
+      <div>
+        <div id="verdict" class="badge ok" style="display:none"></div>
+
+        <div id="counterDone" class="counter" style="display:none">
+          <h4>مضى من عمرك</h4>
+          <div class="cflex">
+            <div class="cbox"><div class="num" id="cntY">0</div><div class="lbl">سنة</div></div>
+            <div class="cbox"><div class="num" id="cntM">0</div><div class="lbl">شهر</div></div>
+            <div class="cbox"><div class="num" id="cntD">0</div><div class="lbl">يوم</div></div>
+          </div>
+        </div>
+
+        <div id="counterRemain" class="counter alt" style="display:none">
+          <h4>المتبقّي من عمرك</h4>
+          <div class="cflex">
+            <div class="cbox"><div class="num" id="remY">0</div><div class="lbl">سنة</div></div>
+            <div class="cbox"><div class="num" id="remM">0</div><div class="lbl">شهر</div></div>
+            <div class="cbox"><div class="num" id="remD">0</div><div class="lbl">يوم</div></div>
+          </div>
+        </div>
+
+        <div id="kpis" class="kpi" style="display:none">
+          <div class="k"><div class="v" id="ageSolar">—</div><div>عُمرك الآن (سنوات ميلادية)</div></div>
+          <div class="k"><div class="v" id="lifeExp">—</div><div>العمر المتوقع (سنوات)</div></div>
+        </div>
+
+        <div id="eqwrap" class="eqwrap">
+          <div class="eqbox">
+            <div class="v" id="eqVal">—</div>
+            <div class="l" id="eqLbl">تاريخ بلوغ العمر المتوقع (تقريب ميلادي)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="advice" class="deck" style="display:none"></div>
+  </section>
+
+  <!-- مشاركة -->
+  <div class="sharewrap">
+    <div id="shareTitle" class="share-title">مشاركة الصفحة</div>
+    <div class="sharebar">
+      <a class="iconbtn" id="shareWA" title="واتساب" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 00-10 18.3L1 23l4.9-1A12 12 0 1012 0zm6.5 17.2c-.3.8-1.7 1.6-2.4 1.6-.6 0-1.4.1-3.8-1-3.2-1.4-5.3-4.6-5.5-4.8-.1-.2-1.3-1.7-1.3-3.2 0-1.6.8-2.4 1.1-2.7.3-.3.7-.4 1-.4h.8c.2 0 .6 0 .9.7.3.8 1.1 2.7 1.2 2.9.1.2.2.5 0 .8-.2.3-.3.5-.6.8-.3.3-.6.6-.2 1.2.4.6 1.7 2.8 4 3.8 2.9 1.2 3 .8 3.5.8.5 0 1.8-.8 2.1-1.5.2-.7 1-1.6 1.3-1.8.2-.1.3-.2.5-.1l1 .5c.3.1.5.3.5.5-.1.4-.7 2-1 2.7z"/></svg>
+      </a>
+      <a class="iconbtn" id="shareTG" title="تيليغرام" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.2l-.3 4.1c.4 0 .6-.2.8-.4l2-1.8 4.1 3c.7.4 1.3.2 1.5-.7L22 6.2c.2-1.1-.4-1.5-1.1-1.2L2.3 11.1c-1.1.4-1 1.3 0 1.6l4.1 1.2 9.4-5.9c.4-.3.9-.1.5.2L9 18.2z"/></svg>
+      </a>
+      <a class="iconbtn" id="shareX" title="X" aria-label="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2h4.7l5 6.8L18.7 2H22l-7.8 9.1L22 22h-4.8l-5.4-7.2L6 22H2.1l8.3-9.8L3 2z"/></svg>
+      </a>
+      <a class="iconbtn" id="shareFB" title="Facebook" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.5.2 2.5.2v2.7h-1.4c-1.4 0-1.9.9-1.9 1.8V12h3.2l-.5 2.9h-2.7v7A10 10 0 0022 12z"/></svg>
+      </a>
+      <button class="iconbtn" id="copyLink" title="نسخ الرابط" aria-label="Copy Link">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H8C6.3 1 5 2.3 5 4v12c0 1.7 1.3 3 3 3h8c1.7 0 3-1.3 3-3V4c0-1.7-1.3-3-3-3zm1 15c0 .6-.4 1-1 1H8c-.6 0-1-.4-1-1V4c0-.6.4-1 1-1h8c.6 0 1 .4 1 1v12zM7 20c0 .6.4 1 1 1h8v2H8c-1.7 0-3-1.3-3-3v-2h2v2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div style="margin-top:8px; line-height:1.7">
+      <strong>المصادر:</strong>
+      البنك الدولي (LE ذكور/إناث) — المصدر الأصلي: UN WPP. تأثير التدخين ~10 سنوات (تقريبي). النشاط البدني تقدير تعليمي.
+    </div>
+    <div style="margin-top:10px">
+      <a id="devLink" class="ghost-link" href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1" target="_blank" rel="noopener">
+        برمجة وتطوير: فاضل الريس
+      </a>
+    </div>
+  </footer>
+</main>
+
+<!-- إشعار -->
+<div id="notice" class="notice" style="display:none">
+  <div class="dot"></div>
+  <div class="text">—</div>
+  <button class="close" title="إغلاق" aria-label="إغلاق">×</button>
+</div>
+
+<!-- مكتبات PDF (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+
+<script>
+/* ==== ثوابت الحساب ==== */
+const SOLAR_YEAR = 365.2425;
+const PENALTY_SMOKER = 10.0;
+const PENALTY_CHRONIC = 3.0;
+const ACTIVITY_ACTIVE_BONUS = 2.0;
+const ACTIVITY_INACTIVE_PENALTY = 1.0;
+
+/* ==== عناصر ==== */
+const dEl=document.getElementById('d'), mEl=document.getElementById('m'), yEl=document.getElementById('y');
+const countrySelect=document.getElementById('countrySelect');
+const sexSeg=document.getElementById('sexSeg'), smokeSeg=document.getElementById('smokeSeg'), chronicSeg=document.getElementById('chronicSeg'), activitySeg=document.getElementById('activitySeg');
+const verdict=document.getElementById('verdict'), kpis=document.getElementById('kpis');
+const ageSolarEl=document.getElementById('ageSolar'), lifeExpEl=document.getElementById('lifeExp');
+const counterDone=document.getElementById('counterDone'), cntY=document.getElementById('cntY'), cntM=document.getElementById('cntM'), cntD=document.getElementById('cntD');
+const counterRemain=document.getElementById('counterRemain'), remY=document.getElementById('remY'), remM=document.getElementById('remM'), remD=document.getElementById('remD');
+const eqWrap=document.getElementById('eqwrap'), eqVal=document.getElementById('eqVal');
+const adviceDeck=document.getElementById('advice');
+const pdfwrap=document.getElementById('pdfwrap'), pdfBtn=document.getElementById('pdfBtn');
+
+const notice=document.getElementById('notice'), noticeText=notice.querySelector('.text'); notice.querySelector('.close').onclick=()=>{ notice.classList.remove('show'); setTimeout(()=>notice.style.display='none',250); };
+let selectedSex="male", isSmoker="no", hasChronic="no", activity="active";
+
+/* تبديل الأزرار */
+[sexSeg, smokeSeg, chronicSeg, activitySeg].forEach(seg=>{
+  seg.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click',()=>{ seg.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); const k=[...'data-'.split()].length; });
+  });
+});
+sexSeg.onclick=e=>{const b=e.target.closest('button'); if(!b)return; selectedSex=b.dataset.sex;}
+smokeSeg.onclick=e=>{const b=e.target.closest('button'); if(!b)return; isSmoker=b.dataset.smoke;}
+chronicSeg.onclick=e=>{const b=e.target.closest('button'); if(!b)return; hasChronic=b.dataset.chronic;}
+activitySeg.onclick=e=>{const b=e.target.closest('button'); if(!b)return; activity=b.dataset.activity;}
+
+/* إشعار أنيق */
+let nTimer=null; function notify(msg,{type='info',timeout=3500}={}){ notice.style.display='flex'; notice.classList.toggle('error', type==='error'); noticeText.innerHTML=msg; requestAnimationFrame(()=>notice.classList.add('show')); clearTimeout(nTimer); nTimer=setTimeout(()=>{ notice.classList.remove('show'); setTimeout(()=>notice.style.display='none',250); }, timeout); }
+
+/* أدوات تاريخ */
+function daysInMonthUTC(y,m){ return new Date(Date.UTC(y, m, 0)).getUTCDate(); }
+function fmtDate(d){ return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`; }
+function diffYMD(fromUTC, toUTCDate){
+  let y = toUTCDate.getUTCFullYear() - fromUTC.getUTCFullYear();
+  let m = toUTCDate.getUTCMonth() + 1 - (fromUTC.getUTCMonth() + 1);
+  let d = toUTCDate.getUTCDate() - fromUTC.getUTCDate();
+  if(d < 0){ const prevMonth = new Date(Date.UTC(toUTCDate.getUTCFullYear(), toUTCDate.getUTCMonth(), 0)); d += prevMonth.getUTCDate(); m -= 1; }
+  if(m < 0){ m += 12; y -= 1; }
+  if(y < 0){ y=0; m=0; d=0; }
+  return {y,m,d};
+}
+function validateFullDate(d,m,y){
+  if(!(y>=1900 && y<=2100)) { notify('أدخل سنة صحيحة بين 1900 و 2100.', {type:'error'}); return false; }
+  if(!(m>=1 && m<=12))      { notify('أدخل شهرًا صحيحًا بين 1 و 12.',      {type:'error'}); return false; }
+  if(!(d>=1 && d<=31))      { notify('أدخل يومًا صحيحًا بين 1 و 31.',       {type:'error'}); return false; }
+  const dim = daysInMonthUTC(y, m);
+  if(d > dim){ notify(`هذا الشهر يحتوي ${dim} يومًا فقط. صحّح اليوم.`, {type:'error'}); return false; }
+  const dob=new Date(Date.UTC(y, m-1, d));
+  const today=new Date();
+  if(dob > today){ notify('تاريخ الميلاد لا يمكن أن يكون في المستقبل.', {type:'error'}); return false; }
+  return true;
+}
+const SOLAR_MS=24*60*60*1000*SOLAR_YEAR;
+function calcAgeYears(dobUTC, todayUTC){ return (todayUTC-dobUTC)/SOLAR_MS; }
+function addYearsExact(baseUTC, years){ const days=Math.round(years*SOLAR_YEAR); return new Date(baseUTC.getTime()+days*24*60*60*1000); }
+
+/* جلب العمر المتوقع من البنك الدولي */
+async function fetchLE(iso3){
+  const base=`https://api.worldbank.org/v2/country/${iso3}/indicator/`;
+  async function latest(ind){
+    const res=await fetch(`${base}${ind}?format=json&per_page=100`);
+    if(!res.ok) throw new Error('WB fetch failed');
+    const js=await res.json(); const series=js?.[1]||[];
+    for(const row of series){ if(row.value!=null) return {val:Number(row.value), year:row.date}; }
+    return {val:null, year:null};
+  }
+  const [fe,ma]=await Promise.all([latest('SP.DYN.LE00.FE.IN'), latest('SP.DYN.LE00.MA.IN')]);
+  return {female:fe, male:ma};
+}
+
+/* نصائح */
+function buildAdvice(){
+  const mk=(t,html)=>{ const e=document.createElement('div'); e.className='card'; e.innerHTML=`<h3>${t}</h3>${html}`; return e; };
+  adviceDeck.innerHTML='';
+  adviceDeck.append(
+    mk('فحوصات عامة دورية','<ul><li>ضغط الدم، السكر، دهون الدم، مؤشر كتلة الجسم.</li><li>أسنان/نظر/سمع سنويًا والتطعيمات.</li><li>نشاط بدني ≥ 150 دقيقة/الأسبوع ونوم كافٍ.</li></ul>'),
+    mk('للرجال','<ul><li>سرطان القولون: من 45–50.</li><li>البروستاتا: حسب العمر والخطورة.</li><li>القلب: تقييم المخاطر وفحوص لازمة.</li></ul>'),
+    mk('للنساء','<ul><li>سرطان الثدي: تصوير دوري من 40–50.</li><li>عنق الرحم: Pap/HPV حسب الجدولة.</li><li>هشاشة العظام: بعد 50–65 أو مع عوامل خطورة.</li></ul>'),
+    mk('نمط الحياة','<ul><li>الإقلاع عن التدخين.</li><li>غذاء متوازن وتقليل الملح/السكر/الدهون المشبعة.</li><li>إدارة التوتر، علاقات اجتماعية، كشف مبكر عند الأعراض.</li></ul>')
+  );
+  adviceDeck.style.display='grid';
+}
+
+/* الحساب + إظهار زر PDF */
+document.getElementById('calc').addEventListener('click', async ()=>{
+  const d=parseInt(dEl.value,10), m=parseInt(mEl.value,10), y=parseInt(yEl.value,10);
+  if(!validateFullDate(d,m,y)) return;
+
+  let data; const iso3=countrySelect.value;
+  try{ data=await fetchLE(iso3); }catch(e){ notify('تعذّر جلب بيانات البنك الدولي. تحقّق من الاتصال.', {type:'error'}); return; }
+  let baseLE = (selectedSex==='male') ? data.male.val : data.female.val;
+  let baseYear = (selectedSex==='male') ? data.male.year : data.female.year;
+  if(!baseLE){ baseLE=data.male.val||data.female.val; baseYear=data.male.year||data.female.year; }
+  if(!baseLE){ notify('لم نجد قيمة عمر متوقع لهذا البلد.', {type:'error'}); return; }
+
+  const dobUTC=new Date(Date.UTC(y, m-1, d));
+  const today=new Date(); const todayUTC=new Date(Date.UTC(today.getFullYear(),today.getMonth(),today.getDate()));
+  const ageYears=calcAgeYears(dobUTC,todayUTC);
+
+  let leAdj=baseLE;
+  if(isSmoker==='yes') leAdj -= PENALTY_SMOKER;
+  if(hasChronic==='yes') leAdj -= PENALTY_CHRONIC;
+  if(activity==='active') leAdj += ACTIVITY_ACTIVE_BONUS;
+  if(activity==='inactive') leAdj -= ACTIVITY_INACTIVE_PENALTY;
+  if(leAdj<1) leAdj=1;
+
+  const targetUTC=addYearsExact(dobUTC, leAdj);
+  const remainingMs=targetUTC - todayUTC;
+
+  verdict.style.display='inline-block';
+  verdict.textContent=(remainingMs<=0) ? `ℹ️ بلغت/تجاوزت العمر المتوقع (${baseYear}).` : `🔎 تقدير تقريبي للزمن المتبقّي وفق (${baseYear}).`;
+
+  kpis.style.display='grid';
+  ageSolarEl.textContent=`${ageYears.toFixed(1)} سنة`;
+  lifeExpEl.textContent=`${leAdj.toFixed(1)} سنة`;
+
+  const elapsedDiff=diffYMD(dobUTC,todayUTC);
+  cntY.textContent=elapsedDiff.y; cntM.textContent=elapsedDiff.m; cntD.textContent=elapsedDiff.d;
+  counterDone.style.display='block';
+
+  if(remainingMs>0){
+    const remainDiff=diffYMD(todayUTC,targetUTC);
+    remY.textContent=remainDiff.y; remM.textContent=remainDiff.m; remD.textContent=remainDiff.d;
+    counterRemain.style.display='block';
+  }else{
+    counterRemain.style.display='none';
+  }
+
+  eqWrap.style.display='block';
+  eqVal.textContent=fmtDate(targetUTC);
+
+  buildAdvice();
+
+  // إظهار زر PDF بعد توفر نتائج
+  pdfwrap.style.display='block';
+
+  // خزّن آخر نتيجة لاستخدامها في PDF
+  window.__lastResult = {
+    dob: fmtDate(dobUTC), country: countrySelect.options[countrySelect.selectedIndex].text,
+    sex: (selectedSex==='male'?'رجل':'امرأة'),
+    smoker: (isSmoker==='yes'?'مدخّن':'غير مدخّن'),
+    chronic: (hasChronic==='yes'?'أمراض مزمنة':'لا'),
+    activity: (activity==='active'?'نشِط بدنيًا':'غير نشِط'),
+    baseLE: baseLE?.toFixed(1), baseYear,
+    adjLE: leAdj.toFixed(1),
+    ageNow: ageYears.toFixed(1),
+    spent: `${elapsedDiff.y} سنة، ${elapsedDiff.m} شهر، ${elapsedDiff.d} يوم`,
+    remain: (remainingMs>0)?`${remY.textContent} سنة، ${remM.textContent} شهر، ${remD.textContent} يوم`:'—',
+    targetDate: fmtDate(targetUTC)
+  };
+});
+
+/* مشاركة */
+const shareTitle=document.getElementById('shareTitle');
+['shareWA','shareTG','shareX','shareFB','copyLink'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+});
+shareTitle.addEventListener('click', async ()=>{
+  const url=location.href;
+  if(navigator.share){ try{ await navigator.share({title:document.title,text:'جرّب هذه الصفحة:',url}); }catch(_){} }
+  else{ try{ await navigator.clipboard.writeText(url); notify('🔗 تمّ نسخ رابط الصفحة للحافظة.'); }catch(_){ notify('لم نتمكن من نسخ الرابط. انسخ يدويًا.',{type:'error'}); } }
+});
+document.getElementById('shareWA').onclick=(e)=>{e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent(location.href)}`,'_blank','noopener');}
+document.getElementById('shareTG').onclick=(e)=>{e.preventDefault(); window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}`,'_blank','noopener');}
+document.getElementById('shareX').onclick=(e)=>{e.preventDefault(); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}`,'_blank','noopener');}
+document.getElementById('shareFB').onclick=(e)=>{e.preventDefault(); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`,'_blank','noopener');}
+document.getElementById('copyLink').onclick=async()=>{ try{ await navigator.clipboard.writeText(location.href); notify('🔗 تمّ نسخ رابط الصفحة.'); }catch(_){ notify('لم نتمكن من نسخ الرابط.',{type:'error'});} };
+
+/* تنزيل PDF — إنشاء بطاقة RTL وتحويلها لصورة داخل PDF A4 */
+document.getElementById('pdfBtn').addEventListener('click', async ()=>{
+  const R = window.__lastResult;
+  if(!R){ notify('احسب النتائج أولًا ثم حاوِل تنزيل PDF.', {type:'error'}); return; }
+
+  // عنصر HTML مخفي لبناء تقرير أنيق
+  const box=document.createElement('div');
+  box.setAttribute('dir','rtl');
+  box.style.width='780px'; // عرض مناسب لـ A4 بنقاء جيد
+  box.style.background='#fff';
+  box.style.border='1px solid #e5e7eb';
+  box.style.borderRadius='16px';
+  box.style.padding='20px';
+  box.style.fontFamily='"Cairo",sans-serif';
+  box.style.color='#111827';
+  box.innerHTML=`
+    <div style="text-align:center; margin-bottom:10px">
+      <div style="font-family:'Amiri',serif; font-size:28px; color:${getComputedStyle(document.documentElement).getPropertyValue('--gold')}">تقرير العمر المتوقع — ملخّص شخصي</div>
+      <div style="font-size:12px; color:#6b7280">${new Date().toLocaleString('ar')}</div>
+    </div>
+
+    <table style="width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid #eee">
+      <thead>
+        <tr style="background:linear-gradient(90deg, #fff7e6, #fff)">
+          <th style="padding:10px 12px; text-align:right; border-bottom:1px solid #eee">البند</th>
+          <th style="padding:10px 12px; text-align:right; border-bottom:1px solid #eee">القيمة</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${row('الدولة', R.country)}
+        ${row('النوع', R.sex)}
+        ${row('تاريخ الميلاد', R.dob)}
+        ${row('العمر الآن (سنوات)', R.ageNow)}
+        ${row('العمر المتوقع الأصلي ('+R.baseYear+')', R.baseLE)}
+        ${row('التدخين', R.smoker)}
+        ${row('الأمراض المزمنة', R.chronic)}
+        ${row('النشاط البدني', R.activity)}
+        ${row('العمر المتوقع بعد التعديل', R.adjLE)}
+        ${row('مضى من عمرك', R.spent)}
+        ${row('المتبقّي من عمرك', R.remain)}
+        ${row('تاريخ بلوغ العمر المتوقع', R.targetDate)}
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px; font-size:12px; color:#6b7280; line-height:1.7">
+      <strong>المصدر:</strong> البنك الدولي (LE ذكور/إناث) — UN WPP. التأثيرات (التدخين/النشاط/الأمراض) تقديرات تثقيفية تقريبية.
+    </div>
+  `;
+  function row(k,v){
+    return `<tr>
+      <td style="padding:10px 12px; border-bottom:1px solid #f3f4f6"><strong>${k}</strong></td>
+      <td style="padding:10px 12px; border-bottom:1px solid #f3f4f6">${v}</td>
+    </tr>`;
+  }
+
+  document.body.appendChild(box);
+  // انتظر تحميل الخط/التخطيط
+  await new Promise(r=>setTimeout(r, 120));
+
+  const canvas = await html2canvas(box, {scale:2, useCORS:true});
+  document.body.removeChild(box);
+
+  const imgData = canvas.toDataURL('image/png');
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  // قياس الصورة لتناسب الصفحة مع هوامش
+  const margin = 28;
+  const imgW = pageW - margin*2;
+  const imgH = canvas.height * (imgW / canvas.width);
+
+  let y = margin;
+  if(imgH <= pageH - margin*2){
+    pdf.addImage(imgData, 'PNG', margin, y, imgW, imgH);
+  }else{
+    // تقطيع عمودي إذا طال
+    let sH = pageH - margin*2;
+    let ratio = canvas.width / imgW;
+    let slice = sH * ratio; // ارتفاع بالبكسل لِقصّ الصورة
+    let pos = 0;
+    while(pos < canvas.height){
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = Math.min(slice, canvas.height - pos);
+      const ctx = sliceCanvas.getContext('2d');
+      ctx.drawImage(canvas, 0, pos, canvas.width, sliceCanvas.height, 0, 0, sliceCanvas.width, sliceCanvas.height);
+      const sliceData = sliceCanvas.toDataURL('image/png');
+      if(pos>0) pdf.addPage();
+      pdf.addImage(sliceData, 'PNG', margin, margin, imgW, (sliceCanvas.height / ratio));
+      pos += slice;
+    }
+  }
+
+  pdf.save('نتيجتك.pdf');
+});
+
+/* روابط المشاركة */
+document.getElementById('shareWA').addEventListener('click', e=>{e.preventDefault(); window.open('https://wa.me/?text='+encodeURIComponent(location.href),'_blank','noopener');});
+document.getElementById('shareTG').addEventListener('click', e=>{e.preventDefault(); window.open('https://t.me/share/url?url='+encodeURIComponent(location.href),'_blank','noopener');});
+document.getElementById('shareX').addEventListener('click', e=>{e.preventDefault(); window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href),'_blank','noopener');});
+document.getElementById('shareFB').addEventListener('click', e=>{e.preventDefault(); window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank','noopener');});
+document.getElementById('copyLink').addEventListener('click', async()=>{ try{ await navigator.clipboard.writeText(location.href); notify('🔗 تمّ نسخ رابط الصفحة.'); }catch(_){ notify('لم نتمكن من نسخ الرابط.',{type:'error'});} });
+
+/* مساعدات صغيرة */
+document.getElementById('devLink').addEventListener('click', function(){ setTimeout(()=>{ if(!document.hasFocus()) return; location.href=this.href; }, 100); });
+</script>
+</body>
+</html>
