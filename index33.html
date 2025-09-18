@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>توصيات البورصة — مباشر</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#D4AF37;--bg:#fff;--bg-soft:#faf8f3;--text:#161616;--muted:#6b7280;--card:#fff;--border:#e9e9ef;--pos:#0a7a2f;--neg:#b11a1a;--neu:#555;--shadow:0 8px 24px rgba(0,0,0,.08);--radius:16px}
+  @media (prefers-color-scheme: dark){:root{--bg:#0c0c0e;--bg-soft:#131318;--text:#f5f5f5;--card:#141419;--border:#292933;--shadow:0 10px 30px rgba(0,0,0,.35)}}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:"Cairo","Tajawal","Noto Kufi Arabic",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  .container{max-width:1160px;margin:0 auto;padding:12px}
+  header{position:sticky;top:0;z-index:80;background:linear-gradient(180deg,rgba(212,175,55,.08),transparent),var(--bg);border-bottom:1px solid var(--border);backdrop-filter:blur(6px) saturate(130%)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
+  .logo{width:28px;height:28px;border-radius:8px;background:conic-gradient(from 0deg,var(--gold),#caa42a,var(--gold))}
+  .meta{font-size:13px;color:var(--muted)}
+  .newsbar{display:none;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-soft)}
+  .news-track{display:flex;gap:28px;white-space:nowrap;animation:scroll 26s linear infinite;padding:8px 4px}
+  .news-item{flex:0 0 auto;padding:6px 12px;border:1px solid var(--border);border-radius:999px;background:var(--card);font-size:13px;font-weight:700}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  main{padding:12px}
+  .grid{display:grid;gap:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .head{padding:12px 14px;border-bottom:1px solid var(--border);font-weight:800;background:linear-gradient(180deg,rgba(212,175,55,.10),transparent)}
+  .body{padding:12px}
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  th,td{padding:10px;border-bottom:1px solid var(--border);text-align:center;font-size:14px;vertical-align:middle}
+  th{font-size:12px;color:var(--muted)}
+  tr:hover td{background:rgba(212,175,55,.06)}
+  .prices-table th:nth-child(1){width:40%}.prices-table th:nth-child(2){width:22%}.prices-table th:nth-child(3){width:18%}.prices-table th:nth-child(4){width:20%}
+  .forecast-table th:nth-child(1){width:52%}.forecast-table th:nth-child(2){width:24%}.forecast-table th:nth-child(3){width:12%}.forecast-table th:nth-child(4){width:12%}
+  td.num{white-space:nowrap} td.sym{white-space:normal;word-break:keep-all}
+  .alert{border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:10px;background:var(--bg-soft);display:flex;align-items:center;gap:8px;justify-content:space-between}
+  .empty{text-align:center;color:var(--muted);padding:12px}
+  .sigcell{display:flex;align-items:center;justify-content:center}
+  .sigbox{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+  .sig-bull{background:#e6f8ec}.sig-bear{background:#fde8e8}.sig-neutral{background:#f1f1f1}
+  .sigbox svg{display:block;width:16px;height:16px}
+  @media (max-width:480px){th,td{padding:8px 6px;font-size:13px}.sigbox{width:26px;height:26px}.sigbox svg{width:14px;height:14px}}
+  .tips{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-top:6px}
+  .links-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+  .select-wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .select-wrap select{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft);font-family:inherit}
+  .select-wrap a{padding:10px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none}
+  .select-wrap a:hover{background:rgba(212,175,55,.10)}
+  footer{margin-top:16px;padding:18px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:13px}
+  #devCredit{user-select:none;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <div class="container topbar">
+    <div class="brand"><div class="logo"></div>توصيات البورصة</div>
+    <div class="meta">آخر تحديث: <span id="lastUpdated">—:—:—</span></div>
+  </div>
+  <div class="newsbar" id="newsbar"><div id="newsScroller" class="news-track"></div></div>
+</header>
+
+<main class="container grid">
+  <section class="card">
+    <div class="head">الأسعار الحالية</div>
+    <div class="body">
+      <table class="prices-table">
+        <thead><tr><th>الأصل</th><th>السعر</th><th>التغير %</th><th>الحجم</th></tr></thead>
+        <tbody id="pricesTbody"><tr><td colspan="4" class="empty">جاري التحميل…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="head">التنبؤات</div>
+    <div class="body">
+      <table class="forecast-table">
+        <thead><tr><th>الأصل</th><th>1س</th><th>1ي</th><th>الإشارة</th></tr></thead>
+        <tbody id="forecastTbody"><tr><td colspan="4" class="empty">جاري التحميل…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="card-buy" style="display:none">
+    <div class="head">الأسهم الموصى بشرائها</div>
+    <div class="body" id="buyList"></div>
+  </section>
+
+  <section class="card" id="card-sell" style="display:none">
+    <div class="head">الأسهم الموصى ببيعها</div>
+    <div class="body" id="sellList"></div>
+  </section>
+
+  <section class="card" id="card-alerts">
+    <div class="head">التنبيهات</div>
+    <div class="body" id="alertsList"><div class="empty">لا توجد تنبيهات حاليًا</div></div>
+  </section>
+
+  <section class="tips" id="tipsBox">
+    <h3 style="margin:0 0 8px;font-weight:900">نصيحة تداول مثبتة</h3>
+    <p id="tipOfTheDay" style="margin:0;padding:10px;border:1px dashed var(--border);border-radius:12px;background:var(--bg-soft)">…</p>
+  </section>
+
+  <section class="links-card">
+    <h3 style="margin:0 0 8px;font-weight:900">مواقع تداول عالمية</h3>
+    <div class="select-wrap">
+      <select id="siteSelect" aria-label="اختر موقع تداول">
+        <option value="" selected disabled>اختر موقعًا</option>
+        <option value="https://www.interactivebrokers.com/">Interactive Brokers</option>
+        <option value="https://www.saxobank.com/">Saxo Bank</option>
+        <option value="https://www.ig.com/">IG</option>
+        <option value="https://www.cmcmarkets.com/">CMC Markets</option>
+        <option value="https://www.etoro.com/">eToro</option>
+        <option value="https://www.plus500.com/">Plus500</option>
+        <option value="https://www.xtb.com/">XTB</option>
+        <option value="https://www.avatrade.com/">AvaTrade</option>
+        <option value="https://www.fidelity.com/">Fidelity</option>
+        <option value="https://www.schwab.com/">Charles Schwab</option>
+        <option value="https://www.tdameritrade.com/">TD Ameritrade</option>
+        <option value="https://www.robinhood.com/">Robinhood</option>
+      </select>
+      <a id="openSite" href="#" target="_blank" rel="noopener" style="color:var(--text)">فتح الموقع</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span id="devCredit" title="انقر للتواصل">برمجة وتطوير فاضل الريس</span>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ========= أدوات مساعدة ========= */
+  const $=s=>document.querySelector(s);
+  const fmt=(n,d=2)=> (n==null||Number.isNaN(n))?"—":Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
+  const now=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");$("#lastUpdated").textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;}
+
+  // جلب مرن بمحاولات متعددة (مباشر + r.jina http/https + allorigins)
+  async function fetchCascade(rawUrl, timeout=9000){
+    const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(),timeout);
+    const tries = [
+      rawUrl,
+      `https://r.jina.ai/http/${rawUrl.replace(/^https?:\/\//,'')}`,
+      `https://r.jina.ai/https/${rawUrl.replace(/^https?:\/\//,'')}`,
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(rawUrl)}`
+    ];
+    let lastErr;
+    for(const u of tries){
+      try{
+        const r = await fetch(u,{signal:ctrl.signal,headers:{'Cache-Control':'no-cache'}});
+        if(!r.ok) throw new Error(r.status);
+        const txt=await r.text(); clearTimeout(timer); return txt;
+      }catch(e){ lastErr=e; }
+    }
+    throw lastErr||new Error('fetch failed');
+  }
+
+  /* ========= الخرائط والمصادر ========= */
+  // كريبتو عبر CoinGecko
+  const GECKO_IDS = ["bitcoin","ethereum","solana","binancecoin","ripple"];
+  const GECKO_MAP = { bitcoin:"BTCUSD", ethereum:"ETHUSD", solana:"SOLUSD", binancecoin:"BNBUSD", ripple:"XRPUSD" };
+
+  // Stooq JSON (سلع/أسهم)
+  const STOOQ_JSON = (s)=>{
+    const base = `stooq.com/q/l/?s=${encodeURIComponent(s)}&f=sd2t2ohlcv&h&e=JSON`;
+    return [
+      `https://${base}`,
+      `https://r.jina.ai/https/${base}`,
+      `https://r.jina.ai/http/${base}`
+    ];
+  };
+  const MAPS = { GOLD:['gc.f','xauusd'], SILVER:['si.f','xagusd'], WTI:['cl.f','oil'], BRENT:['br.f','brent'], GAS:['ng.f','gas'] };
+  const STOCKS = [
+    {s:'aapl.us', sym:'AAPL'},{s:'msft.us', sym:'MSFT'},{s:'tsla.us', sym:'TSLA'},
+    {s:'amzn.us', sym:'AMZN'},{s:'nvda.us', sym:'NVDA'},{s:'googl.us', sym:'GOOGL'},{s:'meta.us', sym:'META'}
+  ];
+
+  const FX_PRIMARY  = "https://open.er-api.com/v6/latest/USD";
+  const FX_FALLBACK = "https://api.frankfurter.app/latest?from=USD";
+
+  const NEWS_RSS = [
+    "https://www.cnbcarabia.com/rss/latest",
+    "https://www.asharqbusiness.com/ar/rss",
+    "https://www.mubasher.info/rss/news/all",
+    "https://www.alarabiya.net/tools/rss?cat=aswaq",
+    "https://www.argaam.com/rss/rss.xml",
+    "https://www.alborsanews.com/feed",
+    "https://www.skynewsarabia.com/rss/business"
+  ];
+
+  /* ========= التسميات العربية ========= */
+  function arabicName(s){
+    const m={"BTCUSD":"بيتكوين/دولار","ETHUSD":"إيثريوم/دولار","SOLUSD":"سولانا/دولار","BNBUSD":"بي إن بي/دولار","XRPUSD":"ريبل/دولار",
+      "EURUSD":"يورو/دولار","USDJPY":"دولار/ين","USDBHD":"دولار/دينار بحريني","USDSAR":"دولار/ريال سعودي","USDAED":"دولار/درهم إماراتي",
+      "GBPUSD":"جنيه/دولار","USDTRY":"دولار/ليرة تركية","XAUUSD":"ذهب/دولار","XAGUSD":"فضة/دولار","WTIUSD":"نفط خام WTI/دولار",
+      "BRENTUSD":"نفط برنت/دولار","NGUSD":"غاز طبيعي/دولار","AAPL":"آبل","MSFT":"مايكروسوفت","TSLA":"تسلا","AMZN":"أمازون","NVDA":"إنفيديا","GOOGL":"ألفابت (جوجل)","META":"ميتا"};
+    return m[s]||s;
+  }
+
+  /* ========= الحالة ========= */
+  let CRYPTO={}, FX=[], COMM=[], STOCKS_LIST=[];
+
+  /* ========= جلب البيانات ========= */
+  async function loadCrypto(){
+    try{
+      const url=`https://api.coingecko.com/api/v3/simple/price?ids=${GECKO_IDS.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+      const txt = await fetchCascade(url);
+      const d = JSON.parse(txt);
+      const out=[];
+      for(const k of Object.keys(d)){
+        out.push({ symbol: GECKO_MAP[k], last:+d[k].usd, change:+d[k].usd_24h_change||0, vol:0 });
+      }
+      CRYPTO = Object.fromEntries(out.map(x=>[x.symbol,x]));
+    }catch{}
+  }
+
+  async function loadFX(){
+    try{
+      const txt=await fetchCascade(`${FX_PRIMARY}?_=${Date.now()}`);
+      const d=JSON.parse(txt); if(d.result!=="success") throw 0;
+      const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
+      if(r.EUR)add("EURUSD",1/r.EUR); if(r.JPY)add("USDJPY",r.JPY);
+      if(r.BHD)add("USDBHD",r.BHD); if(r.SAR)add("USDSAR",r.SAR);
+      if(r.AED)add("USDAED",r.AED); if(r.GBP)add("GBPUSD",1/r.GBP); if(r.TRY)add("USDTRY",r.TRY);
+      FX=o;
+    }catch{
+      try{
+        const txt=await fetchCascade(`${FX_FALLBACK}?_=${Date.now()}`);
+        const d=JSON.parse(txt); const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
+        if(r.EUR)add("EURUSD",1/r.EUR); if(r.JPY)add("USDJPY",r.JPY); if(r.GBP)add("GBPUSD",1/r.GBP); if(r.TRY)add("USDTRY",r.TRY);
+        FX=o;
+      }catch{FX=[]}
+    }
+  }
+
+  function parseStooqJSON(txt){
+    try{
+      const d=JSON.parse(txt); if(!d||!d.length) return null;
+      const r=d[0], num=v=>(v&&v!=='N/D')?+v:null;
+      const open=num(r.open), close=num(r.close), vol=num(r.volume)||0;
+      if(!close&&!open) return null;
+      const last=close??open, ch=(open&&close)?((close-open)/open*100):0;
+      return { last, change: ch, vol };
+    }catch{ return null; }
+  }
+
+  // ✅ تم الإصلاح هنا: استخدام fetchCascade بدل fetch
+  async function firstOk(symbols, mapTo){
+    for(const s of symbols){
+      const tries = STOOQ_JSON(s);
+      for(const u of tries){
+        try{
+          const txt = await fetchCascade(u);
+          const rec = parseStooqJSON(txt);
+          if(rec) return {symbol:mapTo, last:rec.last, change:rec.change, vol:rec.vol};
+        }catch{}
+      }
+    }
+    return null;
+  }
+
+  async function loadCommodities(){
+    const out=[];
+    const g  = await firstOk(MAPS.GOLD,  'XAUUSD');
+    const ag = await firstOk(MAPS.SILVER,'XAGUSD');
+    const w  = await firstOk(MAPS.WTI,   'WTIUSD');
+    const b  = await firstOk(MAPS.BRENT, 'BRENTUSD');
+    const ng = await firstOk(MAPS.GAS,   'NGUSD');
+    [g,ag,w,b,ng].forEach(x=>x&&out.push(x));
+    COMM=out;
+  }
+
+  async function loadStocks(){
+    const arr=[];
+    for(const item of STOCKS){
+      const rec = await firstOk([item.s], item.sym);
+      if(rec) arr.push(rec);
+    }
+    STOCKS_LIST=arr;
+  }
+
+  /* ========= اشتقاقات/عرض ========= */
+  function buildForecastRows(list){
+    return list.map(p=>{
+      const m=((p.change ?? 0))/100;
+      const sig=m>0.003?"bull":m<-0.003?"bear":"neutral";
+      return {symbol:p.symbol, f1h:p.last*(1+m*0.6), f1d:p.last*(1+m*1.2), sig};
+    });
+  }
+  const NS='http://www.w3.org/2000/svg';
+  const make=(d,fill)=>{const s=document.createElementNS(NS,'svg');s.setAttribute('width','16');s.setAttribute('height','16');s.setAttribute('viewBox','0 0 24 24');const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill',fill);s.appendChild(p);return s};
+  const up = ()=>make('M12 4l6 6h-4v10h-4V10H6z','#0a7a2f');
+  const dn = ()=>make('M12 20l-6-6h4V4h4v10h4z','#b11a1a');
+  const fl = ()=>{const s=document.createElementNS(NS,'svg');s.setAttribute('width','16');s.setAttribute('height','16');s.setAttribute('viewBox','0 0 24 24');const r=document.createElementNS(NS,'rect');r.setAttribute('x','4');r.setAttribute('y','11');r.setAttribute('width','16');r.setAttribute('height','2');r.setAttribute('fill','#555');s.appendChild(r);return s};
+
+  function arabicNameWrap(s){return arabicName(s)}
+
+  function renderPrices(list){
+    const tb=$("#pricesTbody"); tb.innerHTML="";
+    if(!list.length){tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا</td></tr>'; return;}
+    for(const p of list){
+      const tr=document.createElement("tr");
+      const digits=p.symbol.endsWith("USD")?(p.symbol.startsWith("USD")?5:(p.symbol==='USDJPY'?3:2)):2;
+      tr.innerHTML=`<td class="sym"><b>${arabicNameWrap(p.symbol)}</b></td>
+        <td class="num">${fmt(p.last,digits)}</td>
+        <td class="num" style="font-weight:800;color:${(p.change??0)>=0?'#0a7a2f':'#b11a1a'}">${(p.change??0)>=0?'↑':'↓'} ${fmt(Math.abs(p.change??0),2)}%</td>
+        <td class="num">${fmt(p.vol??0,0)}</td>`;
+      tb.appendChild(tr);
+    }
+  }
+
+  function renderForecast(list){
+    const tb=$("#forecastTbody"); tb.innerHTML="";
+    if(!list.length){tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا</td></tr>'; return;}
+    for(const f of buildForecastRows(list)){
+      let cls,icon;
+      if(f.sig==='bull'){cls='sig-bull';icon=up()}
+      else if(f.sig==='bear'){cls='sig-bear';icon=dn()}
+      else {cls='sig-neutral';icon=fl()}
+      const sigBox=document.createElement('span');sigBox.className=`sigbox ${cls}`;sigBox.appendChild(icon);
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td class="sym"><b>${arabicNameWrap(f.symbol)}</b></td>
+                    <td class="num">${fmt(f.f1h,2)}</td>
+                    <td class="num">${fmt(f.f1d,2)}</td>`;
+      const td=document.createElement('td');td.className='sigcell';td.appendChild(sigBox);tr.appendChild(td);
+      tb.appendChild(tr);
+    }
+  }
+
+  function buildRecommendations(list){const buy=[],sell=[];for(const p of list){if((p.change??0)>=1.5)buy.push(p);if((p.change??0)<=-1.5)sell.push(p)}return {buy,sell}}
+  function renderRecommendations(list){
+    const {buy,sell}=buildRecommendations(list),b=$("#buyList"),s=$("#sellList"),cb=$("#card-buy"),cs=$("#card-sell");
+    b.innerHTML="";s.innerHTML="";
+    if(!buy.length)cb.style.display="none";else{cb.style.display="block";for(const r of buy){const d=document.createElement("div");d.className="alert";d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة شراء</span>`;const sig=document.createElement('span');sig.className='sigbox sig-bull';sig.appendChild(up());d.appendChild(sig);b.appendChild(d)}}
+    if(!sell.length)cs.style.display="none";else{cs.style.display="block";for(const r of sell){const d=document.createElement("div");d.className="alert";d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة بيع</span>`;const sig=document.createElement('span');sig.className='sigbox sig-bear';sig.appendChild(dn());d.appendChild(sig);s.appendChild(d)}}
+  }
+
+  function renderAlerts(list){
+    const arr=list.filter(p=>p.change!=null&&Math.abs(p.change)>=3).map(p=>({symbol:p.symbol,change:p.change,dir:p.change>=0?'bull':'bear'})),
+          a=$("#alertsList"); a.innerHTML="";
+    if(!arr.length){a.innerHTML='<div class="empty">لا توجد تنبيهات حاليًا</div>';return}
+    for(const x of arr){const row=document.createElement("div");row.className="alert";const left=document.createElement('span');left.innerHTML=`<b>${arabicNameWrap(x.symbol)}</b> — ${x.change>=0?'ارتفع':'انخفض'} ${fmt(Math.abs(x.change),2)}%`;const sig=document.createElement('span');sig.className=`sigbox ${x.dir==='bull'?'sig-bull':'sig-bear'}`;sig.appendChild(x.dir==='bull'?up():dn());row.appendChild(left);row.appendChild(sig);a.appendChild(row)}
+  }
+
+  function renderAll(){
+    const combined=[...Object.values(CRYPTO),...FX,...COMM,...STOCKS_LIST];
+    renderPrices(combined); renderForecast(combined); renderRecommendations(combined); renderAlerts(combined); now();
+  }
+
+  /* ========= نصيحة واحدة ========= */
+  const TIPS=["ضع خطة مكتوبة للدخول والخروج وإدارة المخاطر قبل فتح الصفقة.","لا تخاطر بأكثر من 1–2% من رأس المال في صفقة واحدة.","استخدم أوامر وقف الخسارة دائمًا واحترمها.","جمّد عواطفك: لا تدع الخوف أو الطمع يقودان قرارك.","التزم بإستراتيجية مجرَّبة ولا تغيّرها بعد كل صفقة.","قيّم الصفقات على سلسلة نتائج، لا على صفقة منفردة.","تداول مع الاتجاه العام بدلًا من مصارعة السوق.","لا تُطارد الحركة بعد فواتها؛ انتظر إعادة اختبار منطقية.","نوّع محفظتك ولا تركّز كل المخاطر في أصل واحد.","احسب العائد إلى المخاطرة قبل الدخول (مثلاً 1:2 على الأقل).","تجنّب الإفراط في التداول؛ الجودة أهم من الكثرة.","تاجر بأموال يمكنك تحمل خسارتها دون ضغط نفسي.","استخدم أحجام صفقة ثابتة ومنضبطة.","دوّن أسباب الدخول والخروج وتعلّم من المراجعة الدورية.","لا تتداول وقت الأخبار عالية التقلّب دون خطة واضحة.","احذر من مضاعفة الحجم لتعويض الخسائر.","راقب السيولة والسبريد قبل التنفيذ.","اختبر الاستراتيجية تاريخيًا وعلى حساب تجريبي أولًا.","لا تدع صفقة رابحة تتحول إلى خاسرة—حرّك الوقف بحكمة.","احترم مستويات الدعم والمقاومة على الأطر الزمنية الأكبر.","اتبع إشارة واحدة واضحة بدل تكديس مؤشرات كثيرة.","تذكّر أن عدم الدخول قرار تداول أيضًا.","اعرف ما تتداول: العوامل المؤثرة والمخاطر الخاصة بالأصل.","اضبط توقيتك مع جلسات السوق النشطة.","لا تُهمل التكاليف: العمولات والانزلاق تؤثر على الأداء.","تقبّل الخسارة الصغيرة سريعًا لتجنب الخسارة الكبيرة.","لا تتداول بدافع الملل؛ انتظر فرصًا ذات ميزة واضحة.","راجع الخطة عند تغيّر هيكل السوق، لا بعد كل تذبذب.","تدرّج في زيادة الحجم بعد ثبات الأداء لا بعد صفقة واحدة.","احمِ رأس المال أولًا—الفرص لا تنتهي."];
+  $("#tipOfTheDay").textContent=TIPS[Math.floor(Math.random()*TIPS.length)];
+
+  // روابط
+  $("#openSite").addEventListener('click',e=>{e.preventDefault();const v=$("#siteSelect").value;if(v)window.open(v,'_blank','noopener')});
+  $("#devCredit").addEventListener('click',()=>window.open("https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1&fbclid=PAQ0xDSwM47SBleHRuA2FlbQIxMAABp_kyX38pB0gsODjRzVhQKTeY5ocu-YY5ziN9ajBUo-CdUWXFjvN0KmeCrDlS_aem_XeaTlriA2lW1NAuZYhhppw",'_blank','noopener'));
+
+  /* ========= الأخبار العربية ========= */
+  async function loadNews(){
+    const titles=[]; const seen=new Set(); const RE=/\b(بورصة|تداول|سوق(?:\s*الأسهم)?|الأسهم|أسهم|مؤشر|أرباح|سهم|جلسة|إغلاق|توزيعات)\b/i;
+    for(const u of NEWS_RSS){ try{ const txt=await fetchCascade(u); const doc=new DOMParser().parseFromString(txt,"text/xml"); if(doc.querySelector("parsererror")) continue; const arr=[...doc.querySelectorAll("item>title,entry>title")].map(n=>(n.textContent||"").trim()); for(const t of arr){ if(RE.test(t) && !seen.has(t)){ seen.add(t); titles.push(t) } } }catch{} }
+    const bar=$("#newsbar"), track=$("#newsScroller");
+    if(!titles.length){ bar.style.display="none"; track.innerHTML=""; return; }
+    bar.style.display="block"; track.innerHTML="";
+    for(const t of titles.concat(titles)){ const d=document.createElement("div"); d.className="news-item"; d.textContent=t; track.appendChild(d); }
+  }
+
+  /* ========= تشغيل ========= */
+  (async function init(){
+    await Promise.all([loadCrypto(), loadFX(), loadCommodities(), loadStocks()]);
+    loadNews(); setInterval(loadNews, 120000);
+    renderAll();
+    setInterval(async()=>{ await Promise.all([loadCrypto(), loadCommodities(), loadStocks()]); renderAll(); }, 15000);
+  })();
+});
+</script>
+</body>
+</html>
