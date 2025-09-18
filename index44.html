@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مجلس الشيخ عباس الريس الرمضاني</title>
+  <meta name="description" content="موقع مجلس الشيخ عباس الريس الرمضاني وأوقات الاستقبال طيلة شهر رمضان المبارك." />
+
+  <!-- خط عربي -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#C9A227;
+      --gold-soft:#e8d9a6;
+      --text:#1a1a1a;
+      --muted:#6b7280;
+      --bg:#ffffff;
+    }
+    *{ box-sizing:border-box }
+    body{
+      margin:0;
+      font-family:"Cairo",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.8;
+    }
+
+    /* ====== صورة الغلاف (0zz0 كما طلبت) ====== */
+    .hero{
+      position:relative; width:100%; min-height:56vh; overflow:hidden; background:#fff;
+    }
+    .hero img{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      filter:brightness(0.98) contrast(1.05) saturate(1.03);
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0; z-index:1;
+      background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.92) 92%, rgba(255,255,255,1) 100%);
+      pointer-events:none;
+    }
+
+    .wrap{ max-width:1000px; margin:0 auto; padding:18px 22px 34px; }
+
+    header{ text-align:center; padding:24px 10px 8px; }
+
+    /* مربع العنوان */
+    .title{
+      display:inline-block;
+      background:#fff;
+      border:1px solid var(--gold-soft);
+      border-radius:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.06);
+      padding:10px 18px;
+      font-size:clamp(28px,5vw,46px);
+      margin:0 0 12px;
+      font-weight:800; color:var(--text);
+    }
+    .title::after{
+      content:""; display:block; height:3px; width:58%; margin:10px auto 0;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent); border-radius:6px;
+    }
+
+    .site-desc{
+      margin:10px auto 0; color:var(--muted); font-size:16px; max-width:720px;
+    }
+
+    /* مربع الوقت بنفس ستايل العنوان */
+    .time-chip{
+      display:inline-block;
+      background:#fff;
+      border:1px solid var(--gold-soft);
+      border-radius:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.06);
+      padding:10px 18px;
+      margin-top:14px;
+      font-weight:800; color:var(--text);
+      font-size:18px;
+    }
+    .time-chip .moon{ margin-inline-end:8px }
+    .time-chip .hrs strong{ font-size:20px; margin-inline:2px }
+
+    /* ====== بطاقة "الخريطة" (SVG مضمّن) ====== */
+    .card{
+      background:#fff; border:1px solid var(--gold-soft); border-radius:22px; padding:18px; margin-top:24px;
+      box-shadow:0 12px 28px rgba(0,0,0,.08), inset 0 0 0 1px rgba(201,162,39,.06);
+      text-align:center;
+    }
+
+    .map-link{
+      display:block; width:100%; aspect-ratio:16/9; border-radius:22px;
+      border:1px solid var(--gold-soft); overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+      transition:transform .2s ease, box-shadow .3s ease;
+      position:relative; background:#faf7ea;
+    }
+    .map-link:hover{
+      transform:scale(1.02);
+      box-shadow:0 16px 36px rgba(0,0,0,.18);
+    }
+    .map-cta{
+      position:absolute; inset:auto 12px 12px auto;
+      background:#fff; border:1px solid var(--gold-soft); border-radius:999px;
+      padding:8px 12px; font-weight:800; color:var(--text); font-size:14px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .actions{
+      margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    }
+    .btn{
+      appearance:none; border:1.6px solid var(--gold); background:#fff; color:var(--text);
+      padding:10px 16px; border-radius:999px; font-weight:800; text-decoration:none;
+      transition:transform .07s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow:0 6px 16px rgba(201,162,39,.18); white-space:nowrap;
+    }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 24px rgba(201,162,39,.24); background:#fffdf7 }
+
+    /* شاشات صغيرة */
+    @media (max-width:560px){
+      .btn{ width:100%; text-align:center }
+      .map-cta{ font-size:13px; padding:7px 10px }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- صورة الغلاف من 0zz0 -->
+  <section class="hero" aria-label="صورة الغلاف">
+    <img src="https://www2.0zz0.com/2025/09/17/20/579063281.jpg"
+         alt="مجلس الشيخ عباس الريس" loading="eager" referrerpolicy="no-referrer" />
+  </section>
+
+  <div class="wrap">
+    <header>
+      <h1 class="title">مجلس الشيخ عباس الريس الرمضاني</h1>
+      <p class="site-desc">يفتح طيلة شهر رمضان المبارك</p>
+
+      <!-- مربع الوقت -->
+      <div class="time-chip" aria-label="أوقات استقبال المجلس">
+        <span class="moon">🌙</span>
+        <span class="hrs">يوميًا — من <strong>7:00 مساءً</strong> إلى <strong>9:00 مساءً</strong></span>
+      </div>
+    </header>
+
+    <main class="card" aria-label="موقع المجلس">
+      <!-- خريطة SVG احترافية، وعند الضغط تفتح Google Maps -->
+      <a class="map-link" href="https://maps.app.goo.gl/m6qGZnSXFwU8Tfe78" target="_blank" rel="noopener" aria-label="افتح موقع المجلس على خرائط جوجل">
+        <svg viewBox="0 0 1200 675" width="100%" height="100%" preserveAspectRatio="none" role="img" aria-hidden="true">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fffaf0"/>
+              <stop offset="100%" stop-color="#fff"/>
+            </linearGradient>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#c9a227" flood-opacity="0.25"/>
+            </filter>
+          </defs>
+
+          <!-- خلفية -->
+          <rect x="0" y="0" width="1200" height="675" fill="url(#bg)"/>
+
+          <!-- مسطّح مائي -->
+          <path d="M0,140 C220,100 260,180 420,160 C620,140 660,200 800,180 C980,160 1020,200 1200,160
+                   L1200,0 L0,0 Z"
+                fill="#cfe9ff" opacity="0.55"/>
+
+          <!-- متنزّه/مساحات خضراء -->
+          <path d="M60,560 C200,520 280,600 420,570 C540,545 640,605 760,585 C880,565 980,620 1120,600
+                   L1120,675 L60,675 Z"
+                fill="#e7f6df" opacity="0.8"/>
+
+          <!-- شبكة طرق -->
+          <g stroke="#d7c284" stroke-width="10" stroke-linecap="round" opacity="0.9">
+            <path d="M80,120 L1100,620"/>
+            <path d="M90,480 L900,120"/>
+            <path d="M300,40 L980,640"/>
+            <path d="M60,300 L1150,300"/>
+            <path d="M200,580 L1050,200"/>
+          </g>
+
+          <!-- طرق ثانوية -->
+          <g stroke="#ead9a1" stroke-width="5" stroke-linecap="round" opacity="0.9">
+            <path d="M150,90 L400,250 L700,230 L1050,420"/>
+            <path d="M220,350 L480,360 L780,330 L1000,500"/>
+            <path d="M120,520 L360,520 L680,540 L940,560"/>
+          </g>
+
+          <!-- موقع المجلس (دبوس ذهبي) -->
+          <g filter="url(#shadow)">
+            <!-- دائرة توهج -->
+            <circle cx="760" cy="360" r="34" fill="#ffe9a4" opacity="0.8"/>
+            <!-- الدبوس -->
+            <path d="M760 310
+                     C732 310 710 332 710 360
+                     C710 392 745 430 760 455
+                     C775 430 810 392 810 360
+                     C810 332 788 310 760 310 Z"
+                  fill="#c9a227"/>
+            <circle cx="760" cy="360" r="16" fill="#fff9d6"/>
+          </g>
+
+          <!-- اسم توضيحي -->
+          <text x="770" y="305" font-family="Cairo, system-ui, sans-serif" font-weight="800"
+                font-size="28" fill="#7a5a00">مجلس الشيخ عباس الريس</text>
+        </svg>
+
+        <span class="map-cta">اضغط لفتح الخريطة</span>
+      </a>
+
+      <div class="actions">
+        <a class="btn" href="https://maps.app.goo.gl/m6qGZnSXFwU8Tfe78" target="_blank" rel="noopener">
+          افتح في Google&nbsp;Maps
+        </a>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=%D9%85%D8%AC%D9%84%D8%B3%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B9%D8%A8%D8%A7%D8%B3%20%D8%A7%D9%84%D8%B1%D9%85%D8%B6%D8%A7%D9%86%D9%8A" target="_blank" rel="noopener">
+          الحصول على الاتجاهات
+        </a>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
