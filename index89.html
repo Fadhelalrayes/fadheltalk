@@ -84,14 +84,12 @@
     .card p, .card ul{margin:0; font-size:14px; color:#374151; line-height:1.8}
     .card ul{margin-top:8px; padding-inline-start:20px}
 
-    /* بطاقات مضغوطة وجميلة */
     .card--compact{ padding:12px; border-radius:12px }
     .card--compact h3{ font-size:1rem; margin:0 0 6px }
     .card--compact .hint{ font-size:12px }
     .select--sm select{ font-size:.95rem; padding:10px 40px 10px 12px; border-radius:10px }
     .small-note{ font-size:12px; color:#6b7280; margin-top:6px }
 
-    /* نسخة مصغّرة لقسم المراكز حسب الدولة */
     .card.region-compact{ padding:10px; border-radius:10px }
     .card.region-compact *{ line-height:1.5 }
     .card.region-compact h3{ font-size:.95rem; margin:0 0 4px }
@@ -99,7 +97,6 @@
     .card.region-compact .select select{ font-size:.9rem; padding:8px 34px 8px 10px; border-radius:8px; border:1px solid #d9d9d9 }
     .card.region-compact .small-note{ font-size:.78rem; color:#64748b; margin-top:6px }
 
-    /* مربع الحقائق */
     .fact-wrap{ margin-top:12px; border:1px solid var(--info-br); background:var(--info-bg);
       border-radius:14px; padding:14px; box-shadow:0 6px 20px rgba(2,132,199,.12) }
     .fact-title{ display:flex; align-items:center; gap:8px; margin:0 0 8px; font-family:"Amiri",serif; color:var(--info); font-size:18px }
@@ -108,7 +105,6 @@
       box-shadow:0 6px 16px rgba(2,132,199,.25) }
     .fact-text{ color:#0f172a; line-height:1.9; font-size:15px }
 
-    /* نافذة رسائل أنيقة */
     .msg-backdrop{ position:fixed; inset:0; background:rgba(17,24,39,.35); display:none; align-items:center; justify-content:center; z-index:99999 }
     .msg-backdrop.show{ display:flex }
     .msg-box{ width:min(92vw,520px); background:#fff; border:1px solid var(--gold); border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.18); padding:18px; text-align:center }
@@ -119,7 +115,9 @@
       background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; cursor:pointer }
 
     footer{ text-align:center; margin:14px 0 6px; font-size:12px; color:#6b7280 }
-    #devLink{ cursor:pointer; text-decoration:none; color:inherit }
+
+    /* ✅ أداة إخفاء/إظهار */
+    .hide{display:none !important}
   </style>
 </head>
 <body>
@@ -167,12 +165,11 @@
           <div class="hint">لعرض مركز خصوبة محلي موصى به (رابط رسمي).</div>
         </div>
 
-        <!-- الفئة -->
+        <!-- ✅ الفئة (أزلنا زوجان) -->
         <div class="field center">
           <label><strong>الفئة</strong></label>
-          <div class="seg" id="sexSeg" data-sex="couple">
-            <button type="button" class="on" data-sex="couple">زوجان</button>
-            <button type="button" data-sex="female">امرأة</button>
+          <div class="seg" id="sexSeg" data-sex="female">
+            <button type="button" class="on" data-sex="female">امرأة</button>
             <button type="button" data-sex="male">رجل</button>
           </div>
         </div>
@@ -210,22 +207,22 @@
             <div class="seg" data-q="ttc12"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
 
-          <!-- للنساء -->
-          <div class="field"><div><strong>دورات شهرية غير منتظمة أو انقطاع طمث</strong></div>
+          <!-- ✅ للنساء فقط -->
+          <div class="field sex-female"><div><strong>دورات شهرية غير منتظمة أو انقطاع طمث</strong></div>
             <div class="seg" data-q="irreg"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
-          <div class="field"><div><strong>ألم حوضي مزمن/اشتباه انتباذ بطاني رحمي</strong></div>
+          <div class="field sex-female"><div><strong>ألم حوضي مزمن/اشتباه انتباذ بطاني رحمي</strong></div>
             <div class="seg" data-q="endo"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
-          <div class="field"><div><strong>عدوى حوضية سابقة (PID) أو جراحة حوضية</strong></div>
+          <div class="field sex-female"><div><strong>عدوى حوضية سابقة (PID) أو جراحة حوضية</strong></div>
             <div class="seg" data-q="pid"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
 
-          <!-- للرجال -->
-          <div class="field"><div><strong>ضعف انتصاب/قذف مبكّر/عدوى خصية/دوالي</strong></div>
+          <!-- ✅ للرجال فقط -->
+          <div class="field sex-male"><div><strong>ضعف انتصاب/قذف مبكّر/عدوى خصية/دوالي</strong></div>
             <div class="seg" data-q="maleFx"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
-          <div class="field"><div><strong>تعرّض لحرارة/مذيبات/إشعاع/ستيرويدات بنائية</strong></div>
+          <div class="field sex-male"><div><strong>تعرّض لحرارة/مذيبات/إشعاع/ستيرويدات بنائية</strong></div>
             <div class="seg" data-q="exp"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
           </div>
 
@@ -243,15 +240,12 @@
 
       <!-- العمود الأيمن -->
       <div>
-        <!-- نتيجة -->
         <div id="resultBox" class="resultbox rb-ok" aria-live="polite">
           مستوى الإرشاد: <span id="riskText">منخفض</span> — <span id="actionText">ابدأ بتعديلات نمط الحياة وتتبّع المؤشرات لشهرين.</span>
         </div>
 
-        <!-- نصائح -->
         <div class="deck" id="adviceDeck" style="display:none"></div>
 
-        <!-- متى تراجع عيادة الخصوبة -->
         <div class="card" style="margin-top:12px">
           <h3>متى تراجع عيادة الخصوبة؟</h3>
           <ul>
@@ -262,7 +256,6 @@
           <p class="hint" style="margin-top:6px">تذكير: هذه أداة تثقيفية عامة — التشخيص والخطة العلاجية لدى الطبيب/الاستشاري.</p>
         </div>
 
-        <!-- مراكز عالمية مرموقة -->
         <div class="card card--compact" style="margin-top:12px">
           <h3>مراكز خصوبة عالمية مرموقة</h3>
           <div class="hint">الأسماء بالعربية — يفتح الرابط الموقع بلغته الأصلية.</div>
@@ -297,7 +290,6 @@
           <div id="intlContact" class="small-note" style="display:none"></div>
         </div>
 
-        <!-- مراكز مختارة حسب الدولة (نسخة مصغّرة) -->
         <div class="card region-compact" style="margin-top:12px">
           <h3>مراكز مختارة حسب الدولة</h3>
           <div class="hint">اختر مركزًا لفتح الموقع الرسمي في نافذة جديدة.</div>
@@ -408,14 +400,12 @@
           <div id="regionalContact" class="small-note" style="display:none"></div>
         </div>
 
-        <!-- مركز محلي سريع حسب الدولة -->
         <div id="localBox" class="card" style="margin-top:12px; display:none">
           <h3>مركز خصوبة موصى به في بلدك</h3>
           <div class="hint">الرابط الرسمي يفتح مباشرة. قد تتغير الأرقام — يُفضّل التأكيد من الموقع.</div>
           <div id="localContact" style="margin-top:6px; font-size:14px; color:#374151"></div>
         </div>
 
-        <!-- حقائق علمية -->
         <div id="factsBox" class="fact-wrap" aria-live="polite">
           <div class="fact-title"><span class="dot">i</span> حقيقة علمية عن الخصوبة والعقم</div>
           <div id="factText" class="fact-text">سيتم عرض حقيقة علمية في كل زيارة.</div>
@@ -461,9 +451,18 @@ function makeToggle(segId, dataKey){
     seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
     b.classList.add('on');
     seg.dataset[dataKey]=Object.values(b.dataset)[0];
+    if(segId==='sexSeg') updateSexUI(); // ✅ حدّث واجهة الأسئلة حسب الجنس
   });
 }
 makeToggle('sexSeg','sex'); makeToggle('smokeSeg','smoke'); makeToggle('weightSeg','ob'); makeToggle('stiSeg','sti');
+
+/* ✅ إظهار/إخفاء أسئلة الجنس */
+function updateSexUI(){
+  const sex = document.getElementById('sexSeg').dataset.sex || 'female';
+  document.querySelectorAll('.sex-female').forEach(el => el.classList.toggle('hide', sex!=='female'));
+  document.querySelectorAll('.sex-male').forEach(el => el.classList.toggle('hide', sex!=='male'));
+}
+updateSexUI();
 
 /* نعم/لا للأسئلة */
 document.getElementById('symptoms').addEventListener('click', e=>{
@@ -524,31 +523,51 @@ const COUNTRY_CENTERS={
   SDN:[{n:"وزارة الصحة — إحالات", url:"https://fmoh.gov.sd/"}]
 };
 
-/* حساب الإرشاد */
+/* قراءة قيمة نعم/لا */
 function yes(id){ return document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a==='yes'; }
+
+/* ✅ حساب الإرشاد (يأخذ الجنس بعين الاعتبار) */
 function computeGuidance(){
   let score=0;
   const age = parseFloat(document.getElementById('age').value);
-  const sex = document.getElementById('sexSeg').dataset.sex || 'couple';
-  const weights = { ttc12:2, irreg:2, endo:2, pid:2, maleFx:2, exp:1, chronic:1, stress:1 };
-  Object.keys(weights).forEach(id=>{ if(yes(id)) score += weights[id]; });
+  const sex = document.getElementById('sexSeg').dataset.sex || 'female';
+
+  // أوزان عامة
+  const baseWeights = { ttc12:2, chronic:1, stress:1 };
+  Object.keys(baseWeights).forEach(id=>{ if(yes(id)) score += baseWeights[id]; });
+
+  // أوزان خاصة بالنساء
+  if(sex==='female'){
+    const femaleWeights = { irreg:2, endo:2, pid:2 };
+    Object.keys(femaleWeights).forEach(id=>{ if(yes(id)) score += femaleWeights[id]; });
+  }
+
+  // أوزان خاصة بالرجال
+  if(sex==='male'){
+    const maleWeights = { maleFx:2, exp:1 };
+    Object.keys(maleWeights).forEach(id=>{ if(yes(id)) score += maleWeights[id]; });
+  }
+
+  // نمط حياة
   if((document.getElementById('smokeSeg').dataset.smoke||'no')==='yes') score+=1;
   if((document.getElementById('weightSeg').dataset.ob||'no')==='yes') score+=1;
   if((document.getElementById('stiSeg').dataset.sti||'no')==='yes') score+=1;
+
+  // عامل العمر بحسب الجنس
   if(sex==='female' && age>=35) score+=1;
   if(sex==='male' && age>=40) score+=1;
-  if(sex==='couple' && age>=35) score+=1;
+
   if(score>10) score=10;
 
   let level='منخفض', cls='rb-ok', action='ابدأ بتعديلات نمط الحياة وتتبّع المؤشرات لشهرين.';
   if(score>=3){ level='متوسط'; cls='rb-warn'; action='احجز تقييمًا أوليًا لدى طبيب أسرة/نساء/ذكورة خلال 2–4 أسابيع.'; }
-  if(score>=6 || yes('ttc12') || (sex==='female' && yes('irreg')) || (sex!=='female' && yes('maleFx'))){
+  if(score>=6 || yes('ttc12') || (sex==='female' && yes('irreg')) || (sex==='male' && yes('maleFx'))){
     level='مرتفع'; cls='rb-danger'; action='يفضّل مراجعة اختصاصي/ة عقم وطب تناسلي خلال أسبوعين لتخطيط الفحوص.';
   }
   return {level, cls, action};
 }
 
-/* بناء النصائح */
+/* بطاقات النصائح */
 function buildAdvice(age, sex){
   const deck=document.getElementById('adviceDeck'); deck.innerHTML='';
   const mk=(t,html)=>{ const e=document.createElement('div'); e.className='card'; e.innerHTML=`<h3>${t}</h3>${html}`; return e; };
@@ -573,8 +592,7 @@ function buildAdvice(age, sex){
     </ul>`;
   deck.append(
     mk('نصائح عامة للخصوبة', general),
-    mk(sex==='female' ? 'خطوات مبدئية للمرأة' : sex==='male' ? 'خطوات مبدئية للرجل' : 'خطوات مبدئية للزوجين',
-      sex==='female' ? female : sex==='male' ? male : `<ul><li>تتبّع الإباضة (تطبيق/شرائط LH).</li><li>توقيت العلاقة حول الإباضة (كل 1–2 يوم).</li><li>فحوص أساسية للطرفين قبل الإحالات المتقدمة.</li></ul>`)
+    mk(sex==='female' ? 'خطوات مبدئية للمرأة' : 'خطوات مبدئية للرجل', sex==='female' ? female : male)
   );
   deck.style.display='grid';
 }
@@ -588,7 +606,7 @@ document.getElementById('calc').addEventListener('click', ()=>{
     ageField.focus();
     return;
   }
-  const sex = document.getElementById('sexSeg').dataset.sex || 'couple';
+  const sex = document.getElementById('sexSeg').dataset.sex || 'female';
   const {level, cls, action}=computeGuidance();
 
   const box=document.getElementById('resultBox');
@@ -660,7 +678,7 @@ const FACTS = [
   }
 })();
 
-/* واتساب عند الضغط على الاسم فقط (لا يبدو كرابط) */
+/* واتساب */
 document.getElementById('devLink').addEventListener('click', function(e){
   e.preventDefault();
   const waUrl="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0";
