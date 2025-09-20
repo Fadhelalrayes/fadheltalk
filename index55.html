@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>العدّ التنازلي لبداية شهر محرم | أحاديث عن الإمام الحسين (ع)</title>
+  <meta name="description" content="عدّ تنازلي لبداية شهر محرم + مربّع ثابت أنيق لأقوال الإمام الحسين عليه السلام يتبدّل عند كل تصفّح جديد، تصميم أبيض بتدرّج ذهبي. برمجة وتطوير: فاضل الريس." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root{ --bg:#ffffff; --ink:#0a0a0a; --gold-1:#fef9e7; --gold-2:#f3e6b2; --gold-3:#e0c56d; --gold-4:#d4af37; --gold-5:#a37c10; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:"Tajawal", system-ui, sans-serif; color:var(--ink); background:var(--bg);}    
+    .wrap{ min-height:100%; display:flex; align-items:center; justify-content:center; padding:28px; }
+    .card{ width:min(1100px,96vw); border-radius:28px; padding:28px; background:linear-gradient(180deg, rgba(250,245,230,.75), rgba(255,255,255,.9)); border:1px solid rgba(212,175,55,.35);}    
+    .header-box{ border:1px solid rgba(212,175,55,.45); background:linear-gradient(180deg, rgba(223,197,109,.16), rgba(223,197,109,.06)); border-radius:16px; padding:16px; margin-bottom:20px; text-align:center; }
+    .header-box h1{ margin:0 0 12px; font-size:clamp(1.6rem,2.2vw + 1rem,3rem); font-weight:900; background:linear-gradient(180deg,#1a1a1a,#000 40%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .header-box .meta{ font-size:1.1rem; color:#333; font-weight:700 }.grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin:18px 0 8px; }
+.unit{ flex:1 1 140px; max-width:180px; padding:18px 16px; border-radius:18px; text-align:center; background:linear-gradient(180deg, rgba(223,197,109,.16), rgba(223,197,109,.08)); border:1px solid rgba(212,175,55,.45); }
+.unit .label{ font-size:.95rem; color:#5a4711; font-weight:700 }
+.unit .value{ font-size:clamp(2rem,2vw + 1.4rem,3.2rem); font-weight:900; color:#000; }
+@supports (-webkit-background-clip:text) or (background-clip:text) {
+  .unit .value{ background:linear-gradient(180deg,var(--gold-5),#000); -webkit-background-clip:text; background-clip:text; color:transparent; }
+}
+
+/* مربّع الأحاديث: ثابت ضمن القالب */
+.hadith-widget{position:relative; margin-top:18px; width:100%; background:linear-gradient(180deg, rgba(223,197,109,.16), rgba(223,197,109,.06)); border:1px solid rgba(212,175,55,.45); border-radius:16px; padding:14px 16px; box-shadow:0 6px 18px rgba(163,124,16,.12); color:#111; font-weight:600; line-height:2; overflow:hidden; text-align:justify; text-justify:inter-word}
+.hadith-widget .title{display:block; font-size:.95rem; color:#5a4711; margin-bottom:6px; font-weight:800}
+.hadith-widget .text{font-size:1rem; opacity:1; transition:opacity .45s ease; white-space:pre-line}
+.hadith-widget.fade .text{opacity:0}
+
+.footer{margin-top:16px}
+.credit{margin-top:8px; text-align:center; color:#333}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header-box">
+        <h1>العدّ التنازلي لبداية شهر مُحَرَّم</h1>
+        <div class="meta" id="targetDate">سيصادف ١ محرم يوم الثلاثاء، 16 يونيو 2026</div>
+      </div>
+      <div class="grid">
+        <div class="unit"><div class="label">الشهور</div><div class="value" id="months">—</div></div>
+        <div class="unit"><div class="label">الأيام</div><div class="value" id="days">—</div></div>
+        <div class="unit"><div class="label">الثواني</div><div class="value" id="seconds">—</div></div>
+        <div class="unit"><div class="label">الساعات</div><div class="value" id="hours">—</div></div>
+        <div class="unit"><div class="label">الدقائق</div><div class="value" id="minutes">—</div></div>
+      </div><!-- مربّع الأحاديث الثابت -->
+  <div class="hadith-widget" id="hadithWidget" aria-live="polite">
+    <span class="title">قول عن الإمام الحسين (ع)</span>
+    <div class="text" id="hadithText">—</div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="credit">برمجة وتطوير : <strong>فاضل الريس</strong></div>
+  </footer>
+</div>
+
+  </div>  <script>
+    // ===== العدّ التنازلي =====
+    const monthsEl=document.getElementById('months');
+    const daysEl=document.getElementById('days');
+    const hoursEl=document.getElementById('hours');
+    const minutesEl=document.getElementById('minutes');
+    const secondsEl=document.getElementById('seconds');
+    const targetDateEl=document.getElementById('targetDate');
+
+    function findNextViaIntl(){
+      const fmtHijriParts=new Intl.DateTimeFormat('en-u-ca-islamic',{year:'numeric',month:'numeric',day:'numeric'});
+      let d=new Date();d.setHours(0,0,0,0);
+      for(let i=0;i<420;i++){
+        const parts=fmtHijriParts.formatToParts(d);
+        const map=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+        if(Number(map.month)===1 && Number(map.day)===1){return new Date(d);}
+        d.setDate(d.getDate()+1);
+      }
+      return new Date();
+    }
+
+    const targetDate=findNextViaIntl();
+    const fmtGreg=new Intl.DateTimeFormat('ar',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+    function update(){
+      const now=new Date();
+      let diff=targetDate-now;
+      if(diff<0) diff=0;
+      const lunarMonth=29.530588*24*60*60*1000;
+      const months=Math.floor(diff/lunarMonth);
+      const remAfterMonths=diff-months*lunarMonth;
+      const days=Math.floor(remAfterMonths/(24*60*60*1000));
+      const remAfterDays=remAfterMonths-days*24*60*60*1000;
+      const hours=Math.floor(remAfterDays/(60*60*1000));
+      const remAfterHours=remAfterDays-hours*60*60*1000;
+      const minutes=Math.floor(remAfterHours/(60*1000));
+      const remAfterMinutes=remAfterHours-minutes*60*1000;
+      const seconds=Math.floor(remAfterMinutes/1000);
+
+      monthsEl.textContent=String(months);
+      daysEl.textContent=String(days);
+      hoursEl.textContent=String(hours).padStart(2,'0');
+      minutesEl.textContent=String(minutes).padStart(2,'0');
+      secondsEl.textContent=String(seconds).padStart(2,'0');
+
+      targetDateEl.textContent = `سيصادف ١ محرم يوم ${fmtGreg.format(targetDate)}`;
+    }
+
+    update();
+    setInterval(update,1000);
+
+    // ===== أحاديث كاملة وثابتة ضمن القالب (بدون أرقام) =====
+    const hadiths = [
+`في الخُلق الحسن:
+قال الإمام الحسين عليه السلام: «الخُلق الحَسَن عبادةٌ».`,
+`في المكارم الأخلاق:
+قال الإمام الحسين عليه السلام: «أيّها الناس نافِسوا في المكارم وسارعوا في المغانِم».`,
+`في القِسمة:
+قال الإمام الحسين عليه السلام: «سمعت جدّي رسول الله (صلى الله عليه وآله) يقول: وارْضَ بِقَسمِ الله تكن أغنى الناس».`,
+`في التسليم لرضاء الله تعالى:
+قال الحسين عليه السلام: «أصبحتُ ولِيَ ربٌّ فوقي، والنار أمامي والموت يطلبني والحساب محدقٌ بي، وأما مُرتهنٌ بعملي، لا أجد ما أحبّ، ولا أدفع ما أكره، والأمور بيد غيري، فإن شاءَ عذّبني، وإن شاء عفا عنّي، فأيّ فقير أفقر منّي؟».`,
+`في ثبات الإيمان وزواله:
+قال الحسين عليه السلام: «سُئِلَ أميرُ المؤمنين صلوات الله عليه: ما ثِباتُ الإيمان؟ فقال: الورع، فقيل له: ما زواله؟ قال الطمع».`,
+`في أوصاف المؤمن:
+قال الحسين عليه السلام: «إنّ المؤمن اتّخذ الله عِصمَتَه، وقولَه مِرأته، فَمرَّةٌ ينظرُ في نعتِ المؤمنين، وتارةً يَنظُرُ في وصف المتجبّرين، فهو منه في لطائف، ومن نفسه في تعارف، ومن فَطِنَتِه في يقين، ومِن قُدسِه على تمكين».`,
+`في التوكّل:
+قال الحسين عليه السلام: «إنّ العِزّ والغنى خرجا يجولان فَلَقيا التوكّل فاستَوطَنا».`,
+`في الاتكال على حُسن اختيار الله:
+قيل للحسين عليه السلام إنّ أباذر يقول: الفقر أحبّ إليّ من الغنى، فقال الحسين عليه السلام: «رحم الله تعالى أباذر، أمّا أنا فأقول: مَن اتكَلَ على حُسنِ اختيار الله تعالى له، لم يتمنّ غير ما اختاره الله عزّ وجل له».`,
+`في خير الدنيا والآخرة:
+عن الصادق، عن أبيه، عن جده عليهم السلام، قال: «كتب رجل إلى الحسين بن علي عليهما السلام: يا سيّدي، أخبرني بخير الدنيا والآخرة. فكتب إليه: بسم الله الرحمن الرحيم، أمّا بعد فإنّه من طلبَ رضا الله بسخط الناس كفاه الله أمورَ الناس، ومن طلب رضا الناس بسخطِ الله وكله الله إلى الناس، والسلام».`,
+`في معنى الأدب:
+سئل الحسين عليه السلام عن الأدب، فقال عليه السلام: «هو أن تخرُج من بيتك، فلا تَلقي أحداً إلا رأيتَ له الفضلَ عليك».`,
+`في السلام وثواب السلام:
+قال الحسين عليه السلام: «لِلسّلام سبعونَ حسنَة، تسعٌ وسِتّون للمبتدي، وواحدةٌ لِلرّاد».`,
+`في البُخل بالسلام:
+قال الحسين عليه السلام: «البخيل مَن بَخِل بالسّلام».`,
+`في السّلام قبل الكلام:
+قال رجل للحسين عليه السلام ابتداءً: كيف أنت عافاك الله؟ فقال الحسين عليه السلام له: «السّلام قبل الكلام عافاك الله». ثمّ قال عليه السلام: «لا تأذنوا لأحدٍ حتّى يُسلّم».`,
+`في السلام على العاصي:
+عن علي بن الحسين، عن أبيه عليهما السلام: إنّ ابنَ الكُوّا سأل علي بن أبي طالب عليه السلام فقال: يا أمير المؤمنين، تسلّم على مذنب هذه الأمّة؟ فقال عليه السلام: «يراه الله عزّ وجل للتوحيد أهلاً، ولا تراه للسلام عليه أهلاً».`,
+`في الأوصاف الجميلة:
+خَطبَ الإمام الحسين عليه السلام فقال: «يا أيها الناس نافِسوا في المكارم، وسارعوا في المغانم، ولا تَحتَسِبوا بمعروفٍ لم تُعجّلوا، واكسبوا الحَمْدَ بالنُّجح، ولا تَكتسِبوا بالمَطَلِ ذمّاً، فَمَهْما يكُن لأحدٍ عندَ أحدٍ صنيعةٌ لَه رأى أنّه لا يَقوم بِشُكرِها فاللهُ له بمُكافاته، فإنّه أجزلُ عطاءً وأعظمُ أجراً. وَاعْلَموا أنّ حوائج الناس إليكم من نِعمِ الله عليكم فلا تَمُلُّوا النِعَم فَتُحَوِّر نِقماً. واعلموا أنّ المعروف مُكسِبٌ حَمداً، ومُعقِبٌ أجراً، فلو رأيتم المعروفَ رجلاً رأيتموه حسناً يسُرُّ الناظرين، ولو رأيتمُ اللّومَ رأيتموهُ سَمِجاً مُشَوَّهاً تنفرُ منه القلوب، وتَغضُّ دونَه الأبصار. أيها الناس من جادَ سادَ، ومن بَخِل رَذِلَ، وإنّ أجودَ الناس من أعطى من لا يرجو، وإنّ أعفى الناس من عَفى عن قدرةٍ، وإنّ أوصلَ الناس من وَصلَ من قَطَعَه، والأصولُ على مغارِسِها بفروعها تَسموا، فمن تعجَّلَ لأخيه خيراً وجَدَه إذا قَدِم عليه غداً، ومَن أراد الله تبارك وتعالى بالصنيعة إلى أخيه كافأه بها في وقتِ حاجته، وصرف عنه من بلاءِ الدّنيا ما هو أكثر منه، ومن نَفَّسَ كُربَةَ مُؤمِنٍ فَرّج الله عنه كَرْبَ الدنيا والآخرة، ومن أحسنَ أحسن اللهُ إليه، والله يُحبُّ المحسنين».`,
+`في الكذب والصّدق:
+قال الحسين عليه السلام: «الصِّدقُ عِزٌّ، والكِذبُ عجزٌ، والسِرُّ أمانةٌ، والجِوارُ قَرابةٌ، والمعونةُ صَداقةٌ، والعَملُ تَجربَةٌ، والخُلْقُ الحَسَنُ عِبادةٌ، والصَّمتُ زَيْنٌ، والشُّحُّ فقرٌ، والسَّخاءُ غِنًى، والرِّفقُ لُبٌّ».`,
+`في الاحتياط في التكلّم:
+روى عبد الله بن عباس، قال لي الحسين عليه السلام: «يا ابنَ عباس، لا تتكلّمنّ بما لا يُعْنيكَ فإنني أخاف عليكَ الوِزرَ، ولا تتكلّمنّ بما يُعنيك حتى تَرى له موضعاً، فَرُبَّ متكلّم قد تكلّمَ بحقٍّ فَعيبَ، ولا تماريَنّ حليماً ولا سفيهاً، فإنّ الحليمَ يقليكَ، والسّفيه يُرديك، ولا تقولَنّ خَلفَ أحدٍ إذا توارى عنكَ، إلا مثلَ ما تُحبُّ أن يقولَ عنكَ إذا توارَيْتَ عنه، واعمل عَملَ عبدٍ يَعلَمُ أنّه مأخوذٌ بالإجرام مُجزيٌ بالإحسان، والسّلام».`,
+`في إنفاق المال:
+وقال الحسين عليه السلام: «مالُكَ إنْ يكن لكَ كنتَ له مُنفِقاً، فلا تُبقِه بعدك فَيَكُن ذخيرةً لِغَيرِكَ وتكون أنتَ المُطالَب به المأخوذ بحسابه، وَاعَلم أنّك لا تبقى له، ولا يبقى عليكَ فَكُلْه قبلَ أن يَأكُلَك».`,
+`في الشُكر:
+قال الحسين عليه السلام: «شُكرُكَ لِنِعمةٍ سالِفةٍ يقتضي نعمةً آنفةً».`,
+`في الرِّفق:
+قال الحسين عليه السلام: «مَن أحْجمَ عنِ الرأي وعَيَيَتْ بِهِ الحِيَلُ كان الرِّفقُ مفتاحَه».`,
+`في صلة الرّحم:
+قال الحسين عليه السلام: «مَن سَرَّه أن يُنْسَأ في أجلهِ ويُزداد في رزقه فَلْيَصِل رَحِمَهُ».`,
+`في الصبر:
+قال الحسين عليه السلام: «اصبر على ما تَكرَه فيما يُلزِمُكَ الحق، واصبِر عمّا تُحِبُّ فيما يدعوكَ إليه الهوى».`,
+`في الغيبة:
+قال الحسين عليه السلام لرجل اغتاب عنده رجلاً: «يا هذا كُفَّ عن الغيبةِ فإنّها إدامُ كلابِ النّار».`,
+`في التحذير من اتّباع الهوى:
+قال الحسين عليه السلام: «اتّقوا هذه الأهواءَ التي جِماعُها الضلالَة وميعادُها النار».`,
+`في موعظة العاصي:
+رُوي أنّ الحسين بن علي عليهما السلام جاءَه رجل وقال: أنا رجل عاص ولا أصبر عن المعصية، فعِظني بموعظةٍ فقال عليه السلام: «افعَل خمسةَ أشياء واذْنِب ما شِئتَ، فأوّلُ ذلك: لا تأكُل رزقَ الله واذنِب ما شئْتَ، والثاني: أخْرُج من ولايةِ الله وَاذْنِبْ ما شِئتَ، والثالث: أطلُب موضِعاً لا يَراكَ الله واذنِب ما شئتَ، والرابع: إذا جاءَ ملكُ الموتِ لِيَقبضَ رُوحكَ فادفَعهُ عن نَفْسِكَ واذنِب ما شئتَ، والخامس: إذا أدْخَلَكَ مالكَ في النار فلا تدخُل في النار واذنِب ما شئت».`,
+`في إطعام المسلم:
+قال الحسين عليه السلام: «لَئِن أطْعِمَ أخاً لي مُسلِماً أحبُّ إليّ مِن أن أعتق أفُقاً من الناس». قيل وكم الأفق؟ قال: «عشرة آلاف».`,
+`في توقير الكبير:
+عن الإمام الحسن بن علي بن أبي طالب عليهم السلام قال رسول الله صلى الله عليه وآله: «مَن وَقّرَ ذا شيبةٍ لشيبته، آمنه الله مِن فزع يوم القيامة».`,
+`في فعل المعروف:
+عن الإمام الحسين عليه السلام: «إذا كان يوم القيامة نادى منادٍ: أيّها الناس، من كان له على الله أجرٌ فَلْيَقم، فلا يقوم إلا أهلُ المعروف».`,
+`في التحبّب إلى الناس:
+عن الإمام الحسين عليه السلام عن علي بن أبي طالب عليهما السلام قال: «قال رسول الله صلى الله عليه وآله وسلم: رأس العقل بعد الإيمان بالله التّحبُب إلى الناس».`,
+`في الفرق بين الشيعي والمُحِبّ:
+قال رجل للحسين بن علي عليهما السلام: يا ابن رسول الله أنا من شيعتكم، قال عليه السلام: «اتّقِ الله ولا تدّعِيَنّ شيئاً يقولُ الله لك كَذِبْتَ وفَجَرْتَ في دَعواكَ، إنّ شيعَتَنا من سَلُمَتْ قُلُوبُهُمْ مِن كلّ غِشٍّ وَغِلٍّ ودَغَلٍ، ولكن قُل أنا من مواليكُمْ ومن مُحبيكُم».`
+];
+
+    const widget = document.getElementById('hadithWidget');
+    const textEl = document.getElementById('hadithText');
+
+    function getNextIndex(){
+      const KEY='hadith_index_hussain_30';
+      let i = Number(localStorage.getItem(KEY));
+      if(!Number.isInteger(i) || i<0 || i>=hadiths.length){ i = 0; }
+      else { i = (i + 1) % hadiths.length; }
+      localStorage.setItem(KEY, String(i));
+      return i;
+    }
+
+    function showHadith(i){
+      widget.classList.add('fade');
+      setTimeout(()=>{
+        textEl.textContent = hadiths[i];
+        widget.classList.remove('fade');
+      }, 300);
+    }
+
+    // أوّل تحميل: يتغيّر الحديث مرة واحدة في كل تصفّح/تحديث
+    let index = getNextIndex();
+    showHadith(index);
+  </script></body>
+</html>
