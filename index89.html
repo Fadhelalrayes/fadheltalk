@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>فاحص أعراض العقم — إرشاد أولي ومراكز خصوبة</title>
+
+  <!-- SEO -->
+  <meta name="description" content="أداة تثقيفية عربية للتنبه إلى مؤشرات العقم وتأخر الإنجاب للنساء والرجال، مع نتيجة إرشادية ونصائح وروابط لمراكز خصوبة موثوقة عالميًا ومحليًا. ليست بديلاً عن الاستشارة الطبية."/>
+  <meta name="keywords" content="عقم, خصوبة, فحص خصوبة, IVF, ICSI, IUI, أطفال الأنابيب, استبيان العقم, فقيه IVF, رويان, سدرة للطب"/>
+  <link rel="canonical" href="https://fadhel-alrayes.fun/index89.html"/>
+  <meta name="robots" content="index, follow"/>
+
+  <!-- OG / Twitter -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="فاحص أعراض العقم — إرشاد أولي ومراكز خصوبة"/>
+  <meta property="og:description" content="استبيان إرشادي بالعربية مع نصائح وروابط مراكز خصوبة موثوقة."/>
+  <meta property="og:url" content="https://fadhel-alrayes.fun/index89.html"/>
+  <meta property="og:image" content="https://fadhel-alrayes.fun/og-fertility.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#f6f7fb; --ink:#111827; --muted:#6b7280;
+      --card:#ffffff; --line:#e5e7eb;
+      --gold:#b58900; --gold-soft:#f5d574;
+      --ok:#10b981; --ok-bg:#ecfdf5; --ok-br:#a7f3d0;
+      --warn:#f59e0b; --warn-bg:#fffbeb; --warn-br:#fde68a;
+      --danger:#ef4444; --danger-bg:#fef2f2; --danger-br:#fecaca;
+      --info:#0ea5e9; --info-bg:#eff6ff; --info-br:#bfdbfe;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:var(--ink)}
+    a{color:inherit}
+
+    header{text-align:center; padding:20px 12px}
+    .brand{font-family:"Amiri",serif; font-size:clamp(26px,4.5vw,42px); color:var(--gold)}
+    .tag{margin-top:6px; font-size:14px; color:var(--muted); line-height:1.8}
+
+    .shell{max-width:980px; margin:0 auto; padding:0 16px 22px}
+    .hero{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; box-shadow:0 10px 26px rgba(0,0,0,.06)}
+    .row{display:grid; gap:16px}
+    @media(min-width:920px){ .row{grid-template-columns:1.2fr .8fr} }
+
+    .field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
+    .hint{font-size:12px; color:var(--muted)}
+    .center{text-align:center}
+    .small{font-size:12px}
+
+    .seg{display:flex; gap:6px; justify-content:center; flex-wrap:wrap}
+    .seg button{
+      flex:1; padding:10px 14px; border-radius:10px; border:1px solid var(--line);
+      background:#f9fafb; cursor:pointer; max-width:220px; font-weight:700; user-select:none
+    }
+    .seg button.on{background:var(--gold); color:#111; border-color:var(--gold); outline:none}
+
+    .select{position:relative; display:inline-block; width:100%}
+    .select select{
+      width:100%; appearance:none; background:#fff; border:1px solid var(--gold); border-radius:10px;
+      padding:12px 42px 12px 12px; font-size:1rem; cursor:pointer; color:#111; text-align:right;
+    }
+    .select::after{
+      content:""; position:absolute; top:50%; transform:translateY(-50%); right:12px; width:18px; height:18px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+              mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+      pointer-events:none; opacity:.95;
+    }
+
+    .btn{padding:12px 20px; border-radius:10px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; display:block; margin:0 auto}
+
+    .resultbox{display:none; border-radius:14px; padding:14px; border:1px solid; font-weight:700; text-align:center}
+    .rb-ok{ background:var(--ok-bg); border-color:var(--ok-br); color:#064e3b }
+    .rb-warn{ background:var(--warn-bg); border-color:var(--warn-br); color:#7c2d12 }
+    .rb-danger{ background:var(--danger-bg); border-color:var(--danger-br); color:#7f1d1d }
+
+    .deck{display:grid; gap:12px; grid-template-columns:1fr; margin-top:16px}
+    @media(min-width:860px){ .deck{grid-template-columns:repeat(2,1fr)} }
+    .card{background:#fdfdfd; border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 2px 6px rgba(0,0,0,.04)}
+    .card h3{margin:0 0 6px; font-family:"Amiri",serif; color:var(--gold)}
+    .card p, .card ul{margin:0; font-size:14px; color:#374151; line-height:1.8}
+    .card ul{margin-top:8px; padding-inline-start:20px}
+
+    /* بطاقات مضغوطة وجميلة */
+    .card--compact{ padding:12px; border-radius:12px }
+    .card--compact h3{ font-size:1rem; margin:0 0 6px }
+    .card--compact .hint{ font-size:12px }
+    .select--sm select{ font-size:.95rem; padding:10px 40px 10px 12px; border-radius:10px }
+    .small-note{ font-size:12px; color:#6b7280; margin-top:6px }
+
+    /* نسخة مصغّرة لقسم المراكز حسب الدولة */
+    .card.region-compact{ padding:10px; border-radius:10px }
+    .card.region-compact *{ line-height:1.5 }
+    .card.region-compact h3{ font-size:.95rem; margin:0 0 4px }
+    .card.region-compact .hint{ font-size:.78rem; color:#6b7280 }
+    .card.region-compact .select select{ font-size:.9rem; padding:8px 34px 8px 10px; border-radius:8px; border:1px solid #d9d9d9 }
+    .card.region-compact .small-note{ font-size:.78rem; color:#64748b; margin-top:6px }
+
+    /* مربع الحقائق */
+    .fact-wrap{ margin-top:12px; border:1px solid var(--info-br); background:var(--info-bg);
+      border-radius:14px; padding:14px; box-shadow:0 6px 20px rgba(2,132,199,.12) }
+    .fact-title{ display:flex; align-items:center; gap:8px; margin:0 0 8px; font-family:"Amiri",serif; color:var(--info); font-size:18px }
+    .fact-title .dot{ width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+      background: radial-gradient(120% 120% at 20% 15%, #93c5fd, #38bdf8); color:#072b3a; font-weight:900;
+      box-shadow:0 6px 16px rgba(2,132,199,.25) }
+    .fact-text{ color:#0f172a; line-height:1.9; font-size:15px }
+
+    /* نافذة رسائل أنيقة */
+    .msg-backdrop{ position:fixed; inset:0; background:rgba(17,24,39,.35); display:none; align-items:center; justify-content:center; z-index:99999 }
+    .msg-backdrop.show{ display:flex }
+    .msg-box{ width:min(92vw,520px); background:#fff; border:1px solid var(--gold); border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.18); padding:18px; text-align:center }
+    .msg-title{ font-family:"Amiri",serif; font-size:20px; color:var(--gold); margin:6px 0 2px }
+    .msg-text{ color:#374151; line-height:1.9; margin:8px 0 14px }
+    .msg-actions{ display:flex; justify-content:center }
+    .msg-btn{ padding:10px 18px; border-radius:10px; border:1px solid var(--gold);
+      background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; cursor:pointer }
+
+    footer{ text-align:center; margin:14px 0 6px; font-size:12px; color:#6b7280 }
+    #devLink{ cursor:pointer; text-decoration:none; color:inherit }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">فاحص أعراض العقم</div>
+  <div class="tag">أداة تثقيفية للتنبّه إلى مؤشرات العقم وتأخر الإنجاب — ليست تشخيصًا ولا بديلًا عن الطبيب.</div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="row">
+      <!-- العمود الأيسر -->
+      <div>
+        <!-- الدولة -->
+        <div class="field">
+          <label><strong>اختر دولتك</strong></label>
+          <div class="select">
+            <select id="countrySelect" aria-label="اختر الدولة">
+              <!-- جميع الدول العربية + إيران -->
+              <option value="BHR" selected>البحرين</option>
+              <option value="KSA">السعودية</option>
+              <option value="ARE">الإمارات</option>
+              <option value="QAT">قطر</option>
+              <option value="KWT">الكويت</option>
+              <option value="OMN">عُمان</option>
+              <option value="EGY">مصر</option>
+              <option value="JOR">الأردن</option>
+              <option value="LBN">لبنان</option>
+              <option value="IRQ">العراق</option>
+              <option value="LBA">ليبيا</option>
+              <option value="MAR">المغرب</option>
+              <option value="DZA">الجزائر</option>
+              <option value="TUN">تونس</option>
+              <option value="SDN">السودان</option>
+              <option value="SYR">سوريا</option>
+              <option value="PSE">فلسطين</option>
+              <option value="DJI">جيبوتي</option>
+              <option value="COM">جزر القمر</option>
+              <option value="MRT">موريتانيا</option>
+              <option value="SOM">الصومال</option>
+              <option value="YEM">اليمن</option>
+              <option value="IRN">إيران</option>
+            </select>
+          </div>
+          <div class="hint">لعرض مركز خصوبة محلي موصى به (رابط رسمي).</div>
+        </div>
+
+        <!-- الفئة -->
+        <div class="field center">
+          <label><strong>الفئة</strong></label>
+          <div class="seg" id="sexSeg" data-sex="couple">
+            <button type="button" class="on" data-sex="couple">زوجان</button>
+            <button type="button" data-sex="female">امرأة</button>
+            <button type="button" data-sex="male">رجل</button>
+          </div>
+        </div>
+
+        <!-- العمر -->
+        <div class="field center">
+          <label><strong>العمر</strong> <span class="small">(بين 1 و 65)</span></label>
+          <input id="age" type="number" inputmode="numeric" min="1" max="65" placeholder="مثال: 32" style="width:180px; padding:12px; border:1px solid var(--line); border-radius:10px; text-align:center; margin:0 auto">
+        </div>
+
+        <!-- عوامل نمط الحياة/التاريخ -->
+        <div class="field center">
+          <label><strong>عوامل مؤثرة</strong></label>
+          <div class="seg" id="smokeSeg" data-smoke="no">
+            <button type="button" class="on" data-smoke="no">غير مدخّن</button>
+            <button type="button" data-smoke="yes">مدخّن</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="weightSeg" data-ob="no">
+            <button type="button" class="on" data-ob="no">وزن مناسب</button>
+            <button type="button" data-ob="yes">سمنة/نحافة شديدة</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="stiSeg" data-sti="no">
+            <button type="button" class="on" data-sti="no">لا أمراض تناسلية معروفة</button>
+            <button type="button" data-sti="yes">تاريخ أمراض تناسلية</button>
+          </div>
+        </div>
+
+        <!-- أسئلة المؤشرات -->
+        <div id="symptoms" class="card">
+          <h3>أسئلة المؤشرات (اختر نعم/لا)</h3>
+          <div class="hint">المؤشرات لا تعني تشخيصًا. الهدف التنبيه ومتى يلزم التقييم الطبي.</div>
+
+          <!-- عامة -->
+          <div class="field"><div><strong>محاولة حمل لأكثر من 12 شهرًا بدون نجاح (أكثر من 6 أشهر إذا ≥ 35 سنة)</strong></div>
+            <div class="seg" data-q="ttc12"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+
+          <!-- للنساء -->
+          <div class="field"><div><strong>دورات شهرية غير منتظمة أو انقطاع طمث</strong></div>
+            <div class="seg" data-q="irreg"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ألم حوضي مزمن/اشتباه انتباذ بطاني رحمي</strong></div>
+            <div class="seg" data-q="endo"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>عدوى حوضية سابقة (PID) أو جراحة حوضية</strong></div>
+            <div class="seg" data-q="pid"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+
+          <!-- للرجال -->
+          <div class="field"><div><strong>ضعف انتصاب/قذف مبكّر/عدوى خصية/دوالي</strong></div>
+            <div class="seg" data-q="maleFx"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>تعرّض لحرارة/مذيبات/إشعاع/ستيرويدات بنائية</strong></div>
+            <div class="seg" data-q="exp"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+
+          <!-- عامة إضافية -->
+          <div class="field"><div><strong>أمراض مزمنة مؤثرة (سكري غير مضبوط/غدّة/كُلى/مشكلات منوية)</strong></div>
+            <div class="seg" data-q="chronic"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>توتر شديد مستمر أو نوم أقل من 6 ساعات لفترات طويلة</strong></div>
+            <div class="seg" data-q="stress"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+        </div>
+
+        <button class="btn" id="calc">اعرض النتيجة</button>
+      </div>
+
+      <!-- العمود الأيمن -->
+      <div>
+        <!-- نتيجة -->
+        <div id="resultBox" class="resultbox rb-ok" aria-live="polite">
+          مستوى الإرشاد: <span id="riskText">منخفض</span> — <span id="actionText">ابدأ بتعديلات نمط الحياة وتتبّع المؤشرات لشهرين.</span>
+        </div>
+
+        <!-- نصائح -->
+        <div class="deck" id="adviceDeck" style="display:none"></div>
+
+        <!-- متى تراجع عيادة الخصوبة -->
+        <div class="card" style="margin-top:12px">
+          <h3>متى تراجع عيادة الخصوبة؟</h3>
+          <ul>
+            <li>العمر ≥ 35 سنة مع محاولة حمل &gt; 6 أشهر.</li>
+            <li>العمر &lt; 35 سنة ومحاولة حمل &gt; 12 شهرًا.</li>
+            <li>عدم انتظام الدورة/ألم حوض مزمن/أمراض تناسلية سابقة/مشكلات جنسية للزوج.</li>
+          </ul>
+          <p class="hint" style="margin-top:6px">تذكير: هذه أداة تثقيفية عامة — التشخيص والخطة العلاجية لدى الطبيب/الاستشاري.</p>
+        </div>
+
+        <!-- مراكز عالمية مرموقة -->
+        <div class="card card--compact" style="margin-top:12px">
+          <h3>مراكز خصوبة عالمية مرموقة</h3>
+          <div class="hint">الأسماء بالعربية — يفتح الرابط الموقع بلغته الأصلية.</div>
+          <div class="select select--sm">
+            <select id="intlSelect" aria-label="اختر مركزًا عالميًا">
+              <option value="">— اختر مركزًا عالميًا —</option>
+              <optgroup label="الولايات المتحدة">
+                <option value="https://www.mayoclinic.org/departments-centers/fertility-center/sections/overview/ovc-20423544">مايو كلينك — مركز الخصوبة</option>
+                <option value="https://my.clevelandclinic.org/departments/obgyn/depts/reproductive-endocrinology-infertility">كليفلاند كلينك — طب الإنجاب</option>
+                <option value="https://www.hopkinsmedicine.org/gynecology-obstetrics/specialty-areas/fertility-center">جونز هوبكنز — مركز الخصوبة</option>
+                <option value="https://fertilitycenter.ucsf.edu/">UCSF — مركز الصحة الإنجابية</option>
+                <option value="https://med.stanford.edu/womenshealth/fertility.html">ستانفورد — الخصوبة وصحة الإنجاب</option>
+              </optgroup>
+              <optgroup label="أوروبا">
+                <option value="https://ivi.es/en/">IVI / جِنِرالايف — إسبانيا</option>
+                <option value="https://www.carefertility.com/">كير فيرتيليتي — المملكة المتحدة</option>
+                <option value="https://www.charite.de/en/clinics-institutes/clinic-for-gynecology/">شاريتيه برلين — طب الإنجاب</option>
+                <option value="https://www.klinikum.uni-heidelberg.de/en/zentrum-fuer-frauenheilkunde/kliniken/poliklinik-fuer-gynaekologische-endokrinologie-und-reproduktionsmedizin">هايدلبرغ الجامعي — طب الإنجاب</option>
+              </optgroup>
+              <optgroup label="آسيا">
+                <option value="https://www.nuh.com.sg/our-services/Specialties/Womens-Health/Pages/Reproductive-Medicine.aspx">جامعة سنغافورة الوطنية — طب الإنجاب</option>
+                <option value="https://www.kkh.com.sg/clinical-services/centres-and-services/kkhivfcentre">مستشفى KK للنساء والأطفال — مركز IVF</option>
+                <option value="https://www.samsunghospital.com/dept/main/index.do?DP_CODE=OBG">مركز سامسونج الطبي — IVF (كوريا)</option>
+                <option value="https://www.ncchd.go.jp/en/">المركز الوطني لصحة وأمن الطفل — اليابان</option>
+              </optgroup>
+              <optgroup label="أستراليا ونيوزيلندا">
+                <option value="https://www.mivf.com.au/">ملبورن IVF — أستراليا</option>
+                <option value="https://fertilityassociates.co.nz/">فيرتيليتي أسوشييتس — نيوزيلندا</option>
+              </optgroup>
+            </select>
+          </div>
+          <div id="intlContact" class="small-note" style="display:none"></div>
+        </div>
+
+        <!-- مراكز مختارة حسب الدولة (نسخة مصغّرة) -->
+        <div class="card region-compact" style="margin-top:12px">
+          <h3>مراكز مختارة حسب الدولة</h3>
+          <div class="hint">اختر مركزًا لفتح الموقع الرسمي في نافذة جديدة.</div>
+
+          <div class="select">
+            <select id="regionalSelect" aria-label="اختر مركزًا إقليميًا">
+              <option value="">— اختر مركزًا —</option>
+
+              <optgroup label="البحرين">
+                <option value="https://www.moh.gov.bh/">السلمانية الطبي — عيادات الخصوبة</option>
+                <option value="https://www.bsh.com.bh/">مستشفى البحرين التخصصي — IVF</option>
+              </optgroup>
+
+              <optgroup label="السعودية">
+                <option value="https://www.kfshrc.edu.sa/en/home/research/centers/center-for-reproductive-medicine">مستشفى فيصل التخصصي — مركز الطب التناسلي</option>
+                <option value="https://www.kfmc.med.sa/">مدينة الملك فهد الطبية — عيادة العقم</option>
+                <option value="https://hmg.com/en/medical-services/obstetrics-gynecology/ivf">مجموعة د. سليمان الحبيب — IVF</option>
+              </optgroup>
+
+              <optgroup label="الإمارات">
+                <option value="https://www.clevelandclinicabudhabi.ae/en/institutes-and-specialties/obstetrics-and-gynecology">كليفلاند كلينك أبوظبي — طب الإنجاب</option>
+                <option value="https://fakihivf.com/">فقيه IVF</option>
+                <option value="https://conceiveivf.com/">كونسيف IVF</option>
+              </optgroup>
+
+              <optgroup label="قطر">
+                <option value="https://www.sidra.org/clinics-services/womens-services/reproductive-medicine">سدرة للطب — طب التكاثر</option>
+                <option value="https://www.hamad.qa/EN/Hospitals-and-services/WWRC/Pages/default.aspx">مؤسسة حمد الطبية — صحة المرأة</option>
+              </optgroup>
+
+              <optgroup label="إيران">
+                <option value="https://www.royaninstitute.org/ri-ar/">معهد رويان — طهران</option>
+                <option value="https://avicenna.ac.ir/en/avicenna-infertility-center">مركز ابن سينا للخصوبة — طهران</option>
+              </optgroup>
+
+              <optgroup label="مصر">
+                <option value="https://mohp.gov.eg/">وزارة الصحة — إحالات</option>
+                <option value="https://ivf-egypt.com/en/">المركز المصري لأطفال الأنابيب</option>
+              </optgroup>
+
+              <optgroup label="الأردن">
+                <option value="https://ivfjo.com/">مركز حدّاد للخصوبة</option>
+                <option value="https://www.khcc.jo/">مركز الحسين — استشارات خصوبة</option>
+              </optgroup>
+
+              <optgroup label="لبنان">
+                <option value="https://www.aubmc.org.lb/">AUBMC — طب الإنجاب</option>
+              </optgroup>
+
+              <optgroup label="المغرب">
+                <option value="https://www.sante.gov.ma/">وزارة الصحة — إحالات</option>
+              </optgroup>
+
+              <optgroup label="تونس">
+                <option value="http://www.santetunisie.rns.tn/">وزارة الصحة — إحالات</option>
+              </optgroup>
+
+              <optgroup label="الجزائر">
+                <option value="https://www.sante.gov.dz/">وزارة الصحة — إحالات</option>
+              </optgroup>
+
+              <optgroup label="الكويت">
+                <option value="https://www.moh.gov.kw/">وزارة الصحة — مركز الكويت للخصوبة</option>
+              </optgroup>
+
+              <optgroup label="عُمان">
+                <option value="https://www.royalhospital.om/">المستشفى السلطاني — خصوبة</option>
+              </optgroup>
+
+              <optgroup label="العراق">
+                <option value="https://moh.gov.iq/">وزارة الصحة — إحالات ومراكز خاصة</option>
+              </optgroup>
+
+              <optgroup label="فلسطين">
+                <option value="https://www.moh.ps/">وزارة الصحة الفلسطينية</option>
+              </optgroup>
+
+              <optgroup label="اليمن">
+                <option value="https://moh.gov.ye/">وزارة الصحة — مراكز خاصة</option>
+              </optgroup>
+
+              <optgroup label="جيبوتي">
+                <option value="https://www.sante.gouv.dj/">وزارة الصحة — جيبوتي</option>
+              </optgroup>
+
+              <optgroup label="جزر القمر">
+                <option value="#">وزارة الصحة — جزر القمر</option>
+              </optgroup>
+
+              <optgroup label="موريتانيا">
+                <option value="#">المستشفى الوطني — نواكشوط</option>
+              </optgroup>
+
+              <optgroup label="الصومال">
+                <option value="#">مراكز خاصة — مقديشو</option>
+              </optgroup>
+
+              <optgroup label="سوريا">
+                <option value="http://moh.gov.sy/">وزارة الصحة — إحالات</option>
+              </optgroup>
+
+              <optgroup label="السودان">
+                <option value="https://fmoh.gov.sd/">وزارة الصحة — إحالات</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div id="regionalContact" class="small-note" style="display:none"></div>
+        </div>
+
+        <!-- مركز محلي سريع حسب الدولة -->
+        <div id="localBox" class="card" style="margin-top:12px; display:none">
+          <h3>مركز خصوبة موصى به في بلدك</h3>
+          <div class="hint">الرابط الرسمي يفتح مباشرة. قد تتغير الأرقام — يُفضّل التأكيد من الموقع.</div>
+          <div id="localContact" style="margin-top:6px; font-size:14px; color:#374151"></div>
+        </div>
+
+        <!-- حقائق علمية -->
+        <div id="factsBox" class="fact-wrap" aria-live="polite">
+          <div class="fact-title"><span class="dot">i</span> حقيقة علمية عن الخصوبة والعقم</div>
+          <div id="factText" class="fact-text">سيتم عرض حقيقة علمية في كل زيارة.</div>
+        </div>
+
+        <footer style="text-align:center; margin:10px 0 0; font-size:12px; color:#6b7280">
+          <span id="devLink">برمجة وتطوير: فاضل الريس</span>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- نافذة رسائل -->
+<div id="msgBackdrop" class="msg-backdrop" role="dialog" aria-modal="true" aria-labelledby="msgTitle">
+  <div class="msg-box">
+    <div id="msgTitle" class="msg-title">معلومة</div>
+    <div id="msgText" class="msg-text">—</div>
+    <div class="msg-actions">
+      <button id="msgOk" class="msg-btn">حسنًا</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* نافذة الرسائل الأنيقة */
+const $mb = document.getElementById('msgBackdrop');
+const $txt = document.getElementById('msgText');
+const $ttl = document.getElementById('msgTitle');
+document.getElementById('msgOk').onclick = () => $mb.classList.remove('show');
+function openMsg(message, type='info', title){
+  $txt.innerHTML = message;
+  $ttl.textContent = title || (type==='error' ? 'تنبيه' : 'معلومة');
+  document.querySelector('.msg-box').classList.toggle('error', type==='error');
+  $mb.classList.add('show');
+}
+
+/* أزرار التبديل العامة */
+function makeToggle(segId, dataKey){
+  const seg=document.getElementById(segId);
+  seg.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    seg.dataset[dataKey]=Object.values(b.dataset)[0];
+  });
+}
+makeToggle('sexSeg','sex'); makeToggle('smokeSeg','smoke'); makeToggle('weightSeg','ob'); makeToggle('stiSeg','sti');
+
+/* نعم/لا للأسئلة */
+document.getElementById('symptoms').addEventListener('click', e=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  const seg=btn.parentElement;
+  seg.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+});
+
+/* فتح الروابط للقوائم */
+function wireOpen(selectId, targetId){
+  const el=document.getElementById(selectId);
+  const tgt=document.getElementById(targetId);
+  if(!el || !tgt) return;
+  el.addEventListener('change', e=>{
+    const url=e.target.value;
+    if(!url){ tgt.style.display='none'; tgt.innerHTML=''; return; }
+    const name = e.target.selectedOptions[0].textContent.trim();
+    tgt.innerHTML = `🌐 <a href="${url}" target="_blank" rel="noopener">زيارة موقع <strong>${name}</strong></a>`;
+    tgt.style.display='block';
+  });
+}
+wireOpen('intlSelect','intlContact');
+wireOpen('regionalSelect','regionalContact');
+
+/* مراكز محلية (اقتراح سريع يعتمد الدولة المختارة) */
+const COUNTRY_CENTERS={
+  BHR:[{n:"السلمانية الطبي — خصوبة", url:"https://www.moh.gov.bh/"},
+       {n:"مستشفى البحرين التخصصي — IVF", url:"https://www.bsh.com.bh/"}],
+  KSA:[{n:"مستشفى فيصل التخصصي — طب الإنجاب", url:"https://www.kfshrc.edu.sa/en/home/research/centers/center-for-reproductive-medicine"},
+       {n:"KFMC — عيادة العقم", url:"https://www.kfmc.med.sa/"},
+       {n:"مجموعة الحبيب — IVF", url:"https://hmg.com/en/medical-services/obstetrics-gynecology/ivf"}],
+  ARE:[{n:"Cleveland Clinic Abu Dhabi — REI", url:"https://www.clevelandclinicabudhabi.ae/en/institutes-and-specialties/obstetrics-and-gynecology"},
+       {n:"Fakih IVF", url:"https://fakihivf.com/"},
+       {n:"Conceive IVF", url:"https://conceiveivf.com/"}],
+  QAT:[{n:"Sidra Medicine — طب التكاثر", url:"https://www.sidra.org/clinics-services/womens-services/reproductive-medicine"},
+       {n:"HMC — صحة المرأة والبحوث", url:"https://www.hamad.qa/EN/Hospitals-and-services/WWRC/Pages/default.aspx"}],
+  IRN:[{n:"Royan Institute — طهران", url:"https://www.royaninstitute.org/ri-ar/"},
+       {n:"Avicenna Fertility Center — طهران", url:"https://avicenna.ac.ir/en/avicenna-infertility-center"}],
+  KWT:[{n:"وزارة الصحة — مركز الكويت للخصوبة", url:"https://www.moh.gov.kw/"}],
+  OMN:[{n:"المستشفى السلطاني — خصوبة", url:"https://www.royalhospital.om/"}],
+  EGY:[{n:"وزارة الصحة — إحالات", url:"https://mohp.gov.eg/"},
+       {n:"المركز المصري لأطفال الأنابيب", url:"https://ivf-egypt.com/en/"}],
+  JOR:[{n:"KHCC — استشارات خصوبة", url:"https://www.khcc.jo/"},
+       {n:"حدّاد للخصوبة", url:"https://ivfjo.com/"}],
+  LBN:[{n:"AUBMC — طب الإنجاب", url:"https://www.aubmc.org.lb/"}],
+  MAR:[{n:"وزارة الصحة — إحالات", url:"https://www.sante.gov.ma/"}],
+  DZA:[{n:"وزارة الصحة — إحالات", url:"https://www.sante.gov.dz/"}],
+  TUN:[{n:"وزارة الصحة — إحالات", url:"http://www.santetunisie.rns.tn/"}],
+  IRQ:[{n:"وزارة الصحة — إحالات ومراكز خاصة", url:"https://moh.gov.iq/"}],
+  PSE:[{n:"وزارة الصحة الفلسطينية", url:"https://www.moh.ps/"}],
+  DJI:[{n:"وزارة الصحة — جيبوتي", url:"https://www.sante.gouv.dj/"}],
+  COM:[{n:"وزارة الصحة — جزر القمر", url:"#"}],
+  MRT:[{n:"المستشفى الوطني — نواكشوط", url:"#"}],
+  SOM:[{n:"مراكز خاصة — مقديشو", url:"#"}],
+  YEM:[{n:"وزارة الصحة — مراكز خاصة", url:"https://moh.gov.ye/"}],
+  SYR:[{n:"وزارة الصحة — إحالات", url:"http://moh.gov.sy/"}],
+  SDN:[{n:"وزارة الصحة — إحالات", url:"https://fmoh.gov.sd/"}]
+};
+
+/* حساب الإرشاد */
+function yes(id){ return document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a==='yes'; }
+function computeGuidance(){
+  let score=0;
+  const age = parseFloat(document.getElementById('age').value);
+  const sex = document.getElementById('sexSeg').dataset.sex || 'couple';
+  const weights = { ttc12:2, irreg:2, endo:2, pid:2, maleFx:2, exp:1, chronic:1, stress:1 };
+  Object.keys(weights).forEach(id=>{ if(yes(id)) score += weights[id]; });
+  if((document.getElementById('smokeSeg').dataset.smoke||'no')==='yes') score+=1;
+  if((document.getElementById('weightSeg').dataset.ob||'no')==='yes') score+=1;
+  if((document.getElementById('stiSeg').dataset.sti||'no')==='yes') score+=1;
+  if(sex==='female' && age>=35) score+=1;
+  if(sex==='male' && age>=40) score+=1;
+  if(sex==='couple' && age>=35) score+=1;
+  if(score>10) score=10;
+
+  let level='منخفض', cls='rb-ok', action='ابدأ بتعديلات نمط الحياة وتتبّع المؤشرات لشهرين.';
+  if(score>=3){ level='متوسط'; cls='rb-warn'; action='احجز تقييمًا أوليًا لدى طبيب أسرة/نساء/ذكورة خلال 2–4 أسابيع.'; }
+  if(score>=6 || yes('ttc12') || (sex==='female' && yes('irreg')) || (sex!=='female' && yes('maleFx'))){
+    level='مرتفع'; cls='rb-danger'; action='يفضّل مراجعة اختصاصي/ة عقم وطب تناسلي خلال أسبوعين لتخطيط الفحوص.';
+  }
+  return {level, cls, action};
+}
+
+/* بناء النصائح */
+function buildAdvice(age, sex){
+  const deck=document.getElementById('adviceDeck'); deck.innerHTML='';
+  const mk=(t,html)=>{ const e=document.createElement('div'); e.className='card'; e.innerHTML=`<h3>${t}</h3>${html}`; return e; };
+  const general = `
+    <ul>
+      <li>الإقلاع عن التبغ والنيكوتين.</li>
+      <li>وزن صحي ونشاط بدني 150–300 دقيقة/الأسبوع.</li>
+      <li>تقليل التوتر والنوم 7–8 ساعات.</li>
+      <li>حمية متوازنة ومكمّل فوليك أسيد قبل الحمل.</li>
+    </ul>`;
+  const female = `
+    <ul>
+      <li>إذا الدورات غير منتظمة: ناقشي فحوص الغدة والهرمونات وPCOS.</li>
+      <li>تقييم قنوات فالوب إذا وُجد PID/عملية حوضية.</li>
+      <li>العمر ≥35: مراجعة خلال 6 أشهر من محاولة الحمل.</li>
+    </ul>`;
+  const male = `
+    <ul>
+      <li>تحليل سائل منوي أساسي وتقييم دوالي الخصية عند اللزوم.</li>
+      <li>تجنّب الحرارة المرتفعة/الساونا/الستيرويدات البنائية.</li>
+      <li>العمر ≥40: مراجعة مبكرة.</li>
+    </ul>`;
+  deck.append(
+    mk('نصائح عامة للخصوبة', general),
+    mk(sex==='female' ? 'خطوات مبدئية للمرأة' : sex==='male' ? 'خطوات مبدئية للرجل' : 'خطوات مبدئية للزوجين',
+      sex==='female' ? female : sex==='male' ? male : `<ul><li>تتبّع الإباضة (تطبيق/شرائط LH).</li><li>توقيت العلاقة حول الإباضة (كل 1–2 يوم).</li><li>فحوص أساسية للطرفين قبل الإحالات المتقدمة.</li></ul>`)
+  );
+  deck.style.display='grid';
+}
+
+/* نتيجة + مراكز محلية سريعة */
+document.getElementById('calc').addEventListener('click', ()=>{
+  const ageField=document.getElementById('age');
+  const age=parseFloat(ageField.value);
+  if(!(age>=1 && age<=65)){
+    openMsg('من فضلك أدخل عمرًا صحيحًا بين 1 و 65 لعرض النتيجة.', 'error', 'مطلوب إدخال');
+    ageField.focus();
+    return;
+  }
+  const sex = document.getElementById('sexSeg').dataset.sex || 'couple';
+  const {level, cls, action}=computeGuidance();
+
+  const box=document.getElementById('resultBox');
+  box.className='resultbox '+cls;
+  document.getElementById('riskText').textContent=level;
+  document.getElementById('actionText').textContent=action;
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  buildAdvice(age, sex);
+
+  const ccode=document.getElementById('countrySelect').value;
+  const locArr=COUNTRY_CENTERS[ccode]||[];
+  const localBox=document.getElementById('localBox');
+  const localContact=document.getElementById('localContact');
+  if(locArr.length){
+    localContact.innerHTML = locArr.map(c=>`🏥 <strong>${c.n}</strong> — 🌐 <a href="${c.url}" target="_blank" rel="noopener">الموقع</a>`).join('<br>');
+    localBox.style.display='block';
+  }else{
+    localBox.style.display='none';
+    localContact.innerHTML='';
+  }
+});
+
+/* حقائق علمية — 30 حقيقة */
+const FACTS = [
+  "تعريف العقم طبيًّا: عدم حدوث حمل بعد 12 شهرًا من علاقة منتظمة دون موانع (6 أشهر إذا كان عمر المرأة ≥ 35).",
+  "نحو 10–15% من الأزواج يواجهون صعوبة في الإنجاب؛ قد تكون الأسباب لدى أحد الطرفين أو مشتركة.",
+  "الإباضة تحدث عادة قبل 14 يومًا من الدورة التالية، لكنها تختلف من امرأة لأخرى.",
+  "خصوبة المرأة تنخفض تدريجيًّا بعد 32 سنة وبشكل أوضح بعد 35 سنة.",
+  "خصوبة الرجل تتأثر بالعمر أيضًا (خاصة بعد 40 سنة) وقد تقل جودة السائل المنوي.",
+  "متلازمة تكيس المبايض (PCOS) من أكثر أسباب اضطراب الإباضة شيوعًا.",
+  "الانتباذ البطاني الرحمي قد يسبب ألمًا حوضيًا ويؤثر على الخصوبة عبر التصاقات.",
+  "التدخين يقلل فرص الحمل ويضعف نتائج التقنيات المساعدة على الإنجاب.",
+  "السمنة أو النحافة الشديدة تؤثر على الهرمونات والإباضة لدى النساء والرجال.",
+  "دوالي الخصية قد تؤثر على جودة السائل المنوي لدى بعض الرجال ويمكن علاجها في حالات محددة.",
+  "تحليل السائل المنوي فحص أساسي لتقييم الرجل ويُفضّل تكراره للتحقق.",
+  "اختبارات احتياطي المبيض (AMH، AFC) تقدّر عدد البويضات لكنها ليست حكمًا نهائيًا على الخصوبة.",
+  "أشعة الصبغة (HSG) تُقيّم انفتاح قنوات فالوب وقد تُحسّن فرص الحمل مؤقتًا.",
+  "توقيت العلاقة كل 1–2 يوم حول فترة الإباضة يزيد فرص الحمل.",
+  "الالتهابات التناسلية غير المعالجة قد تؤدي إلى انسداد القنوات.",
+  "التوتر المزمن وسوء النوم قد يخفضان الخصوبة لدى الجنسين.",
+  "الستيرويدات البنائية والمنشطات تضر بالخصوبة الذكرية.",
+  "المذيبات الصناعية والإشعاع والحرارة المتكررة قد تُضعف إنتاج النطاف.",
+  "الفوليك أسيد (400–800 ميكروغرام يوميًا) يُنصح به قبل الحمل.",
+  "نجاح IVF يعتمد بشكل كبير على عمر المرأة وجودة البويضات/الأجنة.",
+  "IUI يفيد حالات مختارة مثل العقم غير المفسّر أو مشكلات خفيفة في السائل المنوي.",
+  "ICSI يُستخدم عند ضعف شديد في السائل المنوي أو فشل الإخصاب التقليدي.",
+  "تقليل الحمل المتعدّد يحسّن السلامة؛ غالبًا يُفضّل نقل جنين واحد.",
+  "تجميد الأجنة والبويضات بالتزجيج يحافظ على الجودة بنسب عالية.",
+  "العقم غير المفسّر قد يشكّل 10–20% وقد يحدث حمل تلقائي لاحقًا.",
+  "العمر وBMI والتدخين والأمراض المزمنة عوامل نمط حياة رئيسية.",
+  "مكملات الخصوبة ليست بديلًا عن التقييم الطبي، والأدلة متباينة.",
+  "التطعيمات (مثل الحصبة الألمانية) مهمة قبل الحمل.",
+  "الدعم النفسي والسلوكي يُحسّن التعايش مع رحلة العلاج.",
+  "التثقيف حول الخصوبة المبكر يحسّن القرارات العلاجية."
+];
+(function rotateFact(){
+  try{
+    const key='fertility_fact_index_v3';
+    let idx=parseInt(localStorage.getItem(key)||'0',10);
+    if(isNaN(idx)||idx<0||idx>=FACTS.length) idx=0;
+    document.getElementById('factText').textContent=FACTS[idx];
+    idx=(idx+1)%FACTS.length;
+    localStorage.setItem(key,String(idx));
+  }catch(e){
+    const r=Math.floor(Math.random()*FACTS.length);
+    document.getElementById('factText').textContent=FACTS[r];
+  }
+})();
+
+/* واتساب عند الضغط على الاسم فقط (لا يبدو كرابط) */
+document.getElementById('devLink').addEventListener('click', function(e){
+  e.preventDefault();
+  const waUrl="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0";
+  window.open(waUrl,'_blank','noopener');
+});
+</script>
+
+<!-- بيانات منظّمة -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"MedicalWebPage",
+  "name":"فاحص أعراض العقم",
+  "description":"استبيان تثقيفي عربي للتنبيه إلى مؤشرات العقم وتأخر الإنجاب للنساء والرجال، مع روابط مراكز خصوبة.",
+  "medicalSpecialty":"ObstetricsAndGynecology",
+  "inLanguage":"ar",
+  "audience":{"@type":"PeopleAudience","healthCondition":"Infertility"},
+  "publisher":{"@type":"Organization","name":"Fadhel AlRayes"},
+  "isAccessibleForFree": true
+}
+</script>
+</body>
+</html>
