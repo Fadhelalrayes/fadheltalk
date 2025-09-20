@@ -4,19 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>فاضل الريس | مركز الصفحات</title>
-  <meta name="description" content="لوحة روابط احترافية تضم مشاريع وأدوات فاضل الريس: المحادثة الذكية، مدار الخبر، القرآن الكريم، الاستخارة، المسبحة الرقمية، الرياضة، الطيران، الصحة، الأسواق، والعدّ التنازلي." />
+  <meta name="description" content="روابط مشاريع وأدوات فاضل الريس: المحادثة الذكية، مدار الخبر، القرآن الكريم، الاستخارة، المسبحة الرقمية، الرياضة، الطيران، الصحة، الأسواق، والعدّ التنازلي." />
   <meta name="keywords" content="فاضل الريس, المحادثة الذكية, القرآن الكريم, استخارة, مسبحة, أخبار, رياضة, تذاكر طيران, حاسبة عمر, فاحص سرطان, أسعار الأسواق, العد التنازلي, محرم" />
   <link rel="canonical" href="https://fadhel-alrayes.fun/" />
   <meta name="robots" content="index, follow" />
 
-  <!-- خط Cairo -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="فاضل الريس | مركز الصفحات" />
+  <meta property="og:description" content="روابط احترافية لمشاريع وأدوات فاضل الريس." />
+  <meta property="og:url" content="https://fadhel-alrayes.fun/" />
+  <meta property="og:image" content="https://fadhel-alrayes.fun/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- خط -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root{
       --gold-1:#d4af37; --gold-2:#f5d76e;
       --bg-1:#ffffff; --bg-2:#f7f4ea;
-      --text:#111; --muted:#666;
+      --text:#101418; --muted:#5e6773;
       --card:#fff; --border:#e8e2cf;
       --radius:16px;
       --shadow:0 10px 28px rgba(0,0,0,.10);
@@ -26,70 +34,73 @@
     body{
       margin:0; color:var(--text);
       font-family:"Cairo","Noto Kufi Arabic",Tahoma,Arial,sans-serif;
-      background: radial-gradient(1000px 500px at 85% -10%, rgba(212,175,55,.12), transparent),
-                  linear-gradient(180deg,var(--bg-2),var(--bg-1));
+      background:
+        radial-gradient(900px 480px at 85% -10%, rgba(212,175,55,.10), transparent),
+        linear-gradient(180deg,var(--bg-2),var(--bg-1));
     }
     .wrap{max-width:1000px; margin:0 auto; padding:20px}
 
-    /* مربع رسمي لاسم فاضل الريس */
+    /* رأس رسمي أنيق */
     .title-bar{
-      background: linear-gradient(135deg,var(--gold-1),var(--gold-2));
-      color:#fff;
-      text-align:center;
-      font-size:2rem;
-      font-weight:900;
-      padding:28px 20px;
-      border-radius:20px;
-      margin-bottom:28px;
-      box-shadow:0 8px 30px rgba(212,175,55,.45), inset 0 2px 6px rgba(255,255,255,.3);
-      letter-spacing:1px;
-      text-shadow:0 0 6px rgba(255,255,255,.7), 0 0 14px rgba(212,175,55,.8);
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px 22px;
+      box-shadow:0 10px 26px rgba(0,0,0,.06);
+      margin-bottom:22px;
       position:relative;
       overflow:hidden;
     }
-    .title-bar::after{
+    .title-bar::before{
       content:"";
-      position:absolute;
-      top:0; left:-50%; width:200%; height:100%;
-      background: linear-gradient(120deg,transparent 0%,rgba(255,255,255,.4) 50%,transparent 100%);
-      transform:skewX(-25deg);
-      animation: shine 5s infinite;
+      position:absolute; inset:0 0 auto 0; height:5px;
+      background:linear-gradient(90deg, var(--gold-1), var(--gold-2));
     }
-    @keyframes shine {
-      0%{left:-80%}
-      50%{left:120%}
-      100%{left:120%}
+    .title{
+      margin:0; text-align:center; font-weight:900; font-size:1.8rem; letter-spacing:.4px;
+      color:#1a1f27;
     }
 
+    /* شبكة الأزرار */
     .grid{
       display:grid; gap:14px;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
     a.card{
-      display:block; text-decoration:none; color:inherit; background:var(--card);
-      border:1px solid var(--border); border-radius:var(--radius);
-      padding:18px; box-shadow:var(--shadow); transition:.2s ease;
+      display:block; text-decoration:none; color:inherit;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+      transition:.2s ease;
     }
     a.card:hover{transform:translateY(-3px); box-shadow:var(--shadow-hover)}
-    .row{display:flex; align-items:center; gap:12px}
+    .row{display:flex; align-items:flex-start; gap:12px}
     .ico{
-      width:46px; height:46px; border-radius:12px; display:grid; place-items:center;
+      width:42px; height:42px; border-radius:12px; display:grid; place-items:center; flex:0 0 42px;
       background: radial-gradient(120% 120% at 20% 15%, var(--gold-2), var(--gold-1));
-      color:#fff; box-shadow:0 8px 18px rgba(212,175,55,.35)
+      color:#fff; font-size:1.1rem; box-shadow:0 8px 18px rgba(212,175,55,.30)
     }
-    h3{margin:0 0 4px; font-size:1.1rem; font-weight:600}
-    p.desc{margin:0; color:var(--muted); font-size:.92rem; line-height:1.6}
-    footer{margin:24px 0 6px; text-align:center; color:var(--muted); font-size:.9rem; font-weight:600}
-    #footerName{cursor:default; user-select:none; -webkit-tap-highlight-color: transparent;}
+    h3{margin:0 0 6px; font-size:1.06rem; font-weight:800}
+    p.desc{margin:0; color:var(--muted); font-size:.92rem; line-height:1.65}
+
+    footer{
+      margin:26px 0 6px; text-align:center; color:var(--muted); font-size:.9rem; font-weight:600;
+    }
+    #footerName{cursor:default; user-select:none; -webkit-tap-highlight-color:transparent}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="title-bar">فاضل الريس</div>
+    <!-- رأس رسمي بدون رموز -->
+    <div class="title-bar">
+      <h1 class="title">فاضل الريس</h1>
+    </div>
 
+    <!-- جميع الأزرار ثابتة بدون JS -->
     <main class="grid">
-      <!-- مثال زر -->
-      <a class="card" href="https://fadhel-alrayes.fun/talk.html">
+      <a class="card" href="https://fadhel-alrayes.fun/talk.html" aria-label="FadhelTalk — المحادثة الذكية">
         <div class="row">
           <span class="ico">💬</span>
           <div>
@@ -98,7 +109,126 @@
           </div>
         </div>
       </a>
-      <!-- أكمل باقي الأزرار كما عندك -->
+
+      <a class="card" href="https://fadhelalrayes.github.io/Akbar/" aria-label="مدار الخبر">
+        <div class="row">
+          <span class="ico">📰</span>
+          <div>
+            <h3>مدار الخبر</h3>
+            <p class="desc">صفحة إخبارية خفيفة تلتقط آخر المستجدات العربية.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index5.html#home" aria-label="استخارة بالقرآن">
+        <div class="row">
+          <span class="ico">📖</span>
+          <div>
+            <h3>استخارة بالقرآن</h3>
+            <p class="desc">نتيجة لحظية وبحث بالسور والآيات والصفحات — متوافق مع الجوال.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index6.html#home" aria-label="مِسبحة رقمية">
+        <div class="row">
+          <span class="ico">🔢</span>
+          <div>
+            <h3>مِسبحة رقمية</h3>
+            <p class="desc">تسبيح الزهراء عليها السلام والتسبيح المفتوح مع حفظ تلقائي للأعداد.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index7.html" aria-label="الأيام الصالحة للزواج وفق المذهب الشيعي">
+        <div class="row">
+          <span class="ico">📅</span>
+          <div>
+            <h3>الأيام الصالحة للزواج وفق المذهب الشيعي</h3>
+            <p class="desc">تقويم يساعدك على اختيار الأيام المناسبة للمراسم.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index9.html#home" aria-label="حِساب سنّ التكليف الشرعي">
+        <div class="row">
+          <span class="ico">🌙</span>
+          <div>
+            <h3>حِساب سنّ التكليف الشرعي</h3>
+            <p class="desc">تحويل العمر القمري وتحديد بلوغ سنّ التكليف للصبي أو الفتاة.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index11" aria-label="خط التماس الأخباري">
+        <div class="row">
+          <span class="ico">⚽</span>
+          <div>
+            <h3>خط التماس الأخباري</h3>
+            <p class="desc">آخر الأخبار الرياضية العربية لحظة بلحظة.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index13.html" aria-label="تذكرتك للطيران">
+        <div class="row">
+          <span class="ico">✈️</span>
+          <div>
+            <h3>تذكرتك للطيران</h3>
+            <p class="desc">قارن أسعار الرحلات واحجز عبر مواقع الحجز العالمية.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index15.html" aria-label="القرآن الكريم — قراءة وتلاوة">
+        <div class="row">
+          <span class="ico">📜</span>
+          <div>
+            <h3>القرآن الكريم — قراءة وتلاوة</h3>
+            <p class="desc">اختيار السورة والاستماع للآيات بتجربة ميسّرة.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index22.html" aria-label="حاسبة العمر المتوقّع">
+        <div class="row">
+          <span class="ico">⏳</span>
+          <div>
+            <h3>حاسبة العمر المتوقّع</h3>
+            <p class="desc">عمر متوقّع ومتبقٍّ مع تقرير PDF ونصائح صحية مخصّصة.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index23.html" aria-label="فاحص أعراض السرطان">
+        <div class="row">
+          <span class="ico">🧪</span>
+          <div>
+            <h3>فاحص أعراض السرطان</h3>
+            <p class="desc">استبيان إرشادي وفق WHO/IARC/NCI مع عرض أقرب مستشفى.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index33.html" aria-label="أسعار وأسواق لحظية">
+        <div class="row">
+          <span class="ico">💹</span>
+          <div>
+            <h3>أسعار وأسواق لحظية</h3>
+            <p class="desc">عملات وأسهم وسلع مع توصيات وتنبيهات فورية.</p>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://fadhel-alrayes.fun/index55.html" aria-label="العدّ التنازلي لمحرم">
+        <div class="row">
+          <span class="ico">📆</span>
+          <div>
+            <h3>العدّ التنازلي لمحرم</h3>
+            <p class="desc">حساب دقيق لموعد بداية شهر مُحَرَّم.</p>
+          </div>
+        </div>
+      </a>
     </main>
 
     <footer>© <span id="year"></span> <span id="footerName">فاضل الريس</span> — جميع الحقوق محفوظة</footer>
@@ -106,6 +236,7 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    // الاسم في الأسفل فقط يفتح واتساب
     const waUrl = "https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0";
     document.getElementById('footerName').addEventListener('click', () => {
       window.open(waUrl, '_blank', 'noopener');
