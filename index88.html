@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>فاحص أعراض القلب — تقدير أولي ونصائح عاجلة</title>
+<meta name="description" content="أداة عربية سريعة لتقييم أولي لأعراض القلب مع نصائح طوارئ وروابط مستشفيات محلية وعالمية. ليست بديلاً عن الطبيب.">
+<link rel="canonical" href="https://example.com/heart-checker-ar"/>
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:type" content="website">
+<meta property="og:title" content="فاحص أعراض القلب — تقدير أولي ونصائح عاجلة">
+<meta property="og:description" content="تقييم أولي لأعراض القلب + طوارئ + مستشفيات موثوقة.">
+<meta property="og:url" content="https://example.com/heart-checker-ar">
+<meta property="og:site_name" content="Heart Checker AR">
+<meta property="og:image" content="https://example.com/assets/heart-checker-cover.png">
+<meta property="og:image:alt" content="واجهة فاحص أعراض القلب العربي">
+<meta name="twitter:card" content="summary_large_image">
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#f6f7fa; --ink:#0f172a; --muted:#64748b;
+    --card:#ffffff; --line:#e5e7eb;
+    --gold:#b58900; --gold-soft:#f5d574;
+    --ok:#10b981; --ok-bg:#ecfdf5; --ok-br:#a7f3d0;
+    --warn:#f59e0b; --warn-bg:#fffbeb; --warn-br:#fde68a;
+    --danger:#ef4444; --danger-bg:#fef2f2; --danger-br:#fecaca;
+    --shadow:0 8px 24px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:var(--ink)}
+  header{text-align:center; padding:24px 12px}
+  .brand{font-family:"Amiri",serif; font-size:clamp(26px,4.5vw,42px); color:var(--gold)}
+  .tag{margin-top:6px; font-size:14px; color:var(--muted); line-height:1.8}
+  .shell{max-width:1100px; margin:0 auto; padding:0 16px}
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:var(--shadow)}
+  .row{display:grid; gap:16px}
+  @media(min-width:980px){ .row{grid-template-columns:1.2fr .8fr} }
+
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
+  .hint{font-size:12px; color:var(--muted)}
+  .center{text-align:center}
+  .seg{display:flex; gap:6px; justify-content:center; flex-wrap:wrap}
+  .seg button{
+    flex:1; padding:10px 14px; border-radius:10px; border:1px solid var(--line);
+    background:#f9fafb; cursor:pointer; max-width:220px; font-weight:700; user-select:none; transition:.2s
+  }
+  .seg button.on{background:var(--gold); color:#111; border-color:var(--gold); outline:none}
+
+  .select{ position:relative; display:inline-block; width:100% }
+  .select select{
+    width:100%; appearance:none; background:#fff; border:1px solid var(--gold); border-radius:10px;
+    padding:12px 42px 12px 12px; font-size:1rem; cursor:pointer; color:#111; text-align:right;
+  }
+  .select::after{
+    content:""; position:absolute; top:50%; transform:translateY(-50%); right:12px; width:18px; height:18px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+    -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    pointer-events:none; opacity:.95;
+  }
+
+  .btn{padding:12px 20px; border-radius:10px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; display:block; margin:0 auto}
+
+  .resultbox{display:none; border-radius:14px; padding:14px; border:1px solid; font-weight:700; text-align:center}
+  .rb-ok{ background:var(--ok-bg); border-color:var(--ok-br); color:#064e3b }
+  .rb-warn{ background:var(--warn-bg); border-color:var(--warn-br); color:#7c2d12 }
+  .rb-danger{ background:var(--danger-bg); border-color:var(--danger-br); color:#7f1d1d }
+
+  .deck{display:grid; gap:12px; grid-template-columns:1fr; margin-top:16px}
+  @media(min-width:860px){ .deck{grid-template-columns:repeat(2,1fr)} }
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 2px 10px rgba(0,0,0,.04)}
+  .card h3{margin:0 0 6px; font-family:"Amiri",serif; color:var(--gold)}
+  .card p, .card ul{margin:0; font-size:14px; color:#374151; line-height:1.9}
+  .card ul{margin-top:8px; padding-inline-start:20px}
+
+  .iconbtn{width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:#fff; cursor:pointer}
+
+  .pdfwrap{margin-top:12px; text-align:center; display:none}
+  .pdfbtn{padding:10px 16px; border-radius:10px; border:1px solid var(--gold); background:#fff; cursor:pointer; font-weight:700}
+
+  /* نافذة رسائل محسّنة */
+  .msg-backdrop{position:fixed; inset:0; background:rgba(17,24,39,.35); display:none; align-items:center; justify-content:center; z-index:99999}
+  .msg-backdrop.show{ display:flex }
+  .msg-box{width:min(92vw,540px); background:#fff; border:1px solid var(--gold); border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.18); padding:18px; text-align:center}
+  .msg-title{font-family:"Amiri",serif; font-size:20px; color:#b58900; margin:6px 0 2px}
+  .msg-text{ color:#374151; line-height:1.8; margin:8px 0 14px }
+  .msg-actions{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap }
+  .msg-btn{padding:10px 18px; border-radius:10px; border:1px solid var(--gold); background:linear-gradient(90deg,var(--gold),var(--gold-soft)); color:#111; font-weight:700; cursor:pointer}
+  .msg-ghost{padding:10px 18px; border-radius:10px; border:1px solid var(--line); background:#fff; color:#111; cursor:pointer}
+  .msg-box.error{ border-color:#fecaca }
+  .msg-box.error .msg-title{ color:#ef4444 }
+
+  /* صناديق طوارئ أنيقة */
+  .emg{border-radius:14px; padding:14px; box-shadow:var(--shadow); border:1px solid var(--line)}
+  .emg-a{background:#fff5f5; border-left:6px solid #ef4444}
+  .emg-b{background:#fffbea; border-left:6px solid #f59e0b}
+
+  /* زر واتساب للمطور — زر خفي */
+  #devLinkBtn{background:none; border:none; padding:0; font:inherit; color:inherit; cursor:pointer}
+</style>
+
+<!-- Structured Data مختصر -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"فاحص أعراض القلب","inLanguage":"ar","applicationCategory":"HealthApplication","offers":{"@type":"Offer","price":"0"}}
+</script>
+</head>
+<body>
+<header>
+  <div class="brand">فاحص أعراض القلب</div>
+  <div class="tag">
+    تقدير أولي للأعراض القلبية + نصائح طوارئ + مستشفيات موثوقة. ليست تشخيصًا نهائيًا.
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="row">
+      <div>
+        <!-- الدولة -->
+        <div class="field">
+          <label><strong>اختر دولتك</strong></label>
+          <div class="select">
+            <select id="countrySelect" aria-label="اختر الدولة">
+              <!-- الخليج -->
+              <option value="BHR" selected>البحرين</option>
+              <option value="KSA">السعودية</option>
+              <option value="ARE">الإمارات</option>
+              <option value="QAT">قطر</option>
+              <option value="KWT">الكويت</option>
+              <option value="OMN">عُمان</option>
+              <!-- المشرق -->
+              <option value="JOR">الأردن</option>
+              <option value="LBN">لبنان</option>
+              <option value="PSE">فلسطين</option>
+              <option value="SYR">سوريا</option>
+              <option value="IRQ">العراق</option>
+              <!-- وادي النيل والقرن -->
+              <option value="EGY">مصر</option>
+              <option value="SDN">السودان</option>
+              <option value="SOM">الصومال</option>
+              <option value="DJI">جيبوتي</option>
+              <option value="COM">جزر القمر</option>
+              <option value="MRT">موريتانيا</option>
+              <!-- المغرب العربي -->
+              <option value="MAR">المغرب</option>
+              <option value="DZA">الجزائر</option>
+              <option value="TUN">تونس</option>
+              <option value="LBA">ليبيا</option>
+              <!-- إيران -->
+              <option value="IRN">إيران</option>
+              <!-- اليمن -->
+              <option value="YEM">اليمن</option>
+            </select>
+          </div>
+          <div class="hint">لعرض مستشفى قلب محلي موصى به (اتصال مباشر + موقع رسمي).</div>
+        </div>
+
+        <!-- النوع -->
+        <div class="field center">
+          <label><strong>النوع</strong></label>
+          <div class="seg" id="sexSeg">
+            <button type="button" class="on" data-sex="male">رجل</button>
+            <button type="button" data-sex="female">امرأة</button>
+          </div>
+        </div>
+
+        <!-- العمر -->
+        <div class="field center">
+          <label><strong>العمر</strong></label>
+          <input id="age" type="number" inputmode="numeric" min="1" max="120" placeholder="مثال: 45" style="width:180px; padding:12px; border:1px solid var(--line); border-radius:10px; text-align:center; margin:0 auto">
+          <div class="hint">إن لم تدخل العمر لن تُحتسب النتيجة — أدخل عمرًا بين 1 و 120.</div>
+        </div>
+
+        <!-- عوامل خطورة ووراثة -->
+        <div class="field center">
+          <label><strong>عوامل مؤثّرة</strong></label>
+          <div class="seg" id="smokeSeg">
+            <button type="button" class="on" data-smoke="no">غير مدخّن</button>
+            <button type="button" data-smoke="yes">مدخّن</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="familySeg">
+            <button type="button" class="on" data-fh="no">لا تاريخ عائلي قلبي مبكر</button>
+            <button type="button" data-fh="yes">تاريخ عائلي قلبي مبكر</button>
+          </div>
+          <div style="margin-top:8px" class="seg" id="genSeg">
+            <button type="button" class="on" data-gen="no">لا وراثة معروفة</button>
+            <button type="button" data-gen="yes">وراثة دقيقة (فرط كوليسترول الدم العائلي/اعتلال عضلة القلب الضُخامي/متلازمة فترة QT الطويلة/متلازمة بروغادا)</button>
+          </div>
+        </div>
+
+        <!-- أسئلة الأعراض القلبية -->
+        <div id="symptoms" class="card" aria-live="polite">
+          <h3>أسئلة الأعراض القلبية (اختر نعم/لا)</h3>
+          <div class="hint">أي ألم صدري حاد أو ضيق نفس شديد = طوارئ.</div>
+
+          <div class="field"><div><strong>ألم/ضغط صدري مع الجهد أو الراحة</strong></div>
+            <div class="seg" data-q="chestpain"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ضيق نفس بالجهد أو عند الاستلقاء</strong></div>
+            <div class="seg" data-q="sob"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>خفقان سريع/غير منتظم أو إغماء</strong></div>
+            <div class="seg" data-q="palp"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>تورّم الساقين/الكاحلين أو زيادة مفاجئة بالوزن</strong></div>
+            <div class="seg" data-q="edema"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ألم صدري مع تعرّق شديد/غثيان</strong></div>
+            <div class="seg" data-q="acs"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ألم ينتشر للذراع/الظهر/الفك أو ضيق نفس ليلي مفاجئ</strong></div>
+            <div class="seg" data-q="rad"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ضغط/سكر/كولسترول غير مضبوط</strong></div>
+            <div class="seg" data-q="rf"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+          <div class="field"><div><strong>ألم أو خفقان جديد بعد كوفيد/إجهاد</strong></div>
+            <div class="seg" data-q="postcovid"><button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button></div>
+          </div>
+        </div>
+
+        <button class="btn" id="calc">اعرض النتيجة</button>
+        <div class="pdfwrap" id="pdfwrap">
+          <button class="pdfbtn" id="pdfBtn">تنزيل النتائج PDF</button>
+        </div>
+      </div>
+
+      <div>
+        <!-- نتيجة -->
+        <div id="resultBox" class="resultbox rb-ok" role="status" aria-live="polite" aria-atomic="true">
+          مستوى الخطورة: <span id="riskText">منخفضة</span> — <span id="actionText">راقب الأعراض والتزم بنمط حياة قلبي صحي.</span>
+        </div>
+
+        <!-- ✅ أضفت الصندوق الناقص الذي كان يسبب الخطأ -->
+        <div class="deck" id="adviceDeck" style="display:none"></div>
+
+        <!-- صناديق الطوارئ -->
+        <div class="emg emg-a" style="margin-top:14px">
+          <h3 style="color:#b91c1c; font-family:'Amiri',serif; margin-bottom:8px">🚑 ماذا تفعل إذا كان أمامك مريض قلب في طارئ؟</h3>
+          <ul style="line-height:1.9; font-size:15px; color:#374151; padding-inline-start:22px; margin:0">
+            <li><strong>اتصل فورًا بالإسعاف</strong> (999 أو 112 حسب بلدك).</li>
+            <li>اجعل المريض نصف جلوس، خفّف الملابس، وفّر هواءً نقيًا.</li>
+            <li>إن توفّر أسبرين 300مغ ولا يوجد تحسّس: يُمضغ ببطء.</li>
+            <li>إذا توقف التنفس/النبض: ابدأ <strong>الإنعاش القلبي الرئوي (CPR)</strong> ضغطات 100–120/دقيقة على منتصف الصدر.</li>
+          </ul>
+        </div>
+
+        <div class="emg emg-b" style="margin-top:10px">
+          <h3 style="color:#92400e; font-family:'Amiri',serif; margin-bottom:8px">❤️ ماذا تفعل إذا أصابتك شخصيًا حالة قلبية طارئة؟</h3>
+          <ul style="line-height:1.9; font-size:15px; color:#374151; padding-inline-start:22px; margin:0">
+            <li>توقف فورًا واجلس أو استلقِ بوضع مريح.</li>
+            <li><strong>اتصل بالطوارئ</strong> أو اطلب من من حولك الاتصال.</li>
+            <li>لا تقد السيارة بنفسك. إن وُصف لك دواء تحت اللسان (نيتروغليسرين): ضع قرصًا كما وصف الطبيب.</li>
+            <li>إذا لم تتحسن خلال دقائق أو ساءت: انتظر الإسعاف فورًا.</li>
+          </ul>
+        </div>
+
+        <!-- مستشفى محلي -->
+        <div id="localBox" class="card" style="margin-top:12px; display:none">
+          <h3>مستشفى قلب موصى به في بلدك</h3>
+          <div class="hint">زر الاتصال يعمل مباشرة، مع رابط الموقع الرسمي.</div>
+          <div id="localContact" style="margin-top:6px; font-size:14px; color:#374151"></div>
+        </div>
+
+        <!-- مستشفيات عالمية -->
+        <div class="card" style="margin-top:12px">
+          <h3>مستشفيات قلب عالمية موثوقة</h3>
+          <div class="hint">اختر مستشفى لمعرفة رقم التواصل والاتصال مباشرة.</div>
+          <div class="select">
+            <select id="intlSelect" aria-label="اختر مستشفى عالمي">
+              <option value="">— اختر مستشفى عالميًا —</option>
+              <option data-phone="+1-216-444-2200" value="https://my.clevelandclinic.org/departments/heart">Cleveland Clinic — الولايات المتحدة</option>
+              <option data-phone="+1-507-284-2511" value="https://www.mayoclinic.org/departments-centers/cardiovascular-medicine/home/orc-20121930">Mayo Clinic Cardiovascular — الولايات المتحدة</option>
+              <option data-phone="+1-713-332-2539" value="https://www.houstonmethodist.org/heart-vascular/">Houston Methodist DeBakey — الولايات المتحدة</option>
+              <option data-phone="+44-20-7352-8121" value="https://www.rbht.nhs.uk/contact">Royal Brompton — المملكة المتحدة</option>
+              <option data-phone="+49-30-450-50" value="https://www.charite.de/en/deutsches_herzzentrum_der_charite_dhzc">Deutsches Herzzentrum — ألمانيا</option>
+              <option data-phone="+65-6704-2000" value="https://www.nhcs.com.sg/appointments">National Heart Centre Singapore — سنغافورة</option>
+              <option data-phone="+66-2066-8888" value="https://www.bumrungrad.com/en/contact-us/contact-details">Bumrungrad Heart Institute — تايلند</option>
+              <option data-phone="+971-800-82223" value="https://www.clevelandclinicabudhabi.ae/en/institutes-and-specialties/heart-vascular-and-thoracic-institute">Cleveland Clinic أبوظبي — الإمارات</option>
+            </select>
+          </div>
+          <div id="intlContact" style="margin-top:8px; font-size:14px; color:#374151; display:none"></div>
+        </div>
+
+        <!-- مراجع -->
+        <div class="card" style="margin-top:12px">
+          <h3>مراجع موثوقة</h3>
+          <div class="hint">روابط تعليمية تُفتح مباشرة.</div>
+          <div class="select">
+            <select id="refSelect" aria-label="اختر مرجعًا">
+              <option value="">— اختر مرجعًا —</option>
+              <option value="https://www.who.int/health-topics/cardiovascular-diseases">منظمة الصحة العالمية — أمراض القلب والأوعية</option>
+              <option value="https://www.heart.org/">الجمعية الأمريكية للقلب</option>
+              <option value="https://www.escardio.org/">الجمعية الأوروبية لأمراض القلب</option>
+              <option value="https://www.nhs.uk/conditions/heart-disease/">خدمة الصحة الوطنية البريطانية — أمراض القلب</option>
+              <option value="https://www.cdc.gov/heartdisease/">المراكز الأمريكية للسيطرة على الأمراض — أمراض القلب</option>
+              <option value="https://www.nice.org.uk/guidance">المعهد الوطني للتميّز الصحي — أدلة</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- مشاركة -->
+        <div class="card" style="margin-top:12px; text-align:center">
+          <h3>شارك الصفحة</h3>
+          <div class="sharebar" style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap">
+            <a class="iconbtn" id="shareWA" title="واتساب" aria-label="WhatsApp" href="https://wa.me/?text=%D9%81%D8%A7%D8%AD%D8%B5%20%D8%A3%D8%B9%D8%B1%D8%A7%D8%B6%20%D8%A7%D9%84%D9%82%D9%84%D8%A8%20https%3A%2F%2Fexample.com%2Fheart-checker-ar" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 0a12 12 0 00-10 18.3L1 23l4.9-1A12 12 0 1012 0zm6.5 17.2c-.3.8-1.7 1.6-2.4 1.6-.6 0-1.4.1-3.8-1-3.2-1.4-5.3-4.6-5.5-4.8-.1-.2-1.3-1.7-1.3-3.2 0-1.6.8-2.4 1.1-2.7.3-.3.7-.4 1-.4h.8c.2 0 .6 0 .9.7.3.8 1.1 2.7 1.2 2.9.1.2.2.5 0 .8-.2.3-.3.5-.6.8-.3.3-.6.6-.2 1.2.4.6 1.7 2.8 4 3.8 2.9 1.2 3 .8 3.5.8.5 0 1.8-.8 2.1-1.5.2-.7 1-1.6 1.3-1.8.2-.1.3-.2.5-.1l1 .5c.3.1.5.3.5.5-.1.4-.7 2-1 2.7z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareTG" title="تيليغرام" aria-label="Telegram" href="https://t.me/share/url?url=https%3A%2F%2Fexample.com%2Fheart-checker-ar&text=%D9%81%D8%A7%D8%AD%D8%B5%20%D8%A3%D8%B9%D8%B1%D8%A7%D8%B6%20%D8%A7%D9%84%D9%82%D9%84%D8%A8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 18.2l-.3 4.1c.4 0 .6-.2.8-.4l2-1.8 4.1 3c.7.4 1.3.2 1.5-.7L22 6.2c.2-1.1-.4-1.5-1.1-1.2L2.3 11.1c-1.1.4-1 1.3 0 1.6ل4.1 1.2 9.4-5.9c.4-.3.9-.1.5.2L9 18.2z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareX" title="X" aria-label="X" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fexample.com%2Fheart-checker-ar&text=%D9%81%D8%A7%D8%AD%D8%B5%20%D8%A3%D8%B9%D8%B1%D8%A7%D8%B6%20%D8%A7%D9%84%D9%82%D9%84%D8%A8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 2h4.7l5 6.8L18.7 2H22ل-7.8 9.1L22 22h-4.8l-5.4-7.2L6 22H2.1l8.3-9.8L3 2z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareFB" title="Facebook" aria-label="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.com%2Fheart-checker-ar" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.5.2 2.5.2v2.7h-1.4c-1.4 0-1.9.9-1.9 1.8V12ه3.2l-.5 2.9h-2.7v7A10 10 0 0022 12z"/></svg>
+            </a>
+            <button class="iconbtn" id="copyLink" title="نسخ الرابط" aria-label="Copy Link">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M16 1H8C6.3 1 5 2.3 5 4v12c0 1.7 1.3 3 3 3h8c1.7 0 3-1.3 3-3V4c0-1.7-1.3-3-3-3zm1 15c0 .6-.4 1-1 1H8c-.6 0-1-.4-1-1V4c0-.6.4-1 1-1h8c.6 0 1 .4 1 1v12زM7 20c0 .6.4 1 1 1h8v2H8c-1.7 0-3-1.3-3-3v-2h2v2z"/></svg>
+            </button>
+          </div>
+          <div class="hint">إذا لم يفتح واتساب، الزر ينسخ النص تلقائيًا لتلصقه يدويًا.</div>
+        </div>
+
+        <footer style="text-align:center; margin:10px 0 0; font-size:12px; color:#6b7280">
+          <!-- زر خفي: لا يبدو رابطًا، لكن عند الضغط يفتح واتساب الذي أرسلته -->
+          <button id="devLinkBtn" type="button">برمجة وتطوير: فاضل الريس</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- نافذة رسائل -->
+<div id="msgBackdrop" class="msg-backdrop" role="dialog" aria-modal="true" aria-labelledby="msgTitle">
+  <div id="msgBox" class="msg-box">
+    <div id="msgTitle" class="msg-title">معلومة</div>
+    <div id="msgText" class="msg-text">—</div>
+    <div class="msg-actions">
+      <button id="msgRetry" class="msg-ghost" style="display:none">إعادة المحاولة</button>
+      <button id="msgOk" class="msg-btn">حسنًا</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF & مشاركة -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+<script>
+/* نافذة الرسائل */
+const $mb=document.getElementById('msgBackdrop');
+const $box=document.getElementById('msgBox');
+const $txt=document.getElementById('msgText');
+const $ttl=document.getElementById('msgTitle');
+const $retry=document.getElementById('msgRetry');
+document.getElementById('msgOk').onclick=()=>{$mb.classList.remove('show'); $retry.style.display='none'};
+function openMsg(message,type='info',title,withRetry=false,retryFn=null){
+  $txt.innerHTML=message;
+  $ttl.textContent=title||(type==='error'?'تعذّر إتمام العملية':'معلومة');
+  $box.classList.toggle('error', type==='error');
+  $mb.classList.add('show');
+  if(withRetry && typeof retryFn==='function'){
+    $retry.style.display='inline-flex';
+    $retry.onclick=()=>{ $mb.classList.remove('show'); $retry.style.display='none'; retryFn(); };
+  }else{
+    $retry.style.display='none';
+  }
+}
+
+/* أزرار التبديل */
+function makeToggle(segId,dataKey){
+  const seg=document.getElementById(segId);
+  seg.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    seg.dataset[dataKey]=Object.values(b.dataset)[0];
+  });
+}
+makeToggle('sexSeg','sex'); makeToggle('smokeSeg','smoke'); makeToggle('familySeg','fh'); makeToggle('genSeg','gen');
+
+/* نعم/لا للأسئلة */
+document.getElementById('symptoms').addEventListener('click', e=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  const seg=btn.parentElement;
+  seg.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+});
+
+/* فتح الروابط للقوائم */
+const refSelect=document.getElementById('refSelect');
+refSelect&&refSelect.addEventListener('change', e=>{
+  const url=e.target.value; if(url){ window.open(url,'_blank','noopener'); e.target.value=''; }
+});
+
+/* مستشفيات عالمية */
+const intlSelect=document.getElementById('intlSelect');
+const intlContact=document.getElementById('intlContact');
+intlSelect.addEventListener('change', ()=>{
+  const opt=intlSelect.selectedOptions[0];
+  if(!opt||!opt.value){ intlContact.style.display='none'; intlContact.innerHTML=''; return; }
+  const phone=(opt.dataset.phone||'').replace(/\s+/g,'');
+  const telLocal=phone?`tel:${phone}`:'';
+  const url=opt.value;
+  const name=opt.textContent.split('—')[0].trim();
+  intlContact.innerHTML=`${phone?`📞 <a href="${telLocal}"><strong>${opt.dataset.phone}</strong></a>`:'📞 —'} &nbsp;—&nbsp; <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+  intlContact.style.display='block';
+});
+
+/* مستشفيات محلية (مختصرة — يمكنك ضبطها لاحقًا بدقة أكبر) */
+const COUNTRY_HOSPITALS={
+  BHR:{n:"مجمع السلمانية الطبي — قسم القلب", phone:"+973-17288888", url:"https://www.moh.gov.bh/Contact/SMC?lang=ar"},
+  KSA:{n:"مدينة الملك فهد الطبية — مركز القلب", phone:"+966-11-288-9999", url:"https://www.kfmc.med.sa"},
+  ARE:{n:"كليفلاند كلينك أبوظبي — معهد القلب والأوعية", phone:"+971-800-82223", url:"https://www.clevelandclinicabudhabi.ae/en/institutes-and-specialties/heart-vascular-and-thoracic-institute"},
+  QAT:{n:"مستشفى القلب — مؤسسة حمد الطبية", phone:"+974-4025-1111", url:"https://hamad.qa"},
+  KWT:{n:"مستشفى الأمراض الصدرية — وحدة القلب", phone:"+965-24844040", url:"https://www.moh.gov.kw/"},
+  OMN:{n:"المركز الوطني للقلب — المستشفى السلطاني", phone:"+968-24599000", url:"https://www.royalhospital.om/"},
+  JOR:{n:"مدينة الحسين الطبية — مركز القلب", phone:"+962-6-5804800", url:"https://www.rms.jo/"},
+  LBN:{n:"AUBMC — مركز القلب", phone:"+961-1-350000", url:"https://www.aubmc.org.lb/"},
+  PSE:{n:"مجمع فلسطين الطبي — وحدة القلب", phone:"+970-2-2965600", url:"https://www.moh.ps/"},
+  SYR:{n:"مشفى الأسد الجامعي — أمراض القلب", phone:"+963-11-3340", url:"http://moh.gov.sy/"},
+  IRQ:{n:"مركز ابن البيطار لجراحة القلب", phone:"+964-1-0000000", url:"https://moh.gov.iq/"},
+  EGY:{n:"المعهد القومي للقلب (NHIC)", phone:"+20-2-27948030", url:"http://www.nhic.gov.eg/"},
+  SDN:{n:"مستشفى الشعب التعليمي — القلب", phone:"+249-183-000000", url:"https://fmoh.gov.sd/"},
+  SOM:{n:"مستشفى مديجو — القلب", phone:"+252-61-0000000", url:""},
+  DJI:{n:"مستشفى بيلتييه — أمراض القلب", phone:"+253-21350000", url:"https://www.sante.gouv.dj/"},
+  COM:{n:"المستشفى الوطني — قسم القلب", phone:"+269-3210000", url:""},
+  MRT:{n:"المستشفى الوطني — وحدة القلب", phone:"+222-45000000", url:""},
+  MAR:{n:"المركز الوطني لأمراض القلب — الرباط", phone:"+212-537-771700", url:"https://www.sante.gov.ma/"},
+  DZA:{n:"مركز القلب — CHU", phone:"+213-21-239000", url:""},
+  TUN:{n:"معهد صالح عزيّز — أمراض القلب", phone:"+216-71783022", url:""},
+  LBA:{n:"مركز طرابلس القلبي", phone:"+218-21-0000000", url:""},
+  YEM:{n:"مركز القلب — اليمن", phone:"+967-1-000000", url:""},
+  IRN:{n:"مركز طهران القلبي — جامعة طهران", phone:"+98-21-88029111", url:"https://thc.tums.ac.ir/"}
+};
+const EXTRA_HOSPITALS={
+  QAT:[
+    {n:"National Heart Center (HMC)", phone:"+974-44395777", url:"https://hamad.qa"},
+    {n:"Sidra Medicine — أمراض القلب", phone:"+974-40034000", url:"https://www.sidra.org/"}
+  ],
+  IRN:[
+    {n:"مركز رجائي لأمراض وجراحة القلب", phone:"+98-21-23922000", url:"https://www.rhc.ac.ir/"},
+    {n:"مستشفى شريعتي — أمراض القلب", phone:"+98-21-84902000", url:"https://shariati.tums.ac.ir/"}
+  ]
+};
+
+/* حساب الخطورة */
+const QUESTIONS_IDS=["chestpain","sob","palp","edema","acs","rad","rf","postcovid"];
+function isYes(id){ return document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a==='yes'; }
+function computeRisk(){
+  let score=0;
+  const heavy=['acs','chestpain'];
+  QUESTIONS_IDS.forEach(id=>{
+    const seg=document.querySelector(`.seg[data-q="${id}"]`);
+    const a=seg.querySelector('button.on')?.dataset.a||'no';
+    if(a==='yes'){ score+=1; if(heavy.includes(id)) score+=2; }
+  });
+  if((document.getElementById('smokeSeg').dataset.smoke||'no')==='yes') score+=1;
+  if((document.getElementById('familySeg').dataset.fh||'no')==='yes') score+=1;
+  if((document.getElementById('genSeg').dataset.gen||'no')==='yes') score+=1;
+  if(score>10) score=10;
+
+  let levelText='منخفضة', cls='rb-ok', action='راقب الأعراض والتزم بنمط حياة قلبي صحي.';
+  if(isYes('acs') || (isYes('chestpain') && isYes('sob'))){
+    levelText='عالية'; cls='rb-danger'; action='اتصل بالإسعاف أو راجع أقرب طوارئ فورًا.';
+  }else if(isYes('palp') || isYes('edema') || isYes('rad')){
+    levelText='متوسطة'; cls='rb-warn'; action='احجز موعدًا لدى طبيب القلب/الأسرة خلال 1–3 أيام للتقييم.';
+  }
+  if(score>=6){ levelText='عالية'; cls='rb-danger'; action='تقييم عاجل خلال 24–72 ساعة أو الطوارئ إذا ساءت الحالة.'; }
+  return {levelText, cls, action, score};
+}
+
+/* فحوص ونصائح */
+function screening(age,sex,smoker,fh,gen){
+  const list=[];
+  list.push("قياس ضغط الدم سنويًا (أو وفق نصيحة الطبيب).");
+  list.push("تحليل الدهون والسكر (صائم/تراكمي) كل 1–3 سنوات حسب الخطورة.");
+  if(smoker==='yes') list.push("الإقلاع عن التبغ + برنامج دعم/بدائل نيكوتين.");
+  if(fh==='yes') list.push("تاريخ عائلي مبكر: فحص الشحوم المبكر وفحوص أقارب الدرجة الأولى.");
+  if(gen==='yes') list.push("وراثة دقيقة: إحالة لطب/قلب وراثي.");
+  if(age>=40) list.push("تقييم خطر التصلّب (ASCVD) ومناقشة العلاج المناسب مع الطبيب.");
+  return list;
+}
+function buildAdvice(age,sex,smoke,fh,gen){
+  const deck=document.getElementById('adviceDeck');
+  if(!deck){ console.warn('adviceDeck مفقود'); return; }
+  deck.innerHTML='';
+  const mk=(t,html)=>{ const e=document.createElement('div'); e.className='card'; e.innerHTML=`<h3>${t}</h3>${html}`; return e; };
+  const list=screening(age,sex,smoke,fh,gen);
+  deck.append(
+    mk('نصائح سريعة','<ul><li>أي ألم صدري ضاغط أو ضيق نفس شديد = طوارئ.</li><li>امتنع عن التبغ، ونم 7–8 ساعات، وتحرك 150–300 دقيقة/أسبوع.</li><li>نظام متوسطي: خضار، فواكه، حبوب كاملة، أسماك، زيت زيتون.</li></ul>'),
+    mk('فحوص مقترحة', '<ul>'+list.map(x=>`<li>${x}</li>`).join('')+'</ul>')
+  );
+  deck.style.display='grid';
+}
+
+/* نتيجة + PDF + رسائل واضحة */
+let lastResult=null;
+const calcBtn=document.getElementById('calc');
+calcBtn.addEventListener('click', ()=>{
+  try{
+    const ageVal=document.getElementById('age').value.trim();
+    if(ageVal===''){
+      openMsg('لم يتم إدخال العمر بعد. لإظهار النتيجة: أدخل عمرًا (1–120) ثم اضغط "اعرض النتيجة".', 'error', 'العمر مطلوب', true, ()=>calcBtn.click());
+      return;
+    }
+    const age=parseFloat(ageVal);
+    if(!(age>=1 && age<=120)){
+      openMsg('أدخل عمرًا صحيحًا بين 1 و 120.', 'error', 'قيمة غير صالحة', true, ()=>calcBtn.click());
+      return;
+    }
+    const sex=document.getElementById('sexSeg').dataset.sex||'male';
+    const smoke=document.getElementById('smokeSeg').dataset.smoke||'no';
+    const fh=document.getElementById('familySeg').dataset.fh||'no';
+    const gen=document.getElementById('genSeg').dataset.gen||'no';
+
+    const {levelText, cls, action, score}=computeRisk();
+    const box=document.getElementById('resultBox');
+    box.className='resultbox '+cls;
+    document.getElementById('riskText').textContent=levelText;
+    document.getElementById('actionText').textContent=action;
+    box.style.display='block';
+
+    buildAdvice(age,sex,smoke,fh,gen);
+
+    // مستشفى بلدك
+    const ccode=document.getElementById('countrySelect').value;
+    const loc=COUNTRY_HOSPITALS[ccode];
+    const localBox=document.getElementById('localBox');
+    const localContact=document.getElementById('localContact');
+    if(loc){
+      const telHref = loc.phone ? `tel:${loc.phone.replace(/\s+/g,'')}` : '';
+      let extraHtml='';
+      if(EXTRA_HOSPITALS[ccode]){
+        extraHtml = '<div style="margin-top:8px"><strong>مستشفيات إضافية:</strong><ul style="margin:6px 0 0 0; padding-inline-start:20px">';
+        EXTRA_HOSPITALS[ccode].forEach(h=>{
+          const tel = h.phone?`tel:${(h.phone||'').replace(/\s+/g,'')}`:'';
+          extraHtml += `<li>${h.n} — ${h.phone?`📞 <a href="${tel}">${h.phone}</a>`:'—'} ${h.url?`&nbsp;—&nbsp;<a href="${h.url}" target="_blank" rel="noopener">الموقع</a>`:''}</li>`;
+        });
+        extraHtml += '</ul></div>';
+      }
+      localContact.innerHTML = `
+        🏥 <strong>${loc.n}</strong><br>
+        ${loc.phone ? `📞 <a href="${telHref}"><strong>${loc.phone}</strong></a>` : '📞 —'}
+        &nbsp;—&nbsp; ${loc.url ? `<a href="${loc.url}" target="_blank" rel="noopener">الموقع الرسمي</a>` : ''}
+        ${extraHtml}
+      `;
+      localBox.style.display='block';
+    }else{
+      localBox.style.display='none';
+      localContact.innerHTML='';
+    }
+
+    // مستشفى عالمي مختار
+    const sel=document.getElementById('intlSelect');
+    if(sel.value){
+      const opt=sel.selectedOptions[0];
+      const phone=opt.dataset.phone||'';
+      const tel=phone?`tel:${phone.replace(/\s+/g,'')}`:'';
+      const url=sel.value;
+      const name=opt.textContent.split('—')[0].trim();
+      intlContact.innerHTML=`${phone?`📞 <a href="${tel}"><strong>${phone}</strong></a>`:'📞 —'} &nbsp;—&nbsp; <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+      intlContact.style.display='block';
+    }else{
+      intlContact.style.display='none';
+      intlContact.innerHTML='';
+    }
+
+    // حفظ النتيجة للتصدير
+    lastResult = {
+      country: document.querySelector('#countrySelect option:checked').textContent,
+      age, sex:(sex==='male'?'رجل':'امرأة'),
+      smoke:(smoke==='yes'?'مدخّن':'غير مدخّن'),
+      fh:(fh==='yes'?'تاريخ عائلي مبكر':'لا'),
+      gen:(gen==='yes'?'وراثة دقيقة: موجودة':'لا'),
+      level:levelText, action, score
+    };
+    document.getElementById('pdfwrap').style.display='block';
+  }catch(err){
+    // يظهر الصندوق فقط عند وجود خطأ فعلي
+    openMsg('حدثت مشكلة غير متوقعة أثناء حساب النتيجة. جرّب إعادة المحاولة. إن استمرت المشكلة، حدّث الصفحة.', 'error', 'خطأ غير متوقع', true, ()=>calcBtn.click());
+    console.error(err);
+  }
+});
+
+/* PDF */
+document.getElementById('pdfBtn').addEventListener('click', async ()=>{
+  if(!lastResult){ openMsg('أجب عن الاستبيان أولًا لعرض النتائج ثم تنزيلها PDF.', 'error'); return; }
+  const { jsPDF } = window.jspdf;
+  const box=document.createElement('div');
+  box.setAttribute('dir','rtl');
+  box.style.width='780px'; box.style.background='#fff'; box.style.border='1px solid #e5e7eb'; box.style.borderRadius='16px'; box.style.padding='20px'; box.style.fontFamily='"Cairo",sans-serif'; box.style.color='#111827';
+  function row(k,v){ return `<tr><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6"><strong>${k}</strong></td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">${v}</td></tr>`; }
+  box.innerHTML=`
+    <div style="text-align:center; margin-bottom:10px">
+      <div style="font-family:'Amiri',serif; font-size:26px; color:${getComputedStyle(document.documentElement).getPropertyValue('--gold')}">تقرير استبيان أعراض القلب</div>
+      <div style="font-size:12px; color:#6b7280">${new Date().toLocaleString('ar')}</div>
+    </div>
+    <table style="width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid #eee; margin-bottom:10px">
+      <thead><tr style="background:linear-gradient(90deg,#fff7e6,#fff)"><th style="padding:10px 12px; text-align:right">البند</th><th style="padding:10px 12px; text-align:right">القيمة</th></tr></thead>
+      <tbody>
+        ${row('الدولة', lastResult.country)}
+        ${row('العمر', lastResult.age)}
+        ${row('النوع', lastResult.sex)}
+        ${row('التدخين', lastResult.smoke)}
+        ${row('تاريخ عائلي/وراثة', `${lastResult.fh} — ${lastResult.gen}`)}
+        ${row('مستوى الخطورة', lastResult.level + ` (الدرجة: ${lastResult.score}/10)`)}
+        ${row('التوصية الآن', lastResult.action)}
+      </tbody>
+    </table>
+    <div style="margin-top:10px; font-size:12px; color:#6b7280">هذه نتيجة تثقيفية عامة وليست تشخيصًا طبيًا. اتصل بالإسعاف عند أعراض طارئة.</div>
+  `;
+  document.body.appendChild(box);
+  await new Promise(r=>setTimeout(r, 80));
+  const canvas = await html2canvas(box, {scale:2, useCORS:true});
+  document.body.removeChild(box);
+
+  const pdf = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 28;
+  const imgW = pageW - margin*2;
+  const imgH = canvas.height * (imgW / canvas.width);
+
+  if(imgH <= pageH - margin*2){
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', margin, margin, imgW, imgH);
+  }else{
+    let sH = pageH - margin*2, ratio = canvas.width / imgW, slice = sH * ratio, pos = 0;
+    while(pos < canvas.height){
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = Math.min(slice, canvas.height - pos);
+      sliceCanvas.getContext('2d').drawImage(canvas, 0, pos, canvas.width, sliceCanvas.height, 0, 0, sliceCanvas.width, sliceCanvas.height);
+      const sliceData = sliceCanvas.toDataURL('image/png');
+      if(pos>0) pdf.addPage();
+      pdf.addImage(sliceData,'PNG', margin, margin, imgW, (sliceCanvas.height / ratio));
+      pos += slice;
+    }
+  }
+  pdf.save('نتيجة-استبيان-القلب.pdf');
+});
+
+/* مشاركة + إصلاح واتساب (ينسخ النص عند فشل الفتح) */
+document.getElementById('copyLink').onclick=async (e)=>{
+  e.preventDefault();
+  try{ await navigator.clipboard.writeText(location.href); openMsg('تم نسخ رابط الصفحة — الصقه في المكان المطلوب.'); }
+  catch{ openMsg('لم يتم نسخ الرابط تلقائيًا — انسخ يدويًا.', 'error'); }
+};
+document.getElementById('shareWA').addEventListener('click', async ()=>{
+  setTimeout(async ()=>{
+    if(document.hasFocus()){
+      try{
+        const text=`فاحص أعراض القلب ${location.href}`;
+        await navigator.clipboard.writeText(text);
+        openMsg('فتح واتساب قد لا يكون مدعومًا على هذا الجهاز. نسخنا الرسالة — الصقها في واتساب يدويًا.');
+      }catch{
+        openMsg('إن لم يفتح واتساب، انسخ الرابط يدويًا والصقه في واتساب.', 'error');
+      }
+    }
+  }, 400);
+});
+
+/* زر المطور — لا يظهر كرابط، لكنه يفتح واتساب عند الضغط فقط */
+document.getElementById('devLinkBtn').addEventListener('click', ()=>{
+  const url="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1&fbclid=PAT01DUAM7l4pleHRuA2FlbQIxMAABpwJGnDp7WfAHhqRoa_qpGrhg7GIMSgPMIRoSG6soArRWJ5EgIqPqQd_19r5-_aem_p13zwEhkcUR1Z56-MA-c6g";
+  window.open(url, '_blank', 'noopener');
+});
+</script>
+</body>
+</html>
