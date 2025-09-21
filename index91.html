@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="فاحص أعراض الاكتئاب بالعربية: أداة تثقيفية للكشف المبكر عن أعراض الاكتئاب، مع روابط لمستشفيات حكومية ومراكز موثوقة في الدول العربية. لا تغني عن الاستشارة الطبية.">
+<meta name="keywords" content="أعراض الاكتئاب, فحص الاكتئاب, مراكز الاكتئاب, مستشفيات حكومية للاكتئاب, توعية الاكتئاب, depression symptoms checker arabic">
+<meta name="robots" content="index, follow"/>
+<title>فاحص أعراض الاكتئاب — توعية وتحويلات طبية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f0f8ff; --ink:#001f3f; --muted:#708090;
+    --card:#ffffff; --line:#d3d3d3;
+    --primary:#4169e1; --primary-soft:#add8e6;
+    --ok:#228b22; --ok-bg:#f0fff0; --ok-br:#90ee90;
+    --warn:#ffd700; --warn-bg:#fffacd; --warn-br:#eee8aa;
+    --danger:#ff4500; --danger-bg:#ffe4e1; --danger-br:#ffc0cb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:var(--ink)}
+  header{text-align:center; padding:24px 12px; background:linear-gradient(to bottom, var(--primary), var(--primary-soft)); color:#fff; border-radius:0 0 20px 20px;}
+  .brand{font-family:"Amiri",serif; font-size:clamp(28px,5vw,48px); margin:0;}
+  .tag{margin-top:8px; font-size:15px; color:#f0f8ff; line-height:1.6}
+  .shell{max-width:1024px; margin:0 auto; padding:0 18px}
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:0 6px 16px rgba(0,0,0,.08); margin-top:20px;}
+  .row{display:grid; gap:18px}
+  @media(min-width:960px){ .row{grid-template-columns:1.3fr .7fr} }
+
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:14px}
+  .hint{font-size:13px; color:var(--muted)}
+  .center{text-align:center}
+
+  .seg{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+  .seg button{
+    flex:1; padding:12px 16px; border-radius:12px; border:1px solid var(--line);
+    background:#f8f9fa; cursor:pointer; max-width:220px; font-weight:700; transition:background 0.3s;
+  }
+  .seg button:hover{background:#e9ecef;}
+  .seg button.on{background:var(--primary); color:#fff; border-color:var(--primary);}
+
+  .select{ position:relative; display:inline-block; width:100% }
+  .select select{
+    width:100%; appearance:none; background:#fff; border:1px solid var(--primary); border-radius:12px;
+    padding:14px 44px 14px 14px; font-size:1.05rem; cursor:pointer; color:var(--ink); text-align:right;
+  }
+  .select::after{
+    content:""; position:absolute; top:50%; transform:translateY(-50%); right:14px; width:20px; height:20px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-soft));
+    -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    pointer-events:none;
+  }
+
+  .btn{padding:14px 24px; border-radius:12px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--primary),var(--primary-soft)); color:#fff; font-weight:700; display:block; margin:0 auto; transition:transform 0.2s;}
+  .btn:hover{transform:scale(1.05);}
+
+  .resultbox{display:none; border-radius:16px; padding:16px; border:1px solid; font-weight:700; text-align:center; margin-bottom:16px;}
+  .rb-ok{ background:var(--ok-bg); border-color:var(--ok-br); color:var(--ok); }
+  .rb-warn{ background:var(--warn-bg); border-color:var(--warn-br); color:var(--warn); }
+  .rb-danger{ background:var(--danger-bg); border-color:var(--danger-br); color:var(--danger); }
+
+  .deck{display:grid; gap:14px; grid-template-columns:1fr; margin-top:18px}
+  @media(min-width:860px){ .deck{grid-template-columns:repeat(2,1fr)} }
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 3px 8px rgba(0,0,0,.05)}
+  .card h3{margin:0 0 8px; font-family:"Amiri",serif; color:var(--primary); font-size:1.3rem}
+  .card p, .card ul{margin:0; font-size:15px; color:var(--ink); line-height:1.8}
+  .card ul{margin-top:10px; padding-inline-start:22px}
+
+  .iconbtn{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:#fff; cursor:pointer; transition:background 0.3s;}
+  .iconbtn:hover{background:#f0f8ff;}
+
+  .pdfwrap{margin-top:14px; text-align:center; display:none}
+  .pdfbtn{padding:12px 18px; border-radius:12px; border:1px solid var(--primary); background:#fff; cursor:pointer; font-weight:700; transition:background 0.3s;}
+  .pdfbtn:hover{background:var(--primary-soft);}
+
+  .msg-backdrop{
+    position:fixed; inset:0; background:rgba(0,0,0,.4);
+    display:none; align-items:center; justify-content:center; z-index:100000;
+  }
+  .msg-backdrop.show{ display:flex; }
+  .msg-box{
+    width:min(95vw,560px); background:#fff; border:1px solid var(--primary);
+    border-radius:18px; box-shadow:0 25px 60px rgba(0,0,0,.2);
+    padding:20px; text-align:center;
+  }
+  .msg-title{
+    font-family:"Amiri",serif; font-size:22px; color:var(--primary); margin:8px 0 4px;
+  }
+  .msg-text{ color:var(--ink); line-height:1.9; margin:10px 0 16px }
+  .msg-actions{ display:flex; justify-content:center }
+  .msg-btn{
+    padding:12px 20px; border-radius:12px; border:1px solid var(--primary);
+    background:linear-gradient(90deg,var(--primary),var(--primary-soft)); color:#fff; font-weight:700; cursor:pointer;
+  }
+  .msg-box.error{ border-color:#ff0000; }
+  .msg-box.error .msg-title{ color:#ff0000 }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">فاحص أعراض الاكتئاب</div>
+  <div class="tag">
+    أداة تثقيفية بالعربية للكشف المبكر عن أعراض الاكتئاب وعوامل الخطورة، مع روابط لمستشفيات حكومية ومراكز موثوقة. لا تُغني عن الاستشارة الطبية المهنية.  
+    <strong>المصادر:</strong> WHO، CDC، NIMH، NHS، APA، NICE.
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="row">
+      <div>
+        <!-- الدولة -->
+        <div class="field">
+          <label><strong>اختر دولتك</strong></label>
+          <div class="select">
+            <select id="countrySelect" aria-label="اختر الدولة">
+              <option value="BHR" selected>البحرين</option>
+              <option value="KSA">السعودية</option>
+              <option value="ARE">الإمارات</option>
+              <option value="QAT">قطر</option>
+              <option value="KWT">الكويت</option>
+              <option value="OMN">عُمان</option>
+              <option value="EGY">مصر</option>
+              <option value="JOR">الأردن</option>
+              <option value="LBN">لبنان</option>
+              <option value="IRQ">العراق</option>
+              <option value="LBA">ليبيا</option>
+              <option value="MAR">المغرب</option>
+              <option value="DZA">الجزائر</option>
+              <option value="TUN">تونس</option>
+              <option value="SDN">السودان</option>
+              <option value="SYR">سوريا</option>
+              <option value="PSE">فلسطين</option>
+              <option value="DJI">جيبوتي</option>
+              <option value="COM">جزر القمر</option>
+              <option value="MRT">موريتانيا</option>
+              <option value="SOM">الصومال</option>
+              <option value="YEM">اليمن</option>
+              <option value="IRN">إيران</option>
+            </select>
+          </div>
+          <div class="hint">لعرض مستشفى حكومي ومركز محلي موصى به للتواصل السريع.</div>
+        </div>
+
+        <!-- النوع -->
+        <div class="field center">
+          <label><strong>النوع</strong></label>
+          <div class="seg" id="sexSeg">
+            <button type="button" class="on" data-sex="male">ذكر</button>
+            <button type="button" data-sex="female">أنثى</button>
+          </div>
+        </div>
+
+        <!-- العمر -->
+        <div class="field center">
+          <label><strong>العمر</strong></label>
+          <input id="age" type="number" inputmode="numeric" min="0" max="120" placeholder="مثال: 25" style="width:180px; padding:12px; border:1px solid var(--line); border-radius:10px; text-align:center; margin:0 auto">
+        </div>
+
+        <!-- عوامل -->
+        <div class="field center">
+          <label><strong>عوامل مؤثرة</strong></label>
+          <div class="seg" id="familySeg">
+            <button type="button" class="on" data-fh="no">لا تاريخ عائلي قوي</button>
+            <button type="button" data-fh="yes">تاريخ عائلي قوي</button>
+          </div>
+        </div>
+
+        <!-- أسئلة الأعراض -->
+        <div id="symptoms" class="card">
+          <h3>أسئلة الأعراض (اختر نعم/لا)</h3>
+          <div class="hint">العرض الذي يستمر ويؤثر على الحياة اليومية يستلزم تقييمًا طبيًا.</div>
+
+          <div class="field"><div><strong>شعور مستمر بالحزن أو اليأس</strong></div>
+            <div class="seg" data-q="sadness">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>فقدان الاهتمام بالأنشطة اليومية أو الهوايات</strong></div>
+            <div class="seg" data-q="interest">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>تغيرات في الشهية أو الوزن</strong></div>
+            <div class="seg" data-q="appetite">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>اضطرابات في النوم (أرق أو نوم زائد)</strong></div>
+            <div class="seg" data-q="sleep">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>الإرهاق أو انخفاض الطاقة</strong></div>
+            <div class="seg" data-q="fatigue">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>صعوبة في التركيز أو اتخاذ القرارات</strong></div>
+            <div class="seg" data-q="concentration">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>الشعور بالذنب أو عدم القيمة</strong></div>
+            <div class="seg" data-q="guilt">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>التهيج أو الغضب الزائد</strong></div>
+            <div class="seg" data-q="irritability">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>أفكار بالموت أو الانتحار</strong></div>
+            <div class="seg" data-q="suicidal">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>آلام جسدية بدون سبب واضح</strong></div>
+            <div class="seg" data-q="pain">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>بطء في الحركة أو الكلام</strong></div>
+            <div class="seg" data-q="slow">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>القلق أو التوتر الزائد</strong></div>
+            <div class="seg" data-q="anxiety">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn" id="calc">اعرض النتيجة</button>
+        <div class="pdfwrap" id="pdfwrap">
+          <button class="pdfbtn" id="pdfBtn">تنزيل النتائج PDF</button>
+        </div>
+      </div>
+
+      <div>
+        <!-- صندوق النتيجة -->
+        <div id="resultBox" class="resultbox rb-ok">
+          مستوى الإشارة: <span id="riskText">منخفضة</span> — <span id="actionText">راقب التطور واستشر طبيبًا إذا استمر.</span>
+        </div>
+
+        <div class="deck" id="adviceDeck" style="display:none"></div>
+
+        <!-- توصيات محلية يظهر بعد النتيجة -->
+        <div id="localBox" class="card" style="margin-top:12px; display:none">
+          <h3>توصيات طبية في بلدك</h3>
+          <div class="hint">ابدأ بالمستشفى الحكومي، ثم المركز المتخصص إذا توفر. زر الاتصال يعمل مباشرة.</div>
+          <div id="govHospital" style="margin-top:10px; font-size:14px; color:#374151; border-bottom:1px solid var(--line); padding-bottom:10px;"></div>
+          <div id="localContact" style="margin-top:10px; font-size:14px; color:#374151;"></div>
+        </div>
+
+        <!-- مراكز عالمية -->
+        <div class="card" style="margin-top:12px">
+          <h3>مراكز عالمية موثوقة</h3>
+          <div class="hint">اختر مركزًا لمعرفة رقم التواصل والاتصال مباشرة.</div>
+          <div class="select">
+            <select id="intlSelect" aria-label="اختر مركزًا عالميًا">
+              <option value="">— اختر مركزًا عالميًا —</option>
+              <option data-phone="+1-800-662-4357" value="https://www.nimh.nih.gov/">National Institute of Mental Health (NIMH) — الولايات المتحدة</option>
+              <option data-phone="+1-800-232-4636" value="https://www.cdc.gov/mentalhealth/">CDC Mental Health Resources — الولايات المتحدة</option>
+              <option data-phone="+44-207-611-8888" value="https://www.mind.org.uk/">Mind — المملكة المتحدة</option>
+              <option data-phone="+33-1-43-92-67-00" value="https://www.inserm.fr/">Inserm Mental Health — فرنسا</option>
+              <option data-phone="+49-30-921-1000" value="https://www.deutsche-depressionshilfe.de/">Deutsche Depressionshilfe — ألمانيا</option>
+              <option data-phone="+65-6389-2000" value="https://www.imh.com.sg/">Institute of Mental Health — سنغافورة</option>
+              <option data-phone="+82-2-3274-0100" value="https://www.mentalhealth.go.kr/">Korea Mental Health Foundation — كوريا الجنوبية</option>
+              <option data-phone="+66-2-149-5500" value="https://www.dmh.go.th/">Department of Mental Health — تايلند</option>
+              <option data-phone="+90-312-306-15-00" value="https://www.saglik.gov.tr/">Ministry of Health Mental Health — تركيا</option>
+              <option data-phone="+971-4-344-9896" value="https://www.dubaiautismcenter.ae/">Dubai Mental Health Center — الإمارات</option>
+              <option data-phone="+91-11-2616-4001" value="https://www.nimhans.ac.in/">NIMHANS — الهند</option>
+            </select>
+          </div>
+          <div id="intlContact" style="margin-top:8px; font-size:14px; color:#374151; display:none"></div>
+        </div>
+
+        <!-- دليل عالمي -->
+        <div class="card" style="margin-top:12px">
+          <h3>دليل عالمي موثوق</h3>
+          <div class="hint">روابط تعليمية معتمدة عالميًا — تُفتح مباشرة.</div>
+          <div class="select">
+            <select id="refSelect" aria-label="اختر مرجعًا عالميًا">
+              <option value="">— اختر مرجعًا —</option>
+              <option value="https://www.who.int/news-room/fact-sheets/detail/depression">منظمة الصحة العالمية (WHO) — الاكتئاب</option>
+              <option value="https://www.cdc.gov/mentalhealth/depression/index.htm">مركز مكافحة الأمراض (CDC) — الاكتئاب</option>
+              <option value="https://www.nimh.nih.gov/health/topics/depression">NIMH — ما هو الاكتئاب</option>
+              <option value="https://www.nhs.uk/mental-health/conditions/clinical-depression/">خدمة الصحة الوطنية البريطانية (NHS) — الاكتئاب</option>
+              <option value="https://www.depression.org/">الجمعية الأمريكية للاكتئاب</option>
+              <option value="https://www.nice.org.uk/guidance/ng222">NICE — إرشادات الاكتئاب</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- أدوات الفحص -->
+        <div class="card" style="margin-top:12px">
+          <h3>أدوات الفحص الرسمية</h3>
+          <div class="hint">اختر أداة فحص للوصول إلى الموقع الرسمي أو التنزيل.</div>
+          <div class="select">
+            <select id="toolSelect" aria-label="اختر أداة فحص">
+              <option value="">— اختر أداة فحص —</option>
+              <option value="https://www.phqscreeners.com/">PHQ-9 — فحص الاكتئاب</option>
+              <option value="https://www.nimh.nih.gov/health/topics/depression">NIMH Depression Screening</option>
+              <option value="https://psychology-tools.com/test/beck-depression-inventory">BDI — استبيان بيك للاكتئاب</option>
+              <option value="https://www.gad7.com/">GAD-7 — فحص القلق</option>
+              <option value="https://www.ham-d.com/">HAM-D — مقياس هاملتون للاكتئاب</option>
+              <option value="https://www.madrs.com/">MADRS — مقياس مونتغمري أسبرغ</option>
+              <option value="https://www.qids.com/">QIDS — استبيان سريع لأعراض الاكتئاب</option>
+              <option value="https://www.zung-depression-scale.com/">Zung Self-Rating Depression Scale</option>
+              <option value="https://psychology-tools.com/test/geriatric-depression-scale">GDS — مقياس الاكتئاب لكبار السن</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- المصادر الطبية -->
+        <div class="card" style="margin-top:12px">
+          <h3>المصادر الطبية</h3>
+          <div class="hint">مقالات عن الأعراض والتحرّي تشمل العلامات التحذيرية وخطوات المتابعة.</div>
+          <div class="select">
+            <select id="srcSelect" aria-label="اختر مصدرًا طبيًا">
+              <option value="">— اختر مصدرًا —</option>
+              <option value="https://www.who.int/news-room/fact-sheets/detail/depression">WHO — حقائق رئيسية عن الاكتئاب</option>
+              <option value="https://www.cdc.gov/mentalhealth/depression/index.htm">CDC — علامات وأعراض الاكتئاب</option>
+              <option value="https://www.nimh.nih.gov/health/topics/depression">NIMH — علامات الاكتئاب</option>
+              <option value="https://www.nhs.uk/mental-health/conditions/clinical-depression/symptoms/">NHS — أعراض الاكتئاب</option>
+              <option value="https://www.mind.org.uk/information-support/types-of-mental-health-problems/depression/about-depression/">Mind — طيف الاكتئاب</option>
+              <option value="https://www.nice.org.uk/guidance/ng222">NICE — إرشادات الاكتئاب</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- مشاركة -->
+        <div class="card" style="margin-top:12px; text-align:center">
+          <h3>شارك الصفحة</h3>
+          <div class="sharebar" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap">
+            <a class="iconbtn" id="shareWA" title="واتساب" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 0a12 12 0 00-10 18.3L1 23l4.9-1A12 12 0 1012 0zm6.5 17.2c-.3.8-1.7 1.6-2.4 1.6-.6 0-1.4.1-3.8-1-3.2-1.4-5.3-4.6-5.5-4.8-.1-.2-1.3-1.7-1.3-3.2 0-1.6.8-2.4 1.1-2.7.3-.3.7-.4 1-.4h.8c.2 0 .6 0 .9.7.3.8 1.1 2.7 1.2 2.9.1.2.2.5 0 .8-.2.3-.3.5-.6.8-.3.3-.6.6-.2 1.2.4.6 1.7 2.8 4 3.8 2.9 1.2 3 .8 3.5.8.5 0 1.8-.8 2.1-1.5.2-.7 1-1.6 1.3-1.8.2-.1.3-.2.5-.1l1 .5c.3.1.5.3.5.5-.1.4-.7 2-1 2.7z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareTG" title="تيليغرام" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 18.2l-.3 4.1c.4 0 .6-.2.8-.4l2-1.8 4.1 3c.7.4 1.3.2 1.5-.7L22 6.2c.2-1.1-.4-1.5-1.1-1.2L2.3 11.1c-1.1.4-1 1.3 0 1.6ل4.1 1.2 9.4-5.9c.4-.3.9-.1.5.2L9 18.2z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareX" title="X" aria-label="X">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 2h4.7l5 6.8L18.7 2H22l-7.8 9.1L22 22h-4.8l-5.4-7.2L6 22H2.1l8.3-9.8L3 2z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareFB" title="Facebook" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.5.2 2.5.2v2.7h-1.4c-1.4 0-1.9.9-1.9 1.8V12h3.2l-.5 2.9h-2.7v7A10 10 0 0022 12z"/></svg>
+            </a>
+            <button class="iconbtn" id="copyLink" title="نسخ الرابط" aria-label="Copy Link">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M16 1H8C6.3 1 5 2.3 5 4v12c0 1.7 1.3 3 3 3h8c1.7 0 3-1.3 3-3V4c0-1.7-1.3-3-3-3zm1 15c0 .6-.4 1-1 1H8c-.6 0-1-.4-1-1V4c0-.6.4-1 1-1h8c.6 0 1 .4 1 1v12zM7 20c0 .6.4 1 1 1h8v2H8c-1.7 0-3-1.3-3-3v-2h2v2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <footer style="text-align:center; margin:12px 0 0; font-size:13px; color:var(--muted)">
+          <a id="devLink" class="ghost-link" href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1" target="_blank" rel="noopener">برمجة وتطوير: فاضل الريس</a>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- نافذة رسائل -->
+<div id="msgBackdrop" class="msg-backdrop" role="dialog" aria-modal="true" aria-labelledby="msgTitle">
+  <div id="msgBox" class="msg-box">
+    <div id="msgTitle" class="msg-title">تنبيه</div>
+    <div id="msgText" class="msg-text">—</div>
+    <div class="msg-actions">
+      <button id="msgOk" class="msg-btn">حسنًا</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF & مشاركة -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+<script>
+/* نافذة الرسائل */
+const $mb = document.getElementById('msgBackdrop');
+const $box = document.getElementById('msgBox');
+const $txt = document.getElementById('msgText');
+const $ttl = document.getElementById('msgTitle');
+document.getElementById('msgOk').onclick = () => $mb.classList.remove('show');
+function openMsg(message, type='info', title){
+  $txt.innerHTML = message;
+  $ttl.textContent = title || (type==='error' ? 'تنبيه' : 'معلومة');
+  $box.classList.toggle('error', type==='error');
+  $mb.classList.add('show');
+}
+
+/* أزرار التبديل */
+function makeToggle(segId, dataKey){
+  const seg=document.getElementById(segId);
+  seg.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    seg.dataset[dataKey]=Object.values(b.dataset)[0];
+  });
+}
+makeToggle('sexSeg','sex'); makeToggle('familySeg','fh');
+
+/* نعم/لا للأسئلة */
+document.getElementById('symptoms').addEventListener('click', e=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  const seg=btn.parentElement;
+  seg.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+});
+
+/* فتح الروابط للقوائم */
+['refSelect','srcSelect','toolSelect'].forEach(id=>{
+  const el=document.getElementById(id);
+  el.addEventListener('change', e=>{ const url=e.target.value; if(url){ window.open(url,'_blank','noopener'); e.target.value=''; }});
+});
+
+/* مركز عالمي */
+const intlSelect=document.getElementById('intlSelect');
+const intlContact=document.getElementById('intlContact');
+intlSelect.addEventListener('change', ()=>{
+  const opt = intlSelect.selectedOptions[0];
+  if(!opt || !opt.value){ intlContact.style.display='none'; intlContact.innerHTML=''; return; }
+  const phone = (opt.dataset.phone||'').replace(/\s+/g,'');
+  const tel = phone ? `tel:${phone}` : '';
+  const url = opt.value;
+  const name = opt.textContent.split('—')[0].trim();
+  intlContact.innerHTML = `${phone?`📞 <a href="${tel}"><strong>${opt.dataset.phone}</strong></a>`:'📞 —'} &nbsp;—&nbsp; <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+  intlContact.style.display='block';
+});
+
+/* مستشفيات حكومية ومراكز محلية */
+const GOVERNMENT_HOSPITALS = {
+  BHR: {n: "مستشفى الطب النفسي - البحرين", phone: "+973-17279301", url: "https://www.moh.gov.bh/healthinstitution/psychiatrichospital?lang=en"},
+  KSA: {n: "مستشفى الصحة النفسية - الطائف", phone: "+966-12-7466666", url: "https://www.moh.gov.sa/"},
+  ARE: {n: "مستشفى الأمل للطب النفسي", phone: "+971-4-3445500", url: "https://mohap.gov.ae/"},
+  QAT: {n: "مستشفى الطب النفسي - حماد الطبية", phone: "+974-44398999", url: "https://www.hamad.qa/"},
+  KWT: {n: "مستشفى الطب النفسي - الكويت", phone: "+965-24843900", url: "https://www.moh.gov.kw/"},
+  OMN: {n: "مستشفى الخود للصحة النفسية", phone: "+968-24504608", url: "https://www.moh.gov.om/"},
+  EGY: {n: "مستشفى العباسية للصحة النفسية", phone: "+20-2-23654031", url: "https://www.mohp.gov.eg/"},
+  JOR: {n: "المركز الوطني للصحة النفسية", phone: "+962-6-4745551", url: "https://www.moh.gov.jo/"},
+  LBN: {n: "مستشفى الصليب للأمراض النفسية", phone: "+961-1-830000", url: "https://www.moph.gov.lb/"},
+  IRQ: {n: "مستشفى الرشاد النفسي", phone: "+964-1-5410000", url: "https://moh.gov.iq/"},
+  LBA: {n: "مستشفى رازي للصحة النفسية", phone: "+218-21-4440666", url: "https://www.health.gov.ly/"},
+  MAR: {n: "مستشفى الرازي للصحة النفسية", phone: "+212-537677777", url: "https://www.sante.gov.ma/"},
+  DZA: {n: "مستشفى فرحات حشاد للصحة النفسية", phone: "+213-21-235555", url: "https://www.sante.gov.dz/"},
+  TUN: {n: "مستشفى رازي للأمراض النفسية", phone: "+216-71-576666", url: "http://www.sante.tn/"},
+  SDN: {n: "مستشفى الخرطوم للصحة النفسية", phone: "+249-183771717", url: "https://fmoh.gov.sd/"},
+  SYR: {n: "مستشفى ابن سينا للصحة النفسية", phone: "+963-11-2122700", url: "http://moh.gov.sy/"},
+  PSE: {n: "مركز بيت لحم للصحة النفسية", phone: "+970-2-2741161", url: "https://www.moh.ps/"},
+  DJI: {n: "مستشفى بيلتييه للصحة النفسية", phone: "+253-21-351111", url: "https://sante.gouv.dj/"},
+  COM: {n: "المستشفى الوطني للصحة النفسية", phone: "+269-7731122", url: "https://sante.gouv.km/"},
+  MRT: {n: "المستشفى الوطني للصحة النفسية", phone: "+222-45291212", url: "https://sante.gov.mr/"},
+  SOM: {n: "مستشفى مقديشو للصحة النفسية", phone: "+252-61-5555000", url: "https://moh.gov.so/"},
+  YEM: {n: "مستشفى الثورة للصحة النفسية", phone: "+967-1-241111", url: "https://moh.gov.ye/"},
+  IRN: {n: "مركز طهران للصحة النفسية", phone: "+98-21-66551000", url: "https://ctad.ir/"}
+};
+
+const COUNTRY_CENTERS = {
+  BHR: {n: "مركز سيرين للطب النفسي", phone: "+973-17730960", url: "https://serenehospital.com/"},
+  KSA: {n: "جمعية أسر الاكتئاب", phone: "+966-11-4644444", url: "https://www.moh.gov.sa/"},
+  ARE: {n: "مركز دبي للصحة النفسية", phone: "+971-4-3449896", url: "https://mohap.gov.ae/"},
+  QAT: {n: "مركز الشفلح للصحة النفسية", phone: "+974-44956666", url: "https://www.shafallah.org.qa/"},
+  KWT: {n: "مركز الكويت للصحة النفسية", phone: "+965-25309300", url: "https://www.moh.gov.kw/"},
+  OMN: {n: "جمعية عمان للصحة النفسية", phone: "+968-24599599", url: "https://www.moh.gov.om/"},
+  EGY: {n: "الجمعية المصرية للصحة النفسية", phone: "+20-100-000-6633", url: "https://www.mohp.gov.eg/"},
+  JOR: {n: "مركز الأردن للصحة النفسية", phone: "+962-6-5920000", url: "https://www.moh.gov.jo/"},
+  LBN: {n: "جمعية الصحة النفسية اللبنانية", phone: "+961-5-456789", url: "https://www.moph.gov.lb/"},
+  IRQ: {n: "جمعية الصحة النفسية العراقية", phone: "+964-771-2345678", url: "https://moh.gov.iq/"},
+  LBA: {n: "مركز ليبيا للصحة النفسية", phone: "+218-91-3210000", url: "https://www.health.gov.ly/"},
+  MAR: {n: "جمعية الصحة النفسية المغربية", phone: "+212-537-202020", url: "https://www.sante.gov.ma/"},
+  DZA: {n: "جمعية الصحة النفسية الجزائرية", phone: "+213-21-565656", url: "https://www.sante.gov.dz/"},
+  TUN: {n: "جمعية الصحة النفسية التونسية", phone: "+216-71-840000", url: "http://www.sante.tn/"},
+  SDN: {n: "جمعية الصحة النفسية السودانية", phone: "+249-183-555555", url: "https://fmoh.gov.sd/"},
+  SYR: {n: "جمعية الصحة النفسية السورية", phone: "+963-11-3333333", url: "http://moh.gov.sy/"},
+  PSE: {n: "مركز الصحة النفسية الفلسطيني", phone: "+970-2-2964040", url: "https://www.moh.ps/"},
+  DJI: {n: "مركز الصحة النفسية جيبوتي", phone: "+253-21-350000", url: "https://sante.gouv.dj/"},
+  COM: {n: "جمعية الصحة النفسية جزر القمر", phone: "+269-7731122", url: "https://sante.gouv.km/"},
+  MRT: {n: "مركز الصحة النفسية موريتانيا", phone: "+222-45291212", url: "https://sante.gov.mr/"},
+  SOM: {n: "مركز الصحة النفسية الصومالي", phone: "+252-61-5555000", url: "https://moh.gov.so/"},
+  YEM: {n: "جمعية الصحة النفسية اليمنية", phone: "+967-1-241111", url: "https://moh.gov.ye/"},
+  IRN: {n: "مركز طهران للاكتئاب", phone: "+98-21-66551000", url: "https://ctad.ir/"}
+};
+
+/* حساب الإشارة */
+const QUESTIONS_IDS = ["sadness","interest","appetite","sleep","fatigue","concentration","guilt","irritability","suicidal","pain","slow","anxiety"];
+function isYes(id){ return document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a==='yes'; }
+function screening(age, sex, fh){
+  const list = [];
+  if (age >= 18) list.push("فحص PHQ-9 للبالغين.");
+  if (age < 18) list.push("تقييم GAD-7 أو BDI إذا لزم الأمر.");
+  if (fh === 'yes') list.push("تاريخ عائلي قوي: استشر اختصاصي نفسي.");
+  return list;
+}
+function computeRisk(){
+  let score = 0;
+  const heavy = ['sadness','interest','suicidal','sleep'];
+  QUESTIONS_IDS.forEach(id => {
+    const seg = document.querySelector(`.seg[data-q="${id}"]`);
+    const a = seg.querySelector('button.on')?.dataset.a || 'no';
+    if (a === 'yes') { score += 1; if (heavy.includes(id)) score += 1; }
+  });
+  if ((document.getElementById('familySeg').dataset.fh || 'no') === 'yes') score += 1;
+  if (isYes('suicidal')) score = 12; // High if suicidal
+  if (score > 10) score = 10;
+
+  let levelText = 'منخفضة', cls = 'rb-ok', action = 'راقب التطور واستشر طبيبًا إذا استمر.';
+  if (score >= 3) { levelText = 'متوسطة'; cls = 'rb-warn'; action = 'احجز موعدًا لدى طبيب نفسي خلال 1–2 أسبوع.'; }
+  if (score >= 6 || isYes('suicidal')) { levelText = 'عالية'; cls = 'rb-danger'; action = 'تقييم عاجل خلال 24–72 ساعة أو أقرب عيادة نفسي.'; }
+  return {levelText, cls, action};
+}
+
+/* بناء النصائح */
+function buildAdvice(age, sex, fh){
+  const deck = document.getElementById('adviceDeck'); deck.innerHTML = '';
+  const mk = (t, html) => { const e = document.createElement('div'); e.className = 'card'; e.innerHTML = `<h3>${t}</h3>${html}`; return e; };
+  const list = screening(age, sex, fh);
+  deck.append(
+    mk('نصائح سريعة', '<ul><li>أي عرض مستمر يؤثر على النمو = تقييم طبي.</li><li>شجع التفاعل الاجتماعي والألعاب التعليمية.</li><li>استشر المتخصصين مبكرًا لدعم أفضل.</li></ul>'),
+    mk('فحوص التحري المقترحة', list.length ? '<ul>' + list.map(x => `<li>${x}</li>`).join('') + '</ul>' : '<div>لا توجد فحوص روتينية خاصّة بعمرك الآن — اتبع نصيحة طبيبك.</div>')
+  );
+  deck.style.display = 'grid';
+}
+
+/* عرض النتيجة + PDF */
+let lastResult = null;
+document.getElementById('calc').addEventListener('click', () => {
+  const age = parseFloat(document.getElementById('age').value);
+  if (!(age >= 0 && age <= 120)) { openMsg('أدخل عمرًا صحيحًا بين 0 و 120.', 'error'); return; }
+  const sex = document.getElementById('sexSeg').dataset.sex || 'male';
+  const fh = document.getElementById('familySeg').dataset.fh || 'no';
+
+  const {levelText, cls, action} = computeRisk();
+
+  const box = document.getElementById('resultBox');
+  box.className = 'resultbox ' + cls;
+  document.getElementById('riskText').textContent = levelText;
+  document.getElementById('actionText').textContent = action;
+  box.style.display = 'block';
+
+  buildAdvice(age, sex, fh);
+
+  const ccode = document.getElementById('countrySelect').value;
+  const gov = GOVERNMENT_HOSPITALS[ccode];
+  const loc = COUNTRY_CENTERS[ccode];
+  const localBox = document.getElementById('localBox');
+  const govHospital = document.getElementById('govHospital');
+  const localContact = document.getElementById('localContact');
+  govHospital.innerHTML = '';
+  localContact.innerHTML = '';
+
+  if (gov) {
+    const telHref = gov.phone ? `tel:${gov.phone.replace(/\s+/g,'')}` : '';
+    govHospital.innerHTML = `
+      🏛️ <strong>مستشفى حكومي: ${gov.n}</strong><br>
+      ${gov.phone ? `📞 <a href="${telHref}"><strong>${gov.phone}</strong></a>` : '📞 —'}
+      &nbsp;—&nbsp;
+      ${gov.url ? `<a href="${gov.url}" target="_blank" rel="noopener">الموقع الرسمي</a>` : ''}
+    `;
+  }
+
+  if (loc && loc.n !== gov.n) {
+    const telHref = loc.phone ? `tel:${loc.phone.replace(/\s+/g,'')}` : '';
+    localContact.innerHTML = `
+      🏥 <strong>مركز متخصص: ${loc.n}</strong><br>
+      ${loc.phone ? `📞 <a href="${telHref}"><strong>${loc.phone}</strong></a>` : '📞 —'}
+      &nbsp;—&nbsp;
+      ${loc.url ? `<a href="${loc.url}" target="_blank" rel="noopener">الموقع الرسمي</a>` : ''}
+    `;
+  }
+
+  localBox.style.display = 'block';
+
+  const sel = document.getElementById('intlSelect');
+  if (sel.value) {
+    const opt = sel.selectedOptions[0];
+    const phone = opt.dataset.phone || '';
+    const tel = phone ? `tel:${phone.replace(/\s+/g,'')}` : '';
+    const url = sel.value;
+    const name = opt.textContent.split('—')[0].trim();
+    intlContact.innerHTML = `${phone ? `📞 <a href="${tel}"><strong>${phone}</strong></a>` : '📞 —'} &nbsp;—&nbsp; <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+    intlContact.style.display = 'block';
+  }
+
+  lastResult = {
+    country: document.querySelector('#countrySelect option:checked').textContent,
+    age, sex: (sex === 'male' ? 'ذكر' : 'أنثى'),
+    fh: (fh === 'yes' ? 'تاريخ عائلي قوي' : 'لا'),
+    level: levelText, action,
+    gov: gov ? {n: gov.n, phone: gov.phone || '', url: gov.url || ''} : null,
+    local: loc ? {n: loc.n, phone: loc.phone || '', url: loc.url || ''} : null,
+    intl: sel.value ? {n: sel.selectedOptions[0].textContent, phone: sel.selectedOptions[0].dataset.phone || '', url: sel.value} : null,
+    answers: QUESTIONS_IDS.map(id => {
+      const label = document.querySelector(`.seg[data-q="${id}"]`).previousElementSibling.textContent.trim();
+      const a = document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a || 'no';
+      return {q: label, a: (a === 'yes' ? 'نعم' : 'لا')};
+    })
+  };
+  document.getElementById('pdfwrap').style.display = 'block';
+});
+
+/* PDF */
+document.getElementById('pdfBtn').addEventListener('click', async () => {
+  if (!lastResult) { openMsg('أجب عن الاستبيان أولًا لعرض النتائج ثم تنزيلها PDF.', 'error'); return; }
+  const box = document.createElement('div');
+  box.setAttribute('dir', 'rtl');
+  box.style.width = '780px'; box.style.background = '#fff'; box.style.border = '1px solid #e5e7eb'; box.style.borderRadius = '16px'; box.style.padding = '20px'; box.style.fontFamily = '"Cairo",sans-serif'; box.style.color = '#111827';
+
+  function row(k, v) { return `<tr><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6"><strong>${k}</strong></td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">${v}</td></tr>`; }
+  const rowsAns = lastResult.answers.map(x => row(x.q, x.a)).join('');
+
+  const govRows = lastResult.gov ? `
+    ${row('مستشفى حكومي', lastResult.gov.n)}
+    ${row('هاتف المستشفى', lastResult.gov.phone || '—')}
+    ${row('الموقع الحكومي', lastResult.gov.url ? `<a href='${lastResult.gov.url}' target='_blank' rel='noopener'>رابط الموقع</a>` : '—')}
+  ` : '';
+
+  const localRows = lastResult.local ? `
+    ${row('مركز متخصص', lastResult.local.n)}
+    ${row('هاتف المركز', lastResult.local.phone || '—')}
+    ${row('موقع المركز', lastResult.local.url ? `<a href='${lastResult.local.url}' target='_blank' rel='noopener'>رابط الموقع</a>` : '—')}
+  ` : '';
+
+  const intlRows = lastResult.intl ? `
+    ${row('مركز عالمي مختار', lastResult.intl.n)}
+    ${row('هاتف المركز', lastResult.intl.phone || '—')}
+    ${row('موقع المركز', lastResult.intl.url ? `<a href='${lastResult.intl.url}' target='_blank' rel='noopener'>رابط الموقع</a>` : '—')}
+  ` : '';
+
+  box.innerHTML = `
+    <div style="text-align:center; margin-bottom:10px">
+      <div style="font-family:'Amiri',serif; font-size:26px; color:${getComputedStyle(document.documentElement).getPropertyValue('--primary')}">تقرير استبيان أعراض الاكتئاب</div>
+      <div style="font-size:12px; color:#6b7280">${new Date().toLocaleString('ar')}</div>
+    </div>
+
+    <table style="width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid #eee; margin-bottom:10px">
+      <thead><tr style="background:linear-gradient(90deg,#e7f3ff,#fff)"><th style="padding:10px 12px; text-align:right">البند</th><th style="padding:10px 12px; text-align:right">القيمة</th></tr></thead>
+      <tbody>
+        ${row('الدولة', lastResult.country)}
+        ${row('العمر', lastResult.age)}
+        ${row('النوع', lastResult.sex)}
+        ${row('تاريخ عائلي', lastResult.fh)}
+        ${row('مستوى الإشارة', lastResult.level)}
+        ${row('التوصية الآن', lastResult.action)}
+        ${govRows}
+        ${localRows}
+        ${intlRows}
+      </tbody>
+    </table>
+
+    <div style="font-weight:700; margin-bottom:6px">إجابات الأعراض</div>
+    <table style="width:100%; border:1px solid #eee; border-radius:12px; border-collapse:separate; border-spacing:0">
+      <thead><tr style="background:#f9fafb"><th style="padding:8px 10px; text-align:right">العَرَض</th><th style="padding:8px 10px; text-align:right">الإجابة</th></tr></thead>
+      <tbody>${rowsAns}</tbody>
+    </table>
+
+    <div style="margin-top:10px; font-size:12px; color:#6b7280">نتيجة تثقيفية عامة وليست تشخيصًا. تأكد من المصادر الرسمية للأرقام.</div>
+  `;
+
+  document.body.appendChild(box);
+  await new Promise(r => setTimeout(r, 120));
+  const canvas = await html2canvas(box, {scale: 2, useCORS: true});
+  document.body.removeChild(box);
+
+  const imgData = canvas.toDataURL('image/png');
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({orientation: 'p', unit: 'pt', format: 'a4'});
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 28;
+  const imgW = pageW - margin * 2;
+  const imgH = canvas.height * (imgW / canvas.width);
+
+  if (imgH <= pageH - margin * 2) {
+    pdf.addImage(imgData, 'PNG', margin, margin, imgW, imgH);
+  } else {
+    let sH = pageH - margin * 2, ratio = canvas.width / imgW, slice = sH * ratio, pos = 0;
+    while (pos < canvas.height) {
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = Math.min(slice, canvas.height - pos);
+      sliceCanvas.getContext('2d').drawImage(canvas, 0, pos, canvas.width, sliceCanvas.height, 0, 0, sliceCanvas.width, sliceCanvas.height);
+      const sliceData = sliceCanvas.toDataURL('image/png');
+      if (pos > 0) pdf.addPage();
+      pdf.addImage(sliceData, 'PNG', margin, margin, imgW, (sliceCanvas.height / ratio));
+      pos += slice;
+    }
+  }
+  pdf.save('نتيجة-استبيان-الاكتئاب.pdf');
+});
+
+/* مشاركة */
+document.getElementById('shareWA').onclick = (e) => { e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareTG').onclick = (e) => { e.preventDefault(); window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareX').onclick = (e) => { e.preventDefault(); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareFB').onclick = (e) => { e.preventDefault(); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('copyLink').onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    openMsg('تم نسخ الرابط بنجاح!');
+  } catch (err) {
+    openMsg('فشل في نسخ الرابط.', 'error');
+  }
+};
+document.getElementById('devLink').addEventListener('click', function() { setTimeout(() => { if (!document.hasFocus()) return; location.href = this.href; }, 120); });
+</script>
+</body>
+</html>
