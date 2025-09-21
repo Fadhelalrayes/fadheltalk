@@ -4,11 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>تصاميم البحرين | تصميم مواقع ومتاجر إلكترونية احترافية</title>
-  <meta name="description" content="تصاميم البحرين — تصميم وتطوير مواقع إلكترونية ومتاجر حديثة في البحرين بسرعة عالية وتجربة استخدام ممتازة، متوافقة مع جميع الأجهزة ومحسّنة لمحركات البحث.">
+  <!-- أساسي (عنوان + وصف مُحسّن للسيو في البحرين) -->
+  <title>تصميم مواقع في البحرين | متاجر إلكترونية وSEO احترافي – تصاميم البحرين</title>
+  <meta name="description" content="وكالة بحرينية لتصميم المواقع والمتاجر الإلكترونية وتحسين الظهور بمحركات البحث (SEO). مواقع سريعة ومتجاوبة لزيادة العملاء في البحرين. تواصل الآن.">
 
-  <!-- Canonical -->
+  <!-- Canonical + hreflang لاستهداف البحرين -->
   <link rel="canonical" href="https://fadhel-alrayes.fun/">
+  <link rel="alternate" href="https://fadhel-alrayes.fun/" hreflang="ar-BH" />
+  <link rel="alternate" href="https://fadhel-alrayes.fun/" hreflang="ar" />
+  <link rel="alternate" href="https://fadhel-alrayes.fun/" hreflang="x-default" />
 
   <!-- Open Graph / Social -->
   <meta property="og:title" content="تصاميم البحرين | مواقع إلكترونية احترافية" />
@@ -18,58 +22,86 @@
   <meta property="og:image" content="https://fadhel-alrayes.fun/og-cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicons -->
+  <!-- Favicons & Manifest (تأكّد من وجود هذه الملفات في الجذر) -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
-  <!-- Preconnect & Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-  <!-- Base Styles -->
+  <!-- أنماط -->
   <style>
     :root{
-      --primary:#0d9488;    /* تركواز */
-      --secondary:#3b82f6;  /* أزرق */
+      --primary:#0ea5e9;    /* أزرق سماوي */
+      --secondary:#10b981;  /* تركواز/أخضر */
       --accent:#f97316;     /* برتقالي CTA */
       --light:#f9fafb;      /* خلفية فاتحة */
       --dark:#0f172a;       /* نص داكن */
       --muted:#64748b;      /* نص ثانوي */
       --radius:14px;
-      --shadow:0 6px 20px rgba(0,0,0,.12);
+      --shadow:0 8px 24px rgba(2,6,23,.12);
       --container:1100px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{margin:0;font-family:'Tajawal','Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:var(--light);color:var(--dark);line-height:1.75}
-    a{color:var(--secondary);text-decoration:none}
+
+    a{color:var(--primary);text-decoration:none}
     a:hover{text-decoration:underline;text-underline-offset:3px}
+
     .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+
     .skip-link{position:absolute;inset-inline-start:10px;top:-40px;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid #e5e7eb;transition:.2s;z-index:1000}
     .skip-link:focus{top:10px}
 
-    header{background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;box-shadow:var(--shadow)}
-    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{font-size:1.6rem;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
+    /* Header: تدرّج هادئ وحديث */
+    header{
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color:#fff;
+      box-shadow: var(--shadow);
+    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:14px;flex-wrap:wrap}
+    .brand{font-size:1.6rem;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;gap:10px;color:#fff}
+    .brand:hover{text-decoration:none;opacity:.95}
     .brand-logo{width:28px;height:28px}
     nav[aria-label]{display:flex;gap:16px;flex-wrap:wrap}
     nav a{color:#fff;font-weight:700}
 
-    .hero{padding:72px 0;background:linear-gradient(135deg,var(--secondary),var(--primary));color:#fff;text-align:center}
-    .hero h1{margin:0 0 12px;font-size:clamp(1.8rem,3.2vw,2.6rem)}
-    .hero p{margin:0 auto 22px;max-width:680px}
+    /* HERO: صورة + Overlay تدرّج احترافي مع بديل إن لم تحمل الصورة */
+    .hero{
+      position:relative;
+      padding: clamp(56px, 8vw, 96px) 0;
+      color:#fff;
+      text-align:center;
+      background:
+        url('/images/hero.webp') center/cover no-repeat,
+        #0f172a; /* لون بديل في حال فشل الصورة */
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1200px 600px at 85% -100px, rgba(59,130,246,.35), transparent 60%),
+        linear-gradient(135deg, rgba(14,165,233,.85), rgba(16,185,129,.85));
+      pointer-events:none;
+    }
+    .hero > .container{position:relative; z-index:1}
+    .hero h1{margin:0 0 12px;font-size:clamp(1.9rem, 4vw, 2.6rem);line-height:1.25}
+    .hero p{margin:0 auto 22px;max-width:720px;opacity:.95}
+
     .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:800;border:1px solid transparent;box-shadow:var(--shadow);transition:transform .2s,opacity .2s}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:800;border:1px solid transparent;box-shadow:0 10px 20px rgba(2,6,23,.12);transition:transform .2s,opacity .2s}
     .btn:hover{transform:translateY(-2px)}
     .btn:focus-visible{outline:3px solid rgba(59,130,246,.35);outline-offset:2px}
     .btn.primary{background:linear-gradient(135deg,var(--accent),#fb923c);color:#fff}
-    .btn.secondary{background:#fff;color:var(--secondary);border-color:#e5e7eb}
+    .btn.secondary{background:#fff;color:var(--primary);border-color:#e5e7eb}
 
     section{padding:64px 0}
-    h2{margin:0 0 8px;font-size:1.8rem;text-align:center;color:var(--primary)}
+    h2{margin:0 0 8px;font-size:1.8rem;text-align:center;color:var(--secondary)}
     .section-subtitle{color:var(--muted);text-align:center;margin:0 0 24px}
 
     .grid{display:grid;gap:24px}
@@ -77,26 +109,32 @@
     .card{background:#fff;border:1px solid #eef2f7;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .25s}
     .card:hover{transform:translateY(-4px)}
     .service-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-    .icon-circle{inline-size:44px;block-size:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--secondary),var(--primary));color:#fff;box-shadow:var(--shadow)}
+    .icon-circle{inline-size:44px;block-size:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg, var(--primary), var(--secondary));color:#fff;box-shadow:var(--shadow)}
     .icon-circle svg{width:22px;height:22px}
+    .icon-circle.sm{inline-size:40px;block-size:40px}
 
     .about p{margin:0}
 
     .contact-list{display:grid;gap:14px}
     .contact-item{display:flex;align-items:center;gap:12px}
-    .icon-circle.sm{inline-size:40px;block-size:40px}
 
-    footer{background:var(--primary);color:#fff;text-align:center;padding:24px;margin-top:50px}
+    /* FAQ */
+    details{padding:12px 0;border-bottom:1px solid #eef2f7}
+    details:last-child{border-bottom:0}
+    summary{cursor:pointer;font-weight:700}
 
+    /* Footer + واتساب ثابت */
+    footer{background:var(--secondary);color:#fff;text-align:center;padding:24px;margin-top:50px}
     .wa-float{position:fixed;inset-inline-start:20px;bottom:20px;z-index:90}
     .wa-float img{width:58px;height:58px;display:block;filter:drop-shadow(0 6px 20px rgba(0,0,0,.2))}
+
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       .btn,.card{transition:none}
     }
   </style>
 
-  <!-- Redirect if opened via github.io (keeps SEO canonical on custom domain) -->
+  <!-- إعادة توجيه لو فُتح عبر github.io للحفاظ على الـcanonical -->
   <script>
     (function(){
       var target = 'fadhel-alrayes.fun';
@@ -107,7 +145,23 @@
     })();
   </script>
 
-  <!-- Schema.org JSON-LD (Local Business / Professional Service) -->
+  <!-- JSON-LD: WebSite + SearchAction (اختياري إن وجدت صفحة بحث) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"تصاميم البحرين",
+    "url":"https://fadhel-alrayes.fun/",
+    "inLanguage":"ar-BH",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://fadhel-alrayes.fun/search?q={query}",
+      "query-input":"required name=query"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: ProfessionalService (محسّن للسيو المحلي) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -117,14 +171,10 @@
     "image":"https://fadhel-alrayes.fun/og-cover.jpg",
     "telephone":"+97333375858",
     "email":"Richadvadv@gmail.com",
-    "areaServed":"BH",
-    "address":{
-      "@type":"PostalAddress",
-      "addressCountry":"BH"
-    },
-    "sameAs":[
-      "https://wa.me/97333375858"
-    ]
+    "priceRange":"BD",
+    "areaServed":["BH"],
+    "address":{"@type":"PostalAddress","addressCountry":"BH"},
+    "sameAs":["https://wa.me/97333375858"]
   }
   </script>
 </head>
@@ -134,12 +184,23 @@
   <header>
     <div class="container topbar">
       <a class="brand" href="/" aria-label="العودة للصفحة الرئيسية">
-        <img class="brand-logo" src="/favicon.svg" alt="" aria-hidden="true">
+        <!-- شعار SVG مضمّن (لا يتعطّل) -->
+        <svg class="brand-logo" viewBox="0 0 48 48" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0ea5e9"/>
+              <stop offset="1" stop-color="#10b981"/>
+            </linearGradient>
+          </defs>
+          <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#g)"/>
+          <path d="M14 30l7-12 5 8 4-6 4 10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <span>تصاميم البحرين</span>
       </a>
       <nav aria-label="التنقل الرئيسي">
         <a href="#services">الخدمات</a>
         <a href="#about">من نحن</a>
+        <a href="#faq">الأسئلة الشائعة</a>
         <a href="#contact">تواصل معنا</a>
       </nav>
     </div>
@@ -174,7 +235,7 @@
               </span>
               <h3 style="margin:0">تصميم مواقع</h3>
             </div>
-            <p>مواقع متجاوبة حديثة، تُبرز هويتك وتراعي سهولة الاستخدام وسرعة التحميل.</p>
+            <p>مواقع متجاوبة حديثة تُبرز هويتك وتراعي سهولة الاستخدام وسرعة التحميل.</p>
           </article>
 
           <article class="card" aria-label="متاجر إلكترونية">
@@ -186,10 +247,10 @@
               </span>
               <h3 style="margin:0">متاجر إلكترونية</h3>
             </div>
-            <p>بنية تسوّق آمنة وسلسة مع بوابات دفع، إدارة منتجات، وشحن — جاهزة للنمو.</p>
+            <p>تجربة تسوّق آمنة وسلسة مع بوابات دفع، إدارة منتجات، وشحن — جاهزة للنمو.</p>
           </article>
 
-          <article class="card" aria-label="تحسين محركات البحث SEO">
+          <article class="card" aria-label="تحسين محركات البحث">
             <div class="service-head">
               <span class="icon-circle" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -211,6 +272,27 @@
         <article class="card">
           <p>«تصاميم البحرين» وكالة متخصّصة في تطوير مواقع ومتاجر إلكترونية عصرية في البحرين. نركّز على جودة التصميم وتجربة استخدام ممتازة وأداء سريع، مع تطبيق معايير الويب العالمية لضمان نتائج قابلة للقياس.</p>
         </article>
+      </div>
+    </section>
+
+    <!-- FAQ (مرئي ويطابق JSON-LD) -->
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <h2 id="faq-title">الأسئلة الشائعة</h2>
+        <div class="card">
+          <details>
+            <summary>كم يستغرق تصميم موقع في البحرين؟</summary>
+            <p>عادةً من 7 إلى 14 يوم عمل، بحسب عدد الصفحات والوظائف المطلوبة.</p>
+          </details>
+          <details>
+            <summary>هل تقدّمون متاجر إلكترونية مع بوابات دفع بحرينية؟</summary>
+            <p>نعم، نوفّر ربطًا ببوابات الدفع المحلية والدولية مع إدارة منتجات وشحن وعناصر SEO.</p>
+          </details>
+          <details>
+            <summary>كيف تضمنون ظهور موقعي في نتائج البحث؟</summary>
+            <p>ننفّذ تحسينات تقنية ومحتوى، ونبني خطة كلمات مفتاحية محلية ونقيس الأداء دوريًا.</p>
+          </details>
+        </div>
       </div>
     </section>
 
@@ -271,14 +353,54 @@
     </div>
   </footer>
 
-  <!-- Sticky WhatsApp -->
+  <!-- زر واتساب عائم -->
   <a class="wa-float" aria-label="تواصل عبر واتساب" href="https://wa.me/97333375858" target="_blank" rel="noopener">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="58" height="58" loading="lazy" alt="واتساب">
   </a>
 
+  <!-- JSON-LD: FAQPage (يطابق قسم FAQ المرئي) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"كم يستغرق تصميم موقع في البحرين؟",
+        "acceptedAnswer":{"@type":"Answer","text":"عادةً من 7 إلى 14 يوم عمل حسب حجم الصفحات والميزات المطلوبة."}
+      },
+      {
+        "@type":"Question",
+        "name":"هل تقدّمون متاجر إلكترونية مع بوابات دفع بحرينية؟",
+        "acceptedAnswer":{"@type":"Answer","text":"نعم، نجهّز المتجر مع بوابات دفع محلية ودولية، مع لوحة إدارة وشحن وإعداد SEO."}
+      },
+      {
+        "@type":"Question",
+        "name":"كيف تضمنون ظهور موقعي في نتائج البحث؟",
+        "acceptedAnswer":{"@type":"Answer","text":"ننفّذ تحسينات تقنية للموقع والمحتوى (عناوين، وصف، سرعات، Schema) ونقدّم خطة محتوى محلية تستهدف كلمات البحرين."}
+      }
+    ]
+  }
+  </script>
+
+  <!-- سنة ديناميكية -->
   <script>
-    // سنة ديناميكية
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <!-- GA4 (اختياري: استبدل G-XXXXXXX بمعرّفك) -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-XXXXXXX');
+    document.addEventListener('click', function(e){
+      const a = e.target.closest('a'); if(!a) return;
+      if(a.href.includes('wa.me')) gtag('event','click_whatsapp',{method:'cta'});
+      if(a.href.startsWith('tel:')) gtag('event','click_call',{method:'cta'});
+    });
+  </script>
+  -->
 </body>
 </html>
