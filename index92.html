@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="فاحص أعراض السكري بالعربية: أداة تثقيفية للكشف المبكر عن أعراض السكري وعوامل الخطورة، مع روابط لوزارات الصحة ومراجع موثوقة. لا تغني عن الاستشارة الطبية."/>
+<meta name="keywords" content="أعراض السكري, فحص السكري, فحص سكر الدم, A1C, OGTT, diabetes symptoms checker arabic"/>
+<meta name="robots" content="index, follow"/>
+<title>فاحص أعراض السكري — توعية وتحويلات طبية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f0f8ff; --ink:#001f3f; --muted:#708090;
+    --card:#ffffff; --line:#d3d3d3;
+    --primary:#1f7aec; --primary-soft:#add8e6;
+    --ok:#228b22; --ok-bg:#f0fff0; --ok-br:#90ee90;
+    --warn:#b58900; --warn-bg:#fff8d6; --warn-br:#f4e19f;
+    --danger:#d7263d; --danger-bg:#ffe8ea; --danger-br:#ffb9c4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:var(--ink)}
+  header{text-align:center; padding:24px 12px; background:linear-gradient(to bottom, var(--primary), var(--primary-soft)); color:#fff; border-radius:0 0 20px 20px;}
+  .brand{font-family:"Amiri",serif; font-size:clamp(28px,5vw,48px); margin:0;}
+  .tag{margin-top:8px; font-size:15px; color:#f0f8ff; line-height:1.6}
+  .shell{max-width:1024px; margin:0 auto; padding:0 18px}
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:0 6px 16px rgba(0,0,0,.08); margin-top:20px;}
+  .row{display:grid; gap:18px}
+  @media(min-width:960px){ .row{grid-template-columns:1.3fr .7fr} }
+
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:14px}
+  .hint{font-size:13px; color:var(--muted)}
+  .center{text-align:center}
+
+  .seg{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+  .seg button{
+    flex:1; padding:12px 16px; border-radius:12px; border:1px solid var(--line);
+    background:#f8f9fa; cursor:pointer; max-width:220px; font-weight:700; transition:background 0.3s;
+  }
+  .seg button:hover{background:#e9ecef;}
+  .seg button.on{background:var(--primary); color:#fff; border-color:var(--primary);}
+
+  .select{ position:relative; display:inline-block; width:100% }
+  .select select{
+    width:100%; appearance:none; background:#fff; border:1px solid var(--primary); border-radius:12px;
+    padding:14px 44px 14px 14px; font-size:1.05rem; cursor:pointer; color:var(--ink); text-align:right;
+  }
+  .select::after{
+    content:""; position:absolute; top:50%; transform:translateY(-50%); right:14px; width:20px; height:20px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-soft));
+    -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>') center/contain no-repeat;
+    pointer-events:none;
+  }
+
+  .btn{padding:14px 24px; border-radius:12px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--primary),var(--primary-soft)); color:#fff; font-weight:700; display:block; margin:0 auto; transition:transform 0.2s;}
+  .btn:hover{transform:scale(1.05);}
+
+  .resultbox{display:none; border-radius:16px; padding:16px; border:1px solid; font-weight:700; text-align:center; margin-bottom:16px;}
+  .rb-ok{ background:var(--ok-bg); border-color:var(--ok-br); color:var(--ok); }
+  .rb-warn{ background:var(--warn-bg); border-color:var(--warn-br); color:var(--warn); }
+  .rb-danger{ background:var(--danger-bg); border-color:var(--danger-br); color:var(--danger); }
+
+  .deck{display:grid; gap:14px; grid-template-columns:1fr; margin-top:18px}
+  @media(min-width:860px){ .deck{grid-template-columns:repeat(2,1fr)} }
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 3px 8px rgba(0,0,0,.05)}
+  .card h3{margin:0 0 8px; font-family:"Amiri",serif; color:var(--primary); font-size:1.3rem}
+  .card p, .card ul{margin:0; font-size:15px; color:var(--ink); line-height:1.8}
+  .card ul{margin-top:10px; padding-inline-start:22px}
+
+  .iconbtn{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:#fff; cursor:pointer; transition:background 0.3s;}
+  .iconbtn:hover{background:#f0f8ff;}
+
+  .pdfwrap{margin-top:14px; text-align:center; display:none}
+  .pdfbtn{padding:12px 18px; border-radius:12px; border:1px solid var(--primary); background:#fff; cursor:pointer; font-weight:700; transition:background 0.3s;}
+  .pdfbtn:hover{background:var(--primary-soft);}
+
+  .msg-backdrop{
+    position:fixed; inset:0; background:rgba(0,0,0,.4);
+    display:none; align-items:center; justify-content:center; z-index:100000;
+  }
+  .msg-backdrop.show{ display:flex; }
+  .msg-box{
+    width:min(95vw,560px); background:#fff; border:1px solid var(--primary);
+    border-radius:18px; box-shadow:0 25px 60px rgba(0,0,0,.2);
+    padding:20px; text-align:center;
+  }
+  .msg-title{
+    font-family:"Amiri",serif; font-size:22px; color:var(--primary); margin:8px 0 4px;
+  }
+  .msg-text{ color:var(--ink); line-height:1.9; margin:10px 0 16px }
+  .msg-actions{ display:flex; justify-content:center }
+  .msg-btn{
+    padding:12px 20px; border-radius:12px; border:1px solid var(--primary);
+    background:linear-gradient(90deg,var(--primary),var(--primary-soft)); color:#fff; font-weight:700; cursor:pointer;
+  }
+  .msg-box.error{ border-color:#ff0000; }
+  .msg-box.error .msg-title{ color:#ff0000 }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">فاحص أعراض السكري</div>
+  <div class="tag">
+    أداة تثقيفية بالعربية للكشف المبكر عن أعراض السكري وعوامل الخطورة. لا تُغني عن الاستشارة الطبية.  
+    <strong>مراجع:</strong> WHO، CDC، ADA، NIDDK، NHS، NICE.
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="row">
+      <div>
+        <!-- الدولة -->
+        <div class="field">
+          <label><strong>اختر دولتك</strong></label>
+          <div class="select">
+            <select id="countrySelect" aria-label="اختر الدولة">
+              <option value="BHR" selected>البحرين</option>
+              <option value="KSA">السعودية</option>
+              <option value="ARE">الإمارات</option>
+              <option value="QAT">قطر</option>
+              <option value="KWT">الكويت</option>
+              <option value="OMN">عُمان</option>
+              <option value="EGY">مصر</option>
+              <option value="JOR">الأردن</option>
+              <option value="LBN">لبنان</option>
+              <option value="IRQ">العراق</option>
+              <option value="LBA">ليبيا</option>
+              <option value="MAR">المغرب</option>
+              <option value="DZA">الجزائر</option>
+              <option value="TUN">تونس</option>
+              <option value="SDN">السودان</option>
+              <option value="SYR">سوريا</option>
+              <option value="PSE">فلسطين</option>
+              <option value="DJI">جيبوتي</option>
+              <option value="COM">جزر القمر</option>
+              <option value="MRT">موريتانيا</option>
+              <option value="SOM">الصومال</option>
+              <option value="YEM">اليمن</option>
+              <option value="IRN">إيران</option>
+            </select>
+          </div>
+          <div class="hint">لعرض جهة حكومية وروابط موثوقة للسكري.</div>
+        </div>
+
+        <!-- النوع -->
+        <div class="field center">
+          <label><strong>النوع</strong></label>
+          <div class="seg" id="sexSeg">
+            <button type="button" class="on" data-sex="male">ذكر</button>
+            <button type="button" data-sex="female">أنثى</button>
+          </div>
+        </div>
+
+        <!-- العمر -->
+        <div class="field center">
+          <label><strong>العمر</strong></label>
+          <input id="age" type="number" inputmode="numeric" min="0" max="120" placeholder="مثال: 35" style="width:180px; padding:12px; border:1px solid var(--line); border-radius:10px; text-align:center; margin:0 auto">
+        </div>
+
+        <!-- عوامل -->
+        <div class="field center">
+          <label><strong>عوامل مؤثرة</strong></label>
+          <div class="seg" id="familySeg">
+            <button type="button" class="on" data-fh="no">لا تاريخ عائلي قوي</button>
+            <button type="button" data-fh="yes">تاريخ عائلي قوي</button>
+          </div>
+        </div>
+
+        <!-- أسئلة الأعراض -->
+        <div id="symptoms" class="card">
+          <h3>أسئلة الأعراض (اختر نعم/لا)</h3>
+          <div class="hint">الأعراض المستمرة أو الشديدة تستلزم فحص سكر الدم وتقييمًا طبيًا.</div>
+
+          <div class="field"><div><strong>عطش زائد (كثيرًا ما تحتاج للشرب)</strong></div>
+            <div class="seg" data-q="thirst">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>تبول متكرر أكثر من المعتاد</strong></div>
+            <div class="seg" data-q="urination">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>جوع شديد أو ازدياد الشهية</strong></div>
+            <div class="seg" data-q="hunger">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>فقدان وزن غير مبرر</strong></div>
+            <div class="seg" data-q="weight">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>إرهاق أو تعب غير معتاد</strong></div>
+            <div class="seg" data-q="fatigue">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>تشوش/عدم وضوح الرؤية</strong></div>
+            <div class="seg" data-q="vision">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>بطء التئام الجروح أو التهابات متكررة</strong></div>
+            <div class="seg" data-q="wounds">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>وخز/تنميل في اليدين أو القدمين</strong></div>
+            <div class="seg" data-q="tingling">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>جفاف شديد بالفم أو الجلد</strong></div>
+            <div class="seg" data-q="dryness">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+          <div class="field"><div><strong>اسوداد/تغير لون الجلد حول الرقبة أو الإبطين</strong></div>
+            <div class="seg" data-q="skin">
+              <button type="button" class="on" data-a="no">لا</button><button type="button" data-a="yes">نعم</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn" id="calc">اعرض النتيجة</button>
+        <div class="pdfwrap" id="pdfwrap">
+          <button class="pdfbtn" id="pdfBtn">تنزيل النتائج PDF</button>
+        </div>
+      </div>
+
+      <div>
+        <!-- مربع تعريف علمي -->
+        <div class="card" id="defBox" aria-label="تعريف علمي مختصر" style="margin-top:0">
+          <h3>تعريف علمي مختصر</h3>
+          <p>
+            السكري (<em>Diabetes mellitus</em>) مجموعةُ اضطراباتٍ استقلابية تتسم بارتفاعٍ مزمن في سكر الدم
+            نتيجةَ عوز الإنسولين، أو مقاومةٍ لفعله، أو كليهما؛ ما يسبب اضطرابًا في استقلاب
+            الكربوهيدرات والدهون والبروتينات. يرتبط على المدى البعيد بضرر/اختلال في أعضاءٍ متعددة
+            أهمها العينان والكِلى والأعصاب والقلب والأوعية.
+          </p>
+          <details>
+            <summary style="cursor:pointer; margin-top:6px"><strong>تفاصيل سريعة (أنواع وتشخيص)</strong></summary>
+            <ul>
+              <li><strong>أنواع شائعة:</strong> النوع 1 (مناعي ذاتي/نقص مطلق للإنسولين)، النوع 2 (مقاومة إنسولين مع قصور إفراز تدريجي)، سكري الحمل، وأنواع أخرى (دوائية/جينية).</li>
+              <li><strong>دلائل تشخيصية مختصرة (مختبر):</strong> A1C ≥ 6.5%، أو سكر صائم FPG ≥ 126 mg/dL (7.0 mmol/L)،
+                  أو سكر بعد ساعتين OGTT ≥ 200 mg/dL (11.1 mmol/L)، أو سكر عشوائي ≥ 200 mg/dL مع أعراض كلاسيكية.
+                  يجب التأكيد مخبريًا وبإشراف طبي.</li>
+            </ul>
+          </details>
+          <div class="hint">المحتوى تثقيفي ولا يغني عن مراجعة الطبيب.</div>
+        </div>
+
+        <!-- صندوق النتيجة -->
+        <div id="resultBox" class="resultbox rb-ok">
+          مستوى الإشارة: <span id="riskText">منخفضة</span> — <span id="actionText">التزم بنمط حياة صحي وافحص دوريًا.</span>
+        </div>
+
+        <div class="deck" id="adviceDeck" style="display:none"></div>
+
+        <!-- توصيات محلية يظهر بعد النتيجة -->
+        <div id="localBox" class="card" style="margin-top:12px; display:none">
+          <h3>روابط رسمية في بلدك</h3>
+          <div class="hint">ابدأ بوزارة الصحة/برنامج الأمراض غير السارية (السكري). تحقق من أرقام التواصل على الموقع الرسمي.</div>
+          <div id="govHospital" style="margin-top:10px; font-size:14px; color:#374151; border-bottom:1px solid var(--line); padding-bottom:10px;"></div>
+          <div id="localContact" style="margin-top:10px; font-size:14px; color:#374151;"></div>
+        </div>
+
+        <!-- مراجع عالمية -->
+        <div class="card" style="margin-top:12px">
+          <h3>جهات عالمية موثوقة</h3>
+          <div class="hint">اختر لزيارة الموقع.</div>
+          <div class="select">
+            <select id="intlSelect" aria-label="اختر جهة عالمية">
+              <option value="">— اختر جهة —</option>
+              <option value="https://www.who.int/news-room/fact-sheets/detail/diabetes">WHO — حقائق السكري</option>
+              <option value="https://www.cdc.gov/diabetes/">CDC — السكري</option>
+              <option value="https://www.diabetes.org/">ADA — جمعية السكري الأمريكية</option>
+              <option value="https://www.niddk.nih.gov/health-information/diabetes">NIDDK — نظرة عامة</option>
+              <option value="https://www.diabetes.org.uk/">Diabetes UK</option>
+              <option value="https://idf.org/">الاتحاد الدولي للسكري (IDF)</option>
+            </select>
+          </div>
+          <div id="intlContact" style="margin-top:8px; font-size:14px; color:#374151; display:none"></div>
+        </div>
+
+        <!-- مقالات تعليمية -->
+        <div class="card" style="margin-top:12px">
+          <h3>مقالات تعليمية معتمدة</h3>
+          <div class="select">
+            <select id="refSelect" aria-label="اختر مرجعًا">
+              <option value="">— اختر مرجعًا —</option>
+              <option value="https://www.who.int/news-room/fact-sheets/detail/diabetes">منظمة الصحة العالمية — السكري</option>
+              <option value="https://www.cdc.gov/diabetes/basics/diabetes.html">CDC — أساسيات السكري</option>
+              <option value="https://www.nhs.uk/conditions/diabetes/">NHS — السكري</option>
+              <option value="https://www.nice.org.uk/guidance/ng28">NICE — إرشادات النوع 2</option>
+              <option value="https://www.diabetes.org/diabetes">ADA — ما هو السكري؟</option>
+              <option value="https://www.niddk.nih.gov/health-information/diabetes/overview/what-is-diabetes">NIDDK — ما هو السكري</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- أدوات تقييم -->
+        <div class="card" style="margin-top:12px">
+          <h3>أدوات تقييم معرّضة (غير تشخيصية)</h3>
+          <div class="hint">الاختبارات الحاسمة: A1C، سكر صائم FPG، اختبار تحمل الغلوكوز OGTT — تُجرى في مختبر/عيادة.</div>
+          <div class="select">
+            <select id="toolSelect" aria-label="اختر أداة">
+              <option value="">— اختر أداة —</option>
+              <option value="https://www.diabetes.org/risk-test">اختبار الخطر من ADA</option>
+              <option value="https://riskscore.diabetes.org.uk/">اعرف مخاطر السكري — Diabetes UK</option>
+              <option value="https://www.cdc.gov/diabetes/basics/getting-tested.html">CDC — كيف تُفحص للسكري</option>
+              <option value="https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test">NIDDK — اختبار A1C</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- مشاركة -->
+        <div class="card" style="margin-top:12px; text-align:center">
+          <h3>شارك الصفحة</h3>
+          <div class="sharebar" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap">
+            <a class="iconbtn" id="shareWA" title="واتساب" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 0a12 12 0 00-10 18.3L1 23l4.9-1A12 12 0 1012 0zm6.5 17.2c-.3.8-1.7 1.6-2.4 1.6-.6 0-1.4.1-3.8-1-3.2-1.4-5.3-4.6-5.5-4.8-.1-.2-1.3-1.7-1.3-3.2 0-1.6.8-2.4 1.1-2.7.3-.3.7-.4 1-.4h.8c.2 0 .6 0 .9.7.3.8 1.1 2.7 1.2 2.9.1.2.2.5 0 .8-.2.3-.3.5-.6.8-.3.3-.6.6-.2 1.2.4.6 1.7 2.8 4 3.8 2.9 1.2 3 .8 3.5.8.5 0 1.8-.8 2.1-1.5.2-.7 1-1.6 1.3-1.8.2-.1.3-.2.5-.1l1 .5c.3.1.5.3.5.5-.1.4-.7 2-1 2.7z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareTG" title="تيليغرام" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9.04 18.29l-.35 4.04c.37 0 .62-.18.86-.4l1.98-1.84 4.12 3.04c.72.42 1.3.18 1.5-.65l4.27-17.9c.24-1.07-.42-1.54-1.13-1.24L2.3 11.12c-1.1.42-.97 1.27.03 1.6l4.1 1.2 9.42-5.86c.42-.26.9-.07.55.26l-7.36 9.97z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareX" title="X" aria-label="X">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 2h4.7l5 6.8L18.7 2H22l-7.8 9.1L22 22h-4.8l-5.4-7.2L6 22H2.1l8.3-9.8L3 2z"/></svg>
+            </a>
+            <a class="iconbtn" id="shareFB" title="Facebook" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.7V12h2.7V9.8c0-2.7 1.6-4.2 4-4.2 1.2 0 2.5.2 2.5.2v2.7h-1.4c-1.4 0-1.9.9-1.9 1.8V12h3.2l-.5 2.9h-2.7v7A10 10 0 0022 12z"/></svg>
+            </a>
+            <button class="iconbtn" id="copyLink" title="نسخ الرابط" aria-label="Copy Link">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M16 1H8C6.3 1 5 2.3 5 4v12c0 1.7 1.3 3 3 3h8c1.7 0 3-1.3 3-3V4c0-1.7-1.3-3-3-3zm1 15c0 .6-.4 1-1 1H8c-.6 0-1-.4-1-1V4c0-.6.4-1 1-1h8c.6 0 1 .4 1 1v12zM7 20c0 .6.4 1 1 1h8v2H8c-1.7 0-3-1.3-3-3v-2h2v2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <footer style="text-align:center; margin:12px 0 0; font-size:13px; color:var(--muted)">
+          <a id="devLink" class="ghost-link" href="https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0&wame_ctl=1" target="_blank" rel="noopener">برمجة وتطوير: فاضل الريس</a>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- نافذة رسائل -->
+<div id="msgBackdrop" class="msg-backdrop" role="dialog" aria-modal="true" aria-labelledby="msgTitle">
+  <div id="msgBox" class="msg-box">
+    <div id="msgTitle" class="msg-title">تنبيه</div>
+    <div id="msgText" class="msg-text">—</div>
+    <div class="msg-actions">
+      <button id="msgOk" class="msg-btn">حسنًا</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF & مشاركة -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+<script>
+/* نافذة الرسائل */
+const $mb = document.getElementById('msgBackdrop');
+const $box = document.getElementById('msgBox');
+const $txt = document.getElementById('msgText');
+const $ttl = document.getElementById('msgTitle');
+document.getElementById('msgOk').onclick = () => $mb.classList.remove('show');
+function openMsg(message, type='info', title){
+  $txt.innerHTML = message;
+  $ttl.textContent = title || (type==='error' ? 'تنبيه' : 'معلومة');
+  $box.classList.toggle('error', type==='error');
+  $mb.classList.add('show');
+}
+
+/* أزرار التبديل العامة */
+function makeToggle(segId, dataKey){
+  const seg=document.getElementById(segId);
+  seg.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    seg.dataset[dataKey]=Object.values(b.dataset)[0];
+  });
+}
+makeToggle('sexSeg','sex'); makeToggle('familySeg','fh');
+
+/* نعم/لا للأسئلة */
+document.getElementById('symptoms').addEventListener('click', e=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  const seg=btn.parentElement;
+  seg.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+});
+
+/* فتح الروابط للقوائم */
+['refSelect','srcSelect','toolSelect'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('change', e=>{ const url=e.target.value; if(url){ window.open(url,'_blank','noopener'); e.target.value=''; }});
+});
+
+/* جهات عالمية */
+const intlSelect=document.getElementById('intlSelect');
+const intlContact=document.getElementById('intlContact');
+intlSelect.addEventListener('change', ()=>{
+  const opt = intlSelect.selectedOptions[0];
+  if(!opt || !opt.value){ intlContact.style.display='none'; intlContact.innerHTML=''; return; }
+  const url = opt.value;
+  const name = opt.textContent.split('—')[0].trim();
+  intlContact.innerHTML = `🌐 <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+  intlContact.style.display='block';
+});
+
+/* روابط وزارات الصحة */
+const MOH_LINKS = {
+  BHR: {n: "وزارة الصحة — البحرين (قسم الأمراض غير السارية/السكري)", url: "https://www.moh.gov.bh/"},
+  KSA: {n: "وزارة الصحة — السعودية (الأمراض المزمنة)", url: "https://www.moh.gov.sa/"},
+  ARE: {n: "وزارة الصحة — الإمارات", url: "https://mohap.gov.ae/"},
+  QAT: {n: "وزارة الصحة — قطر / مؤسسة حمد الطبية", url: "https://www.hamad.qa/"},
+  KWT: {n: "وزارة الصحة — الكويت", url: "https://www.moh.gov.kw/"},
+  OMN: {n: "وزارة الصحة — عُمان", url: "https://www.moh.gov.om/"},
+  EGY: {n: "وزارة الصحة — مصر", url: "https://www.mohp.gov.eg/"},
+  JOR: {n: "وزارة الصحة — الأردن", url: "https://www.moh.gov.jo/"},
+  LBN: {n: "وزارة الصحة — لبنان", url: "https://www.moph.gov.lb/"},
+  IRQ: {n: "وزارة الصحة — العراق", url: "https://moh.gov.iq/"},
+  LBA: {n: "وزارة الصحة — ليبيا", url: "https://www.health.gov.ly/"},
+  MAR: {n: "وزارة الصحة — المغرب", url: "https://www.sante.gov.ma/"},
+  DZA: {n: "وزارة الصحة — الجزائر", url: "https://www.sante.gov.dz/"},
+  TUN: {n: "وزارة الصحة — تونس", url: "http://www.sante.tn/"},
+  SDN: {n: "وزارة الصحة — السودان", url: "https://fmoh.gov.sd/"},
+  SYR: {n: "وزارة الصحة — سوريا", url: "http://moh.gov.sy/"},
+  PSE: {n: "وزارة الصحة — فلسطين", url: "https://www.moh.ps/"},
+  DJI: {n: "وزارة الصحة — جيبوتي", url: "https://sante.gouv.dj/"},
+  COM: {n: "وزارة الصحة — جزر القمر", url: "https://sante.gouv.km/"},
+  MRT: {n: "وزارة الصحة — موريتانيا", url: "https://sante.gov.mr/"},
+  SOM: {n: "وزارة الصحة — الصومال", url: "https://moh.gov.so/"},
+  YEM: {n: "وزارة الصحة — اليمن", url: "https://moh.gov.ye/"},
+  IRN: {n: "وزارة الصحة — إيران", url: "https://behdasht.gov.ir/"}
+};
+
+/* حساب الإشارة */
+const QUESTIONS_IDS = ["thirst","urination","hunger","weight","fatigue","vision","wounds","tingling","dryness","skin"];
+function isYes(id){ return document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a==='yes'; }
+
+function screening(age, sex, fh){
+  const list = [];
+  if (age >= 35) list.push("العمر ≥ 35: إجراء اختبار A1C أو سكر صائم FPG للتحري.");
+  if (fh === 'yes') list.push("تاريخ عائلي قوي: تحرٍ مبكر (A1C/FPG) والمتابعة الدورية.");
+  list.push("إذا كانت الأعراض واضحة: اختبار عشوائي للسكر + إعادة تأكيد بفحص مخبري.");
+  list.push("يمكن استخدام اختبار المخاطر من ADA أو Diabetes UK لمعرفة مستوى الخطورة.");
+  return list;
+}
+
+function computeRisk(){
+  let score = 0;
+  const heavy = ['thirst','urination','hunger','weight','vision'];
+  QUESTIONS_IDS.forEach(id => {
+    const seg = document.querySelector(`.seg[data-q="${id}"]`);
+    const a = seg.querySelector('button.on')?.dataset.a || 'no';
+    if (a === 'yes') { score += 1; if (heavy.includes(id)) score += 1; }
+  });
+  if ((document.getElementById('familySeg').dataset.fh || 'no') === 'yes') score += 1;
+  const age = parseFloat(document.getElementById('age').value);
+  if (age >= 45) score += 1;
+
+  if (score > 10) score = 10;
+
+  let levelText = 'منخفضة', cls = 'rb-ok', action = 'التزم بنمط حياة صحي وافحص دوريًا.';
+  if (score >= 3) { levelText = 'متوسطة'; cls = 'rb-warn'; action = 'احجز موعد فحص سكر (A1C/صائم) خلال 1–2 أسبوع.'; }
+  if (score >= 6) { levelText = 'عالية'; cls = 'rb-danger'; action = 'أجرِ فحص سكر الدم خلال 24–72 ساعة وتابع مع طبيب أسرة/باطنية.'; }
+  return {levelText, cls, action};
+}
+
+/* بناء النصائح */
+function buildAdvice(age, sex, fh){
+  const deck = document.getElementById('adviceDeck'); deck.innerHTML = '';
+  const mk = (t, html) => { const e = document.createElement('div'); e.className = 'card'; e.innerHTML = `<h3>${t}</h3>${html}`; return e; };
+  const list = screening(age, sex, fh);
+
+  const lifestyle = `
+    <ul>
+      <li>قلّل السكريات والمشروبات المحلاة. زد الألياف (خضار، حبوب كاملة).</li>
+      <li>نشاط بدني ≥ 150 دقيقة أسبوعيًا (مشي سريع/سباحة...)</li>
+      <li>خفض الوزن 5–7% لمن لديهم زيادة وزن.</li>
+      <li>راقب ضغط الدم والدهون وتوقف عن التدخين إن وُجد.</li>
+    </ul>`;
+  const tests = list.length ? '<ul>' + list.map(x => `<li>${x}</li>`).join('') + '</ul>' : '<div>لا توجد فحوص خاصة بعُمرك حاليًا — اتبع نصيحة طبيبك.</div>';
+
+  deck.append(
+    mk('نصائح سريعة', lifestyle),
+    mk('فحوص التحري المقترحة', tests)
+  );
+  deck.style.display = 'grid';
+}
+
+/* عرض النتيجة + روابط */
+let lastResult = null;
+document.getElementById('calc').addEventListener('click', () => {
+  const age = parseFloat(document.getElementById('age').value);
+  if (!(age >= 0 && age <= 120)) { openMsg('أدخل عمرًا صحيحًا بين 0 و 120.', 'error'); return; }
+  const sex = document.getElementById('sexSeg').dataset.sex || 'male';
+  const fh = document.getElementById('familySeg').dataset.fh || 'no';
+
+  const {levelText, cls, action} = computeRisk();
+
+  const box = document.getElementById('resultBox');
+  box.className = 'resultbox ' + cls;
+  document.getElementById('riskText').textContent = levelText;
+  document.getElementById('actionText').textContent = action;
+  box.style.display = 'block';
+
+  buildAdvice(age, sex, fh);
+
+  const ccode = document.getElementById('countrySelect').value;
+  const gov = MOH_LINKS[ccode];
+  const localBox = document.getElementById('localBox');
+  const govHospital = document.getElementById('govHospital');
+  const localContact = document.getElementById('localContact');
+  govHospital.innerHTML = '';
+  localContact.innerHTML = '';
+
+  if (gov) {
+    govHospital.innerHTML = `
+      🏛️ <strong>${gov.n}</strong><br>
+      🌐 <a href="${gov.url}" target="_blank" rel="noopener">الموقع الرسمي</a>
+    `;
+  }
+  localBox.style.display = 'block';
+
+  const sel = document.getElementById('intlSelect');
+  if (sel.value) {
+    const opt = sel.selectedOptions[0];
+    const url = sel.value;
+    const name = opt.textContent.split('—')[0].trim();
+    document.getElementById('intlContact').innerHTML = `🌐 <a href="${url}" target="_blank" rel="noopener">زيارة موقع ${name}</a>`;
+    document.getElementById('intlContact').style.display = 'block';
+  }
+
+  lastResult = {
+    country: document.querySelector('#countrySelect option:checked').textContent,
+    age, sex: (sex === 'male' ? 'ذكر' : 'أنثى'),
+    fh: (fh === 'yes' ? 'تاريخ عائلي قوي' : 'لا'),
+    level: levelText, action,
+    gov: gov ? {n: gov.n, url: gov.url} : null,
+    answers: QUESTIONS_IDS.map(id => {
+      const label = document.querySelector(`.seg[data-q="${id}"]`).previousElementSibling.textContent.trim();
+      const a = document.querySelector(`.seg[data-q="${id}"] .on`)?.dataset.a || 'no';
+      return {q: label, a: (a === 'yes' ? 'نعم' : 'لا')};
+    })
+  };
+  document.getElementById('pdfwrap').style.display = 'block';
+});
+
+/* PDF */
+document.getElementById('pdfBtn').addEventListener('click', async () => {
+  if (!lastResult) { openMsg('اعرض النتيجة أولًا ثم نزّل PDF.', 'error'); return; }
+  const box = document.createElement('div');
+  box.setAttribute('dir', 'rtl');
+  box.style.width = '780px'; box.style.background = '#fff'; box.style.border = '1px solid #e5e7eb'; box.style.borderRadius = '16px'; box.style.padding = '20px'; box.style.fontFamily = '"Cairo",sans-serif'; box.style.color = '#111827';
+
+  function row(k, v) { return `<tr><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6"><strong>${k}</strong></td><td style="padding:8px 10px;border-bottom:1px solid #f3f4f6">${v}</td></tr>`; }
+  const rowsAns = lastResult.answers.map(x => row(x.q, x.a)).join('');
+
+  box.innerHTML = `
+    <div style="text-align:center; margin-bottom:10px">
+      <div style="font-family:'Amiri',serif; font-size:26px; color:${getComputedStyle(document.documentElement).getPropertyValue('--primary')}">تقرير استبيان أعراض السكري</div>
+      <div style="font-size:12px; color:#6b7280">${new Date().toLocaleString('ar')}</div>
+    </div>
+
+    <table style="width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid #eee; margin-bottom:10px">
+      <thead><tr style="background:linear-gradient(90deg,#e7f3ff,#fff)"><th style="padding:10px 12px; text-align:right">البند</th><th style="padding:10px 12px; text-align:right">القيمة</th></tr></thead>
+      <tbody>
+        ${row('الدولة', lastResult.country)}
+        ${row('العمر', lastResult.age)}
+        ${row('النوع', lastResult.sex)}
+        ${row('تاريخ عائلي', lastResult.fh)}
+        ${row('مستوى الإشارة', lastResult.level)}
+        ${row('التوصية الآن', lastResult.action)}
+        ${lastResult.gov ? row('الجهة الرسمية', `${lastResult.gov.n} — <a href='${lastResult.gov.url}' target='_blank' rel='noopener'>الموقع</a>`) : ''}
+      </tbody>
+    </table>
+
+    <div style="font-weight:700; margin-bottom:6px">إجابات الأعراض</div>
+    <table style="width:100%; border:1px solid #eee; border-radius:12px; border-collapse:separate; border-spacing:0">
+      <thead><tr style="background:#f9fafb"><th style="padding:8px 10px; text-align:right">العَرَض</th><th style="padding:8px 10px; text-align:right">الإجابة</th></tr></thead>
+      <tbody>${rowsAns}</tbody>
+    </table>
+
+    <div style="margin-top:10px; font-size:12px; color:#6b7280">هذه نتيجة تثقيفية عامة وليست تشخيصًا. للحصول على تشخيص، يلزم فحص سكر الدم ومراجعة طبيب مختص.</div>
+  `;
+
+  document.body.appendChild(box);
+  await new Promise(r => setTimeout(r, 120));
+  const canvas = await html2canvas(box, {scale: 2, useCORS: true});
+  document.body.removeChild(box);
+
+  const imgData = canvas.toDataURL('image/png');
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({orientation: 'p', unit: 'pt', format: 'a4'});
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 28;
+  const imgW = pageW - margin * 2;
+  const imgH = canvas.height * (imgW / canvas.width);
+
+  if (imgH <= pageH - margin * 2) {
+    pdf.addImage(imgData, 'PNG', margin, margin, imgW, imgH);
+  } else {
+    let sH = pageH - margin * 2, ratio = canvas.width / imgW, slice = sH * ratio, pos = 0;
+    while (pos < canvas.height) {
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = Math.min(slice, canvas.height - pos);
+      sliceCanvas.getContext('2d').drawImage(canvas, 0, pos, canvas.width, sliceCanvas.height, 0, 0, sliceCanvas.width, sliceCanvas.height);
+      const sliceData = sliceCanvas.toDataURL('image/png');
+      if (pos > 0) pdf.addPage();
+      pdf.addImage(sliceData, 'PNG', margin, margin, imgW, (sliceCanvas.height / ratio));
+      pos += slice;
+    }
+  }
+  pdf.save('نتيجة-استبيان-السكري.pdf');
+});
+
+/* مشاركة */
+document.getElementById('shareWA').onclick = (e) => { e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareTG').onclick = (e) => { e.preventDefault(); window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareX').onclick = (e) => { e.preventDefault(); window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('shareFB').onclick = (e) => { e.preventDefault(); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`, '_blank', 'noopener'); };
+document.getElementById('copyLink').onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    openMsg('تم نسخ الرابط بنجاح!');
+  } catch (err) {
+    openMsg('فشل في نسخ الرابط.', 'error');
+  }
+};
+document.getElementById('devLink').addEventListener('click', function() { setTimeout(() => { if (!document.hasFocus()) return; location.href = this.href; }, 120); });
+</script>
+</body>
+</html>
