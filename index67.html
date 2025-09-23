@@ -1,140 +1,144 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>تقويم الخسوف والكسوف صلاة الآيات</title>
-<meta name="description" content="تقويم دقيق للكسوف والخسوف يعرض الحدث القادم ومراحله الزمنية، مع التعريف بصلاة الآيات وطريقة أدائها والأحكام العامة وأحكام ذوي الأعذار (النساء) وفق فتاوى معتمدة، إضافة إلى خمسة أحداث قادمة ومصادر فلكية موثوقة.">
-<meta name="keywords" content="الخسوف,الكسوف,صلاة الآيات,السيد السيستاني,أحكام,كيفية الصلاة,NASA,TimeandDate">
-<meta property="og:title" content="تقويم الخسوف والكسوف صلاة الآيات">
-<meta property="og:description" content="الحدث القادم مع تعريف وطريقة وأحكام صلاة الآيات، ومواعيد عالمية دقيقة من مصادر فلكية معتمدة.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ar_AR">
-<script id="ld-json" type="application/ld+json">{}</script>
-<script id="ld-list" type="application/ld+json">{}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>تقويم الخسوف والكسوف | صلاة الآيات</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&family=Noto+Kufi+Arabic:wght@600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#f7f7f4; --card:#ffffff; --ink:#0d1420; --muted:#68707a;
-    --border:#e7e3d7; --green:#0f7a4a; --green-700:#0b5e3a; --gold:#c6a83c;
-    --shadow:0 10px 24px rgba(0,0,0,.06);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.75}
-  .container{width:min(1100px,100%);margin:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+  <!-- SEO -->
+  <meta name="description" content="تقويم دقيق للكسوف والخسوف القادمة مع بيان الحكم الشرعي لصلاة الآيات وفق رأي السيد السيستاني. يعتمد على مصادر فلكية موثوقة مثل NASA و TimeandDate.">
+  <meta name="keywords" content="الخسوف, الكسوف, صلاة الآيات, السيد السيستاني, NASA, TimeandDate, تقويم, أحكام, كيفية الصلاة">
+  <meta property="og:title" content="تقويم الخسوف والكسوف | صلاة الآيات">
+  <meta property="og:description" content="مواعيد دقيقة للكسوف والخسوف مع الأحكام المختصرة وكيفية صلاة الآيات.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
+  <link rel="canonical" href="https://fadhel-alrayes.fun/index67.html"/>
 
-  /* العنوان */
-  .hero{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:16px;text-align:center}
-  .heroTitle{margin:2px 0;font-family:"Noto Kufi Arabic",sans-serif;font-weight:700;font-size:1.35rem;letter-spacing:.2px}
+  <!-- JSON-LD placeholders (يُملأ من السكربت) -->
+  <script id="ld-json" type="application/ld+json">{}</script>
+  <script id="ld-list" type="application/ld+json">{}</script>
 
-  /* الحدث القادم */
-  .nextBox{background:var(--card);border:2px solid var(--gold);border-radius:14px;box-shadow:var(--shadow);padding:14px;display:grid;gap:10px}
-  .nextHead{display:flex;justify-content:center}
-  .nextTitle{color:var(--green);font-weight:900;font-size:1.05rem;text-align:center}
-  .nextDate{color:#8b7a24;font-weight:800;text-align:center}
-  .eventName{margin-top:2px;text-align:center;font-weight:900;font-size:1.1rem}
-  .whenCol{display:grid;gap:8px}
-  .tag{display:block;width:100%;text-align:center;background:#faf9f5;border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem;font-weight:800}
-  .ruleLine{text-align:center;color:#7a6720;font-weight:800}
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&family=Noto+Kufi+Arabic:wght@600;700&display=swap" rel="stylesheet">
 
-  /* زر تغيير المنطقة بعد الحدث */
-  .tzActions{margin-top:10px;display:flex;justify-content:center}
-  .btn{border:1px solid var(--border);background:#fff;border-radius:10px;padding:.5rem .85rem;font-weight:800;cursor:pointer}
-  .btn.primary{border-color:#e8dfb2;background:#fff}
+  <style>
+    :root{
+      --bg:#f7f7f4; --card:#ffffff; --ink:#0d1420; --muted:#68707a;
+      --border:#e7e3d7; --green:#0f7a4a; --green-700:#0b5e3a; --gold:#c6a83c;
+      --shadow:0 10px 24px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:"Cairo", "Noto Kufi Arabic", Tahoma, Arial, sans-serif;
+      line-height:1.75;
+      /* منع أي فونت ملون للإيموجي */
+      font-variant-emoji: text;
+    }
+    .container{width:min(1100px,100%);margin:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
 
-  /* معلومات عامة */
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:760px){.row{grid-template-columns:1fr}}
-  .chip{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px;display:flex;align-items:center;gap:10px}
-  .ico{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#f2efe6}
-  .stack{display:flex;flex-direction:column}
-  .label{font-size:.86rem;color:var(--muted);font-weight:700}
-  .value{font-weight:900}
+    /* العنوان */
+    .hero{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:16px;text-align:center}
+    .heroTitle{margin:2px 0;font-family:"Noto Kufi Arabic",sans-serif;font-weight:700;font-size:1.35rem;letter-spacing:.2px}
 
-  /* مربّع «الأحكام والكيفية» (عاد وتم تقسيمه لأربع بطاقات) */
-  .rulingBox{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
-  .rulingBox h3{margin:0 0 10px;text-align:center;font-weight:900;font-size:1.06rem;color:var(--green)}
-  .rulingGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:900px){.rulingGrid{grid-template-columns:1fr}}
-  .rCard{border:1px dashed #e9e1c8;border-radius:10px;padding:12px;background:#fffcf3}
-  .rCard h4{margin:0 0 6px;font-weight:900;text-align:center}
-  .rCard p{margin:.35rem 0;text-align:justify}
-  .rList{margin:.35rem 0 0 1rem}
-  .rList li{margin:.25rem 0}
+    /* الحدث القادم */
+    .nextBox{background:var(--card);border:2px solid var(--gold);border-radius:14px;box-shadow:var(--shadow);padding:14px;display:grid;gap:10px}
+    .nextTitle{color:var(--green);font-weight:900;font-size:1.05rem;text-align:center}
+    .nextDate{color:#8b7a24;font-weight:800;text-align:center}
+    .eventName{margin-top:2px;text-align:center;font-weight:900;font-size:1.1rem}
+    .whenCol{display:grid;gap:8px}
+    .tag{display:block;width:100%;text-align:center;background:#faf9f5;border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem;font-weight:800}
+    .ruleLine{text-align:center;color:#7a6720;font-weight:800}
 
-  /* مربعات التعريف بالكسوف والخسوف */
-  .defsGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:760px){.defsGrid{grid-template-columns:1fr}}
-  .defCard{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
-  .defCard h4{margin:0 0 8px;font-weight:900;color:var(--green);text-align:center}
-  .defCard p{margin:.35rem 0;text-align:justify}
-  .bul{margin:.35rem 0 .2rem 1rem}
-  .bul li{margin:.25rem 0}
-  .defWide{grid-column:1/-1}
+    /* زر تغيير المنطقة */
+    .tzActions{margin-top:10px;display:flex;justify-content:center}
+    .btn{border:1px solid var(--border);background:#fff;border-radius:10px;padding:.5rem .85rem;font-weight:800;cursor:pointer}
+    .btn.primary{border-color:#e8dfb2;background:#fff}
 
-  /* بطاقة «الأحداث القادمة» */
-  .upcoming{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
-  .upcoming h3{margin:0 0 8px;text-align:center;font-weight:900;font-size:1.05rem}
-  .uDesc{margin:6px 0 12px;color:var(--muted);text-align:center}
-  .uList{display:grid;gap:8px}
-  .uItem{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid #efeade;border-radius:10px;padding:10px}
-  .uName{font-weight:900}
-  .uWhen{display:flex;flex-direction:column;text-align:left}
-  .uWhen .l{font-weight:800}
-  .uWhen .z{color:var(--muted);font-size:.9rem}
+    /* معلومات عامة */
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:760px){.row{grid-template-columns:1fr}}
+    .chip{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px;display:flex;gap:10px}
+    .stack{display:flex;flex-direction:column}
+    .label{font-size:.86rem;color:var(--muted);font-weight:700}
+    .value{font-weight:900}
 
-  /* المصادر */
-  .sourcesBar{
-    background:var(--card); border:1px solid var(--border); border-radius:12px;
-    box-shadow:var(--shadow); padding:12px; display:flex; gap:10px; align-items:center;
-    justify-content:center; flex-wrap:wrap
-  }
-  .sourcesBar label{font-weight:900;color:var(--green-700)}
-  .sourcesBar select{
-    padding:.55rem .8rem; border:1px solid var(--border); border-radius:10px;
-    font-weight:800; background:#fff; min-width:300px
-  }
-  .sourcesBar .btn{border:1px solid var(--border);border-radius:10px;padding:.5rem .9rem;font-weight:900;background:#fff;cursor:pointer}
-  .sourcesBar .btn.primary{border-color:#e8dfb2}
+    /* أحكام صلاة الآيات */
+    .rulingBox{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
+    .rulingBox h3{margin:0 0 10px;text-align:center;font-weight:900;font-size:1.06rem;color:var(--green)}
+    .rulingGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:900px){.rulingGrid{grid-template-columns:1fr}}
+    .rCard{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px}
+    .rCard h4{margin:0 0 6px;font-weight:900;text-align:center}
+    .rCard p{margin:.35rem 0;text-align:justify}
+    .rList{margin:.35rem 0 0 1rem}
+    .rList li{margin:.25rem 0}
 
-  footer{text-align:center;margin-top:6px}
-  .credit{color:var(--green-700);font-weight:900}
+    /* تعريف الكسوف والخسوف */
+    .defsGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:760px){.defsGrid{grid-template-columns:1fr}}
+    .defCard{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
+    .defCard h4{margin:0 0 8px;font-weight:900;color:var(--green);text-align:center}
+    .defCard p{margin:.35rem 0;text-align:justify}
+    .bul{margin:.35rem 0 .2rem 1rem}
+    .bul li{margin:.25rem 0}
+    .defWide{grid-column:1/-1}
 
-  /* حوار تغيير المنطقة */
-  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.28);z-index:60}
-  .modal.open{display:grid}
-  .box{width:min(480px,95%);background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:14px}
-  .rowCtrl{display:flex;gap:10px;align-items:center;margin:8px 0}
-  .rowCtrl label{width:120px;color:var(--muted);font-weight:800}
-  select{flex:1;padding:.55rem;border:1px solid var(--border);border-radius:10px;font-weight:800;background:#fff}
-  .actions{display:flex;gap:10px;margin-top:10px;justify-content:flex-end}
-</style>
+    /* الأحداث القادمة */
+    .upcoming{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
+    .upcoming h3{margin:0 0 8px;text-align:center;font-weight:900;font-size:1.05rem}
+    .uDesc{margin:6px 0 12px;color:var(--muted);text-align:center}
+    .uList{display:grid;gap:8px}
+    .uItem{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid #efeade;border-radius:10px;padding:10px}
+    .uName{font-weight:900}
+    .uWhen{display:flex;flex-direction:column;text-align:left}
+    .uWhen .l{font-weight:800}
+    .uWhen .z{color:var(--muted);font-size:.9rem}
+
+    /* المصادر */
+    .sourcesBar{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .sourcesBar label{font-weight:900;color:var(--green-700)}
+    .sourcesBar select{padding:.55rem .8rem;border:1px solid var(--border);border-radius:10px;font-weight:800;background:#fff;min-width:300px}
+    .sourcesBar .btn{border:1px solid var(--border);border-radius:10px;padding:.5rem .9rem;font-weight:900;background:#fff;cursor:pointer}
+    .sourcesBar .btn.primary{border-color:#e8dfb2}
+
+    footer{text-align:center;margin-top:6px}
+    .credit{color:var(--green-700);font-weight:900}
+
+    /* حوار تغيير المنطقة */
+    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.28);z-index:60}
+    .modal.open{display:grid}
+    .box{width:min(480px,95%);background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:14px}
+    .rowCtrl{display:flex;gap:10px;align-items:center;margin:8px 0}
+    .rowCtrl label{width:120px;color:var(--muted);font-weight:800}
+    select{flex:1;padding:.55rem;border:1px solid var(--border);border-radius:10px;font-weight:800;background:#fff}
+    .actions{display:flex;gap:10px;margin-top:10px;justify-content:flex-end}
+
+    /* إخفاء أي عناصر أيقونات قديمة لو بقيت صدفة */
+    .ico, [class*="icon"], [data-icon], .emoji, .emj { display:none !important; }
+  </style>
 </head>
 <body>
   <div class="container">
     <!-- العنوان -->
     <section class="hero" aria-label="تقويم الخسوف والكسوف">
-      <h1 class="heroTitle">تقويم الخسوف والكسوف صلاة الآيات</h1>
+      <h1 class="heroTitle">تقويم الخسوف والكسوف | صلاة الآيات</h1>
     </section>
 
     <!-- الحدث القادم -->
     <section class="nextBox" id="nextBox" aria-live="polite">
-      <div class="nextHead"><div class="nextTitle">الحدث القادم</div></div>
+      <div class="nextTitle">الحدث القادم</div>
       <div class="nextDate" id="nextDate">—</div>
       <div class="eventName" id="eventName">—</div>
-
-      <!-- مستطيلات ممتدة: «الوقت فقط» (ساعة:دقيقة:ثانية) -->
       <div class="whenCol">
         <span class="tag" id="tStart">يبدأ: —</span>
         <span class="tag" id="tMax">الأعظم: —</span>
         <span class="tag" id="tEnd">ينتهي: —</span>
       </div>
-
       <div class="ruleLine" id="nextRuling">الحكم الشرعي للصلاة : واجبة</div>
     </section>
 
-    <!-- زر تغيير المنطقة بعد مربع الحدث -->
+    <!-- زر تغيير المنطقة -->
     <div class="tzActions">
       <button class="btn primary" id="openTZ" type="button">تغيير المنطقة</button>
     </div>
@@ -142,98 +146,97 @@
     <!-- معلومات عامة -->
     <section class="row">
       <div class="chip">
-        <div class="ico">📅</div>
-        <div class="stack"><div class="label">التاريخ الميلادي</div><div class="value" id="greg">—</div></div>
+        <div class="stack">
+          <div class="label">التاريخ الميلادي</div>
+          <div class="value" id="greg">—</div>
+        </div>
       </div>
       <div class="chip">
-        <div class="ico">🌍</div>
-        <div class="stack"><div class="label">المنطقة الزمنية المعروضة</div><div class="value" id="tzLabel">—</div></div>
+        <div class="stack">
+          <div class="label">المنطقة الزمنية</div>
+          <div class="value" id="tzLabel">—</div>
+        </div>
       </div>
     </section>
 
-    <!-- مربّع: التعريف/الطريقة/الأحكام/ذوي الأعذار (أُعيد كما طلبت) -->
-    <section class="rulingBox" aria-label="التعريف والكيفية والأحكام">
-      <h3>صلاة الآيات — تعريف وطريقة وأحكام</h3>
+    <!-- أحكام صلاة الآيات -->
+    <section class="rulingBox" aria-label="أحكام صلاة الآيات">
+      <h3>أحكام صلاة الآيات</h3>
       <div class="rulingGrid">
-        <!-- التعريف -->
         <div class="rCard">
-          <h4>تعريف صلاة الآيات</h4>
-          <p>صلاةٌ واجبةٌ تُشرّع عند الظواهر المخوِّفة مثل <strong>الكسوف والخسوف</strong>، وتُؤدّى بنية «صلاة الآيات» تقرّبًا إلى الله تعالى.</p>
+          <h4>تعريف</h4>
+          <p>صلاة واجبة عند الظواهر المخوفة مثل الكسوف والخسوف، وتؤدّى بنية صلاة الآيات تقربًا إلى الله تعالى.</p>
         </div>
-        <!-- كيفية الصلاة -->
         <div class="rCard">
-          <h4>طريقة الصلاة باختصار</h4>
-          <p>ركعتان، في كل ركعة <strong>خمسة ركوعات</strong> ثم سجدتان، وتُفعل الركعة الثانية كذلك ثم التشهّد والسلام.</p>
-          <p>القراءة: إمّا الفاتحة + سورة تامة لكل قيام، أو تجزئة سورة واحدة على القيامات الخمسة.</p>
+          <h4>الطريقة</h4>
+          <p>ركعتان، في كل ركعة خمسة ركوعات ثم سجدتان. تعاد الركعة الثانية كذلك، ثم التشهد والسلام.</p>
+          <p>القراءة: إمّا الفاتحة وسورة كاملة لكل قيام، أو تجزئة سورة واحدة على القيامات الخمسة.</p>
         </div>
-        <!-- أحكام عامة -->
         <div class="rCard">
-          <h4>أحكام صلاة الآيات</h4>
+          <h4>الأحكام العامة</h4>
           <ul class="rList">
-            <li><strong>الوجوب:</strong> تجب عند حدوث الكسوف أو الخسوف ولو جزئيًا.</li>
-            <li><strong>الوقت:</strong> من بدء الظاهرة إلى تمام الانجلاء.</li>
-            <li><strong>القضاء:</strong> من علم بالظاهرة وتركها حتى انجلت وجب عليه القضاء. ومن لم يعلم: يقضي إن كان <strong>كليًا</strong>، وإلا فلا.</li>
+            <li>واجبة عند حدوث الكسوف أو الخسوف ولو جزئيًا.</li>
+            <li>وقتها: من ابتداء الظاهرة إلى تمام الانجلاء.</li>
+            <li>القضاء: من علم بالظاهرة ولم يصلِّ حتى انجلت وجب عليه القضاء. من لم يعلم بها: يقضي إن كان كليًا فقط.</li>
           </ul>
         </div>
-        <!-- ذوي الأعذار (النساء) -->
         <div class="rCard">
-          <h4>أحكام ذوي الأعذار (النساء)</h4>
+          <h4>ذوو الأعذار (النساء)</h4>
           <ul class="rList">
-            <li><strong>الحيض والنفاس:</strong> لا تجب الصلاة حال العذر، ولا قضاء لما فُوّت زمن العذر.</li>
-            <li>إن طَهُرت أثناء بقاء وقت الظاهرة، تُصلّي ما دام الوقت باقيًا.</li>
+            <li>الحائض والنفساء: لا تجب الصلاة حال العذر، ولا قضاء لما فات زمن العذر.</li>
+            <li>إن طهرت أثناء بقاء وقت الظاهرة صلّت ما دام الوقت باقيًا.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- مربّع تعريف عام + مربعا التعريف للشمس والقمر -->
-    <section class="defsGrid" aria-label="تعريف الكسوف والخسوف">
+    <!-- تعريف الكسوف والخسوف -->
+    <section class="defsGrid" aria-label="التعريف الفلكي">
       <article class="defCard defWide">
         <h4>الكسوف والخسوف</h4>
-        <p><strong>الكسوف والخسوف</strong> ظاهرتان فلكيتان مختلفتان تماماً. الكسوف يكون <strong>للشمس</strong>، بينما الخسوف يكون <strong>للقمر</strong>.</p>
+        <p>ظاهرتان فلكيتان مختلفتان تمامًا: الكسوف للشمس والخسوف للقمر.</p>
       </article>
-
       <article class="defCard">
         <h4>الكسوف</h4>
-        <p>هو حجب <strong>الشمس</strong> عن الأرض عندما يمرّ القمر بين الشمس والأرض، فيمنع ضوءها كليًا أو جزئيًا.</p>
+        <p>حجب الشمس عن الأرض عندما يمرّ القمر بين الشمس والأرض فيَحجُب ضوءها كليًا أو جزئيًا.</p>
         <ul class="bul">
-          <li><strong>الجرم المحجوب:</strong> الشمس.</li>
-          <li><strong>الترتيب:</strong> الشمس – القمر – الأرض.</li>
+          <li>المحجوب: الشمس</li>
+          <li>الترتيب: الشمس - القمر - الأرض</li>
         </ul>
       </article>
-
       <article class="defCard">
         <h4>الخسوف</h4>
-        <p>هو وقوع <strong>القمر</strong> في ظلّ الأرض عندما تكون الأرض بين الشمس والقمر؛ فيبدو مُظلّمًا أو مُحمَرًّا.</p>
+        <p>وقوع القمر في ظلّ الأرض عندما تكون الأرض بين الشمس والقمر؛ فيبدو القمر مظلمًا أو محمرًا.</p>
         <ul class="bul">
-          <li><strong>الجرم المحجوب:</strong> القمر.</li>
-          <li><strong>الترتيب:</strong> الشمس – الأرض – القمر.</li>
+          <li>المحجوب: القمر</li>
+          <li>الترتيب: الشمس - الأرض - القمر</li>
         </ul>
       </article>
     </section>
 
-    <!-- أحداث قادمة -->
+    <!-- الأحداث القادمة -->
     <section class="upcoming" id="upcoming">
       <h3>الخسوف والكسوف القادمة</h3>
-      <div class="uDesc">أقرب خمسة أحداث قادمة عالميًا مع اليوم والتاريخ بالعربية ووقت <strong>أعظم الظاهرة</strong> محليًا وUTC. تتكيّف تلقائيًا مع منطقتك.</div>
-      <div class="uList" id="uList"><div class="uItem"><div class="uName">—</div><div class="uWhen"><span class="l">—</span><span class="z">—</span></div></div></div>
+      <div class="uDesc">أقرب خمسة أحداث قادمة عالميًا: التاريخ بالعربية، ووقت أعظم الظاهرة محليًا وبتوقيت UTC.</div>
+      <div class="uList" id="uList">
+        <div class="uItem"><div class="uName">جارٍ التحميل</div><div class="uWhen"><span class="l">...</span><span class="z">...</span></div></div>
+      </div>
     </section>
 
-    <!-- قائمة المصادر المنسدلة -->
+    <!-- المصادر -->
     <section class="sourcesBar" aria-label="مصادر معتمدة">
       <label for="srcSel">المصادر:</label>
-      <select id="srcSel">
-        <!-- فلك (دقيقة/رسمية) -->
-        <option value="https://eclipse.gsfc.nasa.gov/SEdecade/SEdecade2021.html">NASA GSFC – Solar Eclipses 2021–2030</option>
-        <option value="https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2021.html">NASA GSFC – Lunar Eclipses 2021–2030</option>
-        <option value="https://www.timeanddate.com/eclipse/">TimeandDate – Eclipses</option>
+      <select id="srcSel" aria-label="اختيار مصدر">
+        <!-- فلك -->
+        <option value="https://eclipse.gsfc.nasa.gov/SEdecade/SEdecade2021.html">NASA GSFC — Solar Eclipses 2021-2030</option>
+        <option value="https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2021.html">NASA GSFC — Lunar Eclipses 2021-2030</option>
+        <option value="https://www.timeanddate.com/eclipse/">TimeandDate — Eclipses</option>
         <option value="https://www.eclipsewise.com/">EclipseWise</option>
-        <!-- أحكام (مكتب السيد السيستاني) -->
-        <option value="https://www.sistani.org/arabic/qa/0551/">الاستفتاءات – صلاة الآيات (sistani.org)</option>
-        <option value="https://www.sistani.org/arabic/book/13/597/">المسائل المنتخبة – صلاة الآيات (sistani.org)</option>
-        <option value="https://www.sistani.org/arabic/book/23720/4663/">منهاج الصالحين – موارد وجوب صلاة الآيات</option>
-        <option value="https://www.sistani.org/arabic/book/23720/4664/">منهاج الصالحين – وقت صلاة الآيات</option>
-        <option value="https://www.sistani.org/arabic/book/23720/4665/">منهاج الصالحين – كيفية صلاة الآيات</option>
+        <!-- أحكام (الموقع الرسمي) -->
+        <option value="https://www.sistani.org/arabic/qa/0551/">الموقع الرسمي — استفتاءات صلاة الآيات</option>
+        <option value="https://www.sistani.org/arabic/book/23720/4663/">الموقع الرسمي — موارد وجوب صلاة الآيات</option>
+        <option value="https://www.sistani.org/arabic/book/23720/4664/">الموقع الرسمي — وقت صلاة الآيات</option>
+        <option value="https://www.sistani.org/arabic/book/23720/4665/">الموقع الرسمي — كيفية صلاة الآيات</option>
       </select>
       <button type="button" id="openSrc" class="btn primary">فتح المصدر</button>
     </section>
@@ -244,7 +247,7 @@
   <!-- حوار تغيير المنطقة -->
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="تغيير المنطقة">
     <div class="box">
-      <div class="rowCtrl"><label>المنطقة الزمنية</label><select id="tzSel"></select></div>
+      <div class="rowCtrl"><label for="tzSel">المنطقة الزمنية</label><select id="tzSel"></select></div>
       <div class="actions">
         <button class="btn" id="cancelTZ" type="button">إلغاء</button>
         <button class="btn primary" id="saveTZ" type="button">حفظ</button>
@@ -253,27 +256,30 @@
   </div>
 
 <script>
-/* ========== منطقة الزمن/التنسيقات ========== */
+/* =============== تنسيقات وقت ومنطقة =============== */
 const SYSTEM_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
 let tz = localStorage.getItem('eclipse_tz') || SYSTEM_TZ;
 
-function fmtDateFull(d,zone){
-  return new Intl.DateTimeFormat('ar',{timeZone:zone,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(d);
+function fmtDateFull(d, zone){
+  return new Intl.DateTimeFormat('ar', {timeZone: zone, weekday:'long', year:'numeric', month:'long', day:'numeric'}).format(d);
 }
 function fmtHMS12(d, zone){
-  return new Intl.DateTimeFormat('en-US',{timeZone:zone,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(d);
+  return new Intl.DateTimeFormat('en-US', {timeZone: zone, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true}).format(d);
 }
 function fmtHMS12UTC(iso){
-  return new Intl.DateTimeFormat('en-US',{timeZone:'UTC',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date(iso));
+  return new Intl.DateTimeFormat('en-US', {timeZone: 'UTC', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true}).format(new Date(iso));
 }
 function toTZ(iso, zone){
-  const d=new Date(iso);
-  const p=new Intl.DateTimeFormat('en-CA',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(d);
-  const g=t=>+(p.find(x=>x.type===t).value);
+  const d = new Date(iso);
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: zone, year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'
+  }).formatToParts(d);
+  const g = t => +(parts.find(p=>p.type===t).value);
   return new Date(g('year'), g('month')-1, g('day'), g('hour'), g('minute'), g('second'));
 }
 
-/* ========== بيانات الأحداث (UTC) من مصادر معتمدة ========== */
+/* =============== بيانات فلكية دقيقة (UTC) =============== */
 const EVENTS = [
   /* 2025 */
   { id:"LE-2025-09-07", kind:"خسوف قمري كلي",
@@ -300,118 +306,134 @@ const EVENTS = [
     p1:"2027-08-02T07:30:11Z", greatest:"2027-08-02T10:06:40Z", p4:"2027-08-02T12:43:10Z" }
 ];
 
-/* ========== إيجاد الحدث القادم/الجاري ========== */
+/* =============== اختيار الحدث التالي/الجاري =============== */
 function nextOrCurrent(){
   const now = new Date();
-  const sorted=[...EVENTS].sort((a,b)=> new Date(a.p1 || a.greatest) - new Date(b.p1 || b.greatest));
+  const sorted = [...EVENTS].sort((a,b)=> new Date(a.p1 || a.greatest) - new Date(b.p1 || b.greatest));
   for(const ev of sorted){
-    const start=new Date(ev.p1 || ev.greatest);
-    const end  = new Date(ev.p4 || ev.u4 || ev.greatest || start);
-    if(now<start) return {ev,state:'upcoming'};
-    if(now>=start && now<=end) return {ev,state:'ongoing'};
+    const start = new Date(ev.p1 || ev.greatest);
+    const end   = new Date(ev.p4 || ev.u4 || ev.greatest || ev.p1);
+    if(now < start) return {ev, state:'upcoming'};
+    if(now >= start && now <= end) return {ev, state:'ongoing'};
   }
-  return {ev:sorted[sorted.length-1],state:'past'};
+  return {ev: sorted[sorted.length-1], state:'past'};
 }
 
-/* ========== عرض الحدث ========== */
+/* =============== عرض الحدث في البطاقة العلوية =============== */
 function renderEvent(){
   const {ev} = nextOrCurrent();
+  document.getElementById('eventName').textContent = ev.kind;
 
-  // اسم الحدث في سطر واحد
-  eventName.textContent = ev.kind;
-
-  // التاريخ مرة واحدة بالأعلى
+  // التاريخ مرة واحدة
   const startLocal = toTZ(ev.p1 || ev.greatest, tz);
-  nextDate.textContent = fmtDateFull(startLocal, tz);
+  document.getElementById('nextDate').textContent = fmtDateFull(startLocal, tz);
 
-  // مستطيلات: وقت فقط (ساعة:دقيقة:ثانية) — محلي
-  const s = ev.p1 ? fmtHMS12(toTZ(ev.p1,tz), tz) : '—';
-  const g = ev.greatest ? fmtHMS12(toTZ(ev.greatest,tz), tz) : '—';
-  const e = (ev.p4 || ev.u4 || ev.greatest) ? fmtHMS12(toTZ(ev.p4 || ev.u4 || ev.greatest,tz), tz) : '—';
-  tStart.textContent = `يبدأ: ${s}`;
-  tMax.textContent   = `الأعظم: ${g}`;
-  tEnd.textContent   = `ينتهي: ${e}`;
+  // الأوقات محليًا بنظام 12 ساعة
+  const s = ev.p1 ? fmtHMS12(toTZ(ev.p1, tz), tz) : '—';
+  const g = ev.greatest ? fmtHMS12(toTZ(ev.greatest, tz), tz) : '—';
+  const e = (ev.p4 || ev.u4 || ev.greatest) ? fmtHMS12(toTZ(ev.p4 || ev.u4 || ev.greatest, tz), tz) : '—';
+  document.getElementById('tStart').textContent = "يبدأ: " + s;
+  document.getElementById('tMax').textContent   = "الأعظم: " + g;
+  document.getElementById('tEnd').textContent   = "ينتهي: " + e;
 
-  // الحكم المختصر يظهر فوق، والتفاصيل في مربع الأحكام
-  nextRuling.textContent = 'الحكم الشرعي للصلاة : واجبة';
+  // الحكم المختصر
+  document.getElementById('nextRuling').textContent = "الحكم الشرعي للصلاة : واجبة";
 
-  // JSON-LD للحدث الحالي
+  // JSON-LD
   const startISO = ev.p1 || ev.greatest;
-  const endISO   = ev.p4 || ev.u4 || ev.greatest;
-  const obj = {"@context":"https://schema.org","@type":"Event","name":ev.kind,
-               "startDate":startISO,"endDate":endISO,"inLanguage":"ar",
-               "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
-               "description":"خسوف/كسوف بمواعيد دقيقة تُعرض حسب منطقة الزائر."};
-  document.getElementById('ld-json').textContent = JSON.stringify(obj);
+  const endISO   = ev.p4 || ev.u4 || ev.greatest || startISO;
+  const ld = {
+    "@context":"https://schema.org",
+    "@type":"Event",
+    "name": ev.kind,
+    "startDate": startISO,
+    "endDate": endISO,
+    "inLanguage":"ar",
+    "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
+    "description":"عرض مواعيد دقيقة للكسوف والخسوف حسب منطقة الزائر (قابلة للتغيير اليدوي)."
+  };
+  document.getElementById('ld-json').textContent = JSON.stringify(ld);
 }
 
-/* ========== «خمسة أحداث قادمة» + JSON-LD ItemList ========== */
+/* =============== خمسة أحداث قادمة + JSON-LD =============== */
 function renderUpcoming(){
-  const now=new Date();
-  const future=[...EVENTS]
-    .filter(e=> new Date(e.p1 || e.greatest) > now)
+  const now = new Date();
+  const future = [...EVENTS]
+    .filter(e => new Date(e.p1 || e.greatest) > now)
     .sort((a,b)=> new Date(a.p1||a.greatest) - new Date(b.p1||b.greatest))
     .slice(0,5);
 
-  uList.innerHTML = future.map(e=>{
-    const dLocal = fmtDateFull(toTZ(e.greatest||e.p1, tz), tz);
-    const tLocal = fmtHMS12(toTZ(e.greatest||e.p1, tz), tz);
-    const tUTC   = fmtHMS12UTC(e.greatest||e.p1);
-    return `<div class="uItem">
-      <div class="uName">${e.kind}</div>
-      <div class="uWhen">
-        <span class="l">${dLocal} — ${tLocal}</span>
-        <span class="z">UTC: ${tUTC}</span>
-      </div>
-    </div>`;
-  }).join('');
+  const uList = document.getElementById('uList');
+  if(!future.length){
+    uList.innerHTML = `<div class="uItem"><div class="uName">لا توجد أحداث قادمة ضمن البيانات الحالية</div><div class="uWhen"><span class="l">غير متاح</span><span class="z">غير متاح</span></div></div>`;
+  }else{
+    uList.innerHTML = future.map(e=>{
+      const dLocal = fmtDateFull(toTZ(e.greatest || e.p1, tz), tz);
+      const tLocal = fmtHMS12(toTZ(e.greatest || e.p1, tz), tz);
+      const tUTC   = fmtHMS12UTC(e.greatest || e.p1);
+      return `<div class="uItem">
+        <div class="uName">${e.kind}</div>
+        <div class="uWhen">
+          <span class="l">${dLocal} - ${tLocal}</span>
+          <span class="z">UTC: ${tUTC}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
 
-  // JSON-LD ItemList
   const list = {
-    "@context":"https://schema.org","@type":"ItemList",
-    "name":"Upcoming Eclipses (Next Five)","itemListElement":
-      future.map((e,i)=>({
-        "@type":"ListItem","position":i+1,
-        "item":{"@type":"Event","name":e.kind,"startDate":e.p1||e.greatest,"endDate":e.p4||e.u4||e.greatest}
-      }))
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Upcoming Eclipses (Next Five)",
+    "itemListElement": future.map((e,i)=>({
+      "@type":"ListItem",
+      "position": i+1,
+      "item": {"@type":"Event","name":e.kind,"startDate":e.p1||e.greatest,"endDate":e.p4||e.u4||e.greatest}
+    }))
   };
   document.getElementById('ld-list').textContent = JSON.stringify(list);
 }
 
-/* ========== معلومات عامة + TZ ========== */
+/* =============== شريط معلومات عام وتغيير المنطقة =============== */
 const TZ_LIST = [
   "UTC","Asia/Bahrain","Asia/Riyadh","Asia/Kuwait","Asia/Baghdad","Asia/Tehran","Asia/Beirut",
   "Asia/Dubai","Asia/Qatar","Africa/Cairo","Europe/Istanbul","Europe/Athens","Europe/Paris",
   "Europe/London","America/New_York","America/Toronto","Asia/Karachi","Asia/Kolkata","Asia/Tokyo"
 ];
-
 function renderMeta(){
-  tzLabel.textContent = tz;
-  greg.textContent = fmtDateFull(new Date(), tz);
+  document.getElementById('tzLabel').textContent = tz;
+  document.getElementById('greg').textContent = fmtDateFull(new Date(), tz);
 }
-renderMeta(); renderEvent(); renderUpcoming();
 
-/* حوار تغيير المنطقة */
-function openModal(){
+/* نافذة تغيير المنطقة */
+const modal = document.getElementById('modal');
+const tzSel  = document.getElementById('tzSel');
+document.getElementById('openTZ').addEventListener('click', ()=>{
   tzSel.innerHTML = TZ_LIST.map(z=>`<option value="${z}">${z}</option>`).join("");
   tzSel.value = tz;
   modal.classList.add('open'); document.body.style.overflow='hidden';
-}
-function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
-openTZ.addEventListener('click', openModal);
-cancelTZ.addEventListener('click', closeModal);
-saveTZ.addEventListener('click', ()=>{
+});
+document.getElementById('cancelTZ').addEventListener('click', ()=>{
+  modal.classList.remove('open'); document.body.style.overflow='';
+});
+document.getElementById('saveTZ').addEventListener('click', ()=>{
   tz = tzSel.value || SYSTEM_TZ;
   localStorage.setItem('eclipse_tz', tz);
-  closeModal(); renderMeta(); renderEvent(); renderUpcoming();
+  modal.classList.remove('open'); document.body.style.overflow='';
+  renderMeta(); renderEvent(); renderUpcoming();
 });
-modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
+modal.addEventListener('click', (e)=>{ if(e.target===modal){ modal.classList.remove('open'); document.body.style.overflow=''; }});
 
-/* زر فتح المصدر من القائمة المنسدلة */
-openSrc.addEventListener('click', ()=>{
-  const url = srcSel.value;
+/* زر فتح المصدر */
+document.getElementById('openSrc').addEventListener('click', ()=>{
+  const url = document.getElementById('srcSel').value;
   if(url) window.open(url, '_blank', 'noopener');
 });
+
+/* تشغيل أولي */
+renderMeta();
+renderEvent();
+renderUpcoming();
 </script>
 </body>
 </html>
