@@ -4,10 +4,10 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>تقويم الخسوف والكسوف صلاة الآيات</title>
-<meta name="description" content="تقويم دقيق للخسوف والكسوف مع عرض الحدث القادم، خمسة أحداث قادمة، وأحكام صلاة الآيات باختصار.">
-<meta name="keywords" content="الخسوف,الكسوف,صلاة الآيات,تقويم,مواعيد الكسوف,مواعيد الخسوف,ناسا,السيد السيستاني,أوقات فلكية">
+<meta name="description" content="تقويم دقيق للكسوف والخسوف يعرض الحدث القادم ومراحله الزمنية، مع التعريف بصلاة الآيات وطريقة أدائها والأحكام العامة وأحكام ذوي الأعذار (النساء) وفق فتاوى معتمدة، إضافة إلى خمسة أحداث قادمة ومصادر فلكية موثوقة.">
+<meta name="keywords" content="الخسوف,الكسوف,صلاة الآيات,السيد السيستاني,أحكام,كيفية الصلاة,NASA,TimeandDate">
 <meta property="og:title" content="تقويم الخسوف والكسوف صلاة الآيات">
-<meta property="og:description" content="الحدث القادم والأحداث الخمسة القادمة مع أحكام صلاة الآيات المختصرة.">
+<meta property="og:description" content="الحدث القادم مع تعريف وطريقة وأحكام صلاة الآيات، ومواعيد عالمية دقيقة من مصادر فلكية معتمدة.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_AR">
 <script id="ld-json" type="application/ld+json">{}</script>
@@ -52,16 +52,22 @@
   .label{font-size:.86rem;color:var(--muted);font-weight:700}
   .value{font-weight:900}
 
-  /* أحكام */
-  .ahkam{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
-  .ahkam h3{margin:0 0 6px;text-align:center;font-weight:900;font-size:1.05rem}
-  .ahkam p{margin:.35rem 0;text-align:justify}
+  /* مربّع «الأحكام والكيفية» (عاد وتم تقسيمه لأربع بطاقات) */
+  .rulingBox{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
+  .rulingBox h3{margin:0 0 10px;text-align:center;font-weight:900;font-size:1.06rem;color:var(--green)}
+  .rulingGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:900px){.rulingGrid{grid-template-columns:1fr}}
+  .rCard{border:1px dashed #e9e1c8;border-radius:10px;padding:12px;background:#fffcf3}
+  .rCard h4{margin:0 0 6px;font-weight:900;text-align:center}
+  .rCard p{margin:.35rem 0;text-align:justify}
+  .rList{margin:.35rem 0 0 1rem}
+  .rList li{margin:.25rem 0}
 
-  /* مربعات التعريف */
+  /* مربعات التعريف بالكسوف والخسوف */
   .defsGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:760px){.defsGrid{grid-template-columns:1fr}}
   .defCard{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px}
-  .defCard h4{margin:0 0 8px;font-weight:900;color:var(--green);text-align:center} /* ← توسيط العناوين */
+  .defCard h4{margin:0 0 8px;font-weight:900;color:var(--green);text-align:center}
   .defCard p{margin:.35rem 0;text-align:justify}
   .bul{margin:.35rem 0 .2rem 1rem}
   .bul li{margin:.25rem 0}
@@ -118,7 +124,7 @@
       <div class="nextDate" id="nextDate">—</div>
       <div class="eventName" id="eventName">—</div>
 
-      <!-- مستطيلات ممتدة: وقت فقط (ساعة:دقيقة:ثانية) -->
+      <!-- مستطيلات ممتدة: «الوقت فقط» (ساعة:دقيقة:ثانية) -->
       <div class="whenCol">
         <span class="tag" id="tStart">يبدأ: —</span>
         <span class="tag" id="tMax">الأعظم: —</span>
@@ -145,16 +151,51 @@
       </div>
     </section>
 
+    <!-- مربّع: التعريف/الطريقة/الأحكام/ذوي الأعذار (أُعيد كما طلبت) -->
+    <section class="rulingBox" aria-label="التعريف والكيفية والأحكام">
+      <h3>صلاة الآيات — تعريف وطريقة وأحكام</h3>
+      <div class="rulingGrid">
+        <!-- التعريف -->
+        <div class="rCard">
+          <h4>تعريف صلاة الآيات</h4>
+          <p>صلاةٌ واجبةٌ تُشرّع عند الظواهر المخوِّفة مثل <strong>الكسوف والخسوف</strong>، وتُؤدّى بنية «صلاة الآيات» تقرّبًا إلى الله تعالى.</p>
+        </div>
+        <!-- كيفية الصلاة -->
+        <div class="rCard">
+          <h4>طريقة الصلاة باختصار</h4>
+          <p>ركعتان، في كل ركعة <strong>خمسة ركوعات</strong> ثم سجدتان، وتُفعل الركعة الثانية كذلك ثم التشهّد والسلام.</p>
+          <p>القراءة: إمّا الفاتحة + سورة تامة لكل قيام، أو تجزئة سورة واحدة على القيامات الخمسة.</p>
+        </div>
+        <!-- أحكام عامة -->
+        <div class="rCard">
+          <h4>أحكام صلاة الآيات</h4>
+          <ul class="rList">
+            <li><strong>الوجوب:</strong> تجب عند حدوث الكسوف أو الخسوف ولو جزئيًا.</li>
+            <li><strong>الوقت:</strong> من بدء الظاهرة إلى تمام الانجلاء.</li>
+            <li><strong>القضاء:</strong> من علم بالظاهرة وتركها حتى انجلت وجب عليه القضاء. ومن لم يعلم: يقضي إن كان <strong>كليًا</strong>، وإلا فلا.</li>
+          </ul>
+        </div>
+        <!-- ذوي الأعذار (النساء) -->
+        <div class="rCard">
+          <h4>أحكام ذوي الأعذار (النساء)</h4>
+          <ul class="rList">
+            <li><strong>الحيض والنفاس:</strong> لا تجب الصلاة حال العذر، ولا قضاء لما فُوّت زمن العذر.</li>
+            <li>إن طَهُرت أثناء بقاء وقت الظاهرة، تُصلّي ما دام الوقت باقيًا.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- مربّع تعريف عام + مربعا التعريف للشمس والقمر -->
     <section class="defsGrid" aria-label="تعريف الكسوف والخسوف">
       <article class="defCard defWide">
-        <h4>الكسوف والخسوف</h4> <!-- ← في الوسط -->
+        <h4>الكسوف والخسوف</h4>
         <p><strong>الكسوف والخسوف</strong> ظاهرتان فلكيتان مختلفتان تماماً. الكسوف يكون <strong>للشمس</strong>، بينما الخسوف يكون <strong>للقمر</strong>.</p>
       </article>
 
       <article class="defCard">
-        <h4>الكسوف</h4> <!-- ← أزلت الأيقونة ومركّز -->
-        <p>هو حجب <strong>الشمس</strong> عن الأرض. يحدث عندما يمرّ القمر بين الشمس والأرض فيحجب ضوء الشمس جزئيًا أو كليًا.</p>
+        <h4>الكسوف</h4>
+        <p>هو حجب <strong>الشمس</strong> عن الأرض عندما يمرّ القمر بين الشمس والأرض، فيمنع ضوءها كليًا أو جزئيًا.</p>
         <ul class="bul">
           <li><strong>الجرم المحجوب:</strong> الشمس.</li>
           <li><strong>الترتيب:</strong> الشمس – القمر – الأرض.</li>
@@ -162,8 +203,8 @@
       </article>
 
       <article class="defCard">
-        <h4>الخسوف</h4> <!-- ← أزلت الأيقونة ومركّز -->
-        <p>هو حجب <strong>القمر</strong> عن الشمس عندما تمرّ الأرض بين الشمس والقمر؛ فيقع القمر في ظلّ الأرض ويبدو مُظلّمًا أو مُحمَرًّا.</p>
+        <h4>الخسوف</h4>
+        <p>هو وقوع <strong>القمر</strong> في ظلّ الأرض عندما تكون الأرض بين الشمس والقمر؛ فيبدو مُظلّمًا أو مُحمَرًّا.</p>
         <ul class="bul">
           <li><strong>الجرم المحجوب:</strong> القمر.</li>
           <li><strong>الترتيب:</strong> الشمس – الأرض – القمر.</li>
@@ -174,7 +215,7 @@
     <!-- أحداث قادمة -->
     <section class="upcoming" id="upcoming">
       <h3>الخسوف والكسوف القادمة</h3>
-      <div class="uDesc">هذه البطاقة تعرض أقرب خمسة أحداث قادمة عالميًا، مع اليوم والتاريخ بالتنسيق العربي ووقت <strong>أعظم الظاهرة</strong> بالتوقيت المحلي وUTC. تتكيّف تلقائيًا مع منطقتك.</div>
+      <div class="uDesc">أقرب خمسة أحداث قادمة عالميًا مع اليوم والتاريخ بالعربية ووقت <strong>أعظم الظاهرة</strong> محليًا وUTC. تتكيّف تلقائيًا مع منطقتك.</div>
       <div class="uList" id="uList"><div class="uItem"><div class="uName">—</div><div class="uWhen"><span class="l">—</span><span class="z">—</span></div></div></div>
     </section>
 
@@ -185,7 +226,7 @@
         <!-- فلك (دقيقة/رسمية) -->
         <option value="https://eclipse.gsfc.nasa.gov/SEdecade/SEdecade2021.html">NASA GSFC – Solar Eclipses 2021–2030</option>
         <option value="https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2021.html">NASA GSFC – Lunar Eclipses 2021–2030</option>
-        <option value="https://www.timeanddate.com/eclipse/">Timeanddate – Eclipses</option>
+        <option value="https://www.timeanddate.com/eclipse/">TimeandDate – Eclipses</option>
         <option value="https://www.eclipsewise.com/">EclipseWise</option>
         <!-- أحكام (مكتب السيد السيستاني) -->
         <option value="https://www.sistani.org/arabic/qa/0551/">الاستفتاءات – صلاة الآيات (sistani.org)</option>
@@ -232,9 +273,9 @@ function toTZ(iso, zone){
   return new Date(g('year'), g('month')-1, g('day'), g('hour'), g('minute'), g('second'));
 }
 
-/* ========== بيانات الأحداث (UTC) دقيقة من مصادر معتمدة ========== */
+/* ========== بيانات الأحداث (UTC) من مصادر معتمدة ========== */
 const EVENTS = [
-  /* 2025 (بعضها مضى بالنسبة لتاريخ اليوم) */
+  /* 2025 */
   { id:"LE-2025-09-07", kind:"خسوف قمري كلي",
     p1:"2025-09-07T15:28:21Z", u1:"2025-09-07T16:27:02Z", u2:"2025-09-07T17:30:41Z",
     greatest:"2025-09-07T18:11:43Z", u3:"2025-09-07T18:52:47Z", u4:"2025-09-07T19:56:26Z", p4:"2025-09-07T20:55:00Z" },
@@ -291,7 +332,7 @@ function renderEvent(){
   tMax.textContent   = `الأعظم: ${g}`;
   tEnd.textContent   = `ينتهي: ${e}`;
 
-  // الحكم
+  // الحكم المختصر يظهر فوق، والتفاصيل في مربع الأحكام
   nextRuling.textContent = 'الحكم الشرعي للصلاة : واجبة';
 
   // JSON-LD للحدث الحالي
