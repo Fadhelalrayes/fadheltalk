@@ -3,90 +3,163 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>مواقيت الصلاة وفق المذهب الجعفري</title>
-<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{ --ink:#0f172a; --muted:#6b7280; --bg:#f6f8fb; --border:#e5e7eb; --accent:#0ea5a6; --shadow:0 8px 20px rgba(2,6,23,.08); --hadith-color:#0d2a58; }
-  *{box-sizing:border-box}
-  body{margin:0; background:var(--bg); font-family:"Tajawal",sans-serif; color:var(--ink); padding:16px;}
-  .container{width:min(1000px,100%); margin:auto; display:flex; flex-direction:column; gap:16px}
-  .topClock{text-align:right; font-size:.95rem; font-weight:700; color:#084241}
-  .hero{background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px; text-align:center}
-  .heroTitle{margin:0; font-family:"Reem Kufi",sans-serif; font-size:1.4rem; color:var(--ink)}
-  .locationBox{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px 14px; display:flex; justify-content:space-between; align-items:center}
-  .place{font-weight:800}
-  .changeBtn{background:#eef6ff; border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-weight:800; cursor:pointer}
 
-  /* صندوق الحدث القادم */
-  .nextBox{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:14px; display:grid; gap:8px}
-  .nextTitle{font-weight:800; color:#0b3b3a; text-align:center}
+<title>مواقيت الصلاة وفق المذهب الجعفري | حسب موقعك</title>
+<meta name="description" content="مواقيت الصلاة وفق المذهب الجعفري محسوبة تلقائيًا حسب موقعك الجغرافي مع إمكانية البحث العالمي وتغيير الموقع يدويًا، وعدّاد للحدث القادم، وتاريخ هجري مع تعويض.">
+<link rel="canonical" href="">
+<link rel="alternate" hreflang="ar" href="">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="مواقيت الصلاة الجعفرية حسب موقعك">
+<meta property="og:description" content="احصل على المواقيت الدقيقة أينما كنت مع إمكانية البحث العالمي والعدّاد الذكي.">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="مواقيت الصلاة الجعفرية حسب موقعك">
+<meta name="twitter:description" content="مواقيت دقيقة حسب موقعك + بحث عالمي + عدّاد الحدث القادم.">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "مواقيت الصلاة وفق المذهب الجعفري",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "ar",
+  "description": "مواقيت الصلاة وفق المذهب الجعفري محسوبة حسب الإحداثيات مع تحديد الموقع من المتصفح وبحث عالمي.",
+  "url": "",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "تحديد الموقع تلقائيًا",
+    "بحث عالمي عن المدن والمواقع",
+    "حساب المواقيت وفق الإحداثيات",
+    "تعويض للتاريخ الهجري",
+    "عدّاد للحدث القادم",
+    "تحسينات SEO"
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --bg:#f7fafc; --card:#ffffff; --border:#e5e7eb;
+    --accent:#0ea5a6; --accent-ink:#063f3f; --shadow:0 10px 30px rgba(2,6,23,.08);
+    --hadith-color:#0d2a58;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#e5e7eb; --muted:#94a3b8; --bg:#0b1220; --card:#0f172a; --border:#1f2937; --shadow:none; --hadith-color:#a7c0ff; }
+    .ico{ background:#0b2a2a; }
+    th{ background:#0e1726; }
+    .cd-seg{ background:#0b1220; }
+    .changeBtn{ background:#0b2536; color:#e5e7eb; }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0; background:var(--bg); font-family:"Tajawal",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--ink); padding:16px;}
+  .container{width:min(1100px,100%); margin:auto; display:flex; flex-direction:column; gap:18px}
+
+  .topClock{display:flex; justify-content:flex-end; gap:10px; font-size:.95rem; font-weight:800; color:var(--accent-ink)}
+  .hero{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:20px; text-align:center}
+  .heroTitle{margin:0; font-family:"Reem Kufi",sans-serif; font-size:1.6rem; color:var(--ink); letter-spacing:.2px}
+
+  .locationBox{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .place{font-weight:800; font-size:1.05rem}
+  .changeBtn{border:1px solid var(--border); padding:8px 14px; border-radius:999px; font-weight:800; cursor:pointer; background:#eef6ff}
+  .subPlace{font-size:.88rem; color:var(--muted)}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap}
+  .miniBtn{border:1px solid var(--border); background:var(--card); padding:.45rem .75rem; border-radius:10px; font-weight:800; cursor:pointer}
+  .miniBtn.primary{background:#e6fffb; border-color:#b6f3ec}
+
+  .nextBox{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:16px; display:grid; gap:10px}
+  .nextTitle{font-weight:900; color:var(--accent-ink); text-align:center; letter-spacing:.3px}
   .nextRow{display:flex; justify-content:space-between; align-items:center; font-weight:800}
-  .nextName{font-size:1.05rem}
+  .nextName{font-size:1.07rem}
   .nextAt{font-variant-numeric:tabular-nums}
-  .countdown{display:flex; justify-content:center; gap:10px; font-weight:900; font-size:1.5rem; letter-spacing:.5px; direction:ltr}
-  .cd-seg{min-width:2ch; text-align:center; padding:.2rem .55rem; border:1px solid var(--border); border-radius:10px; background:#f8fafc}
+  .countdown{display:flex; justify-content:center; gap:10px; font-weight:900; font-size:1.6rem; letter-spacing:.5px; direction:ltr}
+  .cd-seg{min-width:2ch; text-align:center; padding:.25rem .6rem; border:1px solid var(--border); border-radius:10px; background:#f8fafc}
   .cd-colon{opacity:.6}
-  .note{font-size:.85rem; color:var(--muted); text-align:center}
+  .note{font-size:.9rem; color:var(--muted); text-align:center}
 
   .infoRow{display:grid; grid-template-columns:1fr 1fr; gap:16px}
   @media(max-width:720px){.infoRow{grid-template-columns:1fr}}
-
-  .chip{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px; display:flex; align-items:center; gap:12px}
-  .ico{width:34px; height:34px; display:grid; place-items:center; border-radius:8px; background:#eef2ff; font-size:1.2rem}
+  .chip{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:12px; display:flex; align-items:center; gap:12px}
+  .ico{width:36px; height:36px; display:grid; place-items:center; border-radius:10px; background:#eef2ff; font-size:1.2rem}
   .stack{display:flex; flex-direction:column}
-  .label{font-size:.85rem; color:var(--muted); font-weight:700}
-  .value{font-weight:800; font-size:1rem; font-variant-numeric:tabular-nums}
+  .label{font-size:.86rem; color:var(--muted); font-weight:800}
+  .value{font-weight:900; font-size:1.02rem; font-variant-numeric:tabular-nums}
 
-  .card{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:12px}
-  .card h3{margin:0 0 10px; font-size:1rem; font-weight:800; text-align:center;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:12px}
+  .card h3{margin:0 0 10px; font-size:1.05rem; font-weight:900; text-align:center;}
   table{width:100%; border-collapse:collapse}
-  th,td{padding:12px; border-bottom:1px solid #f0f0f0; font-size:1rem}
-  th{background:#fafafa; font-weight:800}
-  td.name{text-align:right; font-weight:700}
-  td.time{text-align:left; font-weight:800}
+  th,td{padding:12px; border-bottom:1px solid #eef2f7; font-size:1rem}
+  th{background:#fafafa; font-weight:900}
+  td.name{text-align:right; font-weight:800}
+  td.time{text-align:left; font-weight:900}
   tr.next td{background:linear-gradient(90deg,#0ea5a61a,transparent)}
 
-  .events{display:none; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:14px}
-  .events h3{margin:0 0 8px; font-size:1rem; font-weight:800; text-align:center;}
+  .events{display:none; background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:14px}
+  .events h3{margin:0 0 8px; font-size:1.02rem; font-weight:900; text-align:center;}
   .evtGrid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
   @media(max-width:720px){.evtGrid{grid-template-columns:1fr}}
   .evtCol{border:1px dashed #e3e8f0; border-radius:10px; padding:10px}
-  .evtCol h4{margin:0 0 6px; font-size:.9rem; color:var(--ink)}
+  .evtCol h4{margin:0 0 6px; font-size:.95rem; color:var(--ink)}
   .evtItem{padding:6px 0; border-bottom:1px solid #f0f0f0}
   .evtItem:last-child{border-bottom:none}
-  .evtText{font-weight:700}
+  .evtText{font-weight:800}
 
-  .hadith{background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:16px; text-align:center}
-  .htext{margin:0; font-size:1.06rem; color:var(--hadith-color); line-height:1.9}
+  .hadith{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:16px; text-align:center}
+  .htext{margin:0; font-size:1.08rem; color:var(--hadith-color); line-height:1.9}
   .hsrc{display:inline-block; margin-top:12px; padding:6px 14px; border-radius:10px; background:#f5f7fa; border:1px solid var(--border); font-weight:800; color:#3b4656}
+
   footer{text-align:center; margin-top:8px}
   .credit{color:var(--hadith-color); font-weight:800}
 
+  /* Modal */
   .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(15,23,42,.28); z-index:60}
   .modal.open{display:grid}
-  .box{width:min(520px,96%); background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px}
-  .rowCtrl{display:flex; gap:10px; align-items:center; margin:8px 0}
-  .rowCtrl label{width:110px; color:var(--muted); font-weight:700}
-  select{flex:1; padding:12px; border-radius:12px; border:1px solid var(--border); font-weight:700}
-  .actions{display:flex; gap:10px; margin-top:12px}
-  .btn{border:1px solid var(--border); border-radius:10px; padding:.55rem .9rem; font-weight:800; cursor:pointer; background:#fff}
-  .btn.primary{background:#eef6ff}
+  .box{width:min(620px,96%); background:var(--card); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px}
+  .rowCtrl{display:flex; gap:10px; align-items:center; margin:10px 0}
+  .rowCtrl label{width:120px; color:var(--muted); font-weight:800}
+  .actions{display:flex; gap:10px; margin-top:12px; justify-content:flex-start; flex-wrap:wrap}
+  .btn{border:1px solid var(--border); border-radius:10px; padding:.55rem .9rem; font-weight:900; cursor:pointer; background:var(--card)}
+  .btn.primary{background:#e6fffb}
+  input[type="text"]{flex:1; padding:12px; border-radius:12px; border:1px solid var(--border); font-weight:700; background:transparent; color:var(--ink)}
+  .hint{font-size:.86rem; color:var(--muted)}
+  .results{max-height:270px; overflow:auto; border:1px dashed var(--border); border-radius:12px; padding:6px}
+  .resItem{padding:10px; border-bottom:1px solid #eef2f7; cursor:pointer}
+  .resItem:last-child{border-bottom:none}
+  .resCap{font-weight:800}
+  .resSub{font-size:.86rem; color:var(--muted)}
+  .small{font-size:.85rem; color:var(--muted)}
 </style>
 </head>
 <body>
   <div class="container">
-    <div class="topClock" id="topClock">--:-- --</div>
-
-    <section class="hero">
-      <h1 class="heroTitle">مواقيت الصلاة وفق المذهب الجعفري</h1>
-    </section>
-
-    <div class="locationBox">
-      <div class="place" id="place">المنامة، البحرين</div>
-      <button class="changeBtn" id="openPicker" type="button">تغيير</button>
+    <div class="topClock">
+      <span id="topClock">--:-- --</span>
     </div>
 
-    <!-- الحدث القادم + عداد -->
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title" class="heroTitle">مواقيت الصلاة وفق المذهب الجعفري</h1>
+      <div class="small">دقيقة حسب الإحداثيات، مع إمكانية تحديد موقعك تلقائيًا أو البحث عالميًا.</div>
+    </section>
+
+    <div class="locationBox" aria-live="polite">
+      <div>
+        <div class="place" id="place">—</div>
+        <div class="subPlace" id="subPlace"></div>
+      </div>
+      <div class="bar">
+        <button class="miniBtn primary" id="useGeo" type="button">📍 استخدم موقعي</button>
+        <button class="changeBtn" id="openPicker" type="button">تغيير الموقع</button>
+      </div>
+    </div>
+
     <section class="nextBox" id="nextBox">
       <div class="nextTitle">الحدث القادم</div>
       <div class="nextRow">
@@ -101,7 +174,7 @@
       <div class="note" id="nextNote"></div>
     </section>
 
-    <section class="infoRow">
+    <section class="infoRow" aria-label="التواريخ">
       <div class="chip">
         <div class="ico">🗓</div>
         <div class="stack"><div class="label">التاريخ الهجري</div><div class="value" id="hijri">--</div></div>
@@ -112,7 +185,7 @@
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" aria-label="الجدول اليومي">
       <h3>الجدول اليومي</h3>
       <table>
         <thead><tr><th>الحدث</th><th>الوقت</th></tr></thead>
@@ -120,7 +193,6 @@
       </table>
     </section>
 
-    <!-- يظهر فقط عند وجود مناسبات -->
     <section class="events" id="eventsBox">
       <h3>مناسبات اليوم</h3>
       <div class="evtGrid">
@@ -129,7 +201,7 @@
       </div>
     </section>
 
-    <section class="hadith">
+    <section class="hadith" aria-label="حديث اليوم">
       <p class="htext" id="hadithText"></p>
       <div class="hsrc" id="hadithSource"></div>
     </section>
@@ -137,13 +209,19 @@
     <footer><span class="credit">برمجة وتطوير فاضل الريس</span></footer>
   </div>
 
-  <!-- نافذة الإعدادات -->
-  <div class="modal" id="modal">
+  <!-- نافذة اختيار الموقع العالمية -->
+  <div class="modal" id="modal" aria-modal="true" role="dialog">
     <div class="box">
-      <div class="rowCtrl"><label>البلد</label><select id="countrySel"></select></div>
-      <div class="rowCtrl"><label>المدينة</label><select id="citySel"></select></div>
       <div class="rowCtrl">
-        <label>تعويض الهجري</label>
+        <label for="q">ابحث عن موقع</label>
+        <input id="q" type="text" placeholder="مثال: Manama, Jeddah, London, 24.47, 39.61">
+      </div>
+      <div class="hint">يمكن إدخال اسم مدينة/منطقة بأي لغة، أو كتابة الإحداثيات مباشرة (lat,lon).</div>
+      <div class="rowCtrl">
+        <div class="results" id="results" aria-live="polite"></div>
+      </div>
+      <div class="rowCtrl">
+        <label for="hijriOffsetSel">تعويض الهجري</label>
         <select id="hijriOffsetSel">
           <option value="-2">-2 يوم</option>
           <option value="-1">-1 يوم</option>
@@ -153,106 +231,41 @@
         </select>
       </div>
       <div class="actions">
-        <button class="btn primary" id="savePlace" type="button">حفظ</button>
-        <button class="btn" id="cancelPlace" type="button">إلغاء</button>
+        <button class="btn primary" id="closePicker" type="button">إغلاق</button>
+        <button class="btn" id="clearSaved" type="button">إزالة الموقع المحفوظ</button>
       </div>
     </div>
   </div>
 
 <script>
-/* ========================= إعدادات عامة ========================= */
-const MAP=[
- {ar:"البحرين",en:"Bahrain",tz:"Asia/Bahrain",cities:[
-   {ar:"المنامة",en:"Manama"},{ar:"المحرق",en:"Muharraq"},{ar:"مدينة عيسى",en:"Isa Town"},
-   {ar:"مدينة حمد",en:"Hamad Town"},{ar:"سترة",en:"Sitra"},{ar:"سار",en:"Saar"},
-   {ar:"الدراز",en:"Draz"},{ar:"جدحفص",en:"Jidhafs"}
- ]},
- {ar:"لبنان",en:"Lebanon",tz:"Asia/Beirut",cities:[{ar:"بيروت",en:"Beirut"},{ar:"طرابلس",en:"Tripoli"},{ar:"صيدا",en:"Sidon"}]},
- {ar:"العراق",en:"Iraq",tz:"Asia/Baghdad",cities:[{ar:"بغداد",en:"Baghdad"},{ar:"البصرة",en:"Basrah"},{ar:"أربيل",en:"Erbil"}]},
- {ar:"إيران",en:"Iran",tz:"Asia/Tehran",cities:[{ar:"طهران",en:"Tehran"},{ar:"مشهد",en:"Mashhad"},{ar:"أصفهان",en:"Isfahan"}]},
- {ar:"الكويت",en:"Kuwait",tz:"Asia/Kuwait",cities:[{ar:"مدينة الكويت",en:"Kuwait City"},{ar:"حولي",en:"Hawalli"},{ar:"الأحمدي",en:"Al Ahmadi"}]},
- {ar:"السعودية",en:"Saudi Arabia",tz:"Asia/Riyadh",cities:[{ar:"الرياض",en:"Riyadh"},{ar:"جدة",en:"Jeddah"},{ar:"الدمام",en:"Dammam"},{ar:"مكة",en:"Mecca"},{ar:"المدينة",en:"Medina"}]}
-];
-const DEFAULT={countryEn:"Bahrain",countryAr:"البحرين",cityEn:"Manama",cityAr:"المنامة",tz:"Asia/Bahrain"};
-let current = JSON.parse(localStorage.getItem("jaq_prayer_place")||"null") || {...DEFAULT};
-let HIJRI_OFFSET_DAYS = Number(localStorage.getItem("jaq_hijri_offset_days")||"0");
+/* ========================= SEO: ضبط canonical/alternate ديناميكياً ========================= */
+document.querySelector('link[rel="canonical"]').setAttribute('href', location.href.split('#')[0]);
+document.querySelector('link[rel="alternate"]').setAttribute('href', location.href.split('#')[0]);
 
-/* تسميات الأحداث للواجهة */
+/* ========================= الحالة والتخزين ========================= */
+const DEFAULT = { nameAr:"المنامة، البحرين", nameEn:"Manama, Bahrain", lat:26.2235, lon:50.5876, tz:"Asia/Bahrain" };
+let state = JSON.parse(localStorage.getItem("pr_times_state")||"null") || {...DEFAULT};
+let HIJRI_OFFSET_DAYS = Number(localStorage.getItem("pr_hijri_offset_days")||"0");
+let lastTimings = null;
+let cdTimer = null;
+
+/* ========================= نصوص وبيانات ثابتة ========================= */
 const NAMES = {
   Imsak:"الإمساك", Fajr:"أذان الفجر", Sunrise:"الشروق",
   Dhuhr:"أذان الظهر", Asr:"أذان العصر", Sunset:"الغروب",
   Maghrib:"أذان المغرب", Isha:"أذان العشاء", Midnight:"منتصف الليل"
 };
-
-/* أحاديث */
 const HADITHS=[
   {t:"قال الإمام الباقر (عليه السلام): إذا استقبل المصلي القبلة استقبل الرحمن بوجهه لا إله غيره.",s:"المصدر: ميزان الحكمة"},
   {t:"قال الإمام علي (عليه السلام): إذا قام الرجل إلى الصلاة أقبل إبليس ينظر إليه حسداً لما يرى من رحمة الله التي تغشاه.",s:"المصدر: ميزان الحكمة"},
   {t:"قال الإمام الرضا (عليه السلام): الصلاة لها أربعة آلاف باب.",s:"المصدر: ميزان الحكمة"},
   {t:"قال الإمام علي (عليه السلام): يا كميل! ليس الشأن أن تصلي وتصوم وتتصدق، إنما الشأن أن تكون الصلاة فعلت بقلب نقي، وعمل عند الله مرضي، وخشوع سوي.",s:"المصدر: ميزان الحكمة"},
-  {t:"عن سعد بن أبي وقاص: سألت النبي صلى الله عليه وآله عن قوله: الذين هم عن صلاتهم ساهون. قال: هم الذين يؤخرون الصلاة عن وقتها.",s:"المصدر: السنن الكبرى"},
-  {t:"قال رسول الله صلى الله عليه وآله: من ترك صلاته متعمداً فقد هدم دينه، ومن ترك أوقاتها يدخل الويل، والويل وادٍ في جهنم كما قال تعالى: فويل للمصلين الذين هم عن صلاتهم ساهون.",s:"المصدر: جامع الأخبار"},
-  {t:"قال عبد الله بن مسعود: سألت رسول الله صلى الله عليه وآله: أيّ الأعمال أحب إلى الله جل جلاله؟ قال: الصلاة لوقتها.",s:"المصدر: الخصال"}
+  {t:"قال رسول الله صلى الله عليه وآله: من ترك صلاته متعمداً فقد هدم دينه…",s:"المصدر: جامع الأخبار"},
+  {t:"قال عبد الله بن مسعود: أيّ الأعمال أحب إلى الله؟ قال: الصلاة لوقتها.",s:"المصدر: الخصال"}
 ];
-function setHadith(){
-  const h=HADITHS[Math.floor(Math.random()*HADITHS.length)];
-  hadithText.textContent=h.t; hadithSource.textContent=h.s;
-}
+const HIJRI_MONTHS_AR=["","محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
 
-/* تقويم مناسبات (مختصر قابل للتوسعة) */
-let EVENTS={
-  "1-1":[{t:"رأس السنة الهجرية"}],
-  "1-2":[{t:"دخول الإمام الحسين ع كربلاء"}],
-  "1-7":[{t:"بدء منع الماء عن خيام الحسين ع"}],
-  "1-9":[{t:"تاسوعاء – يوم أبي الفضل العباس ع"}],
-  "1-10":[{t:"عاشوراء – شهادة الإمام الحسين ع"}],
-  "1-12":[{t:"دفن الأجساد الطاهرة بكربلاء"}],
-  "1-25":[{t:"شهادة الإمام زين العابدين ع"}],
-  "2-7":[{t:"شهادة الإمام الحسن المجتبى ع (اختلاف الروايات)"}],
-  "2-20":[{t:"الأربعين – زيارة الإمام الحسين ع"}],
-  "2-28":[{t:"وفاة النبي الأكرم ﷺ (على المشهور)"},{t:"شهادة الإمام الحسن المجتبى ع (قول مشهور)"}],
-  "3-8":[{t:"شهادة الإمام الحسن العسكري ع"}],
-  "3-9":[{t:"فرحة الزهراء (يوم البراءة)"}],
-  "3-17":[{t:"المولد النبوي الشريف (عند الإمامية)"}],
-  "4-8":[{t:"ولادة الإمام الحسن العسكري ع (اختلاف الروايات)"}],
-  "4-10":[{t:"ولادة الإمام الحسن العسكري ع (اختلاف الروايات)"}],
-  "5-5":[{t:"مولد السيدة زينب بنت علي ع"}],
-  "5-13":[{t:"شهادة السيدة فاطمة الزهراء ع (إحدى الروايات)"}],
-  "6-3":[{t:"شهادة السيدة فاطمة الزهراء ع (قول مشهور)"}],
-  "6-20":[{t:"مولد السيدة فاطمة الزهراء ع"}],
-  "7-1":[{t:"مولد الإمام محمد الباقر ع"}],
-  "7-3":[{t:"شهادة الإمام علي الهادي ع"}],
-  "7-10":[{t:"مولد الإمام محمد الجواد ع"}],
-  "7-13":[{t:"مولد الإمام علي بن أبي طالب ع"}],
-  "7-25":[{t:"شهادة الإمام موسى الكاظم ع"}],
-  "7-27":[{t:"المبعث النبوي"}],
-  "8-3":[{t:"مولد الإمام الحسين ع"}],
-  "8-4":[{t:"مولد أبي الفضل العباس ع"}],
-  "8-5":[{t:"مولد الإمام زين العابدين ع"}],
-  "8-11":[{t:"مولد علي الأكبر ع"}],
-  "8-15":[{t:"مولد الإمام المهدي عجل الله فرجه"}],
-  "9-10":[{t:"وفاة السيدة خديجة الكبرى ع"}],
-  "9-15":[{t:"مولد الإمام الحسن المجتبى ع"}],
-  "9-19":[{t:"ضربة الإمام علي ع – ليلة قدر"}],
-  "9-21":[{t:"شهادة الإمام علي ع – ليلة قدر"}],
-  "9-23":[{t:"ليلة القدر (قول مشهور)"}],
-  "10-1":[{t:"عيد الفطر المبارك"}],
-  "10-8":[{t:"ذكرى هدم قبور البقيع"}],
-  "10-25":[{t:"شهادة الإمام جعفر الصادق ع"}],
-  "11-1":[{t:"مولد السيدة فاطمة المعصومة ع"}],
-  "11-11":[{t:"مولد الإمام علي بن موسى الرضا ع"}],
-  "11-23":[{t:"دحو الأرض"}],
-  "11-29":[{t:"شهادة الإمام محمد الجواد ع"}],
-  "12-7":[{t:"يوم التروية"}],
-  "12-8":[{t:"الخروج إلى عرفة"}],
-  "12-9":[{t:"يوم عرفة (وشهادة مسلم بن عقيل ع عند بعض الروايات)"}],
-  "12-10":[{t:"عيد الأضحى المبارك"}],
-  "12-18":[{t:"عيد الغدير الأغر"}],
-  "12-24":[{t:"يوم المباهلة"}],
-  "12-25":[{t:"يوم نزول سورة الإنسان"}]
-};
-
-/* أدوات وقت/تنسيق */
+/* ========================= أدوات وقت/تنسيق ========================= */
 function to12h(raw){
   if(!raw) return "--:-- --";
   const pure=String(raw).replace(/\s*\(.*?\)\s*/g,"").trim();
@@ -262,16 +275,17 @@ function to12h(raw){
   const h=H%12||12; return `${h}:${String(M).padStart(2,"0")} ${H<12?"AM":"PM"}`;
 }
 function updateClock(){
-  topClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:current.tz,hour:'2-digit',minute:'2-digit',hour12:true}).format(new Date());
+  const tz = state.tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  topClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:true}).format(new Date());
 }
+setInterval(updateClock,1000); updateClock();
+
+/* تحويلات هجري محلية (fallback) */
+function hasIntlIslamic(){ try{ new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric'}).format(new Date()); return true; }catch{ return false; } }
 function ymdInTZ(date, tz){
   const p=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
   return {Y:p.find(x=>x.type==='year').value, M:p.find(x=>x.type==='month').value, D:p.find(x=>x.type==='day').value};
 }
-
-/* الهجري (Aladhan + تعويض) */
-const HIJRI_MONTHS_AR=["","محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
-function hasIntlIslamic(){ try{ new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric'}).format(new Date()); return true; }catch{ return false; } }
 function g2jd(y,m,d){ const a=Math.floor((14-m)/12); y=y+4800-a; m=m+12*a-3; return d + Math.floor((153*m+2)/5) + 365*y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) - 32045; }
 function jd2islamic(jd){
   const l = jd - 1948440 + 10632;
@@ -284,39 +298,64 @@ function jd2islamic(jd){
   const y = 30*n + j - 30;
   return {y,m,d};
 }
-async function fetchHijriFromAladhan(refDate){
-  const {Y,M,D}=ymdInTZ(refDate, current.tz);
-  const url=`https://api.aladhan.com/v1/gToH?date=${encodeURIComponent(`${D}-${M}-${Y}`)}&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`;
-  const r=await fetch(url,{cache:"no-store"});
-  if(!r.ok) throw new Error("Hijri API HTTP "+r.status);
-  const j=await r.json();
-  const hj=j?.data?.hijri; if(!hj) throw new Error("Hijri API malformed");
-  return hj;
-}
 function formatHijriFromObj(h, civilWeekday){
   const day = Number(h.day||h.date?.split('-')[0]);
   const monthName = h?.month?.ar || HIJRI_MONTHS_AR[h?.month?.number||0] || '';
   const year = h.year || (h.date? h.date.split('-')[2] : '');
   return `${civilWeekday}، ${day} ${monthName} ${year} هـ`;
 }
-function localHijriFallback(refDate, civilWeekday){
-  try{
-    if(hasIntlIslamic()){
-      const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(refDate);
-      const y=+parts.find(p=>p.type==='year').value;
-      const m=+parts.find(p=>p.type==='month').value;
-      const d=+parts.find(p=>p.type==='day').value;
-      return `${civilWeekday}، ${d} ${HIJRI_MONTHS_AR[m]} ${y} هـ`;
-    }else{
-      const p=ymdInTZ(refDate,current.tz);
-      const jd=g2jd(+p.Y,+p.M,+p.D), h=jd2islamic(jd);
-      return `${civilWeekday}، ${h.d} ${HIJRI_MONTHS_AR[h.m]} ${h.y} هـ`;
-    }
-  }catch{ return "التاريخ الهجري (غير متاح)"; }
+
+/* ========================= أحاديث ========================= */
+(function setHadith(){
+  const h=HADITHS[Math.floor(Math.random()*HADITHS.length)];
+  hadithText.textContent=h.t; hadithSource.textContent=h.s;
+})();
+
+/* ========================= مناسبات (مختصر) ========================= */
+const EVENTS={
+  "1-10":[{t:"عاشوراء – شهادة الإمام الحسين ع"}],
+  "2-20":[{t:"الأربعين – زيارة الإمام الحسين ع"}],
+  "7-27":[{t:"المبعث النبوي"}],
+  "10-1":[{t:"عيد الفطر المبارك"}],
+  "12-10":[{t:"عيد الأضحى المبارك"}],
+  "12-18":[{t:"عيد الغدير"}]
+};
+function drawEvents(todayM,todayD,nightM,nightD){
+  const box=document.getElementById('eventsBox');
+  const colToday=document.getElementById('colToday');
+  const colNight=document.getElementById('colNight');
+  const todayEl=document.getElementById('eventsToday');
+  const nightEl=document.getElementById('eventsTonight');
+
+  const todayList = EVENTS[`${todayM}-${todayD}`] || [];
+  const nightList = EVENTS[`${nightM}-${nightD}`] || [];
+
+  if(!todayList.length && !nightList.length){
+    box.style.display='none'; todayEl.innerHTML=""; nightEl.innerHTML=""; return;
+  }
+  box.style.display='block';
+  if(todayList.length){
+    colToday.style.display='block';
+    todayEl.innerHTML = todayList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
+  }else{ colToday.style.display='none'; todayEl.innerHTML=""; }
+  if(nightList.length){
+    colNight.style.display='block';
+    nightEl.innerHTML = nightList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
+  }else{ colNight.style.display='none'; nightEl.innerHTML=""; }
 }
 
-/* أوقات الصلاة + تحديد القادم */
-let lastTimings=null;
+/* ========================= جلب المواقيت (إحداثيات) ========================= */
+async function fetchTimingsByCoords(lat,lon){
+  const url=`https://api.aladhan.com/v1/timings?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&method=0&iso8601=true&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`;
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok) throw new Error("تعذّر جلب المواقيت");
+  const j=await r.json();
+  const data=j?.data;
+  if(!data?.timings) throw new Error("استجابة غير متوقعة");
+  return data; // يحتوي timings و date و meta.timezone
+}
+
+/* ======= التالي والعدّاد ======= */
 function nextKey(t, tz){
   const order=["Imsak","Fajr","Sunrise","Dhuhr","Asr","Sunset","Maghrib","Isha","Midnight"];
   const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
@@ -331,7 +370,14 @@ function nextKey(t, tz){
   if(!n) n=cand.sort((a,b)=>Math.abs(a.diff)-Math.abs(b.diff))[0];
   return n?.k||null;
 }
-function tr(name,val,next=false){return `<tr class="${next?'next':''}"><td class="name">${name}</td><td class="time">${to12h(val||'')}</td></tr>`;}
+function dateForKeyToday(tz, timings, key){
+  const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
+  const {Y,M,D}=ymdInTZ(nowTZ, tz);
+  const raw=(timings[key]||"").replace(/\s*\(.*?\)\s*/g,"").trim();
+  if(!/^\d{1,2}:\d{2}$/.test(raw)) return null;
+  let [H,Min]=raw.split(':').map(Number); H=(H===24)?0:H;
+  return new Date(+Y,+M-1,+D,H||0,Min||0,0);
+}
 function ensureImsak(t){
   if(!t.Imsak && t.Fajr){
     const pure=String(t.Fajr).replace(/\s*\(.*?\)\s*/g,"").trim();
@@ -341,27 +387,30 @@ function ensureImsak(t){
   }
   return t;
 }
-async function fetchTimings(countryEn, cityEn){
-  const url=`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(cityEn)}&country=${encodeURIComponent(countryEn)}&method=0`;
-  const r=await fetch(url); if(!r.ok) throw new Error("تعذّر جلب المواقيت");
-  const j=await r.json();
-  return j.data.timings;
+function setCD(ms){
+  ms = Math.max(0, ms|0);
+  let s = Math.floor(ms/1000);
+  const h = Math.floor(s/3600); s%=3600;
+  const m = Math.floor(s/60); s%=60;
+  cdH.textContent = String(h).padStart(2,'0');
+  cdM.textContent = String(m).padStart(2,'0');
+  cdS.textContent = String(s).padStart(2,'0');
+}
+function tickCountdown(target,key){
+  const tz = state.tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const now=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
+  const diff = target - now;
+  setCD(diff);
+  if(diff<=0){ clearInterval(cdTimer); load(); }
 }
 
-/* الحصول على تاريخ/ساعة الحدث القادم (كـ Date في المنطقة الزمنية) */
-function dateForKeyToday(tz, timings, key){
-  const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
-  const {Y,M,D}=ymdInTZ(nowTZ, tz);
-  const raw=(timings[key]||"").replace(/\s*\(.*?\)\s*/g,"").trim();
-  if(!/^\d{1,2}:\d{2}$/.test(raw)) return null;
-  let [H,Min]=raw.split(':').map(Number); H=(H===24)?0:H;
-  return new Date(+Y,+M-1,+D,H||0,Min||0,0);
-}
+/* ========================= العرض الرئيسي ========================= */
+async function render(data){
+  // تحديث المنطقة الزمنية من Aladhan meta
+  if(data?.meta?.timezone) state.tz = data.meta.timezone;
 
-/* رسم الجدول + التاريخين + المناسبات */
-async function renderTimes(t, tz){
-  const timings=ensureImsak({...t}); 
-  lastTimings=timings;
+  let t = ensureImsak({...data.timings});
+  lastTimings = t;
 
   const rows=[
     {n:"الإمساك",k:"Imsak"},
@@ -374,204 +423,205 @@ async function renderTimes(t, tz){
     {n:"أذان العشاء",k:"Isha"},
     {n:"منتصف الليل",k:"Midnight"}
   ];
-  const k=nextKey(timings,tz);
-  times.innerHTML=rows.map(r=>tr(r.n,timings[r.k],r.k===k)).join("");
+  const k=nextKey(t,state.tz);
+  times.innerHTML=rows.map(r=>`<tr class="${r.k===k?'next':''}"><td class="name">${r.n}</td><td class="time">${to12h(t[r.k])}</td></tr>`).join("");
 
-  // ملء صندوق الحدث القادم
-  updateNextBox();
-
-  const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-  greg.textContent = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(nowTZ);
-
-  const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(nowTZ);
-  try{
-    const hijriObj = await fetchHijriFromAladhan(nowTZ); // لليوم المدني الحالي
-    hijri.textContent = formatHijriFromObj(hijriObj, civilWeekday);
-    await renderEventsWithHijri(hijriObj, nowTZ);
-  }catch(e){
-    hijri.textContent = localHijriFallback(nowTZ, civilWeekday);
-    renderEventsFallback(nowTZ);
-  }
-}
-
-/* مناسبات باستخدام كائن الهجري من API */
-async function renderEventsWithHijri(hijriObjToday, refToday){
-  const todayM = Number(hijriObjToday?.month?.number||0);
-  const todayD = Number(hijriObjToday?.day||0);
-
-  const refTonight = new Date(refToday.getTime()+86400000);
-  let hijriTomorrow=null;
-  try{ hijriTomorrow = await fetchHijriFromAladhan(refTonight); }catch{}
-
-  const nightM = Number(hijriTomorrow?.month?.number||0);
-  const nightD = Number(hijriTomorrow?.day||0);
-
-  drawEvents(todayM, todayD, nightM, nightD);
-}
-
-/* مناسبات Fallback */
-function renderEventsFallback(ref){
-  let todayM,todayD,nightM,nightD;
-  if(hasIntlIslamic()){
-    const p1=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(ref);
-    todayM=+p1.find(x=>x.type==='month').value; todayD=+p1.find(x=>x.type==='day').value;
-    const ref2=new Date(ref.getTime()+86400000);
-    const p2=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:current.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(ref2);
-    nightM=+p2.find(x=>x.type==='month').value; nightD=+p2.find(x=>x.type==='day').value;
-  }else{
-    const {Y,M,D}=ymdInTZ(ref,current.tz);
-    const h1=jd2islamic(g2jd(+Y,+M,+D));
-    const h2=jd2islamic(g2jd(+Y,+M,+D+1));
-    todayM=h1.m; todayD=h1.d; nightM=h2.m; nightD=h2.d;
-  }
-  drawEvents(todayM, todayD, nightM, nightD);
-}
-
-/* إظهار/إخفاء المناسبات حسب وجودها */
-function drawEvents(todayM,todayD,nightM,nightD){
-  const box=document.getElementById('eventsBox');
-  const colToday=document.getElementById('colToday');
-  const colNight=document.getElementById('colNight');
-  const todayEl=document.getElementById('eventsToday');
-  const nightEl=document.getElementById('eventsTonight');
-
-  const todayList = EVENTS[`${todayM}-${todayD}`] || [];
-  const nightList = EVENTS[`${nightM}-${nightD}`] || [];
-
-  if(todayList.length===0 && nightList.length===0){
-    box.style.display='none';
-    todayEl.innerHTML=""; nightEl.innerHTML="";
-    return;
-  }
-
-  box.style.display='block';
-
-  if(todayList.length){
-    colToday.style.display='block';
-    todayEl.innerHTML = todayList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
-  }else{
-    colToday.style.display='none';
-    todayEl.innerHTML="";
-  }
-
-  if(nightList.length){
-    colNight.style.display='block';
-    nightEl.innerHTML = nightList.map(e=>`<div class="evtItem"><span class="evtText">${e.t}</span></div>`).join("");
-  }else{
-    colNight.style.display='none';
-    nightEl.innerHTML="";
-  }
-}
-
-/* ======= صندوق الحدث القادم + العداد ======= */
-let cdTimer=null;
-function updateNextBox(){
-  if(!lastTimings) return;
-  const key = nextKey(lastTimings, current.tz);
-  const target = dateForKeyToday(current.tz, lastTimings, key);
-  if(!key || !target){ nextName.textContent="--"; nextAt.textContent="--:-- --"; setCD(0); return; }
-
-  nextName.textContent = NAMES[key] || key;
-  nextAt.textContent = to12h(lastTimings[key]);
-  nextNote.textContent = (key==="Sunrise" ? "زمن الشروق" : key==="Sunset" ? "وقت الغروب" : "الوقت المتبقي");
-
-  // أوقف مؤقّت قديم
+  // صندوق الحدث القادم
+  const target = dateForKeyToday(state.tz, t, k);
+  nextName.textContent = NAMES[k] || k || "--";
+  nextAt.textContent = to12h(t[k]||'--:--');
+  nextNote.textContent = (k==="Sunrise" ? "زمن الشروق" : k==="Sunset" ? "وقت الغروب" : "الوقت المتبقي");
   if(cdTimer) clearInterval(cdTimer);
-  // حدّث العدّاد كل ثانية
-  cdTimer = setInterval(()=>tickCountdown(target,key),1000);
-  tickCountdown(target,key);
-}
-function setCD(ms){
-  ms = Math.max(0, ms|0);
-  let s = Math.floor(ms/1000);
-  const h = Math.floor(s/3600); s%=3600;
-  const m = Math.floor(s/60); s%=60;
-  cdH.textContent = String(h).padStart(2,'0');
-  cdM.textContent = String(m).padStart(2,'0');
-  cdS.textContent = String(s).padStart(2,'0');
-}
-function tickCountdown(target,key){
-  const now=new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-  const diff = target - now;
-  setCD(diff);
-  // عند الانتهاء أعد التحميل لتحديث الجدول والعدّاد للحدث التالي
-  if(diff<=0){
-    clearInterval(cdTimer);
-    load();
+  if(target) { cdTimer = setInterval(()=>tickCountdown(target,k),1000); tickCountdown(target,k); }
+
+  // التواريخ
+  const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:state.tz}));
+  greg.textContent = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(nowTZ);
+
+  // الهجري من نفس الاستجابة (مع التعويض)
+  try{
+    const h = data?.date?.hijri;
+    if(h){ 
+      const wd = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long'}).format(nowTZ);
+      hijri.textContent = formatHijriFromObj(h, wd);
+      // مناسبات اليوم/الليلة
+      const todayM = Number(h?.month?.number||0), todayD=Number(h?.day||0);
+      // احسب ليلة الغد
+      const refTonight = new Date(nowTZ.getTime()+86400000);
+      const wd2 = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long'}).format(refTonight);
+      let h2 = h; // افتراضي
+      try{
+        const d2 = await fetch(`https://api.aladhan.com/v1/gToH?date=${encodeURIComponent(new Intl.DateTimeFormat('en-GB',{timeZone:state.tz,day:'2-digit',month:'2-digit',year:'numeric'}).format(refTonight).replace(/\//g,'-'))}&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`).then(x=>x.json());
+        h2 = d2?.data?.hijri || h;
+      }catch{}
+      const nightM = Number(h2?.month?.number||0), nightD=Number(h2?.day||0);
+      drawEvents(todayM,todayD,nightM,nightD);
+    }else{ throw 0; }
+  }catch{
+    // fallback محلي
+    const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long'}).format(nowTZ);
+    try{
+      const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:state.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(nowTZ);
+      const y=+parts.find(p=>p.type==='year').value, m=+parts.find(p=>p.type==='month').value, d=+parts.find(p=>p.type==='day').value;
+      hijri.textContent = `${civilWeekday}، ${d} ${HIJRI_MONTHS_AR[m]} ${y} هـ`;
+    }catch{
+      const {Y,M,D}=ymdInTZ(nowTZ,state.tz);
+      const h=jd2islamic(g2jd(+Y,+M,+D));
+      hijri.textContent = `${civilWeekday}، ${h.d} ${HIJRI_MONTHS_AR[h.m]} ${h.y} هـ`;
+    }
   }
 }
 
-/* ========================= التشغيل ========================= */
-function fmtGreg(){ return new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date()); }
+/* ========================= تحميل أساسي ========================= */
+function setPlaceTexts(){
+  place.textContent = state.nameAr || state.nameEn || `${state.lat.toFixed(4)}, ${state.lon.toFixed(4)}`;
+  subPlace.textContent = `${state.lat.toFixed(4)}, ${state.lon.toFixed(4)} • ${state.tz||Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+}
 async function load(){
-  place.textContent=`${current.cityAr}، ${current.countryAr}`;
+  setPlaceTexts();
   hijri.textContent="--";
-  greg.textContent=fmtGreg();
+  greg.textContent="—";
   times.innerHTML="<tr><td colspan=2>...</td></tr>";
   try{
-    const t=await fetchTimings(current.countryEn,current.cityEn);
-    await renderTimes(t,current.tz);
-  }catch{
+    const data=await fetchTimingsByCoords(state.lat,state.lon);
+    await render(data);
+  }catch(e){
     times.innerHTML=`<tr><td colspan="2" style="color:#b91c1c">تعذّر جلب المواقيت.</td></tr>`;
     document.getElementById('eventsBox').style.display='none';
-    const nowTZ = new Date(new Date().toLocaleString('en-US',{timeZone:current.tz}));
-    const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:current.tz,weekday:'long'}).format(nowTZ);
-    try{
-      const hj = await fetchHijriFromAladhan(nowTZ);
-      hijri.textContent = formatHijriFromObj(hj, civilWeekday);
-    }catch{
-      hijri.textContent = localHijriFallback(nowTZ, civilWeekday);
-    }
-    updateNextBox();
   }
 }
+load();
 
-/* ساعة + حديث */
-setInterval(updateClock,1000); updateClock();
-setHadith();
+/* ========================= تحديد الموقع الجغرافي ========================= */
+async function reverseGeocode(lat,lon){
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&accept-language=ar,en`;
+  const r = await fetch(url,{headers:{'Accept-Language':'ar,en'}});
+  if(!r.ok) throw new Error("تعذّر الرجوع العكسي");
+  const j = await r.json();
+  const dispAr = j?.display_name || "";
+  // اسم عربي/إنجليزي مبسّط
+  const city = j?.address?.city || j?.address?.town || j?.address?.village || j?.address?.municipality || j?.address?.state || "";
+  const country = j?.address?.country || "";
+  return {
+    nameAr: `${city||dispAr}، ${country}`.replace(/^،\s*/,''),
+    nameEn: j?.namedetails?.name || dispAr,
+  };
+}
+document.getElementById('useGeo').addEventListener('click', ()=>{
+  if(!navigator.geolocation){ alert("المتصفح لا يدعم تحديد الموقع."); return; }
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const {latitude:lat, longitude:lon} = pos.coords;
+    try{
+      const data = await fetchTimingsByCoords(lat,lon);
+      const metaName = await reverseGeocode(lat,lon).catch(()=>({nameAr:`إحداثيات (${lat.toFixed(3)}, ${lon.toFixed(3)})`, nameEn:""}));
+      state = { ...state, lat, lon, tz: (data?.meta?.timezone||state.tz), nameAr:metaName.nameAr, nameEn:metaName.nameEn };
+      localStorage.setItem("pr_times_state", JSON.stringify(state));
+      await render(data); setPlaceTexts();
+    }catch{ alert("تعذّر تحديد المواقيت لهذا الموقع."); }
+  }, err=>{ alert("لم يتم السماح بالوصول إلى الموقع."); });
+});
 
-/* نافذة الإعداد */
+/* ========================= واجهة البحث العالمية ========================= */
 const modal=document.getElementById("modal");
 const openPicker=document.getElementById("openPicker");
-const cancelPlace=document.getElementById("cancelPlace");
-const savePlace=document.getElementById("savePlace");
-const countrySel=document.getElementById("countrySel");
-const citySel=document.getElementById("citySel");
+const closePicker=document.getElementById("closePicker");
+const clearSaved=document.getElementById("clearSaved");
+const q=document.getElementById("q");
+const results=document.getElementById("results");
 const hijriOffsetSel=document.getElementById("hijriOffsetSel");
+openPicker.addEventListener('click', ()=>{ hijriOffsetSel.value=String(HIJRI_OFFSET_DAYS); modal.classList.add('open'); document.body.style.overflow='hidden'; q.focus(); results.innerHTML=""; });
+closePicker.addEventListener('click', ()=>{ modal.classList.remove('open'); document.body.style.overflow=''; });
+modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); document.body.style.overflow=''; }});
+clearSaved.addEventListener('click', ()=>{ localStorage.removeItem('pr_times_state'); alert("تمت إزالة الموقع المحفوظ."); });
 
-function populateCities(countryEn){
-  const c=MAP.find(x=>x.en===countryEn);
-  citySel.innerHTML=(c?.cities||[]).map(m=>`<option value="${m.en}">${m.ar}</option>`).join("");
-}
-function openModal(){
-  countrySel.innerHTML=MAP.map(c=>`<option value="${c.en}">${c.ar}</option>`).join("");
-  countrySel.value=current.countryEn;
-  populateCities(countrySel.value);
-  citySel.value=current.cityEn;
-  hijriOffsetSel.value=String(HIJRI_OFFSET_DAYS);
-  modal.classList.add("open");
-  document.body.style.overflow='hidden';
-}
-function closeModal(){ modal.classList.remove("open"); document.body.style.overflow=''; }
-openPicker.addEventListener("click",openModal);
-cancelPlace.addEventListener("click",closeModal);
-modal.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
-countrySel.addEventListener("change",()=>populateCities(countrySel.value));
-savePlace.addEventListener("click",()=>{
-  const c=MAP.find(x=>x.en===countrySel.value);
-  const m=(c?.cities||[]).find(x=>x.en===citySel.value);
-  if(c&&m){
-    current={countryEn:c.en,countryAr:c.ar,cityEn:m.en,cityAr:m.ar,tz:c.tz};
-    localStorage.setItem("jaq_prayer_place",JSON.stringify(current));
-  }
+hijriOffsetSel.addEventListener('change', ()=>{
   HIJRI_OFFSET_DAYS = Number(hijriOffsetSel.value||"0");
-  localStorage.setItem("jaq_hijri_offset_days", String(HIJRI_OFFSET_DAYS));
-  closeModal();
+  localStorage.setItem("pr_hijri_offset_days", String(HIJRI_OFFSET_DAYS));
   load();
 });
 
-/* بدء التشغيل */
-load();
+let searchTimer=null;
+function debounceSearch(){
+  clearTimeout(searchTimer);
+  const term = q.value.trim();
+  if(!term){ results.innerHTML=""; return; }
+  searchTimer = setTimeout(()=>search(term), 500);
+}
+q.addEventListener('input', debounceSearch);
+
+async function search(term){
+  // إذا أدخل المستخدم إحداثيات مباشرة
+  const m = term.match(/^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/);
+  if(m){
+    const lat = parseFloat(m[1]), lon=parseFloat(m[3]);
+    results.innerHTML = renderCoordsOption(lat,lon);
+    return;
+  }
+  results.innerHTML = `<div class="resItem">جاري البحث…</div>`;
+  try{
+    const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(term)}&addressdetails=1&accept-language=ar,en&limit=10`;
+    const r=await fetch(url,{headers:{'Accept-Language':'ar,en'}});
+    if(!r.ok) throw 0;
+    const arr=await r.json();
+    if(!arr.length){ results.innerHTML=`<div class="resItem">لم يتم العثور على نتائج.</div>`; return; }
+    results.innerHTML = arr.map(item=>{
+      const title = item.display_name;
+      const lat = Number(item.lat), lon=Number(item.lon);
+      const city = item.address?.city || item.address?.town || item.address?.village || item.address?.state || "";
+      const country = item.address?.country || "";
+      const cap = (city? `${city}، ${country}` : title);
+      return `<div class="resItem" data-lat="${lat}" data-lon="${lon}" data-title="${cap.replace(/"/g,'&quot;')}">
+        <div class="resCap">${cap}</div>
+        <div class="resSub">${title}</div>
+      </div>`;
+    }).join("");
+  }catch{
+    results.innerHTML = `<div class="resItem">تعذّر الاتصال بخدمة البحث.</div>`;
+  }
+}
+function renderCoordsOption(lat,lon){
+  return `<div class="resItem" data-lat="${lat}" data-lon="${lon}" data-title="إحداثيات (${lat.toFixed(4)}, ${lon.toFixed(4)})">
+    <div class="resCap">إحداثيات مباشرة</div>
+    <div class="resSub">${lat.toFixed(6)}, ${lon.toFixed(6)}</div>
+  </div>`;
+}
+results.addEventListener('click', async (e)=>{
+  const item = e.target.closest('.resItem'); if(!item) return;
+  const lat = Number(item.dataset.lat), lon=Number(item.dataset.lon);
+  try{
+    const data = await fetchTimingsByCoords(lat,lon);
+    // حاول تسمية عربية جميلة
+    let title = item.dataset.title || `إحداثيات (${lat.toFixed(3)}, ${lon.toFixed(3)})`;
+    try{
+      const rev = await reverseGeocode(lat,lon);
+      title = rev.nameAr || title;
+    }catch{}
+    state = { ...state, lat, lon, tz: (data?.meta?.timezone||state.tz), nameAr:title, nameEn:title };
+    localStorage.setItem("pr_times_state", JSON.stringify(state));
+    await render(data); setPlaceTexts();
+    modal.classList.remove('open'); document.body.style.overflow='';
+  }catch{ alert("تعذّر جلب المواقيت لهذا الموقع."); }
+});
+
+/* ========================= بداية التشغيل: محاولة تحديد تلقائي مرة واحدة إن لم يكن محفوظ ========================= */
+(async function initOnce(){
+  // لو لا يوجد حالة محفوظة، جرّب أخذ موقع المستخدم مرة واحدة
+  if(!localStorage.getItem("pr_times_state") && navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(async pos=>{
+      const {latitude:lat, longitude:lon} = pos.coords;
+      try{
+        const data = await fetchTimingsByCoords(lat,lon);
+        const metaName = await reverseGeocode(lat,lon).catch(()=>({nameAr:`إحداثيات (${lat.toFixed(3)}, ${lon.toFixed(3)})`}));
+        state = { ...state, lat, lon, tz:(data?.meta?.timezone||state.tz), nameAr:metaName.nameAr };
+        localStorage.setItem("pr_times_state", JSON.stringify(state));
+        await render(data); setPlaceTexts();
+      }catch{}
+    }, ()=>{ /* تجاهل */ }, {enableHighAccuracy:true, timeout:8000});
+  }
+})();
+
+/* ========================= تحسينات صغيرة ========================= */
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ load(); }});
 </script>
 </body>
 </html>
