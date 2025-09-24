@@ -146,7 +146,7 @@
 
     <section class="hero" aria-labelledby="title">
       <h1 id="title" class="heroTitle">مواقيت الصلاة وفق المذهب الجعفري</h1>
-      <div class="small">دقيقة حسب الإحداثيات، مع إمكانية تحديد موقعك تلقائيًا أو البحث عالميًا.</div>
+      <!-- تمت إزالة الجملة التعريفية حسب طلبك -->
     </section>
 
     <div class="locationBox" aria-live="polite">
@@ -280,7 +280,7 @@ function updateClock(){
 }
 setInterval(updateClock,1000); updateClock();
 
-/* تحويلات هجري محلية (fallback) */
+/* تحويلات هجري محلية (fallback) + توابع مساعدة */
 function hasIntlIslamic(){ try{ new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric'}).format(new Date()); return true; }catch{ return false; } }
 function ymdInTZ(date, tz){
   const p=new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
@@ -303,6 +303,13 @@ function formatHijriFromObj(h, civilWeekday){
   const monthName = h?.month?.ar || HIJRI_MONTHS_AR[h?.month?.number||0] || '';
   const year = h.year || (h.date? h.date.split('-')[2] : '');
   return `${civilWeekday}، ${day} ${monthName} ${year} هـ`;
+}
+
+/* مُطهّر لاستخراج HH:MM من أي صيغة (يشمل ISO) */
+function hmFromAny(s){
+  if(!s) return "";
+  const m = String(s).match(/(\d{1,2}):(\d{2})/);
+  return m ? `${m[1].padStart(2,'0')}:${m[2]}` : "";
 }
 
 /* ========================= أحاديث ========================= */
@@ -345,14 +352,15 @@ function drawEvents(todayM,todayD,nightM,nightD){
 }
 
 /* ========================= جلب المواقيت (إحداثيات) ========================= */
+/* أزلنا iso8601=true كي تعود الأوقات بصيغة HH:MM مباشرةً */
 async function fetchTimingsByCoords(lat,lon){
-  const url=`https://api.aladhan.com/v1/timings?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&method=0&iso8601=true&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`;
+  const url=`https://api.aladhan.com/v1/timings?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&method=0&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`;
   const r=await fetch(url,{cache:"no-store"});
   if(!r.ok) throw new Error("تعذّر جلب المواقيت");
   const j=await r.json();
   const data=j?.data;
   if(!data?.timings) throw new Error("استجابة غير متوقعة");
-  return data; // يحتوي timings و date و meta.timezone
+  return data; // timings + date + meta.timezone
 }
 
 /* ======= التالي والعدّاد ======= */
@@ -361,9 +369,9 @@ function nextKey(t, tz){
   const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
   const {Y,M,D}=ymdInTZ(nowTZ, tz);
   const cand=order.map(k=>{
-    const raw=(t[k]||"").replace(/\s*\(.*?\)\s*/g,"").trim();
-    if(!/^\d{1,2}:\d{2}$/.test(raw)) return {k,diff:Infinity};
-    let [HH,MM]=raw.split(':').map(Number); HH=(HH===24)?0:HH;
+    const hm = hmFromAny(t[k]);
+    if(!/^\d{2}:\d{2}$/.test(hm)) return {k,diff:Infinity};
+    let [HH,MM]=hm.split(':').map(Number); HH=(HH===24)?0:HH;
     return {k,diff:new Date(+Y,+M-1,+D,HH||0,MM||0,0)-nowTZ};
   });
   let n=cand.filter(x=>x.diff>=0).sort((a,b)=>a.diff-b.diff)[0];
@@ -373,14 +381,14 @@ function nextKey(t, tz){
 function dateForKeyToday(tz, timings, key){
   const nowTZ=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
   const {Y,M,D}=ymdInTZ(nowTZ, tz);
-  const raw=(timings[key]||"").replace(/\s*\(.*?\)\s*/g,"").trim();
-  if(!/^\d{1,2}:\d{2}$/.test(raw)) return null;
-  let [H,Min]=raw.split(':').map(Number); H=(H===24)?0:H;
+  const hm = hmFromAny(timings[key]);
+  if(!/^\d{2}:\d{2}$/.test(hm)) return null;
+  let [H,Min]=hm.split(':').map(Number); H=(H===24)?0:H;
   return new Date(+Y,+M-1,+D,H||0,Min||0,0);
 }
 function ensureImsak(t){
   if(!t.Imsak && t.Fajr){
-    const pure=String(t.Fajr).replace(/\s*\(.*?\)\s*/g,"").trim();
+    const pure=hmFromAny(t.Fajr);
     let [H,M]=pure.split(":").map(Number);
     const d=new Date(); d.setHours((H||0), (M||0)-10, 0, 0);
     t.Imsak = `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
@@ -423,13 +431,18 @@ async function render(data){
     {n:"أذان العشاء",k:"Isha"},
     {n:"منتصف الليل",k:"Midnight"}
   ];
+
   const k=nextKey(t,state.tz);
-  times.innerHTML=rows.map(r=>`<tr class="${r.k===k?'next':''}"><td class="name">${r.n}</td><td class="time">${to12h(t[r.k])}</td></tr>`).join("");
+  times.innerHTML=rows.map(r=>{
+    const hm = hmFromAny(t[r.k]);
+    return `<tr class="${r.k===k?'next':''}"><td class="name">${r.n}</td><td class="time">${to12h(hm)}</td></tr>`;
+  }).join("");
 
   // صندوق الحدث القادم
-  const target = dateForKeyToday(state.tz, t, k);
-  nextName.textContent = NAMES[k] || k || "--";
-  nextAt.textContent = to12h(t[k]||'--:--');
+  const target = k ? dateForKeyToday(state.tz, t, k) : null;
+  const hmNext = k ? hmFromAny(t[k]) : "";
+  nextName.textContent = NAMES[k] || (k||"--");
+  nextAt.textContent = hmNext ? to12h(hmNext) : "--:-- --";
   nextNote.textContent = (k==="Sunrise" ? "زمن الشروق" : k==="Sunset" ? "وقت الغروب" : "الوقت المتبقي");
   if(cdTimer) clearInterval(cdTimer);
   if(target) { cdTimer = setInterval(()=>tickCountdown(target,k),1000); tickCountdown(target,k); }
@@ -446,10 +459,8 @@ async function render(data){
       hijri.textContent = formatHijriFromObj(h, wd);
       // مناسبات اليوم/الليلة
       const todayM = Number(h?.month?.number||0), todayD=Number(h?.day||0);
-      // احسب ليلة الغد
       const refTonight = new Date(nowTZ.getTime()+86400000);
-      const wd2 = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long'}).format(refTonight);
-      let h2 = h; // افتراضي
+      let h2 = h;
       try{
         const d2 = await fetch(`https://api.aladhan.com/v1/gToH?date=${encodeURIComponent(new Intl.DateTimeFormat('en-GB',{timeZone:state.tz,day:'2-digit',month:'2-digit',year:'numeric'}).format(refTonight).replace(/\//g,'-'))}&adjustment=${encodeURIComponent(HIJRI_OFFSET_DAYS||0)}`).then(x=>x.json());
         h2 = d2?.data?.hijri || h;
@@ -458,7 +469,6 @@ async function render(data){
       drawEvents(todayM,todayD,nightM,nightD);
     }else{ throw 0; }
   }catch{
-    // fallback محلي
     const civilWeekday = new Intl.DateTimeFormat('ar',{timeZone:state.tz,weekday:'long'}).format(nowTZ);
     try{
       const parts=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{timeZone:state.tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(nowTZ);
@@ -499,7 +509,6 @@ async function reverseGeocode(lat,lon){
   if(!r.ok) throw new Error("تعذّر الرجوع العكسي");
   const j = await r.json();
   const dispAr = j?.display_name || "";
-  // اسم عربي/إنجليزي مبسّط
   const city = j?.address?.city || j?.address?.town || j?.address?.village || j?.address?.municipality || j?.address?.state || "";
   const country = j?.address?.country || "";
   return {
@@ -550,7 +559,6 @@ function debounceSearch(){
 q.addEventListener('input', debounceSearch);
 
 async function search(term){
-  // إذا أدخل المستخدم إحداثيات مباشرة
   const m = term.match(/^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/);
   if(m){
     const lat = parseFloat(m[1]), lon=parseFloat(m[3]);
@@ -590,7 +598,6 @@ results.addEventListener('click', async (e)=>{
   const lat = Number(item.dataset.lat), lon=Number(item.dataset.lon);
   try{
     const data = await fetchTimingsByCoords(lat,lon);
-    // حاول تسمية عربية جميلة
     let title = item.dataset.title || `إحداثيات (${lat.toFixed(3)}, ${lon.toFixed(3)})`;
     try{
       const rev = await reverseGeocode(lat,lon);
@@ -605,7 +612,6 @@ results.addEventListener('click', async (e)=>{
 
 /* ========================= بداية التشغيل: محاولة تحديد تلقائي مرة واحدة إن لم يكن محفوظ ========================= */
 (async function initOnce(){
-  // لو لا يوجد حالة محفوظة، جرّب أخذ موقع المستخدم مرة واحدة
   if(!localStorage.getItem("pr_times_state") && navigator.geolocation){
     navigator.geolocation.getCurrentPosition(async pos=>{
       const {latitude:lat, longitude:lon} = pos.coords;
