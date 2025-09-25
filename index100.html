@@ -105,7 +105,6 @@
   .tag{display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; border:1px solid var(--stroke); color:#fff; font-size:14px; background:#0f1320}
   .z-emoji{font-size:20px}
   .stars{position:relative; overflow:hidden; border-radius:16px}
-  .quota{margin-top:8px; font-size:13px; color:#cfd8dc; text-align:center}
   .muted{color:#bdbdbd}
 
   .notice{ margin:10px auto 0; padding:12px 14px; border-radius:12px; border:1px solid #3a2a2a; background:#1a1010; color:#ffd0d0; font-size:14px; max-width:820px; }
@@ -171,40 +170,17 @@
 
   <!-- الخطوة 1 -->
   <section id="step1" class="card stars center" aria-labelledby="startTitle">
-    <h2 id="startTitle">أدخل بياناتك لبدء القراءة</h2>
-    <div class="grid" style="max-width:760px; margin:10px auto 0;">
+    <h2 id="startTitle">ابدأ القراءة الآن</h2>
+    <p class="muted" style="margin:-6px 0 8px">يمكنك المتابعة بدون إدخال أي بيانات. تاريخ الميلاد اختياري لتحديد البرج.</p>
+    <div class="grid" style="max-width:520px; margin:10px auto 0;">
       <div>
-        <label for="gender">الجنس</label>
-        <select id="gender" required><option value="">اختر</option><option>ذكر</option><option>أنثى</option></select>
-        <div class="notice hidden" id="e_gender">الرجاء اختيار الجنس.</div>
-      </div>
-      <div>
-        <label for="status">الحالة الاجتماعية</label>
-        <select id="status" required>
-          <option value="">اختر</option>
-          <option>أعزب/عزباء</option><option>متزوج/متزوجة</option>
-          <option>منفصل/منفصلة</option><option>مخطوب/مخطوبة</option>
-        </select>
-        <div class="notice hidden" id="e_status">الرجاء اختيار الحالة الاجتماعية.</div>
-      </div>
-      <div>
-        <label for="work">الوضع المهني</label>
-        <select id="work" required>
-          <option value="">اختر</option>
-          <option>أعمل</option><option>عاطل</option><option>طالب</option>
-        </select>
-        <div class="notice hidden" id="e_work">الرجاء اختيار الوضع المهني.</div>
-      </div>
-      <div>
-        <label for="birthdate">تاريخ الميلاد</label>
-        <input id="birthdate" type="date" required>
-        <div class="notice hidden" id="e_birthdate">الرجاء إدخال تاريخ الميلاد.</div>
+        <label for="birthdate">تاريخ الميلاد (اختياري)</label>
+        <input id="birthdate" type="date" placeholder="YYYY-MM-DD">
       </div>
     </div>
     <div style="margin-top:16px;">
       <button class="btn" id="startBtn" style="min-width:220px">ابدأ القراءة</button>
     </div>
-    <div class="quota" id="quotaInfo"></div>
   </section>
 
   <!-- انتظار -->
@@ -224,7 +200,6 @@
       <button class="topic" data-topic="career">المهنة والمال 💼<span>الفرص، القرارات، الاستثمارات</span></button>
       <button class="topic" data-topic="general">عام / دراسي ✨<span>رؤية شاملة، امتحانات وزملاء</span></button>
     </div>
-    <div class="quota" id="quotaInfoTopics"></div>
   </section>
 
   <!-- النتيجة -->
@@ -241,8 +216,6 @@
       <button class="ghost" id="restartBtn">إعادة البدء</button>
       <button class="btn" id="printBtn" title="تحميل PDF">تحميل PDF</button>
     </div>
-    <div class="quota" id="quotaInfoResult" style="margin-top:10px"></div>
-    <p id="printHint" class="muted" style="text-align:center;margin-top:6px;">يتم إنشاء PDF رسمي منظم للهيدر والبيانات والنص فقط.</p>
   </section>
 
   <noscript>
@@ -258,7 +231,7 @@
   <div>شارك الصفحة</div>
   <div class="socials" aria-label="مشاركة">
     <button id="shareNative" title="مشاركة" aria-label="مشاركة">
-      <svg viewBox="0 0 24 24" role="img" aria-label="Share"><path d="M18 8a3 3 0 1 0-2.83-3.99L8.91 7.1a3.02 3.02 0 0 0-2.01-.78A3 3 0 1 0 9.9 9l6.26-3.08A3 3 0 0 0 18 8Zm-9 7a3 3 0 1 0-3 3 3 3 0 0 0 3-3Zm12-1a3 3 0 1 0-3 3 3 3 0 0 0 3-3Z"/></svg>
+      <svg viewBox="0 0 24 24" role="img" aria-label="Share"><path d="M18 8a3 3 0 1 0-2.83-3.99L8.91 7.1a3.02 3.02 0 0 0-2.01-.78A3 3 0 1 0 9.9 9l6.26-3.08A3 3 0 0 0 18 8Zm-9 7a3 3 0 1 0-3 3 3 0 0 0 3-3Zm12-1a3 3 0 1 0-3 3 3 3 0 0 0 3-3Z"/></svg>
     </button>
     <button id="shareX" title="X / Twitter" aria-label="X">
       <svg viewBox="0 0 24 24" role="img" aria-label="X"><path d="M18.244 2H21l-6.56 7.51L22.5 22h-6.79l-4.87-6.37L4.94 22H2l7.02-8.03L1.5 2h6.87l4.39 5.86L18.244 2Zm-2.38 18h1.84L8.23 4h-1.9l9.534 16Z"/></svg>
@@ -272,18 +245,6 @@
   </div>
   <div>© <span id="year"></span> الابراج والاستبصار</div>
 </footer>
-
-<!-- مودال الحد اليومي -->
-<div class="overlay" id="overlayLimit" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); justify-content:center; align-items:center; z-index:20">
-  <div class="modal" style="background:var(--card); border:1px solid var(--stroke); border-radius:14px; padding:18px; max-width:520px; margin:16px; text-align:center">
-    <h3 style="color:var(--brand); margin-top:0">وصلت إلى الحد اليومي</h3>
-    <p>المتاح: <strong>15 قراءة</strong> كل 24 ساعة. الرجاء الانتظار حتى انتهاء العداد لإتاحة قراءات جديدة.</p>
-    <p class="quota"><span id="countdown">00:00:00</span> حتى التجديد</p>
-    <div class="actions" style="display:flex; gap:10px; justify-content:center; margin-top:10px">
-      <button class="ghost" id="closeLimit">حسنًا</button>
-    </div>
-  </div>
-</div>
 
 <!-- قالب PDF الرسمي -->
 <div id="printDoc" aria-hidden="true">
@@ -340,7 +301,7 @@
     } return {name:"—", emoji:"☆"};
   }
 
-  /* أوصاف بشرية واسعة (بدون حروف أولى) */
+  /* أوصاف بشرية واسعة */
   const DESCRIPTORS = [
     "قصير سريع الحركة", "طويل ذو حضور قوي", "صديق قديم يعود بلا مقدمات", "جار متطفّل يكثر من الأسئلة",
     "قريب حسود يتظاهر بالنصح", "زميل حقود يلمّح ولا يصرّح", "مدرّس أناني يطلب الكثير",
@@ -354,7 +315,7 @@
     "مدرّس يعطي تلميحات بدل الحلول", "زميل يغار من إنجازك الأخير"
   ];
 
-  /* قوالب نصية عميقة (سيجري توليد ≥25/موضوع = 100+) */
+  /* قوالب نصية */
   const TEMPLATES = {
     love: [
       "تتقاطع اليوم إشارات عاطفية ناضجة؛ الفعل الصادق يتكرّر دون طلب، والكلام الزائد يتساقط من تلقاء نفسه.",
@@ -406,31 +367,26 @@
     ]
   };
 
-  /* بناء ≥25 تنويعًا/موضوع = 100+ إجمالي (مع مزج الأوصاف) */
   function buildTopicVariants(topic){
     const base = TEMPLATES[topic] || TEMPLATES.general;
     const variants = [];
     let id = 1;
     for(const t of base){
-      // نمزج كل قالب مع مجموعة أوصاف لتكثير التنوع
       for(let i=0;i<DESCRIPTORS.length;i+=Math.max(1, Math.ceil(DESCRIPTORS.length/3))){
         const desc = DESCRIPTORS[i];
         const txt = t.replace("{desc}", desc);
         variants.push({id:`${topic}-${id++}`, text:txt});
       }
     }
-    // ضمان ≥ 25
     while(variants.length<25){
       const desc = DESCRIPTORS[Math.floor(Math.random()*DESCRIPTORS.length)];
       const t = base[Math.floor(Math.random()*base.length)].replace("{desc}", desc);
       variants.push({id:`${topic}-${id++}`, text:t});
     }
-    // خلط واختيار 25
     variants.sort(()=>Math.random()-0.5);
     return variants.slice(0,25);
   }
 
-  // بنك كامل (100+) يُنشأ عند التشغيل
   const BANK = {
     love:   buildTopicVariants('love'),
     career: buildTopicVariants('career'),
@@ -443,18 +399,10 @@
   const globalNotice=$("#globalNotice");
   const zodiacBadge=$("#zodiacBadge"), zEmojiEl=$("#zEmoji"), zNameEl=$("#zName");
   const resultText=$("#resultText"), omenEl=$("#omen"), userEcho=$("#userEcho");
-  const overlayLimit=$("#overlayLimit"), countdownEl=$("#countdown");
-  const quotaInfo=$("#quotaInfo"), quotaInfoTopics=$("#quotaInfoTopics"), quotaInfoResult=$("#quotaInfoResult");
-  document.getElementById("closeLimit").addEventListener("click", ()=> overlayLimit.style.display="none");
 
-  /* حفظ/تحميل النموذج */
-  function saveForm(){ localStorage.setItem("istibsar_form", JSON.stringify({
-    gender: $("#gender").value||"", status: $("#status").value||"", work: $("#work").value||"", birthdate: $("#birthdate").value||""
-  })); }
-  function loadForm(){ try{ const d=JSON.parse(localStorage.getItem("istibsar_form")||"{}");
-    if(d.gender) $("#gender").value=d.gender; if(d.status) $("#status").value=d.status;
-    if(d.work) $("#work").value=d.work; if(d.birthdate) $("#birthdate").value=d.birthdate;
-  }catch(e){} }
+  /* حفظ/تحميل تاريخ الميلاد فقط */
+  function saveForm(){ localStorage.setItem("istibsar_form", JSON.stringify({ birthdate: $("#birthdate").value||"" })); }
+  function loadForm(){ try{ const d=JSON.parse(localStorage.getItem("istibsar_form")||"{}"); if(d.birthdate) $("#birthdate").value=d.birthdate; }catch(e){} }
 
   let currentSign={name:"—",emoji:"☆"};
   function updateZodiacUI(){
@@ -462,43 +410,14 @@
     zEmojiEl.textContent=currentSign.emoji; zNameEl.textContent=currentSign.name;
     zodiacBadge.innerHTML=`<div class="tag"><span class="z-emoji">${currentSign.emoji}</span> برجك: ${currentSign.name}</div>`;
   }
-  ["gender","status","work","birthdate"].forEach(id=>{
-    const el=$("#"+id);
-    el.addEventListener("input", ()=>{ saveForm(); updateZodiacUI(); });
-    el.addEventListener("change", ()=>{ saveForm(); updateZodiacUI(); });
-    el.addEventListener("blur",  ()=>{ saveForm(); updateZodiacUI(); });
-    if(id==="birthdate"){ el.addEventListener("keyup", updateZodiacUI); el.addEventListener("click", ()=>setTimeout(updateZodiacUI,0)); }
-  });
 
-  /* حد 15 قراءة/24 ساعة */
-  const MAX_READS=15;
-  function getQuota(){ const raw=localStorage.getItem("istibsar_quota"), now=Date.now(); if(!raw) return {count:0, resetAt:null};
-    try{ const q=JSON.parse(raw); if(q.resetAt && now>q.resetAt) return {count:0, resetAt:null}; return q; }catch(e){ return {count:0, resetAt:null}; } }
-  function setQuota(q){ localStorage.setItem("istibsar_quota", JSON.stringify(q)); }
-  function incQuota(){ const q=getQuota(); const now=Date.now(); const resetAt=q.resetAt||(now+24*60*60*1000); const next={count:(q.count||0)+1, resetAt}; setQuota(next); return next; }
-  function remainingQuota(){ const q=getQuota(); return Math.max(0, MAX_READS-(q.count||0)); }
-  function fmtRemaining(ms){ if(ms<=0) return "00:00:00"; const s=Math.floor(ms/1000), h=String(Math.floor(s/3600)).padStart(2,"0"), m=String(Math.floor((s%3600)/60)).padStart(2,"0"), sc=String(s%60).padStart(2,"0"); return `${h}:${m}:${sc}`; }
-  function updateQuotaUI(){ const rem=remainingQuota(); const q=getQuota(); const base=`المتبقي اليوم: ${rem} / ${MAX_READS}`+(q.resetAt?` — تجديد خلال ${fmtRemaining(q.resetAt - Date.now())}`:""); [quotaInfo,quotaInfoTopics,quotaInfoResult].forEach(el=>{ if(el) el.textContent=base; }); }
-  function showLimitOverlay(){ const q=getQuota(); if(!q.resetAt) return; overlayLimit.style.display="flex"; (function tick(){ const left=q.resetAt-Date.now(); countdownEl.textContent=fmtRemaining(left); if(left<=0){ overlayLimit.style.display="none"; setQuota({count:0, resetAt:null}); updateQuotaUI(); } else { requestAnimationFrame(tick); } })(); }
+  const bdEl=$("#birthdate");
+  ["input","change","blur","keyup"].forEach(ev=> bdEl.addEventListener(ev, ()=>{ saveForm(); updateZodiacUI(); }));
+  bdEl.addEventListener("click", ()=>setTimeout(updateZodiacUI,0));
 
-  /* إشعار */
-  function showGlobal(msg, ok=false){ globalNotice.textContent=msg; globalNotice.classList.toggle("ok", ok); globalNotice.classList.remove("hidden"); setTimeout(()=>{ globalNotice.classList.add("hidden"); globalNotice.classList.remove("ok"); }, 3200); }
-
-  /* تحقق الإدخال */
-  function validateForm(){
-    let ok=true; const g=$("#gender").value.trim(), s=$("#status").value.trim(), w=$("#work").value.trim(), b=$("#birthdate").value.trim();
-    ["e_gender","e_status","e_work","e_birthdate"].forEach(id=>$("#"+id).classList.add("hidden"));
-    if(!g){ $("#e_gender").classList.remove("hidden"); ok=false; }
-    if(!s){ $("#e_status").classList.remove("hidden"); ok=false; }
-    if(!w){ $("#e_work").classList.remove("hidden"); ok=false; }
-    if(!b){ $("#e_birthdate").classList.remove("hidden"); ok=false; }
-    if(!ok){ showGlobal("الرجاء إكمال البيانات المطلوبة للمتابعة."); }
-    return ok;
-  }
-
-  /* مفتاح المستخدم لمنع التكرار */
+  /* مفتاح المستخدم لمنع تكرار النصوص (يعتمد فقط على تاريخ الميلاد أو مجهول) */
   function userKey(){
-    const form = JSON.stringify({g:$("#gender").value||"", s:$("#status").value||"", w:$("#work").value||"", b:$("#birthdate").value||""});
+    const form = JSON.stringify({b:$("#birthdate").value||"anon"});
     let h=2166136261>>>0; for(let i=0;i<form.length;i++){ h^=form.charCodeAt(i); h=Math.imul(h,16777619); }
     return h.toString(16);
   }
@@ -512,20 +431,18 @@
     localStorage.setItem(key, JSON.stringify([...s]));
   }
 
-  /* اختيار تنويع غير مكرر */
   function pickUniqueVariant(topic){
     const list = BANK[topic] || BANK.general;
     const used = getUsed(topic);
     const pool = list.filter(v=> !used.has(v.id));
     if(pool.length===0){
-      showGlobal("تم استهلاك كل التنويعات المتاحة لهذا الموضوع. سيُعاد التوليف من جديد.", true);
+      showGlobal("تم استهلاك التنويعات الحالية، أعدنا التوليف تلقائيًا.", true);
       localStorage.removeItem(`istibsar_used_${userKey()}_${topic}`);
       return list[Math.floor(Math.random()*list.length)];
     }
     return pool[Math.floor(Math.random()*pool.length)];
   }
 
-  /* توليف قراءة كاملة (بلا افتتاحية ثابتة) */
   function composeReading(topic){
     const main = pickUniqueVariant(topic);
     addUsed(topic, main.id);
@@ -553,46 +470,49 @@
     return parts.join("");
   }
 
-  /* تدفّق الواجهات */
-  const stepSequence = { show: el=>el.classList.remove("hidden"), hide: el=>el.classList.add("hidden") };
-
-  function echoUser(){
-    const g=$("#gender").value||"—", s=$("#status").value||"—", w=$("#work").value||"—", b=$("#birthdate").value||"—";
-    $("#userEcho").innerHTML=`<span class="z-emoji">${currentSign.emoji}</span> ${currentSign.name} • ${g} • ${s} • ${w} • ${b}`;
+  function showGlobal(msg, ok=false){
+    globalNotice.textContent=msg;
+    globalNotice.classList.toggle("ok", ok);
+    globalNotice.classList.remove("hidden");
+    setTimeout(()=>{ globalNotice.classList.add("hidden"); globalNotice.classList.remove("ok"); }, 3200);
   }
 
+  /* عرض البرج في الشارة العلوية */
+  function echoUser(){
+    const b=$("#birthdate").value||"—";
+    $("#userEcho").innerHTML=`<span class="z-emoji">${currentSign.emoji}</span> ${currentSign.name}${b!=="—" ? " • "+b : ""}`;
+  }
+
+  /* تدفّق الواجهات (بدون تحقق/بدون حد يومي) */
+  const stepSequence = { show: el=>el.classList.remove("hidden"), hide: el=>el.classList.add("hidden") };
+
   function startFlow(){
-    if(!validateForm()) return;
     stepSequence.hide(step1); stepSequence.show(stepLoading);
-    setTimeout(()=>{ stepSequence.hide(stepLoading); stepSequence.show(stepTopics); updateZodiacUI(); updateQuotaUI(); }, 1100);
+    setTimeout(()=>{ stepSequence.hide(stepLoading); stepSequence.show(stepTopics); updateZodiacUI(); }, 900);
   }
 
   function runTopic(topic){
-    if(remainingQuota()<=0){ updateQuotaUI(); showLimitOverlay(); return; }
     stepSequence.hide(stepTopics); stepSequence.show(stepLoading);
     setTimeout(()=>{
       stepSequence.hide(stepLoading); stepSequence.show(stepResult);
-      incQuota(); updateQuotaUI(); echoUser();
+      echoUser();
       $("#resultText").innerHTML = composeReading(topic);
       $("#omen").textContent = ["ومضة: رسالة مقتضبة تغيّر اتجاه الأسبوع.","ومضة: لقاء عابر يترك أثرًا أطول من زمنه.","ومضة: باب يُفتح مرتين؛ الأولى امتحان، والثانية فرج."][Math.floor(Math.random()*3)];
-    }, 1100);
+    }, 900);
   }
 
-  $("#startBtn").addEventListener("click", startFlow);
+  document.getElementById("startBtn").addEventListener("click", startFlow);
   document.querySelectorAll(".topic").forEach(btn=> btn.addEventListener("click", ()=> runTopic(btn.dataset.topic)));
-  $("#topicsBtn").addEventListener("click", ()=>{ stepSequence.hide(stepResult); stepSequence.show(stepTopics); updateQuotaUI(); });
-  $("#restartBtn").addEventListener("click", ()=>{ stepSequence.hide(stepResult); stepSequence.hide(stepTopics); stepSequence.show(step1); window.scrollTo({top:0, behavior:"smooth"}); updateQuotaUI(); });
+  $("#topicsBtn").addEventListener("click", ()=>{ stepSequence.hide(stepResult); stepSequence.show(stepTopics); });
+  $("#restartBtn").addEventListener("click", ()=>{ stepSequence.hide(stepResult); stepSequence.hide(stepTopics); stepSequence.show(step1); window.scrollTo({top:0, behavior:"smooth"}); });
 
-  /* PDF رسمي */
+  /* PDF رسمي (بدون جنس/حالة/مهنة) */
   function buildPrintDoc(){
     const meta=$("#printMeta"), reading=$("#printReading");
-    const g=$("#gender").value||"—", s=$("#status").value||"—", w=$("#work").value||"—", b=$("#birthdate").value||"—";
+    const b=$("#birthdate").value||"—";
     const now=new Date(); const when=now.toLocaleString('ar', {hour12:false});
     meta.innerHTML = `
       <div>البرج: ${currentSign.emoji} ${currentSign.name}</div>
-      <div>الجنس: ${g}</div>
-      <div>الحالة الاجتماعية: ${s}</div>
-      <div>الوضع المهني: ${w}</div>
       <div>تاريخ الميلاد: ${b}</div>
       <div>تاريخ الإصدار: ${when}</div>
     `;
@@ -604,7 +524,7 @@
   });
 
   /* تهيئة */
-  (function init(){ updateZodiacUI(); updateQuotaUI(); loadForm(); })();
+  (function init(){ updateZodiacUI(); loadForm(); })();
 </script>
 </body>
 </html>
