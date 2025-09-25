@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>فصل الصدقة | آيات وأحاديث مختارة</title>
+
+  <!-- SEO -->
+  <meta name="description" content="فصل الصدقة: آيات وأحاديث مختارة مع المصادر، من القرآن الكريم وروايات النبي (ص) والأئمة (ع) في فضل الصدقة وآثارها." />
+  <meta name="robots" content="index,follow" />
+
+  <!-- خطوط: العناوين Tajawal | المتن Amiri Quran -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=Amiri+Quran&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --gold:#B08400;
+      --gold-soft:#e7d7a0;
+      --paper:#ffffff;
+      --ink:#1e1e1e;
+      --muted:#6b6b6b;
+      --card:#fffdfa;
+      --ring:rgba(176,132,0,.18);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+    body{
+      font-family:"Amiri Quran",serif;
+      line-height:2.05;
+      text-align:justify; /* محاذاة كتب */
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+      padding:20px 18px 80px;
+    }
+
+    /* رأس الصفحة */
+    header.hero{
+      text-align:center;
+      padding:28px 12px 12px;
+      background:
+        radial-gradient(1200px 300px at 50% -60%, rgba(176,132,0,.11), transparent 60%),
+        linear-gradient(180deg,#fff,#fffaf0 90%);
+      border-bottom:1px solid rgba(176,132,0,.20);
+    }
+    /* شارة "فصل الصدقة" */
+    .chapter-badge{
+      display:inline-block;
+      margin:0 auto 10px;
+      padding:10px 18px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#fff8de,#f6e5a2);
+      border:1px solid rgba(176,132,0,.35);
+      color:#4a3a00;
+      font-family:"Tajawal",sans-serif;
+      font-weight:800;
+      font-size:20px;
+      letter-spacing:.2px;
+      box-shadow:0 8px 24px rgba(176,132,0,.15), inset 0 1px 0 #fff;
+    }
+    /* العنوان الرئيسي */
+    .site-title{
+      font-family:"Tajawal",sans-serif;
+      font-weight:800;
+      color:var(--gold);
+      letter-spacing:.2px;
+      margin:6px 0 6px;
+      font-size:30px;
+      text-align:center;
+    }
+
+    /* عناوين الأقسام ## بالوسط */
+    .section-title{
+      display:block;
+      text-align:center;
+      margin:34px 0 16px;
+      font-family:"Tajawal",sans-serif;
+      font-size:22px;
+      font-weight:800;
+      color:var(--gold);
+      position:relative;
+    }
+    .section-title::before,
+    .section-title::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      width:18%;
+      height:2px;
+      background:linear-gradient(to left, transparent, var(--gold));
+    }
+    .section-title::after{
+      right:6%;
+      transform:translateY(-50%) scaleX(-1);
+    }
+    .section-title::before{
+      left:6%;
+      transform:translateY(-50%);
+    }
+
+    /* بطاقة الحديث */
+    .hadith-card{
+      background:var(--card);
+      border:1px solid rgba(176,132,0,.28);
+      border-radius:16px;
+      padding:18px 18px 12px;
+      margin:12px 0 16px;
+      box-shadow:
+        0 1px 1px rgba(0,0,0,.03),
+        0 10px 24px rgba(176,132,0,.06);
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hadith-card:before{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(420px 120px at 90% -10%, rgba(176,132,0,.08), transparent 60%);
+      z-index:-1;
+    }
+    .narrator{
+      display:block;
+      text-align:center;
+      font-family:"Tajawal",sans-serif;
+      font-weight:700;
+      color:#000;
+      background:linear-gradient(90deg,#fff7da,transparent);
+      padding:4px 10px;
+      border-radius:10px;
+      border:1px dashed rgba(176,132,0,.35);
+      margin-bottom:6px;
+    }
+    .hadith-text{
+      margin:6px 0 10px;
+      font-size:20px;
+    }
+    /* المصدر بالوسط، بدون روابط */
+    .source{
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      margin-top:8px;
+      border-top:1px dashed rgba(176,132,0,.25);
+      padding-top:8px;
+    }
+
+    /* زر تحميل PDF */
+    .actions{
+      display:flex;
+      justify-content:center;
+      margin:38px 0 10px;
+      gap:12px;
+    }
+    .btn{
+      font-family:"Tajawal",sans-serif;
+      font-weight:700;
+      letter-spacing:.2px;
+      padding:12px 22px;
+      border-radius:14px;
+      border:1px solid rgba(176,132,0,.35);
+      background:linear-gradient(180deg,#fff8de,#f1d98f);
+      color:#5b4700;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(176,132,0,.18), inset 0 1px 0 #fff;
+      transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 22px rgba(176,132,0,.22);
+      filter:saturate(1.05);
+    }
+
+    /* تذييل */
+    footer{
+      text-align:center;
+      font-family:"Tajawal",sans-serif;
+      color:#4a4a4a;
+      margin-top:6px;
+      padding-bottom:28px;
+    }
+
+    /* طباعة PDF */
+    @media print{
+      .actions{ display:none !important; }
+      header.hero{ border:none; background:#fff; }
+      .container{ padding:0 0 10px; }
+      .hadith-card{ box-shadow:none; page-break-inside:avoid; }
+      a[href]:after{ content:""; }
+    }
+
+    /* تجاوبية */
+    @media (max-width:720px){
+      .site-title{font-size:26px}
+      .section-title{font-size:20px}
+      .hadith-text{font-size:19px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="chapter-badge">فصل الصدقة</div>
+    <h1 class="site-title">آيات وأحاديث مختارة</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- ## فضل الصدقة -->
+    <h2 class="section-title">فضلُ الصدقة</h2>
+
+    <section class="hadith-card">
+      <div class="hadith-text">قال الله تعالى: <b>(خذ من أموالهم صدقة تطهرهم وتزكيهم بها وصل عليهم إن صلاتك سكن لهم والله سميع عليم)</b>.</div>
+      <div class="source">المصدر: التوبة: 103</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«أرضُ القيامةِ نارٌ، ما خلا ظِلُّ المؤمنِ فإنَّ صدقتَهُ تُظلُّه»</div>
+      <div class="source">المصدر: الكافي 4/3/6؛ كنز العمال 15996، 16068، 16114</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ عليٍّ (عليه السلام)</span>
+      <div class="hadith-text">«الصدقةُ جُنّةٌ من النار»</div>
+      <div class="source">المصدر: وسائل الشيعة 6/258/17</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنَّ الصدقةَ تُطفِئ عن أهلِها حرَّ القبور، وإنّما يستظلّ المؤمنُ يومَ القيامةِ في ظلِّ صدقته»</div>
+      <div class="source">المصدر: كنز العمال 15996، 16068، 16114</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«كلُّ امرئٍ في ظلِّ صدقته حتى يُقضى بين الناس»</div>
+      <div class="source">المصدر: كنز العمال 15996، 16068، 16114</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنَّ الصدقةَ لتُطفِئ غضبَ الرب»</div>
+      <div class="source">المصدر: كنز العمال 15996، 16068، 16114</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنَّ الله عزّ وجلّ ليضحك إلى الرجل إذا مدّ يده في الصدقة، ومَن ضَحِكَ اللهُ إليه غفر له»</div>
+      <div class="source">المصدر: كنز العمال 16166</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">
+        «لمّا أُنزِلت آيةُ الزكاة (خذ من أموالهم صدقة تطهرهم وتزكيهم بها)… نادى مُنادِي النبي (ص): إنّ الله فرض عليكم الزكاة كما فرض عليكم الصلاة».
+      </div>
+      <div class="source">المصدر: الكافي 3/497/2</div>
+    </section>
+
+    <!-- ## تلقي الله للصدقات -->
+    <h2 class="section-title">تلقي اللهِ للصدقات</h2>
+
+    <section class="hadith-card">
+      <div class="hadith-text">قال الله تعالى: <b>(ألم يعلموا أن الله هو يقبل التوبة عن عباده ويأخذ الصدقات وأن الله هو التواب الرحيم)</b>.</div>
+      <div class="source">المصدر: التوبة: 104</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«ما من شيءٍ إلا وقد وكّلتُ من يقبضه غيري، إلّا الصدقة؛ فإني أتلقّفها بيدي تلقّفًا»</div>
+      <div class="source">المصدر: البحار 96/134/68؛ 80/329/2</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«… وصدقتي فإنها من يدي إلى يد السائل، فإنها تقع في يد الرحمن»</div>
+      <div class="source">المصدر: البحار 96/134/68؛ 80/329/2</div>
+    </section>
+
+    <!-- ## جزاء الصدقة -->
+    <h2 class="section-title">جزاءُ الصدقة</h2>
+
+    <section class="hadith-card">
+      <div class="hadith-text">قال الله تعالى: <b>(يمحق الله الربا ويربي الصدقات والله لا يحب كل كفار أثيم)</b>.</div>
+      <div class="source">المصدر: البقرة: 276</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«إنّ من عبادي من يتصدّق بشِقّ تمرة، فأربّيها له كما يربّي أحدُكم فلوَّه، حتى أجعلها له مثل جبل أُحد»</div>
+      <div class="source">المصدر: أمالي الطوسي 125/195</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«اتقوا النار ولو بشقّ تمرة… حتى يكون أعظم من الجبل العظيم»</div>
+      <div class="source">المصدر: البحار 96/122/29</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنّ الله ليُربّي لأحدكم التمرة واللقمة… حتى تكون مثل أُحد»</div>
+      <div class="source">المصدر: كنز العمال 16002</div>
+    </section>
+
+    <!-- ## الصدقة ودفع البلاء -->
+    <h2 class="section-title">الصدقةُ ودفعُ البلاء</h2>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«الصدقةُ تدفع البلاء، وهي أنجحُ دواء، وتدفع القضاء وقد أُبرِم إبرامًا، ولا يذهبُ بالأدواءِ إلا الدعاءُ والصدقة»</div>
+      <div class="source">المصدر: البحار 96/137/71</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنّ الله ليدفع بالصدقة الداءَ، والدُّبيلة، والحرق، والغرق، والهدم، والجنون…»</div>
+      <div class="source">المصدر: البحار 62/269/61</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«الصدقةُ تمنع سبعين نوعًا من البلاء، أهونها الجذامُ والبرص»</div>
+      <div class="source">المصدر: كنز العمال 15982</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«الصدقةُ تسُدُّ سبعين بابًا من الشرّ»</div>
+      <div class="source">المصدر: البحار 96/132/64؛ 96/124/35</div>
+    </section>
+
+    <!-- ## الصدقة ودفع ميتة السوء -->
+    <h2 class="section-title">الصدقةُ ودفعُ ميتةِ السوء</h2>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«الصدقةُ تمنع ميتةَ السوء»</div>
+      <div class="source">المصدر: البحار 96/132/64؛ 96/124/35</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«الصدقةُ تدفع ميتةَ السوء»</div>
+      <div class="source">المصدر: الكافي 4/2/1</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنّ الله ليدرأ بالصدقة سبعين ميتةً من السوء»</div>
+      <div class="source">المصدر: البحار 62/269/63؛ 96/135/68</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الباقر (عليه السلام)</span>
+      <div class="hadith-text">«إنّ الصدقةَ لتدفع سبعين علّةً من بلايا الدنيا مع ميتةِ السوء، إنّ صاحبَها لا يموتُ ميتةَ سوءٍ أبدًا»</div>
+      <div class="source">المصدر: البحار 62/269/63؛ 96/135/68</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«تصدّقوا وداووا مرضاكم بالصدقة… فإنها تدفع عن الأعراض والأمراض، وهي زيادةٌ في الأعمار»</div>
+      <div class="source">المصدر: كنز العمال 16113؛ البحار 96/116</div>
+    </section>
+
+    <!-- ## مداواة المرضى بالصدقة -->
+    <h2 class="section-title">مداواةُ المرضى بالصدقة</h2>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«داووا مرضاكم بالصدقة»</div>
+      <div class="source">المصدر: الكافي 4/3/5</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«إنّ ملكَ الموت يُدفَع إليه الصكُّ بقبض روح العبد، فيتصدّق، فيُقال: رُدّ عليه الصكّ»</div>
+      <div class="source">المصدر: البحار 96/123/32</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ عليٍّ (عليه السلام)</span>
+      <div class="hadith-text">«الصدقةُ دواءٌ مُنجِح»</div>
+      <div class="source">المصدر: نهج البلاغة: الحكمة 7</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الكاظم (عليه السلام)</span>
+      <div class="hadith-text">«داووهم بالصدقة؛ فليس شيءٌ أسرعَ إجابةً منها، ولا أجدى على المريض»</div>
+      <div class="source">المصدر: طبّ الأئمة: 123</div>
+    </section>
+
+    <!-- ## الصدقة مفتاح الرزق -->
+    <h2 class="section-title">الصّدقةُ مفتاحُ الرِّزق</h2>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ عليٍّ (عليه السلام)</span>
+      <div class="hadith-text">«استنزِلوا الرزقَ بالصدقة»</div>
+      <div class="source">المصدر: البحار 78/68/13</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ عليٍّ (عليه السلام)</span>
+      <div class="hadith-text">«إذا أملقتم فتاجروا اللهَ بالصدقة»</div>
+      <div class="source">المصدر: نهج البلاغة: الحكمة 258</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«إنّي لأُملِق أحيانًا، فأتاجرُ اللهَ بالصدقة»</div>
+      <div class="source">المصدر: البحار 78/206/54؛ 96/134/68</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">قصةُ الأربعين دينارًا لابنه محمد: «أما علمتَ أن لكلّ شيءٍ مفتاحًا، ومفتاحُ الرزق الصدقة…» ثم جاء بعد عشرة أيام أربعةُ آلاف دينار.</div>
+      <div class="source">المصدر: البحار 78/206/54؛ 96/134/68</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«أكثِروا من الصدقة تُرزَقوا»</div>
+      <div class="source">المصدر: أعلام الدين: 333</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">«إنّ الصدقةَ تزيد صاحبَها كثرةً، فتصدّقوا يرحمكم الله»</div>
+      <div class="source">المصدر: أمالي الطوسي 14/18</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ الصادق (عليه السلام)</span>
+      <div class="hadith-text">«الصدقةُ تقضي الدَّين وتُخلِف بالبركة»</div>
+      <div class="source">المصدر: البحار 96/134/68؛ 75/50/4</div>
+    </section>
+
+    <!-- ## كل معروف صدقة -->
+    <h2 class="section-title">كلُّ معروفٍ صدقة</h2>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (صلى الله عليه وآله)</span>
+      <div class="hadith-text">
+        «إنّ على كلِّ مسلمٍ في كلِّ يومٍ صدقة… إماطةُ الأذى عن الطريق، إرشادُ الرجل، عيادةُ المريض، الأمرُ بالمعروف، النهيُ عن المنكر، ردُّ السلام…»
+      </div>
+      <div class="source">المصدر: البحار 96/134/68؛ 75/50/4</div>
+    </section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«كلُّ معروفٍ صدقة»</div><div class="source">المصدر: الخصال 1/134/145؛ أمالي الطوسي 458/1023</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«كلُّ معروفٍ صدقةٌ إلى غنيٍّ أو فقير»</div><div class="source">المصدر: أمالي الطوسي 458/1023</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«… وما وُقِيَ به المرءُ عِرضَه كُتِب له به صدقة»</div><div class="source">المصدر: البحار 96/182/29؛ 75/105/40</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«تصدّقوا على أخيكم بعِلمٍ يُرشِدُه ورأيٍ يُسدِّدُه»</div><div class="source">المصدر: البحار 96/182/29؛ 75/105/40</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«صدقةٌ يحبّها الله: إصلاحٌ بين الناس إذا تفاسدوا، وتقاربٌ بينهم إذا تباعدوا»</div><div class="source">المصدر: الكافي 2/209/1</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«الكلمةُ الطيبةُ صدقة، وكلُّ خطوةٍ إلى الصلاة صدقة»</div><div class="source">المصدر: البحار 83/369/30</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«إسماعُ الأصمِّ صدقة»</div><div class="source">المصدر: كنز العمال 16303</div></section>
+
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«إسماعُ الأصمِّ من غيرِ تضجُّر صدقةٌ هنيئة»</div><div class="source">المصدر: البحار 74/388/1</div></section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن الإمامِ زين العابدين (ع)</span>
+      <div class="hadith-text">«من طلبَ الحلالِ فهو من الله عز وجل صدقةٌ عليه» (خروجه صباحًا في طلب الرزق)</div>
+      <div class="source">المصدر: الكافي 4/12/11</div>
+    </section>
+
+    <section class="hadith-card">
+      <span class="narrator">وَرَدَ عن رسولِ الله (ص)</span>
+      <div class="hadith-text">
+        «تبسُّمُك في وجهِ أخيك صدقة… وإماطتُك الحجرَ والشوكَ والعظمَ عن الطريق لك صدقة، وإفراغُك من دلوك في دلو أخيك صدقة».
+      </div>
+      <div class="source">المصدر: كنز العمال 16305</div>
+    </section>
+
+    <!-- ## فضل صدقة السر -->
+    <h2 class="section-title">فضلُ صدقةِ السِّرّ وآثارُها</h2>
+
+    <section class="hadith-card"><div class="hadith-text">قال الله تعالى: <b>(إن تُبدوا الصدقات فنعِمّا هي وإن تُخفوها وتؤتوها الفقراء فهو خيرٌ لكم ويُكفِّر عنكم من سيئاتِكم)</b></div><div class="source">المصدر: البقرة: 271</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«صدقةُ السِّرّ تُطفئ غضبَ الرب»</div><div class="source">المصدر: مكارم الأخلاق 1/296/925</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«لا تتصدّقْ على أعين الناس… فإذا أعطيتَ بيمينك فلا تُطْلِعْ عليها شمالك…»</div><div class="source">المصدر: البحار 78/284/1؛ 96/176/4</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«أكثِر من صدقةِ السِّرّ فإنها تُطفئ غضبَ الرب»</div><div class="source">المصدر: البحار 78/284/1؛ 96/176/4</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ عليٍّ (ع)</span><div class="hadith-text">«الصدقةُ في السِّرّ من أفضلِ البِرّ»</div><div class="source">المصدر: غرر الحكم 1518</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«سبعةٌ في ظلِّ عرشِ الله يومَ لا ظلَّ إلا ظلُّه: رجلٌ تصدّق بيمينِه فأخفاه عن شمالِه…»</div><div class="source">المصدر: البحار 96/177/5</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ عليٍّ (ع)</span><div class="hadith-text">«أفضلُ ما توسّل به المتوسّلون: الإيمانُ بالله… وصدقةُ السِّرّ؛ فإنها تذهبُ الخطيئة وتُطفئ غضبَ الرب»</div><div class="source">المصدر: أمالي الطوسي 1/216/380</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ زين العابدين (ع)</span><div class="hadith-text">«وحقُّ الصدقةِ أن تعلم أنها ذُخرُك عند ربك… وتدفع البلايا والأسقام عنك في الدنيا، وتدفع عنك النارَ في الآخرة»</div><div class="source">المصدر: البحار 74/4/1</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«الصدقةُ — واللهِ — في السِّرّ أفضلُ من الصدقة في العلانية، وكذلك العبادةُ في السِّرّ»</div><div class="source">المصدر: الكافي 4/8/2</div></section>
+
+    <!-- ## أهل البيت وصدقة السر -->
+    <h2 class="section-title">أهلُ البيت (ع) وصدقةُ السِّرّ</h2>
+
+    <section class="hadith-card"><div class="hadith-text">في سيرة زين العابدين (ع): «كان يخرج في الليلةِ الظلماء يحمل الجراب… ويُغطّي وجهه لئلا يُعرَف»</div><div class="source">المصدر: البحار 46/89/77</div></section>
+    <section class="hadith-card"><div class="hadith-text">«كان ناسٌ من أهل المدينة يعيشون لا يدرون من أين معاشُهم… فلما مات علي بن الحسين (ع) فقدوا ما كانوا يُؤتون به ليلًا»</div><div class="source">المصدر: البحار 46/89/77</div></section>
+    <section class="hadith-card"><div class="hadith-text">«كان أبو عبد الله (ع) إذا اعتَمَ… يحمل جرابًا فيه خبزٌ ولحمٌ ودراهم… يُقسِّمها ليلًا ولا يُعرَف… فلما مضى فقدوه فعلموا أنه كان أبا عبد الله (ع)»</div><div class="source">المصدر: الكافي 4/8/1</div></section>
+
+    <!-- ## فضل صدقة العلانية -->
+    <h2 class="section-title">فضلُ صدقةِ العلانية وآثارُها</h2>
+
+    <section class="hadith-card"><div class="hadith-text">قال الله تعالى: <b>(إن تُبدوا الصدقات فنعِمّا هي وإن تُخفوها وتؤتوها الفقراء فهو خير لكم)</b>، و<b>(إنّ الذين يتلون كتاب الله… وأنفقوا مما رزقناهم سرًّا وعلانية)</b></div><div class="source">المصدر: البقرة: 271؛ فاطر: 29</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«صدقةُ العلانية تدفع سبعين نوعًا من البلاء»</div><div class="source">المصدر: ثواب الأعمال: 172/1</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ عليٍّ (ع)</span><div class="hadith-text">«… وصدقةُ السِّرّ تكفّر الخطيئة، وصدقةُ العلانية تدفع ميتةَ السوء»</div><div class="source">المصدر: نهج البلاغة: الخطبة 110</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الباقر (ع)</span><div class="hadith-text">«(إن تُبدوا الصدقات فنعِمّا هي) يعني: الزكاة المفروضة… وكانوا يستحبّون إظهارَ الفرائض وكتمانَ النوافل»</div><div class="source">المصدر: الكافي 4/60/1</div></section>
+
+    <!-- ## فضل صدقة الليل والنهار -->
+    <h2 class="section-title">فضلُ صدقةِ الليلِ والنهار</h2>
+
+    <section class="hadith-card"><div class="hadith-text">قال الله تعالى: <b>(الذين يُنفقون أموالَهم بالليل والنهار سرًّا وعلانية فلهم أجرُهم عند ربّهم ولا خوفٌ عليهم ولا هم يحزنون)</b></div><div class="source">المصدر: البقرة: 274</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«إنّ صدقةَ الليل تُطفئ غضبَ الرب، وتمحو الذنب العظيم، وتُهوِّن الحساب. وصدقةُ النهار تُثمِر المال وتزيد في العمر»</div><div class="source">المصدر: البحار 96/125/39؛ أمالي الصدوق 300/15</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن الإمامِ الصادق (ع)</span><div class="hadith-text">«إنّ صدقةَ النهار تميث الخطيئة كما يميث الماءُ الملح، وإنّ صدقةَ الليل تُطفئ غضبَ الرب»</div><div class="source">المصدر: أمالي الصدوق 300/15؛ البحار 96/176/3</div></section>
+    <section class="hadith-card"><span class="narrator">وَرَدَ عن رسولِ الله (ص)</span><div class="hadith-text">«إذا أصبحتَ فتصدّق بصدقةٍ… وإذا أمسيتَ فتصدّق…»</div><div class="source">المصدر: البحار 96/176/3</div></section>
+    <section class="hadith-card"><div class="hadith-text">وعن ابن عباس: نزلت في عليّ بن أبي طالب (ع): أنفق أربعةَ دراهم — بالليل درهمًا، وبالنهار درهمًا، وسِرًّا درهمًا، وعلانيةً درهمًا.</div><div class="source">المصدر: الدر المنثور 2/100</div></section>
+
+    <!-- زر التحميل -->
+    <div class="actions">
+      <button class="btn" onclick="window.print()">تحميل PDF</button>
+    </div>
+
+  </main>
+
+  <footer>
+    جمع وبرمجة : فاضل الريس
+  </footer>
+
+</body>
+</html>
