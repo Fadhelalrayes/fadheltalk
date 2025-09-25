@@ -12,15 +12,15 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1934188535842979"
      crossorigin="anonymous"></script>
 
-  <meta name="description" content="روابط مشاريع وأدوات فاضل الريس: محادثة الذكاء الاصطناعي، مدار الخبر، مواقيت الصلاة الجعفرية، القرآن الكريم، الاستخارة، المسبحة الرقمية، الرياضة، الطيران، الصحة، الأسواق، والعدّ التنازلي." />
-  <meta name="keywords" content="فاضل الريس, ذكاء اصطناعي, مواقيت الصلاة, القرآن الكريم, استخارة, مسبحة, أخبار, رياضة, تذاكر طيران, حاسبة عمر, فاحص سرطان, فاحص قلب, فاحص عقم, فاحص توحد, فاحص اكتئاب, أسعار الأسواق, العد التنازلي, محرم, رمضان" />
+  <meta name="description" content="روابط مشاريع وأدوات فاضل الريس: محادثة الذكاء الاصطناعي، مدار الخبر، مواقيت الصلاة الجعفرية، القرآن الكريم، الاستخارة، المسبحة الرقمية، الرياضة، الطيران، الصحة، الأسواق، والعدّ التنازلي، وفصل الصدقة (آيات وأحاديث مختارة)." />
+  <meta name="keywords" content="فاضل الريس, ذكاء اصطناعي, مواقيت الصلاة, القرآن الكريم, استخارة, مسبحة, أخبار, رياضة, تذاكر طيران, حاسبة عمر, فاحص سرطان, فاحص قلب, فاحص عقم, فاحص توحد, فاحص اكتئاب, أسعار الأسواق, العد التنازلي, محرم, رمضان, فضل الصدقة, أحاديث" />
   <link rel="canonical" href="https://fadhel-alrayes.fun/" />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="فاضل الريس | مركز الصفحات" />
-  <meta property="og:description" content="روابط احترافية لمشاريع وأدوات فاضل الريس." />
+  <meta property="og:description" content="روابط احترافية لمشاريع وأدوات فاضل الريس، مع فصل الصدقة (آيات وأحاديث مختارة)." />
   <meta property="og:url" content="https://fadhel-alrayes.fun/" />
   <meta property="og:image" content="https://fadhel-alrayes.fun/og-cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -28,7 +28,7 @@
   <!-- خط -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD: فهرس التصفح (يشمل رابط رمضان الجديد) -->
+  <!-- JSON-LD: فهرس التصفح (مضاف رابط فصل الصدقة) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -55,7 +55,8 @@
       "أسعار وأسواق لحظية",
       "العدّ التنازلي لرمضان",
       "العدّ التنازلي لمحرم",
-      "الابراج والاستبصار"
+      "الابراج والاستبصار",
+      "فصل الصدقة — آيات وأحاديث مختارة"
     ],
     "url": [
       "https://fadhel-alrayes.fun/talk.html",
@@ -79,7 +80,8 @@
       "https://fadhel-alrayes.fun/index33.html",
       "https://fadhel-alrayes.fun/index10.html",
       "https://fadhel-alrayes.fun/index55.html",
-      "https://fadhel-alrayes.fun/index100.html"
+      "https://fadhel-alrayes.fun/index100.html",
+      "https://fadhel-alrayes.fun/index202.html"
     ]
   }
   </script>
@@ -108,7 +110,7 @@
     .title-bar{
       background:#fff; border:1px solid var(--border); border-radius:18px;
       padding:18px 22px; box-shadow:0 10px 26px rgba(0,0,0,.06);
-      margin-bottom:22px; position:relative; overflow:hidden;
+      margin-bottom:14px; position:relative; overflow:hidden;
     }
     .title-bar::before{
       content:""; position:absolute; inset:0 0 auto 0; height:5px;
@@ -116,7 +118,24 @@
     }
     .title{margin:0; text-align:center; font-weight:900; font-size:1.8rem; letter-spacing:.4px; color:#1a1f27;}
 
-    /* شبكة الأزرار */
+    /* شريط أزرار علوي (CTA) */
+    .cta-bar{
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+      margin:8px 0 22px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; font-weight:800;
+      padding:10px 16px; border-radius:14px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#fff8de,#f6e7a9);
+      color:#5b4700;
+      box-shadow:var(--shadow);
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+    .btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-hover); filter:saturate(1.05)}
+
+    /* شبكة الأزرار (البطاقات) */
     .grid{display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));}
     a.card{
       display:block; text-decoration:none; color:inherit; background:var(--card);
@@ -140,6 +159,12 @@
 <body>
   <div class="wrap">
     <div class="title-bar"><h1 class="title">فاضل الريس</h1></div>
+
+    <!-- شريط أزرار علوي: تمت إضافة زر "فصل الصدقة" -->
+    <nav class="cta-bar" aria-label="روابط مختصرة">
+      <a class="btn" href="https://fadhel-alrayes.fun/index202.html" title="فصل الصدقة — آيات وأحاديث مختارة">🤲 فصل الصدقة</a>
+      <!-- يمكنك إضافة أزرار سريعة أخرى هنا عند الحاجة -->
+    </nav>
 
     <!-- وحدة إعلانية Responsive -->
     <ins class="adsbygoogle"
@@ -287,7 +312,7 @@
         </div></div>
       </a>
 
-      <!-- ✅ البطاقة الجديدة: العدّ التنازلي لرمضان -->
+      <!-- ✅ العدّ التنازلي لرمضان -->
       <a class="card" href="https://fadhel-alrayes.fun/index10.html" role="listitem">
         <div class="row">
           <span class="ico">🌙</span>
@@ -297,7 +322,6 @@
           </div>
         </div>
       </a>
-      <!-- /البطاقة الجديدة -->
 
       <a class="card" href="https://fadhel-alrayes.fun/index55.html" role="listitem">
         <div class="row"><span class="ico">📆</span><div>
@@ -306,13 +330,23 @@
         </div></div>
       </a>
 
-      <!-- البطاقة الجديدة (أخيرة): الابراج والاستبصار -->
       <a class="card" href="https://fadhel-alrayes.fun/index100.html" role="listitem">
         <div class="row">
           <span class="ico">🔮</span>
           <div>
             <h3>الابراج والاستبصار</h3>
             <p class="desc">قراءة طالع</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- ✅ البطاقة الجديدة: فصل الصدقة — آيات وأحاديث مختارة -->
+      <a class="card" href="https://fadhel-alrayes.fun/index202.html" role="listitem">
+        <div class="row">
+          <span class="ico">🤲</span>
+          <div>
+            <h3>فصل الصدقة — آيات وأحاديث مختارة</h3>
+            <p class="desc">صفحة ذهبية أنيقة: آيات وروايات عن فضل الصدقة، مع مصادرها وزر تحميل PDF.</p>
           </div>
         </div>
       </a>
