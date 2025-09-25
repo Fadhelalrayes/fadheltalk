@@ -26,6 +26,15 @@
   <url><loc>https://fadhel-alrayes.fun/index22.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://fadhel-alrayes.fun/index23.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://fadhel-alrayes.fun/index33.html</loc><changefreq>hourly</changefreq><priority>0.7</priority></url>
+
+  <!-- الصفحة الجديدة: العدّ التنازلي لرمضان -->
+  <url>
+    <loc>https://fadhel-alrayes.fun/index10.html</loc>
+    <lastmod>2025-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <url><loc>https://fadhel-alrayes.fun/index55.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://fadhel-alrayes.fun/index67.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://fadhel-alrayes.fun/index88.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
@@ -34,7 +43,7 @@
   <url><loc>https://fadhel-alrayes.fun/index91.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://fadhel-alrayes.fun/index92.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 
-  <!-- ✨ الصفحة الجديدة -->
+  <!-- الصفحة الجديدة: الابراج والاستبصار -->
   <url>
     <loc>https://fadhel-alrayes.fun/index100.html</loc>
     <lastmod>2025-09-24</lastmod>
