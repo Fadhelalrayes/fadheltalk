@@ -132,9 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const fmt=(n,d=2)=> (n==null||Number.isNaN(n))?"—":Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
   const now=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");$("#lastUpdated").textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;};
 
-  // جلب مرن بمحاولات متعددة (مباشر + r.jina http/https + allorigins)
-  async function fetchCascade(rawUrl, timeout=9000){
-    const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(),timeout);
+  // جلب مرن بمحاولات متعددة
+  async function fetchCascade(rawUrl, timeout=12000){
+    const ctrl=new AbortController(); 
+    const timer=setTimeout(()=>ctrl.abort(),timeout);
     const tries = [
       rawUrl,
       `https://r.jina.ai/http/${rawUrl.replace(/^https?:\/\//,'')}`,
@@ -145,16 +146,21 @@ document.addEventListener('DOMContentLoaded', () => {
     for(const u of tries){
       try{
         const r = await fetch(u,{signal:ctrl.signal,headers:{'Cache-Control':'no-cache'}});
-        if(!r.ok) throw new Error(r.status);
-        const txt=await r.text(); clearTimeout(timer); return txt;
-      }catch(e){ lastErr=e; }
+        if(!r.ok) throw new Error(`HTTP error: ${r.status}`);
+        const txt=await r.text(); 
+        clearTimeout(timer); 
+        return txt;
+      }catch(e){
+        lastErr=e;
+        console.error(`Failed to fetch ${u}: ${e.message}`);
+      }
     }
+    console.error(`All fetch attempts failed for ${rawUrl}: ${lastErr.message}`);
     throw lastErr||new Error('fetch failed');
   }
 
   /* ========= الخرائط والمصادر ========= */
-  // Stooq JSON (سلع/أسهم)
-  const STOOQ_JSON = (s)=>{
+  const STOOQ_JSON = (s) => {
     const base = `stooq.com/q/l/?s=${encodeURIComponent(s)}&f=sd2t2ohlcv&h&e=JSON`;
     return [
       `https://${base}`,
@@ -164,8 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const MAPS = { GOLD:['gc.f','xauusd'], SILVER:['si.f','xagusd'] };
 
-  const FX_PRIMARY  = "https://open.er-api.com/v6/latest/USD";
-  const FX_FALLBACK = "https://api.frankfurter.app/latest?from=USD";
+  const FX_SOURCES = [
+    "https://open.er-api.com/v6/latest/USD",
+    "https://api.frankfurter.app/latest?from=USD",
+    "https://api.exchangerate-api.com/v4/latest/USD"
+  ];
 
   const NEWS_RSS = [
     "https://www.cnbcarabia.com/rss/latest",
@@ -188,33 +197,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ========= جلب البيانات ========= */
   async function loadFX(){
-    try{
-      const txt=await fetchCascade(`${FX_PRIMARY}?_=${Date.now()}`);
-      const d=JSON.parse(txt); if(d.result!=="success") throw 0;
-      const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
-      if(r.EUR)add("EURUSD",1/r.EUR); 
-      if(r.GBP)add("GBPUSD",1/r.GBP); 
-      if(r.JPY)add("USDJPY",r.JPY);
-      FX=o;
-    }catch{
+    for(const url of FX_SOURCES){
       try{
-        const txt=await fetchCascade(`${FX_FALLBACK}?_=${Date.now()}`);
-        const d=JSON.parse(txt); const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
-        if(r.EUR)add("EURUSD",1/r.EUR); if(r.GBP)add("GBPUSD",1/r.GBP); if(r.JPY)add("USDJPY",r.JPY);
-        FX=o;
-      }catch{FX=[]}
+        const txt=await fetchCascade(`${url}?_=${Date.now()}`);
+        const d=JSON.parse(txt);
+        const r=d.rates||d.data||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
+        if(r.EUR) add("EURUSD",1/r.EUR); 
+        if(r.GBP) add("GBPUSD",1/r.GBP); 
+        if(r.JPY) add("USDJPY",r.JPY);
+        if(o.length){
+          FX=o;
+          console.log(`FX data loaded from ${url}`);
+          return;
+        }
+      }catch(e){
+        console.error(`Failed to load FX from ${url}: ${e.message}`);
+      }
     }
+    FX=[];
+    console.warn("All FX sources failed");
   }
 
   function parseStooqJSON(txt){
     try{
-      const d=JSON.parse(txt); if(!d || !d.symbols || !d.symbols.length) return null;
+      const d=JSON.parse(txt);
+      if(!d || !d.symbols || !d.symbols.length) {
+        console.warn("Invalid Stooq JSON structure");
+        return null;
+      }
       const r=d.symbols[0], num=v=>(v&&v!=='N/D')?+v:null;
       const open=num(r.open), close=num(r.close), vol=num(r.volume)||0;
-      if(!close&&!open) return null;
+      if(!close && !open) {
+        console.warn("No valid price data in Stooq response");
+        return null;
+      }
       const last=close??open, ch=(open&&close)?((close-open)/open*100):0;
       return { last, change: ch, vol };
-    }catch{ return null; }
+    }catch(e){
+      console.error(`Error parsing Stooq JSON: ${e.message}`);
+      return null;
+    }
   }
 
   async function firstOk(symbols, mapTo){
@@ -224,19 +246,26 @@ document.addEventListener('DOMContentLoaded', () => {
         try{
           const txt = await fetchCascade(u);
           const rec = parseStooqJSON(txt);
-          if(rec) return {symbol:mapTo, last:rec.last, change:rec.change, vol:rec.vol};
-        }catch{}
+          if(rec) {
+            console.log(`Data for ${mapTo} loaded from ${u}`);
+            return {symbol:mapTo, last:rec.last, change:rec.change, vol:rec.vol};
+          }
+        }catch(e){
+          console.error(`Failed to fetch ${mapTo} from ${u}: ${e.message}`);
+        }
       }
     }
+    console.warn(`No data available for ${mapTo}`);
     return null;
   }
 
   async function loadCommodities(){
-    const out=[];
-    const g  = await firstOk(MAPS.GOLD,  'XAUUSD');
-    const ag = await firstOk(MAPS.SILVER,'XAGUSD');
-    [g,ag].forEach(x=>x&&out.push(x));
-    COMM=out;
+    const out = [];
+    const g = await firstOk(MAPS.GOLD, 'XAUUSD');
+    const ag = await firstOk(MAPS.SILVER, 'XAGUSD');
+    [g, ag].forEach(x => x && out.push(x));
+    COMM = out;
+    console.log(`Commodities loaded: ${out.length} items`);
   }
 
   /* ========= اشتقاقات/عرض ========= */
@@ -247,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return {symbol:p.symbol, f1h:p.last*(1+m*0.6), f1d:p.last*(1+m*1.2), sig};
     });
   }
+
   const NS='http://www.w3.org/2000/svg';
   const make=(d,fill)=>{const s=document.createElementNS(NS,'svg');s.setAttribute('width','16');s.setAttribute('height','16');s.setAttribute('viewBox','0 0 24 24');const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill',fill);s.appendChild(p);return s};
   const up = ()=>make('M12 4l6 6h-4v10h-4V10H6z','#0a7a2f');
@@ -257,7 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderPrices(list){
     const tb=$("#pricesTbody"); tb.innerHTML="";
-    if(!list.length){tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا</td></tr>'; return;}
+    if(!list.length){
+      tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا، يرجى التحقق من الاتصال</td></tr>';
+      return;
+    }
     for(const p of list){
       const tr=document.createElement("tr");
       const digits=p.symbol.endsWith("USD")?(p.symbol.startsWith("USD")?5:(p.symbol==='USDJPY'?3:2)):2;
@@ -271,7 +304,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderForecast(list){
     const tb=$("#forecastTbody"); tb.innerHTML="";
-    if(!list.length){tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا</td></tr>'; return;}
+    if(!list.length){
+      tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا، يرجى التحقق من الاتصال</td></tr>';
+      return;
+    }
     for(const f of buildForecastRows(list)){
       let cls,icon;
       if(f.sig==='bull'){cls='sig-bull';icon=up()}
@@ -287,24 +323,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function buildRecommendations(list){const buy=[],sell=[];for(const p of list){if((p.change??0)>=1.5)buy.push(p);if((p.change??0)<=-1.5)sell.push(p)}return {buy,sell}}
+  function buildRecommendations(list){
+    const buy=[],sell=[];
+    for(const p of list){
+      if((p.change??0)>=1.5) buy.push(p);
+      if((p.change??0)<=-1.5) sell.push(p);
+    }
+    return {buy,sell};
+  }
+
   function renderRecommendations(list){
     const {buy,sell}=buildRecommendations(list),b=$("#buyList"),s=$("#sellList"),cb=$("#card-buy"),cs=$("#card-sell");
     b.innerHTML="";s.innerHTML="";
-    if(!buy.length)cb.style.display="none";else{cb.style.display="block";for(const r of buy){const d=document.createElement("div");d.className="alert";d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة شراء</span>`;const sig=document.createElement('span');sig.className='sigbox sig-bull';sig.appendChild(up());d.appendChild(sig);b.appendChild(d)}}
-    if(!sell.length)cs.style.display="none";else{cs.style.display="block";for(const r of sell){const d=document.createElement("div");d.className="alert";d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة بيع</span>`;const sig=document.createElement('span');sig.className='sigbox sig-bear';sig.appendChild(dn());d.appendChild(sig);s.appendChild(d)}}
+    if(!buy.length) cb.style.display="none";
+    else {
+      cb.style.display="block";
+      for(const r of buy){
+        const d=document.createElement("div");d.className="alert";
+        d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة شراء</span>`;
+        const sig=document.createElement('span');sig.className='sigbox sig-bull';sig.appendChild(up());
+        d.appendChild(sig);b.appendChild(d);
+      }
+    }
+    if(!sell.length) cs.style.display="none";
+    else {
+      cs.style.display="block";
+      for(const r of sell){
+        const d=document.createElement("div");d.className="alert";
+        d.innerHTML=`<span><b>${arabicNameWrap(r.symbol)}</b> — إشارة بيع</span>`;
+        const sig=document.createElement('span');sig.className='sigbox sig-bear';sig.appendChild(dn());
+        d.appendChild(sig);s.appendChild(d);
+      }
+    }
   }
 
   function renderAlerts(list){
     const arr=list.filter(p=>p.change!=null&&Math.abs(p.change)>=3).map(p=>({symbol:p.symbol,change:p.change,dir:p.change>=0?'bull':'bear'})),
           a=$("#alertsList"); a.innerHTML="";
-    if(!arr.length){a.innerHTML='<div class="empty">لا توجد تنبيهات حاليًا</div>';return}
-    for(const x of arr){const row=document.createElement("div");row.className="alert";const left=document.createElement('span');left.innerHTML=`<b>${arabicNameWrap(x.symbol)}</b> — ${x.change>=0?'ارتفع':'انخفض'} ${fmt(Math.abs(x.change),2)}%`;const sig=document.createElement('span');sig.className=`sigbox ${x.dir==='bull'?'sig-bull':'sig-bear'}`;sig.appendChild(x.dir==='bull'?up():dn());row.appendChild(left);row.appendChild(sig);a.appendChild(row)}
+    if(!arr.length){
+      a.innerHTML='<div class="empty">لا توجد تنبيهات حاليًا</div>';
+      return;
+    }
+    for(const x of arr){
+      const row=document.createElement("div");row.className="alert";
+      const left=document.createElement('span');left.innerHTML=`<b>${arabicNameWrap(x.symbol)}</b> — ${x.change>=0?'ارتفع':'انخفض'} ${fmt(Math.abs(x.change),2)}%`;
+      const sig=document.createElement('span');sig.className=`sigbox ${x.dir==='bull'?'sig-bull':'sig-bear'}`;sig.appendChild(x.dir==='bull'?up():dn());
+      row.appendChild(left);row.appendChild(sig);a.appendChild(row);
+    }
   }
 
   function renderAll(){
     const combined=[...FX,...COMM];
-    renderPrices(combined); renderForecast(combined); renderRecommendations(combined); renderAlerts(combined); now();
+    renderPrices(combined); 
+    renderForecast(combined); 
+    renderRecommendations(combined); 
+    renderAlerts(combined); 
+    now();
+    console.log("Rendered data:", combined);
   }
 
   /* ========= نصيحة واحدة ========= */
@@ -318,19 +393,54 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ========= الأخبار العربية ========= */
   async function loadNews(){
     const titles=[]; const seen=new Set(); const RE=/\b(بورصة|تداول|سوق(?:\s*الأسهم)?|الأسهم|أسهم|مؤشر|أرباح|سهم|جلسة|إغلاق|توزيعات)\b/i;
-    for(const u of NEWS_RSS){ try{ const txt=await fetchCascade(u); const doc=new DOMParser().parseFromString(txt,"text/xml"); if(doc.querySelector("parsererror")) continue; const arr=[...doc.querySelectorAll("item>title,entry>title")].map(n=>(n.textContent||"").trim()); for(const t of arr){ if(RE.test(t) && !seen.has(t)){ seen.add(t); titles.push(t) } } }catch{} }
+    for(const u of NEWS_RSS){
+      try{
+        const txt=await fetchCascade(u);
+        const doc=new DOMParser().parseFromString(txt,"text/xml");
+        if(doc.querySelector("parsererror")) continue;
+        const arr=[...doc.querySelectorAll("item>title,entry>title")].map(n=>(n.textContent||"").trim());
+        for(const t of arr){
+          if(RE.test(t) && !seen.has(t)){
+            seen.add(t); titles.push(t);
+          }
+        }
+      }catch(e){
+        console.error(`Failed to load news from ${u}: ${e.message}`);
+      }
+    }
     const bar=$("#newsbar"), track=$("#newsScroller");
-    if(!titles.length){ bar.style.display="none"; track.innerHTML=""; return; }
+    if(!titles.length){
+      bar.style.display="none"; track.innerHTML="";
+      console.warn("No news items loaded");
+      return;
+    }
     bar.style.display="block"; track.innerHTML="";
-    for(const t of titles.concat(titles)){ const d=document.createElement("div"); d.className="news-item"; d.textContent=t; track.appendChild(d); }
+    for(const t of titles.concat(titles)){
+      const d=document.createElement("div"); d.className="news-item"; d.textContent=t; track.appendChild(d);
+    }
+    console.log(`News loaded: ${titles.length} items`);
   }
 
   /* ========= تشغيل ========= */
   (async function init(){
-    await Promise.all([loadFX(), loadCommodities()]);
-    loadNews(); setInterval(loadNews, 120000);
-    renderAll();
-    setInterval(async()=>{ await Promise.all([loadCommodities()]); renderAll(); }, 15000);
+    try{
+      await Promise.all([loadFX(), loadCommodities()]);
+      await loadNews();
+      renderAll();
+      setInterval(async()=>{
+        try{
+          await Promise.all([loadCommodities()]);
+          renderAll();
+        }catch(e){
+          console.error("Error in periodic update:", e.message);
+        }
+      }, 15000);
+      setInterval(loadNews, 120000);
+    }catch(e){
+      console.error("Initialization error:", e.message);
+      $("#pricesTbody").innerHTML='<tr><td colspan="4" class="empty">فشل تحميل البيانات، يرجى التحقق من الاتصال</td></tr>';
+      $("#forecastTbody").innerHTML='<tr><td colspan="4" class="empty">فشل تحميل البيانات، يرجى التحقق من الاتصال</td></tr>';
+    }
   })();
 });
 </script>
