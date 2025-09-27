@@ -4,7 +4,7 @@
   <!-- الصفحة الرئيسية -->
   <url>
     <loc>https://fadhel-alrayes.fun/</loc>
-    <lastmod>2025-09-24</lastmod>
+    <lastmod>2025-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- المحادثة -->
   <url>
     <loc>https://fadhel-alrayes.fun/talk.html</loc>
-    <lastmod>2025-09-24</lastmod>
+    <lastmod>2025-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -20,33 +20,40 @@
   <!-- مدار الخبر -->
   <url>
     <loc>https://fadhelalrayes.github.io/Akbar/</loc>
-    <lastmod>2025-09-24</lastmod>
+    <lastmod>2025-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- باقي الصفحات -->
-  <url><loc>https://fadhel-alrayes.fun/index3.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index5.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index6.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index7.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index9.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index10.html</loc><lastmod>2025-09-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index11.html</loc><lastmod>2025-09-24</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index13.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index15.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index22.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index23.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index33.html</loc><lastmod>2025-09-24</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index55.html</loc><lastmod>2025-09-24</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index67.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index88.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index89.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index90.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index91.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index92.html</loc><lastmod>2025-09-24</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index100.html</loc><lastmod>2025-09-24</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index202.html</loc><lastmod>2025-09-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fadhel-alrayes.fun/index505.html</loc><lastmod>2025-09-26</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index3.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index5.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index6.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index7.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index9.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index10.html</loc><lastmod>2025-09-27</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index11.html</loc><lastmod>2025-09-27</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index13.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index15.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index22.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index23.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index55.html</loc><lastmod>2025-09-27</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index67.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index88.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index89.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index90.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index91.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index92.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index100.html</loc><lastmod>2025-09-27</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index202.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fadhel-alrayes.fun/index505.html</loc><lastmod>2025-09-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- لتر هد أونلاين -->
+  <url>
+    <loc>https://fadhel-alrayes.fun/index242.html</loc>
+    <lastmod>2025-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
 </urlset>
