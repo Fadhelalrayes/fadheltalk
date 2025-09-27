@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ========= أدوات مساعدة ========= */
   const $=s=>document.querySelector(s);
   const fmt=(n,d=2)=> (n==null||Number.isNaN(n))?"—":Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
-  const now=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");$("#lastUpdated").textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;}
+  const now=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");$("#lastUpdated").textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;};
 
   // جلب مرن بمحاولات متعددة (مباشر + r.jina http/https + allorigins)
   async function fetchCascade(rawUrl, timeout=9000){
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ========= التسميات العربية ========= */
   function arabicName(s){
-    const m={"EURUSD":"يورو/دولار","GBPUSD":"جنيه إسترليني/دولار","USDJPY":"دولار/ين ياباني","XAUUSD":"ذهب/دولار","XAGUSD":"فضة/دولار"};
+    const m={"EURUSD":"يورو/دولار","GBPUSD":"جنيه إسترليني/دولار","USDJPY":"دولار/ين","XAUUSD":"ذهب/دولار","XAGUSD":"فضة/دولار"};
     return m[s]||s;
   }
 
@@ -208,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function parseStooqJSON(txt){
     try{
-      const d=JSON.parse(txt); if(!d||!d.length) return null;
-      const r=d[0], num=v=>(v&&v!=='N/D')?+v:null;
+      const d=JSON.parse(txt); if(!d || !d.symbols || !d.symbols.length) return null;
+      const r=d.symbols[0], num=v=>(v&&v!=='N/D')?+v:null;
       const open=num(r.open), close=num(r.close), vol=num(r.volume)||0;
       if(!close&&!open) return null;
       const last=close??open, ch=(open&&close)?((close-open)/open*100):0;
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!list.length){tb.innerHTML='<tr><td colspan="4" class="empty">لا توجد بيانات متاحة حاليًا</td></tr>'; return;}
     for(const p of list){
       const tr=document.createElement("tr");
-      const digits=p.symbol.endsWith("USD")?2:(p.symbol==='USDJPY'?0:2);
+      const digits=p.symbol.endsWith("USD")?(p.symbol.startsWith("USD")?5:(p.symbol==='USDJPY'?3:2)):2;
       tr.innerHTML=`<td class="sym"><b>${arabicNameWrap(p.symbol)}</b></td>
         <td class="num">${fmt(p.last,digits)}</td>
         <td class="num" style="font-weight:800;color:${(p.change??0)>=0?'#0a7a2f':'#b11a1a'}">${(p.change??0)>=0?'↑':'↓'} ${fmt(Math.abs(p.change??0),2)}%</td>
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await Promise.all([loadFX(), loadCommodities()]);
     loadNews(); setInterval(loadNews, 120000);
     renderAll();
-    setInterval(async()=>{ await Promise.all([loadFX(), loadCommodities()]); renderAll(); }, 15000);
+    setInterval(async()=>{ await Promise.all([loadCommodities()]); renderAll(); }, 15000);
   })();
 });
 </script>
