@@ -153,10 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ========= الخرائط والمصادر ========= */
-  // كريبتو عبر CoinGecko
-  const GECKO_IDS = ["bitcoin","ethereum","solana","binancecoin","ripple"];
-  const GECKO_MAP = { bitcoin:"BTCUSD", ethereum:"ETHUSD", solana:"SOLUSD", binancecoin:"BNBUSD", ripple:"XRPUSD" };
-
   // Stooq JSON (سلع/أسهم)
   const STOOQ_JSON = (s)=>{
     const base = `stooq.com/q/l/?s=${encodeURIComponent(s)}&f=sd2t2ohlcv&h&e=JSON`;
@@ -166,11 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `https://r.jina.ai/http/${base}`
     ];
   };
-  const MAPS = { GOLD:['gc.f','xauusd'], SILVER:['si.f','xagusd'], WTI:['cl.f','oil'], BRENT:['br.f','brent'], GAS:['ng.f','gas'] };
-  const STOCKS = [
-    {s:'aapl.us', sym:'AAPL'},{s:'msft.us', sym:'MSFT'},{s:'tsla.us', sym:'TSLA'},
-    {s:'amzn.us', sym:'AMZN'},{s:'nvda.us', sym:'NVDA'},{s:'googl.us', sym:'GOOGL'},{s:'meta.us', sym:'META'}
-  ];
+  const MAPS = { GOLD:['gc.f','xauusd'], SILVER:['si.f','xagusd'] };
 
   const FX_PRIMARY  = "https://open.er-api.com/v6/latest/USD";
   const FX_FALLBACK = "https://api.frankfurter.app/latest?from=USD";
@@ -187,44 +179,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ========= التسميات العربية ========= */
   function arabicName(s){
-    const m={"BTCUSD":"بيتكوين/دولار","ETHUSD":"إيثريوم/دولار","SOLUSD":"سولانا/دولار","BNBUSD":"بي إن بي/دولار","XRPUSD":"ريبل/دولار",
-      "EURUSD":"يورو/دولار","USDJPY":"دولار/ين","USDBHD":"دولار/دينار بحريني","USDSAR":"دولار/ريال سعودي","USDAED":"دولار/درهم إماراتي",
-      "GBPUSD":"جنيه/دولار","USDTRY":"دولار/ليرة تركية","XAUUSD":"ذهب/دولار","XAGUSD":"فضة/دولار","WTIUSD":"نفط خام WTI/دولار",
-      "BRENTUSD":"نفط برنت/دولار","NGUSD":"غاز طبيعي/دولار","AAPL":"آبل","MSFT":"مايكروسوفت","TSLA":"تسلا","AMZN":"أمازون","NVDA":"إنفيديا","GOOGL":"ألفابت (جوجل)","META":"ميتا"};
+    const m={"EURUSD":"يورو/دولار","GBPUSD":"جنيه إسترليني/دولار","XAUUSD":"ذهب/دولار","XAGUSD":"فضة/دولار"};
     return m[s]||s;
   }
 
   /* ========= الحالة ========= */
-  let CRYPTO={}, FX=[], COMM=[], STOCKS_LIST=[];
+  let FX=[], COMM=[];
 
   /* ========= جلب البيانات ========= */
-  async function loadCrypto(){
-    try{
-      const url=`https://api.coingecko.com/api/v3/simple/price?ids=${GECKO_IDS.join(",")}&vs_currencies=usd&include_24hr_change=true`;
-      const txt = await fetchCascade(url);
-      const d = JSON.parse(txt);
-      const out=[];
-      for(const k of Object.keys(d)){
-        out.push({ symbol: GECKO_MAP[k], last:+d[k].usd, change:+d[k].usd_24h_change||0, vol:0 });
-      }
-      CRYPTO = Object.fromEntries(out.map(x=>[x.symbol,x]));
-    }catch{}
-  }
-
   async function loadFX(){
     try{
       const txt=await fetchCascade(`${FX_PRIMARY}?_=${Date.now()}`);
       const d=JSON.parse(txt); if(d.result!=="success") throw 0;
       const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
-      if(r.EUR)add("EURUSD",1/r.EUR); if(r.JPY)add("USDJPY",r.JPY);
-      if(r.BHD)add("USDBHD",r.BHD); if(r.SAR)add("USDSAR",r.SAR);
-      if(r.AED)add("USDAED",r.AED); if(r.GBP)add("GBPUSD",1/r.GBP); if(r.TRY)add("USDTRY",r.TRY);
+      if(r.EUR)add("EURUSD",1/r.EUR); 
+      if(r.GBP)add("GBPUSD",1/r.GBP); 
       FX=o;
     }catch{
       try{
         const txt=await fetchCascade(`${FX_FALLBACK}?_=${Date.now()}`);
         const d=JSON.parse(txt); const r=d.rates||{}, o=[], add=(k,v)=>o.push({symbol:k,last:+v,change:0,vol:0});
-        if(r.EUR)add("EURUSD",1/r.EUR); if(r.JPY)add("USDJPY",r.JPY); if(r.GBP)add("GBPUSD",1/r.GBP); if(r.TRY)add("USDTRY",r.TRY);
+        if(r.EUR)add("EURUSD",1/r.EUR); if(r.GBP)add("GBPUSD",1/r.GBP); 
         FX=o;
       }catch{FX=[]}
     }
@@ -241,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }catch{ return null; }
   }
 
-  // ✅ تم الإصلاح هنا: استخدام fetchCascade بدل fetch
   async function firstOk(symbols, mapTo){
     for(const s of symbols){
       const tries = STOOQ_JSON(s);
@@ -260,20 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const out=[];
     const g  = await firstOk(MAPS.GOLD,  'XAUUSD');
     const ag = await firstOk(MAPS.SILVER,'XAGUSD');
-    const w  = await firstOk(MAPS.WTI,   'WTIUSD');
-    const b  = await firstOk(MAPS.BRENT, 'BRENTUSD');
-    const ng = await firstOk(MAPS.GAS,   'NGUSD');
-    [g,ag,w,b,ng].forEach(x=>x&&out.push(x));
+    [g,ag].forEach(x=>x&&out.push(x));
     COMM=out;
-  }
-
-  async function loadStocks(){
-    const arr=[];
-    for(const item of STOCKS){
-      const rec = await firstOk([item.s], item.sym);
-      if(rec) arr.push(rec);
-    }
-    STOCKS_LIST=arr;
   }
 
   /* ========= اشتقاقات/عرض ========= */
@@ -340,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderAll(){
-    const combined=[...Object.values(CRYPTO),...FX,...COMM,...STOCKS_LIST];
+    const combined=[...FX,...COMM];
     renderPrices(combined); renderForecast(combined); renderRecommendations(combined); renderAlerts(combined); now();
   }
 
@@ -364,10 +326,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ========= تشغيل ========= */
   (async function init(){
-    await Promise.all([loadCrypto(), loadFX(), loadCommodities(), loadStocks()]);
+    await Promise.all([loadFX(), loadCommodities()]);
     loadNews(); setInterval(loadNews, 120000);
     renderAll();
-    setInterval(async()=>{ await Promise.all([loadCrypto(), loadCommodities(), loadStocks()]); renderAll(); }, 15000);
+    setInterval(async()=>{ await Promise.all([loadCommodities()]); renderAll(); }, 15000);
   })();
 });
 </script>
