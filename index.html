@@ -29,89 +29,37 @@
   <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
   <link rel="dns-prefetch" href="//googleads.g.doubleclick.net" />
 
-  <!-- تبادل الخط بسرعة -->
+  <!-- خط Cairo -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet" />
 
-  <!-- التحقق من جوجل -->
+  <!-- التحقق من جوجل (اتركها حسب إعدادك) -->
   <meta name="google-site-verification" content="google7486b7402e792c6c.html" />
 
-  <!-- سياسات أمان (مستوى صفحة) -->
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
-                 script-src 'self' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net 'unsafe-inline' 'unsafe-eval';
-                 style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
-                 img-src 'self' https://fadhel-alrayes.fun data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-                 font-src https://fonts.gstatic.com;
-                 connect-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-                 frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;">
+  <!-- Content Security Policy (مقوّاة مع nonce) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+    form-action 'self';
+    frame-ancestors 'self';
+    script-src 'self' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net 'nonce-7uSYr3';
+    style-src 'self' https://fonts.googleapis.com 'nonce-7uSYr3';
+    img-src 'self' https://fadhel-alrayes.fun data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+    font-src https://fonts.gstatic.com;
+    connect-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+  ">
+
+  <!-- سياسات إضافية (يفضّل كـ Headers من الخادم) -->
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), interest-cohort=()" />
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
 
   <!-- AdSense (async) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1934188535842979" crossorigin="anonymous"></script>
 
-  <!-- JSON-LD: قائمة التنقل (البطاقات) — محدثة لتشمل رصيد استلام -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"SiteNavigationElement",
-    "name": [
-      "محادثة الذكاء الاصطناعي",
-      "مدار الخبر",
-      "مواقيت الصلاة وفق المذهب الجعفري",
-      "تقويم الخسوف والكسوف",
-      "استخارة بالقرآن",
-      "مِسبحة رقمية",
-      "الأيام الصالحة للزواج",
-      "حِساب سنّ التكليف الشرعي",
-      "خط التماس الأخباري",
-      "تذكرتك للطيران",
-      "القرآن الكريم — قراءة وتلاوة",
-      "حاسبة العمر المتوقّع",
-      "فاحص أعراض السرطان",
-      "فاحص أعراض القلب",
-      "فاحص أعراض العقم",
-      "فاحص أعراض التوحّد",
-      "فاحص أعراض الاكتئاب",
-      "فاحص أعراض السكري",
-      "العدّ التنازلي لرمضان",
-      "العدّ التنازلي لمحرم",
-      "أربعون حديث",
-      "فصل الصدقة — آيات وأحاديث مختارة",
-      "رصيد استلام",
-      "لتر هد أونلاين (Letterhead A4)"
-    ],
-    "url": [
-      "https://fadhel-alrayes.fun/talk.html",
-      "https://fadhelalrayes.github.io/Akbar/",
-      "https://fadhel-alrayes.fun/index3.html",
-      "https://fadhel-alrayes.fun/index67.html",
-      "https://fadhel-alrayes.fun/index5.html#home",
-      "https://fadhel-alrayes.fun/index6.html#home",
-      "https://fadhel-alrayes.fun/index7.html",
-      "https://fadhel-alrayes.fun/index9.html#home",
-      "https://fadhel-alrayes.fun/index11.html",
-      "https://fadhel-alrayes.fun/index13.html",
-      "https://fadhel-alrayes.fun/index15.html",
-      "https://fadhel-alrayes.fun/index22.html",
-      "https://fadhel-alrayes.fun/index23.html",
-      "https://fadhel-alrayes.fun/index88.html",
-      "https://fadhel-alrayes.fun/index89.html",
-      "https://fadhel-alrayes.fun/index90.html",
-      "https://fadhel-alrayes.fun/index91.html",
-      "https://fadhel-alrayes.fun/index92.html",
-      "https://fadhel-alrayes.fun/index10.html",
-      "https://fadhel-alrayes.fun/index55.html",
-      "https://fadhel-alrayes.fun/index505.html",
-      "https://fadhel-alrayes.fun/index202.html",
-      "https://fadhel-alrayes.fun/index787.html",
-      "https://fadhel-alrayes.fun/index242.html"
-    ]
-  }
-  </script>
-
-  <style>
+  <!-- أنماط مع nonce -->
+  <style nonce="7uSYr3">
     :root{
       --gold-1:#d4af37; --gold-2:#f5d76e;
       --bg-1:#ffffff; --bg-2:#f7f4ea;
@@ -160,15 +108,17 @@
 
     footer{margin:26px 0 6px; text-align:center; color:var(--muted); font-size:.9rem; font-weight:600;}
     #footerName{cursor:default; user-select:none; -webkit-tap-highlight-color:transparent}
+
+    /* تنسيق إعلان AdSense بدون inline style */
+    .ad-slot { display:block; text-align:center; margin:20px 0; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="title-bar"><h1 class="title">فاضل الريس</h1></div>
 
-    <!-- إعلان (Lazy init) -->
-    <ins class="adsbygoogle"
-         style="display:block; text-align:center; margin:20px 0;"
+    <!-- إعلان (بدون inline style) -->
+    <ins class="adsbygoogle ad-slot"
          data-ad-client="ca-pub-1934188535842979"
          data-ad-slot="1234567890"
          data-ad-format="auto"
@@ -199,7 +149,7 @@
       <a class="card" href="https://fadhel-alrayes.fun/index505.html"><div class="row"><span class="ico">📜</span><div><h3>أربعون حديث</h3><p class="desc">أحاديث الإمام الجواد.</p></div></div></a>
       <a class="card" href="https://fadhel-alrayes.fun/index202.html"><div class="row"><span class="ico">🤲</span><div><h3>فصل الصدقة</h3><p class="desc">آيات وأحاديث مختارة.</p></div></div></a>
 
-      <!-- ✅ بطاقة جديدة: رصيد استلام -->
+      <!-- ✅ بطاقة: رصيد استلام -->
       <a class="card" href="https://fadhel-alrayes.fun/index787.html" role="listitem">
         <div class="row">
           <span class="ico">💵</span>
@@ -210,7 +160,7 @@
         </div>
       </a>
 
-      <!-- ✅ آخر بطاقة: لتر هد أونلاين -->
+      <!-- ✅ بطاقة: لتر هد أونلاين -->
       <a class="card" href="https://fadhel-alrayes.fun/index242.html" role="listitem">
         <div class="row">
           <span class="ico">📄</span>
@@ -225,13 +175,13 @@
     <footer>© <span id="year"></span> <span id="footerName">فاضل الريس</span> — جميع الحقوق محفوظة</footer>
   </div>
 
-  <!-- تهيئة سريعة للإعلان (defer-like) -->
-  <script>
-    (function(){ try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){} })();
+  <!-- تهيئة الإعلان (nonce) -->
+  <script nonce="7uSYr3">
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
   </script>
 
-  <!-- تحسينات أمن/أداء بسيطة -->
-  <script>
+  <!-- تحسينات أمن/أداء بسيطة (nonce) -->
+  <script nonce="7uSYr3">
     // سنة الفوتر
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -239,11 +189,6 @@
     const waUrl = "https://api.whatsapp.com/send/?phone=97333375858&text&type=phone_number&app_absent=0";
     document.getElementById('footerName').addEventListener('click', () => {
       window.open(waUrl, '_blank', 'noopener,noreferrer');
-    });
-
-    // ضمان rel آمن لكل الروابط الخارجية
-    document.querySelectorAll('a[target="_blank"]').forEach(a=>{
-      if(!/noopener|noreferrer/.test(a.rel)) a.rel="noopener noreferrer";
     });
 
     // Lazy-load لأي صور مستقبلًا
