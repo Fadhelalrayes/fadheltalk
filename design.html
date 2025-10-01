@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>ابتكار للحلول الرقمية | تصميم مواقع ومتاجر إلكترونية</title>
+    <meta name="description" content="ابتكار للحلول الرقمية تقدم خدمات تصميم وتطوير المواقع الاحترافية والمتاجر الإلكترونية التي تساعد على نمو أعمالك وجذب المزيد من العملاء.">
+    <meta name="keywords" content="تصميم موقع, تصميم مواقع, تطوير متاجر إلكترونية, شركة تصميم مواقع, حلول رقمية, ابتكار">
+    <meta name="author" content="ابتكار للحلول الرقمية">
+    <link rel="canonical" href="https://YOUR_WEBSITE_URL.com/"> <!-- !! مهم: استبدل برابط موقعك !! -->
+
+    <!-- !! ضع علامة التحقق من جوجل هنا !! -->
+    <!-- <meta name="google-site-verification" content="YOUR_UNIQUE_VERIFICATION_CODE" /> -->
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="ابتكار للحلول الرقمية | تصميم مواقع احترافية">
+    <meta property="og:description" content="نصمم لك مواقع ومتاجر إلكترونية تساعد على نمو أعمالك.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:url" content="https://YOUR_WEBSITE_URL.com"> <!-- !! استبدل برابط موقعك !! -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ابتكار للحلول الرقمية">
+
+    <!-- Google Fonts: Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root { --primary-color: #0d1b2a; --secondary-color: #d4af37; --background-color: #f5f7fa; --text-color: #495057; --heading-color: #1b263b; --white-color: #FFFFFF; --success-color: #25D366; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; line-height: 1.8; background-color: var(--background-color); color: var(--text-color); font-weight: 400; }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        h1, h2, h3 { font-weight: 700; color: var(--heading-color); }
+        
+        h1 { font-size: 3rem; font-weight: 800; }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 50px; }
+        h3 { font-size: 1.8rem; }
+        section { padding: 80px 0; }
+        .main-header { background-color: var(--white-color); box-shadow: 0 2px 15px rgba(0,0,0,0.07); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary-color); text-decoration: none; }
+        .main-nav a { color: var(--primary-color); text-decoration: none; margin: 0 18px; font-weight: 500; transition: color 0.3s; }
+        .main-nav a:hover { color: var(--secondary-color); }
+        .hero { background: var(--primary-color); color: var(--white-color); padding: 100px 0; text-align: center; }
+        .hero h1 { color: var(--white-color); margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; opacity: 0.8; font-weight: 400; }
+        .cta-button { background: var(--secondary-color); color: var(--primary-color); padding: 15px 40px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 800px; margin: auto; }
+        .service-card { background: var(--white-color); padding: 40px 30px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .service-card .icon { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 20px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; background: var(--white-color); padding: 50px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        
+        .contact-info h3 { margin-top: 0; text-align: center; }
+        .contact-info p { text-align: justify; hyphens: auto; }
+        .contact-buttons { margin-top: 20px; display: flex; flex-direction: row; gap: 15px; flex-wrap: wrap; }
+        .contact-btn { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 15px 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; border: none; white-space: nowrap; }
+        .contact-btn i { font-size: 1.2rem; margin-left: 10px; }
+        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .btn-whatsapp { background-color: var(--success-color); color: var(--white-color); }
+        .btn-email { background-color: var(--primary-color); color: var(--white-color); }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Tajawal', sans-serif; font-size: 1rem; box-sizing: border-box; }
+        .contact-form button { width: 100%; padding: 15px; background: var(--secondary-color); color: var(--primary-color); border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: 700; transition: all 0.3s; }
+        .contact-form button:hover { background-color: #c8a030; }
+        .main-footer { background-color: var(--primary-color); color: var(--white-color); text-align: center; padding: 30px 0; }
+        .main-footer p { margin: 0; opacity: 0.7; }
+        @media (max-width: 992px) { .contact-grid { grid-template-columns: 1fr; } .contact-info h3 { text-align: right; } }
+        @media (max-width: 768px) { h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } .main-header .container { flex-direction: column; gap: 15px; } .contact-info h3 { text-align: center; } }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">ابتكار للحلول الرقمية</a>
+            <nav class="main-nav">
+                <a href="#hero">الرئيسية</a>
+                <a href="#services">خدماتنا</a>
+                <a href="#contact">تواصل معنا</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container">
+                <h1>تصميم مواقع احترافية لنمو أعمالك</h1>
+                <p>في "ابتكار للحلول الرقمية"، نحن لا نصمم لك موقعًا فحسب، بل نبني لك أصلاً رقميًا قويًا يجذب العملاء ويزيد من أرباحك.</p>
+                <a href="#contact" class="cta-button">اطلب تصميم موقعك الآن</a>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2>حلولنا الرقمية لنمو أعمالك</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>تصميم وتطوير المواقع</h3>
+                        <p>نصمم مواقع ويب عصرية وسريعة، مع التركيز على تجربة المستخدم لضمان بقاء الزوار وتحويلهم إلى عملاء.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon"><i class="fas fa-store"></i></div>
+                        <h3>تطوير متاجر إلكترونية</h3>
+                        <p>هل تريد البيع عبر الإنترنت؟ نطور لك متجرًا إلكترونيًا متكاملًا وسهل الإدارة لتبدأ في تحقيق المبيعات فورًا.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>تواصل معنا</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>لنبدأ مشروعك القادم</h3>
+                        <p>سواء كنت تحتاج إلى تصميم موقع جديد، أو ترغب في تطوير متجرك الإلكتروني، فريقنا جاهز لمساعدتك على تحقيق أهدافك.</p>
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/97333375858" target="_blank" class="contact-btn btn-whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                                راسلنا عبر واتساب
+                            </a>
+                            <a href="mailto:Richadvadv@gmail.com" class="contact-btn btn-email">
+                                <i class="fas fa-envelope"></i>
+                                أرسل بريدًا إلكترونيًا
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Form is now ACTIVE with your personal URL -->
+                    <form class="contact-form" action="https://formspree.io/f/mqaybaev" method="POST">
+                        <input type="text" name="name" placeholder="الاسم الكامل" required>
+                        <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+                        <textarea name="message" rows="6" placeholder="اشرح لنا عن مشروعك..." required></textarea>
+                        <button type="submit">إرسال النموذج</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 ابتكار للحلول الرقمية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
