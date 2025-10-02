@@ -5,22 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta Tags -->
-    <title>ابتكار للحلول الرقمية | تصميم مواقع ومتاجر إلكترونية</title>
-    <meta name="description" content="ابتكار للحلول الرقمية تقدم خدمات تصميم وتطوير المواقع الاحترافية والمتاجر الإلكترونية التي تساعد على نمو أعمالك وجذب المزيد من العملاء.">
-    <meta name="keywords" content="تصميم موقع, تصميم مواقع, تطوير متاجر إلكترونية, شركة تصميم مواقع, حلول رقمية, ابتكار">
+    <title>ابتكار للحلول الرقمية | تصميم مواقع احترافية ومتاجر إلكترونية 2025</title>
+    <meta name="description" content="تصميم وتطوير مواقع ومتاجر إلكترونية احترافية. حلول رقمية تساعد على نمو أعمالك وزيادة المبيعات. اتصل الآن!">
+    <meta name="keywords" content="تصميم مواقع, شركة تصميم مواقع, تطوير متاجر إلكترونية, حلول رقمية, ابتكار, تصميم مواقع احترافية, تطوير ويب, متاجر إلكترونية">
     <meta name="author" content="ابتكار للحلول الرقمية">
-    <link rel="canonical" href="https://YOUR_WEBSITE_URL.com/"> <!-- !! مهم: استبدل برابط موقعك !! -->
+    <link rel="canonical" href="https://fadhel-alrayes.fun/design.html">
+    <meta name="robots" content="index, follow">
 
-    <!-- !! ضع علامة التحقق من جوجل هنا !! -->
+    <!-- Google Site Verification -->
     <!-- <meta name="google-site-verification" content="YOUR_UNIQUE_VERIFICATION_CODE" /> -->
     
+    <!-- Preload Fonts for Speed -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" as="style">
+
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="ابتكار للحلول الرقمية | تصميم مواقع احترافية">
     <meta property="og:description" content="نصمم لك مواقع ومتاجر إلكترونية تساعد على نمو أعمالك.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop">
-    <meta property="og:url" content="https://YOUR_WEBSITE_URL.com"> <!-- !! استبدل برابط موقعك !! -->
+    <meta property="og:image" content="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop" />
+    <meta property="og:image:alt" content="تصميم موقع إلكتروني احترافي">
+    <meta property="og:url" content="https://fadhel-alrayes.fun/design.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ابتكار للحلول الرقمية">
+
+    <!-- Schema Markup for Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ابتكار للحلول الرقمية",
+      "description": "تصميم مواقع ومتاجر إلكترونية احترافية",
+      "url": "https://fadhel-alrayes.fun/design.html",
+      "telephone": "+97333375858",
+      "email": "Richadvadv@gmail.com",
+      "sameAs": [
+        "https://wa.me/97333375858"
+      ]
+    }
+    </script>
 
     <!-- Google Fonts: Tajawal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,8 +65,10 @@
         .main-header { background-color: var(--white-color); box-shadow: 0 2px 15px rgba(0,0,0,0.07); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
         .main-header .container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary-color); text-decoration: none; }
-        .main-nav a { color: var(--primary-color); text-decoration: none; margin: 0 18px; font-weight: 500; transition: color 0.3s; }
+        .main-nav { display: flex; flex-wrap: nowrap; align-items: center; gap: 20px; } /* تعديل لجعل الروابط في سطر واحد دائماً */
+        .main-nav a { color: var(--primary-color); text-decoration: none; font-weight: 500; transition: color 0.3s; white-space: nowrap; } /* إضافة white-space لمنع الكسر */
         .main-nav a:hover { color: var(--secondary-color); }
+        @media (max-width: 768px) { .main-nav { gap: 10px; font-size: 0.9rem; } } /* تقليل المسافات على الشاشات الصغيرة دون كسر */
         .hero { background: var(--primary-color); color: var(--white-color); padding: 100px 0; text-align: center; }
         .hero h1 { color: var(--white-color); margin-bottom: 20px; }
         .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; opacity: 0.8; font-weight: 400; }
@@ -55,6 +78,10 @@
         .service-card { background: var(--white-color); padding: 40px 30px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s; }
         .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
         .service-card .icon { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 20px; }
+        .why-us-section { background: var(--white-color); }
+        .why-us-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: auto; }
+        .why-us-card { text-align: center; padding: 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .why-us-card .icon { font-size: 2rem; color: var(--secondary-color); margin-bottom: 15px; }
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; background: var(--white-color); padding: 50px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
         
         .contact-info h3 { margin-top: 0; text-align: center; }
@@ -71,7 +98,7 @@
         .main-footer { background-color: var(--primary-color); color: var(--white-color); text-align: center; padding: 30px 0; }
         .main-footer p { margin: 0; opacity: 0.7; }
         @media (max-width: 992px) { .contact-grid { grid-template-columns: 1fr; } .contact-info h3 { text-align: right; } }
-        @media (max-width: 768px) { h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } .main-header .container { flex-direction: column; gap: 15px; } .contact-info h3 { text-align: center; } }
+        @media (max-width: 768px) { h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } .main-header .container { flex-direction: column; gap: 15px; } .contact-info h3 { text-align: center; } .main-nav { justify-content: center; } }
     </style>
 </head>
 <body>
@@ -82,6 +109,7 @@
             <nav class="main-nav">
                 <a href="#hero">الرئيسية</a>
                 <a href="#services">خدماتنا</a>
+                <a href="#why-us">لماذا نحن</a>
                 <a href="#contact">تواصل معنا</a>
             </nav>
         </div>
@@ -103,14 +131,43 @@
                     <div class="service-card">
                         <div class="icon"><i class="fas fa-laptop-code"></i></div>
                         <h3>تصميم وتطوير المواقع</h3>
-                        <p>نصمم مواقع ويب عصرية وسريعة، مع التركيز على تجربة المستخدم لضمان بقاء الزوار وتحويلهم إلى عملاء.</p>
+                        <p>نصمم مواقع ويب عصرية وسريعة، مع التركيز على تجربة المستخدم لضمان بقاء الزوار وتحويلهم إلى عملاء مخلصين. اكتشف المزيد عن جودتنا.</p>
                     </div>
                     <div class="service-card">
                         <div class="icon"><i class="fas fa-store"></i></div>
                         <h3>تطوير متاجر إلكترونية</h3>
-                        <p>هل تريد البيع عبر الإنترنت؟ نطور لك متجرًا إلكترونيًا متكاملًا وسهل الإدارة لتبدأ في تحقيق المبيعات فورًا.</p>
+                        <p>هل تريد البيع عبر الإنترنت؟ نطور لك متجرًا إلكترونيًا متكاملًا وسهل الإدارة لتبدأ في تحقيق المبيعات فورًا. ابدأ مشروعك اليوم.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="why-us" class="why-us-section">
+            <div class="container">
+                <h2>لماذا تختار ابتكار لتصميم موقعك؟</h2>
+                <div class="why-us-grid">
+                    <div class="why-us-card">
+                        <div class="icon"><i class="fas fa-rocket"></i></div>
+                        <h3>تصميم عصري ومتجاوب</h3>
+                        <p>مواقعنا تعمل بسلاسة على جميع الأجهزة، مما يضمن تجربة مستخدم مثالية وزيادة في معدلات التحويل بنسبة تصل إلى 50%.</p>
+                    </div>
+                    <div class="why-us-card">
+                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>أمان وخصوصية عالية</h3>
+                        <p>نستخدم أحدث تقنيات الأمان لحماية بيانات عملائك، مع الالتزام بمعايير الخصوصية العالمية مثل GDPR.</p>
+                    </div>
+                    <div class="why-us-card">
+                        <div class="icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>تحسين لمحركات البحث</h3>
+                        <p>كل موقع نصممه مُحسَّن للـ SEO، لمساعدتك في الظهور في نتائج البحث وجذب المزيد من الزوار العضويين دون تكاليف إعلانية.</p>
+                    </div>
+                    <div class="why-us-card">
+                        <div class="icon"><i class="fas fa-headset"></i></div>
+                        <h3>دعم فني مستمر</h3>
+                        <p>فريقنا متوفر 24/7 لمساعدتك في أي وقت، لضمان استمرارية عمل موقعك دون انقطاع وتحديثات دورية.</p>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop" alt="تصميم موقع إلكتروني احترافي وحديث" style="width: 100%; max-width: 800px; margin: 40px auto; display: block; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             </div>
         </section>
 
@@ -120,7 +177,7 @@
                 <div class="contact-grid">
                     <div class="contact-info">
                         <h3>لنبدأ مشروعك القادم</h3>
-                        <p>سواء كنت تحتاج إلى تصميم موقع جديد، أو ترغب في تطوير متجرك الإلكتروني، فريقنا جاهز لمساعدتك على تحقيق أهدافك.</p>
+                        <p>سواء كنت تحتاج إلى تصميم موقع جديد، أو ترغب في تطوير متجرك الإلكتروني، فريقنا جاهز لمساعدتك على تحقيق أهدافك. تعرف على خدماتنا.</p>
                         <div class="contact-buttons">
                             <a href="https://wa.me/97333375858" target="_blank" class="contact-btn btn-whatsapp">
                                 <i class="fab fa-whatsapp"></i>
@@ -147,7 +204,7 @@
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 ابتكار للحلول الرقمية. جميع الحقوق محفوظة.</p>
+            <p>&copy; 2025 ابتكار للحلول الرقمية. جميع الحقوق محفوظة. <a href="#services" style="color: var(--secondary-color);">خدماتنا</a> | <a href="#why-us" style="color: var(--secondary-color);">لماذا نحن</a> | <a href="#contact" style="color: var(--secondary-color);">تواصل معنا</a></p>
         </div>
     </footer>
 
