@@ -177,7 +177,7 @@
           <ul class="rList">
             <li>واجبة عند حدوث الكسوف أو الخسوف ولو جزئيًا.</li>
             <li>وقتها: من ابتداء الظاهرة إلى تمام الانجلاء.</li>
-            <li>القضاء: من علم بالظاهرة ولم يصلِّ حتى انجلت وجب عليه القضاء. من لم يعلم بها: يقضي إن كان كليًا فقط.</li>
+            <li>القضاء: من علم بالظاهرة ولم يصلِّ حتى انجلت وجب عليه القضاء. من لم يعلم بها: يقضي إن كان كليًا فقط.</li>
           </ul>
         </div>
         <div class="rCard">
@@ -321,7 +321,7 @@ function nextOrCurrent(){
 
 /* =============== عرض الحدث في البطاقة العلوية =============== */
 function renderEvent(){
-  const {ev} = nextOrCurrent();
+  const {ev, state} = nextOrCurrent();
   document.getElementById('eventName').textContent = ev.kind;
 
   // التاريخ مرة واحدة
@@ -336,23 +336,58 @@ function renderEvent(){
   document.getElementById('tMax').textContent   = "الأعظم: " + g;
   document.getElementById('tEnd').textContent   = "ينتهي: " + e;
 
-  // الحكم المختصر
   document.getElementById('nextRuling').textContent = "الحكم الشرعي للصلاة : واجبة";
 
-  // JSON-LD
+  // =================== إضافة البيانات المنظمة المصححة ===================
   const startISO = ev.p1 || ev.greatest;
   const endISO   = ev.p4 || ev.u4 || ev.greatest || startISO;
+  
   const ld = {
-    "@context":"https://schema.org",
-    "@type":"Event",
+    "@context": "https://schema.org",
+    "@type": "Event",
     "name": ev.kind,
     "startDate": startISO,
     "endDate": endISO,
-    "inLanguage":"ar",
-    "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
-    "description":"عرض مواعيد دقيقة للكسوف والخسوف حسب منطقة الزائر (قابلة للتغيير اليدوي)."
+    "inLanguage": "ar",
+    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+    
+    // الحقول المطلوبة لحل مشاكل Google Search Console
+    "description": "متابعة ومشاهدة ظواهر الخسوف والكسوف الفلكية مع معرفة الأحكام الشرعية لصلاة الآيات. توفر الصفحة مواعيد دقيقة حسب المنطقة الزمنية للمستخدم مع شرح مفصل للأحكام الفقهية المتعلقة بهذه الظواهر الطبيعية.",
+    
+    "eventStatus": state === 'past' ? "https://schema.org/EventCancelled" : "https://schema.org/EventScheduled",
+    
+    "location": {
+      "@type": "VirtualLocation",
+      "name": "موقع تقويم الخسوف والكسوف",
+      "url": "https://fadhel-alrayes.fun/index67.html"
+    },
+    
+    "organizer": {
+      "@type": "Person",
+      "name": "فاضل الريس",
+      "url": "https://fadhel-alrayes.fun"
+    },
+    
+    "offers": {
+      "@type": "Offer",
+      "name": "مشاهدة مجانية لتقويم الخسوف والكسوف",
+      "price": "0",
+      "priceCurrency": "SAR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://fadhel-alrayes.fun/index67.html"
+    },
+    
+    "performer": {
+      "@type": "Organization",
+      "name": "موقع فاضل الريس للتقاويم الفلكية",
+      "url": "https://fadhel-alrayes.fun"
+    },
+    
+    "image": "https://fadhel-alrayes.fun/images/eclipse-calendar.jpg"
   };
-  document.getElementById('ld-json').textContent = JSON.stringify(ld);
+  
+  document.getElementById('ld-json').textContent = JSON.stringify(ld, null, 2);
+  // =================== نهاية إضافة البيانات المنظمة ===================
 }
 
 /* =============== خمسة أحداث قادمة + JSON-LD =============== */
@@ -381,17 +416,35 @@ function renderUpcoming(){
     }).join('');
   }
 
+  // =================== إضافة بيانات منظمة للقائمة ===================
   const list = {
-    "@context":"https://schema.org",
-    "@type":"ItemList",
-    "name":"Upcoming Eclipses (Next Five)",
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "الأحداث الفلكية القادمة - الخسوف والكسوف",
+    "description": "قائمة بأقرب خمسة أحداث فلكية قادمة من الخسوف والكسوف",
     "itemListElement": future.map((e,i)=>({
-      "@type":"ListItem",
+      "@type": "ListItem",
       "position": i+1,
-      "item": {"@type":"Event","name":e.kind,"startDate":e.p1||e.greatest,"endDate":e.p4||e.u4||e.greatest}
+      "item": {
+        "@type": "Event",
+        "name": e.kind,
+        "startDate": e.p1||e.greatest,
+        "endDate": e.p4||e.u4||e.greatest,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "VirtualLocation",
+          "url": "https://fadhel-alrayes.fun/index67.html"
+        },
+        "organizer": {
+          "@type": "Person",
+          "name": "فاضل الريس"
+        }
+      }
     }))
   };
-  document.getElementById('ld-list').textContent = JSON.stringify(list);
+  
+  document.getElementById('ld-list').textContent = JSON.stringify(list, null, 2);
+  // =================== نهاية إضافة بيانات القائمة ===================
 }
 
 /* =============== شريط معلومات عام وتغيير المنطقة =============== */
@@ -400,6 +453,7 @@ const TZ_LIST = [
   "Asia/Dubai","Asia/Qatar","Africa/Cairo","Europe/Istanbul","Europe/Athens","Europe/Paris",
   "Europe/London","America/New_York","America/Toronto","Asia/Karachi","Asia/Kolkata","Asia/Tokyo"
 ];
+
 function renderMeta(){
   document.getElementById('tzLabel').textContent = tz;
   document.getElementById('greg').textContent = fmtDateFull(new Date(), tz);
@@ -408,21 +462,35 @@ function renderMeta(){
 /* نافذة تغيير المنطقة */
 const modal = document.getElementById('modal');
 const tzSel  = document.getElementById('tzSel');
+
 document.getElementById('openTZ').addEventListener('click', ()=>{
   tzSel.innerHTML = TZ_LIST.map(z=>`<option value="${z}">${z}</option>`).join("");
   tzSel.value = tz;
-  modal.classList.add('open'); document.body.style.overflow='hidden';
+  modal.classList.add('open'); 
+  document.body.style.overflow='hidden';
 });
+
 document.getElementById('cancelTZ').addEventListener('click', ()=>{
-  modal.classList.remove('open'); document.body.style.overflow='';
+  modal.classList.remove('open'); 
+  document.body.style.overflow='';
 });
+
 document.getElementById('saveTZ').addEventListener('click', ()=>{
   tz = tzSel.value || SYSTEM_TZ;
   localStorage.setItem('eclipse_tz', tz);
-  modal.classList.remove('open'); document.body.style.overflow='';
-  renderMeta(); renderEvent(); renderUpcoming();
+  modal.classList.remove('open'); 
+  document.body.style.overflow='';
+  renderMeta(); 
+  renderEvent(); 
+  renderUpcoming();
 });
-modal.addEventListener('click', (e)=>{ if(e.target===modal){ modal.classList.remove('open'); document.body.style.overflow=''; }});
+
+modal.addEventListener('click', (e)=>{ 
+  if(e.target===modal){ 
+    modal.classList.remove('open'); 
+    document.body.style.overflow=''; 
+  }
+});
 
 /* زر فتح المصدر */
 document.getElementById('openSrc').addEventListener('click', ()=>{
