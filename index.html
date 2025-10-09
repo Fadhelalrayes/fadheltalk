@@ -25,8 +25,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="//fonts.googleapis.com" />
   <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-  <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
-  <link rel="dns-prefetch" href="//googleads.g.doubleclick.net" />
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet" />
 
@@ -39,18 +37,16 @@
     upgrade-insecure-requests;
     form-action 'self';
     frame-ancestors 'self';
-    script-src 'self' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net 'nonce-7uSYr3';
+    script-src 'self' 'nonce-7uSYr3';
     style-src 'self' https://fonts.googleapis.com 'nonce-7uSYr3';
-    img-src 'self' https://fadhel-alrayes.fun data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+    img-src 'self' https://fadhel-alrayes.fun data:;
     font-src https://fonts.gstatic.com;
-    connect-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+    connect-src 'self';
+    frame-src 'self';
   ">
 
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), interest-cohort=()" />
-
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1934188535842979" crossorigin="anonymous"></script>
 
   <style nonce="7uSYr3">
     :root{
@@ -98,22 +94,13 @@
     }
     h3{margin:0 0 6px; font-size:1.06rem; font-weight:800}
     p.desc{margin:0; color:var(--muted); font-size:.92rem; line-height:1.65}
-
     footer{margin:26px 0 6px; text-align:center; color:var(--muted); font-size:.9rem; font-weight:600;}
     #footerName{cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent}
-
-    .ad-slot { display:block; text-align:center; margin:20px 0; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="title-bar"><h1 class="title">فاضل الريس</h1></header>
-
-    <ins class="adsbygoogle ad-slot"
-         data-ad-client="ca-pub-1934188535842979"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
 
     <main class="grid">
 
@@ -122,14 +109,10 @@
       <a class="card" href="https://fadhelalrayes.github.io/Akbar/"><div class="row"><span class="ico">📰</span><div><h3>مدار الخبر</h3><p class="desc">صفحة خفيفة لأحدث المستجدّات العربية.</p></div></div></a>
       <a class="card" href="https://fadhel-alrayes.fun/index3.html"><div class="row"><span class="ico">🕌</span><div><h3>مواقيت الصلاة</h3><p class="desc">حساب وعرض المواقيت الدقيقة.</p></div></div></a>
 
-      <!-- ✅ البطاقة الجديدة: تعليم الصلاة -->
       <a class="card" href="https://fadhel-alrayes.fun/prayer.html">
         <div class="row">
-          <span class="ico" role="img" aria-label="أيقونة صلاة">🙏</span>
-          <div>
-            <h3>تعليم الصلاة</h3>
-            <p class="desc">دليلك الشامل لتعلّم الصلاة.</p>
-          </div>
+          <span class="ico">🙏</span>
+          <div><h3>تعليم الصلاة</h3><p class="desc">دليلك الشامل لتعلّم الصلاة.</p></div>
         </div>
       </a>
 
@@ -160,10 +143,6 @@
 
     <footer>© <span id="year"></span> <span id="footerName">فاضل الريس</span> — جميع الحقوق محفوظة</footer>
   </div>
-
-  <script nonce="7uSYr3">
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-  </script>
 
   <script nonce="7uSYr3">
     document.getElementById('year').textContent = new Date().getFullYear();
