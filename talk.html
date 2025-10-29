@@ -416,6 +416,10 @@
         // حالة التطبيق
         let isConnected = true;
         let isWaitingForResponse = false;
+        let chatHistory = [
+            { role: 'system', content: 'أنت FadhelTalk، مساعد ذكي صممه فاضل الريس. قدم إجابات واضحة، دقيقة، وكاملة بالعربية دون ذكر أي تفاصيل عن مصدر البيانات أو الشركة المطورة. تجنب استخدام الهاشتاغات (#)، النجوم (*)، أو أي رموز تنسيق. استخدم تنسيقًا منظمًا وسهل القراءة مع فقرات أو قوائم إذا لزم الأمر.' },
+            { role: 'assistant', content: 'مرحبًا! أنا FadhelTalk، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟' }
+        ];
 
         // مفتاح API المشفر (Base64) - للأمان البسيط
         const encodedApiKey = 'c2stNmJmNWJjZTFmYTJlNDVkZGIwMTZhOWVjNDJiYzUxZDM='; // استبدل بـ btoa('your-deepseek-api-key')
@@ -550,8 +554,8 @@
         // التحقق من الأسئلة المتعلقة بالتعريف عن التطبيق
         function isIdentityOrCreatorQuestion(message) {
             const patterns = [
-                /من\s*(أنت|انت|أنتم|هو|صنعك|برمجك|مبرمجك|مبرمجيك|مطورك|خلقك|صانعك)\s*\?*/i,
-                /who\s*(are\s*you|is\s*the\s*creator|is\s*the\s*developer|made\s*you|programmed\s*you)\s*\?*/i
+                /^\s*من\s*(أنت|انت|أنتم|هو|صنعك|برمجك|مبرمجك|مبرمجيك|مطورك|خلقك|صانعك)\s*\?*\s*$/i,
+                /^\s*who\s*(are\s*you|is\s*the\s*creator|is\s*the\s*developer|made\s*you|programmed\s*you)\s*\?*\s*$/i
             ];
             return patterns.some(pattern => pattern.test(message));
         }
@@ -559,8 +563,8 @@
         // التحقق من الأسئلة عن فاضل الريس
         function isFadhelQuestion(message) {
             const patterns = [
-                /من\s*(فاضل|فاضل\s*الريس|هو\s*فاضل|فاضل\s*هو)\s*\?*/i,
-                /who\s*(is\s*fadhel|is\s*fadhel\s*al-rais|is\s*fadhel\s*alrais)\s*\?*/i
+                /^\s*من\s*(فاضل|فاضل\s*الريس|هو\s*فاضل|فاضل\s*هو)\s*\?*\s*$/i,
+                /^\s*who\s*(is\s*fadhel|is\s*fadhel\s*al-rais|is\s*fadhel\s*alrais)\s*\?*\s*$/i
             ];
             return patterns.some(pattern => pattern.test(message));
         }
@@ -592,11 +596,8 @@
                     },
                     body: JSON.stringify({
                         model: 'deepseek-chat',
-                        messages: [
-                            { role: 'system', content: 'أنت FadhelTalk، مساعد ذكي صممه فاضل الريس. قدم إجابات واضحة، دقيقة، وكاملة بالعربية دون ذكر أي تفاصيل عن مصدر البيانات أو الشركة المطورة. تجنب استخدام الهاشتاغات (#)، النجوم (*)، أو أي رموز تنسيق. استخدم تنسيقًا منظمًا وسهل القراءة مع فقرات أو قوائم إذا لزم الأمر.' },
-                            { role: 'user', content: message }
-                        ],
-                        max_tokens: 2000,
+                        messages: chatHistory,
+                        max_tokens: 4096,
                         temperature: 0.7
                     })
                 });
@@ -629,6 +630,7 @@
             if (!message) return;
 
             addMessage(message, true);
+            chatHistory.push({ role: 'user', content: message });
             userInput.value = '';
             isWaitingForResponse = true;
             sendBtn.disabled = true;
@@ -639,6 +641,7 @@
                 const answer = await getAIResponse(message);
                 typingIndicator.remove();
                 addMessage(answer, false);
+                chatHistory.push({ role: 'assistant', content: answer });
             } catch (e) {
                 typingIndicator.remove();
                 addMessage('عذرًا، حدث خطأ غير متوقع في المعالجة. جاري إعادة المحاولة...', false);
